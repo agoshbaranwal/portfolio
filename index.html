@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Agosh Baranwal</title>
+		<meta name="description" content="Performance & product marketer. Three projects — admenow, tvbadger, and Utsav." />
+		<meta name="theme-color" content="#ffffff" />
+		<meta property="og:title" content="Agosh Baranwal — Portfolio" />
+		<meta property="og:description" content="Performance & product marketer scaling platforms across Sweden, Spain & India. Three projects: marketing tools, a film & TV taste engine, and a personal food blog." />
+		<meta property="og:type" content="website" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+		<style>
+			:root {
+				--bg: #fbfbf9;
+				--ink: #14161a;
+				--muted: #62676f;
+				--faint: #9aa0a8;
+				--line: #e9e8e3;
+				--card: #ffffff;
+			}
+			* { box-sizing: border-box; margin: 0; padding: 0; }
+			html { -webkit-text-size-adjust: 100%; }
+			body {
+				background: var(--bg);
+				color: var(--ink);
+				font-family: 'Inter', system-ui, sans-serif;
+				line-height: 1.55;
+				-webkit-font-smoothing: antialiased;
+				letter-spacing: -0.01em;
+			}
+			.wrap { max-width: 640px; margin: 0 auto; padding: 84px 24px 64px; }
+			@media (max-width: 600px) { .wrap { padding: 48px 20px 44px; } }
+
+			header { margin-bottom: 48px; }
+			h1 { font-size: clamp(1.85rem, 6vw, 2.4rem); font-weight: 700; letter-spacing: -0.03em; }
+			.bio { color: var(--muted); font-size: clamp(0.98rem, 2.6vw, 1.06rem); margin-top: 15px; max-width: 33em; }
+			.contact { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 20px; font-size: 14px; }
+			.contact a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); padding-bottom: 1px; transition: border-color 0.15s; }
+			.contact a:hover { border-color: var(--ink); }
+
+			.projects { display: flex; flex-direction: column; gap: 14px; }
+
+			.card {
+				display: flex; gap: 18px; align-items: center; text-decoration: none; color: inherit;
+				background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px;
+				transition: border-color 0.18s, box-shadow 0.18s, transform 0.18s;
+			}
+			.card:hover { border-color: #d8d7d0; box-shadow: 0 10px 26px rgba(20, 22, 26, 0.07); transform: translateY(-2px); }
+			.shot {
+				width: 168px; flex-shrink: 0; aspect-ratio: 16 / 10; object-fit: cover; object-position: top center;
+				border: 1px solid var(--line); border-radius: 9px; background: #f4f4f1;
+			}
+			.info { min-width: 0; }
+			.cat { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); }
+			.title-row { display: flex; align-items: baseline; gap: 10px; margin-top: 3px; }
+			.title { font-size: 1.1rem; font-weight: 600; }
+			.visit { font-size: 13px; font-weight: 500; color: var(--faint); white-space: nowrap; }
+			.card:hover .visit { color: var(--ink); }
+			.desc { color: var(--muted); font-size: 0.9rem; margin-top: 6px; }
+
+			@media (max-width: 520px) {
+				.card { gap: 14px; padding: 12px; }
+				.shot { width: 116px; border-radius: 8px; }
+				.desc { font-size: 0.86rem; }
+			}
+
+			footer { margin-top: 56px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--faint); font-size: 13px; }
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<header>
+				<h1>Agosh Baranwal</h1>
+				<p class="bio">
+					Performance &amp; product marketer — 5+ years scaling platforms across Sweden, Spain &amp;
+					India. MBA at Esade, Barcelona; engineer by training (IIT). Three projects below, three
+					sides of how I work: marketing, product design, and the things I love.
+				</p>
+				<nav class="contact">
+					<a href="mailto:agosh.baranwal@alumni.esade.edu">Email</a>
+					<a href="https://www.linkedin.com/in/agoshbaranwal" target="_blank" rel="noopener">LinkedIn</a>
+					<a href="https://github.com/agoshbaranwal" target="_blank" rel="noopener">GitHub</a>
+				</nav>
+			</header>
+
+			<main class="projects">
+				<!-- admenow -->
+				<a class="card" href="https://admenow.vercel.app/" target="_blank" rel="noopener">
+					<img class="shot" src="previews/admenow.jpg" alt="admenow website preview" loading="lazy" width="168" height="105" />
+					<div class="info">
+						<div class="cat">Performance Marketing</div>
+						<div class="title-row"><span class="title">admenow</span><span class="visit">Visit&nbsp;↗</span></div>
+						<p class="desc">Daily-use tools for performance marketers — decode winning ads, brief the week, keep a brand on voice. Built from my own practice.</p>
+					</div>
+				</a>
+
+				<!-- tvbadger -->
+				<a class="card" href="https://tvbadger.vercel.app/" target="_blank" rel="noopener">
+					<img class="shot" src="previews/tvbadger.jpg" alt="tvbadger website preview" loading="lazy" width="168" height="105" />
+					<div class="info">
+						<div class="cat">Film &amp; TV · Product</div>
+						<div class="title-row"><span class="title">tvbadger</span><span class="visit">Visit&nbsp;↗</span></div>
+						<p class="desc">A taste-intelligence engine giving honest, personalized verdicts on what to watch. A study in product design — and a love of film &amp; TV.</p>
+					</div>
+				</a>
+
+				<!-- Utsav -->
+				<a class="card" href="https://utsav-pi.vercel.app/" target="_blank" rel="noopener">
+					<img class="shot" src="previews/utsav.jpg" alt="Utsav website preview" loading="lazy" width="168" height="105" />
+					<div class="info">
+						<div class="cat">Food · Personal</div>
+						<div class="title-row"><span class="title">Utsav · उत्सव</span><span class="visit">Visit&nbsp;↗</span></div>
+						<p class="desc">A personal food blog — recipes I cook and photograph, told with warmth and craft. Designed end to end; the most personal of the three.</p>
+					</div>
+				</a>
+			</main>
+
+			<footer>© 2026 Agosh Baranwal</footer>
+		</div>
+	</body>
+</html>
