@@ -5,119 +5,139 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>Agosh Baranwal</title>
 		<meta name="description" content="Performance and product marketer based in Barcelona. Three projects: admenow, tvbadger, and Utsav." />
-		<meta name="theme-color" content="#fbfbf9" />
+		<meta name="theme-color" content="#faf9f5" />
 		<meta property="og:title" content="Agosh Baranwal" />
 		<meta property="og:description" content="Performance and product marketer. Five years scaling products across Sweden, Spain, and India. Three projects: marketing tools, a film and TV taste engine, and a personal food blog." />
 		<meta property="og:type" content="website" />
 		<meta property="og:image" content="https://agoshportfolio.vercel.app/og.png" />
 		<meta property="og:url" content="https://agoshportfolio.vercel.app/" />
 		<meta name="twitter:card" content="summary_large_image" />
-		<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2315171b'/%3E%3Ctext x='16' y='22' font-family='Helvetica,Arial,sans-serif' font-size='18' font-weight='700' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E" />
+		<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231c1813'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' font-weight='600' fill='%23faf9f5' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" crossorigin />
 		<style>
 			:root {
-				--bg: #fbfbf9;
-				--ink: #15171b;
-				--muted: #585d66;
-				--faint: #686d76;
-				--line: #e7e5df;
+				--bg: #faf9f5;
+				--ink: #1c1813;
+				--muted: #5d574d;
+				--faint: #8b847a;
+				--line: #e8e3d7;
+				--line-2: #ded8ca;
 				--card: #ffffff;
-				--accent: #4f46e5;
+				--accent: #4338ca;
+				--serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+				--sans: 'Inter', system-ui, -apple-system, sans-serif;
 			}
 			* { box-sizing: border-box; margin: 0; padding: 0; }
 			html { -webkit-text-size-adjust: 100%; }
 			body {
 				background: var(--bg);
+				background-image: radial-gradient(115% 55% at 50% -12%, rgba(67, 56, 202, 0.045), transparent 62%);
+				background-attachment: fixed;
 				color: var(--ink);
-				font-family: 'Inter', system-ui, -apple-system, sans-serif;
+				font-family: var(--sans);
 				line-height: 1.55;
 				-webkit-font-smoothing: antialiased;
 				letter-spacing: -0.01em;
+				min-height: 100vh;
 			}
-			::selection { background: color-mix(in srgb, var(--accent) 20%, transparent); }
+			::selection { background: color-mix(in srgb, var(--accent) 18%, transparent); }
 			a { color: inherit; }
 			:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 5px; }
 
-			.wrap { max-width: 1060px; margin: 0 auto; padding: 88px 32px 60px; }
-			@media (max-width: 700px) { .wrap { padding: 48px 22px 44px; } }
+			.wrap { max-width: 1080px; margin: 0 auto; padding: 92px 32px 64px; }
+			@media (max-width: 700px) { .wrap { padding: 52px 22px 48px; } }
 
-			/* Single column by default (mobile); two columns on a real desktop width. */
-			.layout { display: grid; grid-template-columns: 1fr; gap: 44px; }
-			@media (min-width: 860px) {
-				.layout { grid-template-columns: 320px 1fr; gap: 76px; align-items: start; }
-				.intro { position: sticky; top: 88px; }
+			.layout { display: grid; grid-template-columns: 1fr; gap: 48px; }
+			@media (min-width: 880px) {
+				.layout { grid-template-columns: 330px 1fr; gap: 80px; align-items: start; }
+				.intro { position: sticky; top: 92px; }
 			}
 
 			.avatar {
-				width: 96px; height: 96px; display: block; border-radius: 50%;
-				object-fit: cover; object-position: center 28%; border: 1px solid var(--line);
+				width: 104px; height: 104px; display: block; border-radius: 50%;
+				object-fit: cover; object-position: center 26%;
+				border: 1px solid var(--line-2);
+				box-shadow: 0 6px 22px rgba(28, 24, 19, 0.10);
 			}
-			.name { margin-top: 22px; font-size: clamp(1.85rem, 4.5vw, 2.3rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.06; }
+			.name {
+				margin-top: 26px; font-family: var(--serif); font-optical-sizing: auto;
+				font-size: clamp(2.5rem, 5.4vw, 3.35rem); font-weight: 600; line-height: 1.0; letter-spacing: -0.018em;
+			}
 			.subtitle {
-				margin-top: 9px; font-size: 14px; font-weight: 600; letter-spacing: 0.05em;
+				margin-top: 14px; font-size: 12.5px; font-weight: 600; letter-spacing: 0.11em;
 				color: var(--accent); text-transform: uppercase;
 			}
-			.bio { color: var(--muted); font-size: 1rem; margin-top: 20px; max-width: 40ch; }
-			.contact { display: flex; flex-wrap: wrap; gap: 16px 18px; margin-top: 24px; font-size: 14px; font-weight: 500; }
+			.rule { width: 38px; height: 2px; background: var(--accent); opacity: 0.85; margin-top: 22px; border-radius: 2px; }
+			.bio { color: var(--muted); font-size: 1.02rem; line-height: 1.62; margin-top: 22px; max-width: 42ch; }
+			.contact { display: flex; flex-wrap: wrap; gap: 14px 20px; margin-top: 26px; font-size: 14px; font-weight: 500; }
 			.contact a {
 				text-decoration: none; color: var(--ink); padding-bottom: 2px;
 				border-bottom: 1px solid var(--faint); transition: color 0.16s ease, border-color 0.16s ease;
 			}
 			.contact a:hover { color: var(--accent); border-bottom-color: var(--accent); }
 
-			.section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint); margin-bottom: 18px; }
-			.projects { display: flex; flex-direction: column; gap: 16px; }
+			.section-label {
+				font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+				color: var(--faint); margin-bottom: 20px; display: flex; align-items: center; gap: 12px;
+			}
+			.section-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+			.projects { display: flex; flex-direction: column; gap: 18px; }
 
 			.card {
-				position: relative; display: flex; gap: 20px; align-items: center; text-decoration: none;
+				position: relative; display: flex; gap: 22px; align-items: center; text-decoration: none;
 				background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--a);
-				border-radius: 14px; padding: 18px;
-				transition: border-color 0.2s ease, box-shadow 0.22s ease, transform 0.2s ease;
+				border-radius: 16px; padding: 20px;
+				box-shadow: 0 1px 2px rgba(28, 24, 19, 0.03);
+				transition: border-color 0.2s ease, box-shadow 0.24s ease, transform 0.2s ease;
 			}
 			.card:hover,
 			.card:focus-visible {
-				border-color: color-mix(in srgb, var(--a) 55%, var(--line));
-				border-left-color: var(--a);
-				box-shadow: 0 14px 34px color-mix(in srgb, var(--a) 20%, transparent);
-				transform: translateY(-3px);
+				border-color: color-mix(in srgb, var(--a) 50%, var(--line));
+				box-shadow: 0 18px 40px color-mix(in srgb, var(--a) 18%, transparent);
+				transform: translateY(-4px);
 			}
 			.shot {
-				width: 188px; flex-shrink: 0; aspect-ratio: 16 / 10; object-fit: cover; object-position: top center;
-				border: 1px solid var(--line); border-radius: 9px; background: #f4f4f1;
+				width: 210px; flex-shrink: 0; aspect-ratio: 16 / 10; object-fit: cover; object-position: top center;
+				border: 1px solid var(--line-2); border-radius: 10px; background: #f1efe9;
+				box-shadow: 0 2px 8px rgba(28, 24, 19, 0.06);
+				transition: filter 0.2s ease;
 			}
+			.card:hover .shot { filter: brightness(1.03); }
 			.info { min-width: 0; }
 			.idx {
-				position: absolute; top: 16px; right: 18px; font-size: 12px; font-weight: 600;
+				position: absolute; top: 17px; right: 19px; font-family: var(--serif); font-size: 14px; font-weight: 500;
 				color: var(--faint); font-variant-numeric: tabular-nums; transition: color 0.2s ease;
 			}
 			.card:hover .idx, .card:focus-visible .idx { color: var(--a); }
-			.cat { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
-			.title-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; margin-top: 3px; }
-			.title { font-size: 1.12rem; font-weight: 600; }
-			.visit { font-size: 13px; font-weight: 500; color: var(--faint); white-space: nowrap; transition: color 0.18s ease; }
+			.cat { font-size: 10.5px; font-weight: 600; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); }
+			.title-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 11px; margin-top: 6px; }
+			.title { font-family: var(--serif); font-size: 1.32rem; font-weight: 500; letter-spacing: -0.01em; }
+			.visit { font-size: 12.5px; font-weight: 500; color: var(--faint); white-space: nowrap; transition: color 0.18s ease; }
 			.arrow { display: inline-block; transition: transform 0.2s ease; }
 			.card:hover .visit, .card:focus-visible .visit { color: var(--a); }
 			.card:hover .arrow, .card:focus-visible .arrow { transform: translate(2px, -2px); }
-			.desc { color: var(--muted); font-size: 0.92rem; margin-top: 7px; }
+			.desc { color: var(--muted); font-size: 0.93rem; line-height: 1.55; margin-top: 9px; }
 
-			@media (max-width: 520px) {
-				.avatar { width: 80px; height: 80px; }
-				.name { margin-top: 18px; }
-				.card { gap: 14px; padding: 14px; }
-				.shot { width: 116px; border-radius: 8px; }
-				.idx { display: none; }
-				.desc { font-size: 0.88rem; }
+			@media (max-width: 560px) {
+				.card { flex-direction: column; align-items: stretch; gap: 15px; padding: 15px; }
+				.shot { width: 100%; }
+				.idx { top: auto; bottom: 18px; right: 18px; }
+				.avatar { width: 86px; height: 86px; }
+				.name { margin-top: 22px; }
 			}
 
-			footer { margin-top: 72px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--faint); font-size: 13px; }
+			footer {
+				margin-top: 76px; padding-top: 24px; border-top: 1px solid var(--line);
+				display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px;
+				color: var(--faint); font-size: 13px;
+			}
 
-			/* Quiet staggered entrance, disabled for anyone who prefers reduced motion. */
 			@media (prefers-reduced-motion: no-preference) {
-				.reveal { opacity: 0; transform: translateY(10px); animation: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
-				.reveal:nth-child(2) { animation-delay: 0.07s; }
-				.reveal:nth-child(3) { animation-delay: 0.14s; }
+				.reveal { opacity: 0; transform: translateY(12px); animation: rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+				.reveal:nth-child(2) { animation-delay: 0.08s; }
+				.reveal:nth-child(3) { animation-delay: 0.16s; }
 				@keyframes rise { to { opacity: 1; transform: none; } }
 			}
 		</style>
@@ -126,9 +146,10 @@
 		<div class="wrap">
 			<div class="layout">
 				<aside class="intro">
-					<img class="avatar" src="avatar.jpg" alt="Portrait of Agosh Baranwal" width="96" height="96" />
+					<img class="avatar" src="avatar.jpg" alt="Portrait of Agosh Baranwal" width="104" height="104" />
 					<h1 class="name">Agosh Baranwal</h1>
 					<p class="subtitle">Performance &amp; Product Marketer</p>
+					<div class="rule"></div>
 					<p class="bio">
 						I've spent five years scaling products across Sweden, Spain, and India, and recently
 						completed my MBA at Esade in Barcelona (engineer by training, from IIT). On the side,
@@ -144,11 +165,11 @@
 				</aside>
 
 				<main class="work">
-					<p class="section-label">Projects</p>
+					<p class="section-label">Selected Work</p>
 					<div class="projects">
 						<!-- admenow -->
-						<a class="card reveal" style="--a: #e2553c" href="https://admenow.vercel.app/" target="_blank" rel="noopener" aria-label="Visit admenow">
-							<img class="shot" src="previews/admenow.jpg" alt="Screenshot of the admenow website homepage" loading="lazy" width="188" height="118" />
+						<a class="card reveal" style="--a: #d6502f" href="https://admenow.vercel.app/" target="_blank" rel="noopener" aria-label="Visit admenow">
+							<img class="shot" src="previews/admenow.jpg" alt="Screenshot of the admenow website homepage" loading="lazy" width="210" height="131" />
 							<span class="idx">01</span>
 							<div class="info">
 								<div class="cat">Performance Marketing</div>
@@ -158,8 +179,8 @@
 						</a>
 
 						<!-- tvbadger -->
-						<a class="card reveal" style="--a: #5b6ee0" href="https://tvbadger.vercel.app/" target="_blank" rel="noopener" aria-label="Visit tvbadger">
-							<img class="shot" src="previews/tvbadger.jpg" alt="Screenshot of the tvbadger website homepage" loading="lazy" width="188" height="118" />
+						<a class="card reveal" style="--a: #4f63d4" href="https://tvbadger.vercel.app/" target="_blank" rel="noopener" aria-label="Visit tvbadger">
+							<img class="shot" src="previews/tvbadger.jpg" alt="Screenshot of the tvbadger website homepage" loading="lazy" width="210" height="131" />
 							<span class="idx">02</span>
 							<div class="info">
 								<div class="cat">Film &amp; TV · Product</div>
@@ -169,8 +190,8 @@
 						</a>
 
 						<!-- Utsav -->
-						<a class="card reveal" style="--a: #cf6b3e" href="https://utsav-pi.vercel.app/" target="_blank" rel="noopener" aria-label="Visit Utsav">
-							<img class="shot" src="previews/utsav.jpg" alt="Screenshot of the Utsav website homepage" loading="lazy" width="188" height="118" />
+						<a class="card reveal" style="--a: #c2703a" href="https://utsav-pi.vercel.app/" target="_blank" rel="noopener" aria-label="Visit Utsav">
+							<img class="shot" src="previews/utsav.jpg" alt="Screenshot of the Utsav website homepage" loading="lazy" width="210" height="131" />
 							<span class="idx">03</span>
 							<div class="info">
 								<div class="cat">Food · Personal</div>
@@ -182,7 +203,10 @@
 				</main>
 			</div>
 
-			<footer>© 2026 Agosh Baranwal · Barcelona</footer>
+			<footer>
+				<span>© 2026 Agosh Baranwal</span>
+				<span>Barcelona</span>
+			</footer>
 		</div>
 	</body>
 </html>
