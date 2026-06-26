@@ -132,11 +132,18 @@
 			.desc { color: var(--muted); font-size: 0.93rem; line-height: 1.55; margin-top: 9px; }
 
 			@media (max-width: 560px) {
+				/* Compact intro so the contact links sit on the first screen. */
+				.wrap { padding-top: 32px; }
+				.intro { padding: 24px 22px 26px; }
+				.avatar { width: 64px; height: 64px; }
+				.name { margin-top: 15px; font-size: 1.95rem; }
+				.subtitle { margin-top: 7px; }
+				.rule { margin-top: 13px; }
+				.bio { margin-top: 13px; font-size: 0.95rem; line-height: 1.52; }
+				.contact { margin-top: 15px; }
 				.card { flex-direction: column; align-items: stretch; gap: 15px; padding: 15px; }
 				.shot { width: 100%; }
 				.idx { top: auto; bottom: 18px; right: 18px; }
-				.avatar { width: 86px; height: 86px; }
-				.name { margin-top: 22px; }
 			}
 
 			footer {
