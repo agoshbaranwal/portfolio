@@ -34,9 +34,8 @@
 			body {
 				background: var(--bg);
 				background-image:
-					radial-gradient(72% 64% at -4% -14%, rgba(67, 56, 202, 0.17), transparent 56%),
-					radial-gradient(62% 58% at 112% 8%, rgba(194, 112, 58, 0.15), transparent 56%),
-					radial-gradient(84% 74% at 100% 120%, rgba(79, 99, 212, 0.12), transparent 58%);
+					radial-gradient(58% 50% at 104% 2%, rgba(194, 112, 58, 0.06), transparent 60%),
+					radial-gradient(70% 60% at 98% 116%, rgba(79, 99, 212, 0.05), transparent 62%);
 				background-attachment: fixed;
 				color: var(--ink);
 				font-family: var(--sans);
@@ -58,28 +57,37 @@
 				.intro { position: sticky; top: 92px; }
 			}
 
+			/* Structural bold: the intro sits on a deep indigo panel, light type on it. */
+			.intro {
+				background: #1d1b30;
+				background-image: radial-gradient(120% 80% at 0% 0%, rgba(99, 102, 241, 0.18), transparent 60%);
+				border-radius: 22px;
+				padding: 42px 34px 38px;
+				color: #c7c3d6;
+			}
 			.avatar {
 				width: 104px; height: 104px; display: block; border-radius: 50%;
 				object-fit: cover; object-position: center 26%;
-				border: 1px solid var(--line-2);
-				box-shadow: 0 6px 22px rgba(28, 24, 19, 0.10);
+				border: 1px solid rgba(255, 255, 255, 0.2);
+				box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
 			}
 			.name {
 				margin-top: 26px; font-family: var(--serif); font-optical-sizing: auto;
 				font-size: clamp(2.5rem, 5.4vw, 3.35rem); font-weight: 600; line-height: 1.0; letter-spacing: -0.018em;
+				color: #faf9f5;
 			}
 			.subtitle {
 				margin-top: 14px; font-size: 12.5px; font-weight: 600; letter-spacing: 0.11em;
-				color: var(--accent); text-transform: uppercase;
+				color: #a5b4fc; text-transform: uppercase;
 			}
-			.rule { width: 38px; height: 2px; background: var(--accent); opacity: 0.85; margin-top: 22px; border-radius: 2px; }
-			.bio { color: var(--muted); font-size: 1.02rem; line-height: 1.62; margin-top: 22px; max-width: 42ch; }
+			.rule { width: 38px; height: 2px; background: #a5b4fc; opacity: 0.9; margin-top: 22px; border-radius: 2px; }
+			.bio { color: #c7c3d6; font-size: 1.02rem; line-height: 1.62; margin-top: 22px; max-width: 42ch; }
 			.contact { display: flex; flex-wrap: wrap; gap: 14px 20px; margin-top: 26px; font-size: 14px; font-weight: 500; }
 			.contact a {
-				text-decoration: none; color: var(--ink); padding-bottom: 2px;
-				border-bottom: 1px solid var(--faint); transition: color 0.16s ease, border-color 0.16s ease;
+				text-decoration: none; color: #faf9f5; padding-bottom: 2px;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.3); transition: color 0.16s ease, border-color 0.16s ease;
 			}
-			.contact a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+			.contact a:hover { color: #a5b4fc; border-bottom-color: #a5b4fc; }
 
 			.section-label {
 				font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
