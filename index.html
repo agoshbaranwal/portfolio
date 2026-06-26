@@ -33,7 +33,10 @@
 			html { -webkit-text-size-adjust: 100%; }
 			body {
 				background: var(--bg);
-				background-image: radial-gradient(115% 55% at 50% -12%, rgba(67, 56, 202, 0.045), transparent 62%);
+				background-image:
+					radial-gradient(58% 52% at 8% -6%, rgba(67, 56, 202, 0.07), transparent 60%),
+					radial-gradient(52% 48% at 106% 26%, rgba(194, 112, 58, 0.07), transparent 60%),
+					radial-gradient(68% 58% at 88% 110%, rgba(79, 99, 212, 0.055), transparent 62%);
 				background-attachment: fixed;
 				color: var(--ink);
 				font-family: var(--sans);
@@ -42,11 +45,19 @@
 				letter-spacing: -0.01em;
 				min-height: 100vh;
 			}
+			/* Fine paper grain over the gradient, sitting behind the content. */
+			body::before {
+				content: '';
+				position: fixed; inset: 0; z-index: 0; pointer-events: none;
+				opacity: 0.5; mix-blend-mode: multiply;
+				background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+				background-size: 160px 160px;
+			}
 			::selection { background: color-mix(in srgb, var(--accent) 18%, transparent); }
 			a { color: inherit; }
 			:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 5px; }
 
-			.wrap { max-width: 1080px; margin: 0 auto; padding: 92px 32px 64px; }
+			.wrap { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 92px 32px 64px; }
 			@media (max-width: 700px) { .wrap { padding: 52px 22px 48px; } }
 
 			.layout { display: grid; grid-template-columns: 1fr; gap: 48px; }
