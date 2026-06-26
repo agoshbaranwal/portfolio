@@ -34,9 +34,9 @@
 			body {
 				background: var(--bg);
 				background-image:
-					radial-gradient(58% 52% at 8% -6%, rgba(67, 56, 202, 0.07), transparent 60%),
-					radial-gradient(52% 48% at 106% 26%, rgba(194, 112, 58, 0.07), transparent 60%),
-					radial-gradient(68% 58% at 88% 110%, rgba(79, 99, 212, 0.055), transparent 62%);
+					radial-gradient(62% 56% at 4% -10%, rgba(67, 56, 202, 0.10), transparent 58%),
+					radial-gradient(56% 52% at 110% 18%, rgba(194, 112, 58, 0.09), transparent 58%),
+					radial-gradient(76% 64% at 92% 114%, rgba(79, 99, 212, 0.07), transparent 60%);
 				background-attachment: fixed;
 				color: var(--ink);
 				font-family: var(--sans);
@@ -44,14 +44,6 @@
 				-webkit-font-smoothing: antialiased;
 				letter-spacing: -0.01em;
 				min-height: 100vh;
-			}
-			/* Fine paper grain over the gradient, sitting behind the content. */
-			body::before {
-				content: '';
-				position: fixed; inset: 0; z-index: 0; pointer-events: none;
-				opacity: 0.5; mix-blend-mode: multiply;
-				background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-				background-size: 160px 160px;
 			}
 			::selection { background: color-mix(in srgb, var(--accent) 18%, transparent); }
 			a { color: inherit; }
@@ -162,9 +154,9 @@
 					<p class="subtitle">Performance &amp; Product Marketer</p>
 					<div class="rule"></div>
 					<p class="bio">
-						I've scaled products across Sweden, Spain, and India, founded my own startup, and
-						recently completed my MBA at Esade in Barcelona (engineer by training, from IIT). On
-						the side, I like building products, and a few of them are here.
+						I grow products for a living and build my own on the side. I've run growth across
+						Sweden, Spain, and India, founded a company, and recently finished my MBA at Esade
+						(engineer first, at IIT). Everything here I made because I wanted it to exist.
 					</p>
 					<nav class="contact">
 						<a href="mailto:agosh.baranwal@alumni.esade.edu">Email</a>
