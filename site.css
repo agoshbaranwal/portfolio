@@ -1,0 +1,613 @@
+/* ============================================================
+   Agosh Baranwal · the book
+   One stylesheet for every page. Posts carry NO inline styles:
+   if a post needs a new element, add a generic class here once.
+   ============================================================ */
+
+:root {
+	/* Warm oat paper, a page from a well-loved book. No grain: warmth is earned in colour, ink and hand. */
+	--ground: #e5d9bf;      /* the desk the page rests on */
+	--paper: #f5eede;       /* the sheet */
+	--sheet2: #fcf8ee;      /* the whiter typed insert (On paper) */
+	--ink: #2a2018;         /* warm sepia-black, 13.5:1 on paper */
+	--body: #4a3d2f;        /* secondary reading ink, 8.9:1 */
+	--muted: #655746;       /* labels / running head, 5.95:1 */
+	--rubric: #9e2f27;      /* the annotator's red hand, 6.18:1 */
+	--rule: rgba(158, 47, 39, 0.26);   /* the margin line */
+	--hair: rgba(42, 32, 24, 0.14);
+	--serif: 'Newsreader', Georgia, 'Kohinoor Devanagari', 'Noto Serif Devanagari', 'Nirmala UI', 'Devanagari Sangam MN', serif;
+	--hand: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
+	--mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+	--pad-r: 40px;
+}
+/* Night reading: same book under a lamp. Token-level only; components never change. */
+@media (prefers-color-scheme: dark) {
+	:root {
+		--ground: #171209;
+		--paper: #251d12;
+		--sheet2: #2d2417;
+		--ink: #f0e7d4;
+		--body: #d6c8ae;
+		--muted: #b3a084;
+		--rubric: #e79880;
+		--rule: rgba(231, 152, 128, 0.34);
+		--hair: rgba(240, 231, 212, 0.16);
+	}
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+	background: var(--ground);
+	background-image:
+		radial-gradient(120% 90% at 8% -6%, rgba(255, 249, 235, 0.55), transparent 55%),
+		radial-gradient(90% 80% at 108% 112%, rgba(158, 47, 39, 0.06), transparent 60%);
+	color: var(--ink);
+	font-family: var(--serif);
+	font-optical-sizing: auto;
+	line-height: 1.62;
+	-webkit-font-smoothing: antialiased;
+	overflow-x: hidden;
+	min-height: 100vh;
+	padding: clamp(14px, 4vw, 56px) clamp(12px, 3vw, 40px);
+}
+@media (prefers-color-scheme: dark) {
+	body {
+		background-image:
+			radial-gradient(120% 90% at 8% -6%, rgba(255, 244, 214, 0.05), transparent 55%),
+			radial-gradient(90% 80% at 108% 112%, rgba(231, 152, 128, 0.05), transparent 60%);
+	}
+}
+::selection { background: rgba(158, 47, 39, 0.18); }
+@media (prefers-color-scheme: dark) {
+	::selection { background: rgba(231, 152, 128, 0.3); }
+}
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--rubric); outline-offset: 3px; border-radius: 3px; }
+
+/* ---- the sheet ---- */
+.sheet {
+	position: relative;
+	max-width: 1000px;
+	margin: 0 auto;
+	background: var(--paper);
+	background-image: linear-gradient(180deg, rgba(255, 252, 244, 0.6), transparent 24%);
+	border: 1px solid var(--hair);
+	border-radius: 3px;
+	box-shadow:
+		0 1px 0 rgba(255, 255, 255, 0.7) inset,
+		0 18px 50px -22px rgba(42, 32, 24, 0.4),
+		0 2px 8px -2px rgba(42, 32, 24, 0.14);
+	padding: clamp(30px, 5vw, 70px) var(--pad-r) clamp(34px, 5vw, 60px) clamp(24px, 5vw, 76px);
+}
+@media (prefers-color-scheme: dark) {
+	.sheet {
+		background-image: linear-gradient(180deg, rgba(255, 246, 224, 0.04), transparent 24%);
+		box-shadow: 0 18px 50px -22px rgba(0, 0, 0, 0.7), 0 2px 8px -2px rgba(0, 0, 0, 0.4);
+	}
+}
+
+/* running head, like the top of a printed page */
+.runhead {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	gap: 14px;
+	font-size: 11.5px;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	color: var(--muted);
+	padding-bottom: 22px;
+	margin-bottom: 30px;
+	border-bottom: 1px solid var(--hair);
+}
+.runhead a { text-decoration: none; padding: 8px 6px; margin: -8px -6px; }
+.runhead a:hover { color: var(--rubric); }
+.runhead .rh-right { display: flex; align-items: baseline; gap: 22px; }
+.runhead .folio { font-family: var(--hand); font-size: 17px; letter-spacing: 0; text-transform: none; color: var(--rubric); }
+
+.book { position: relative; }
+
+/* the notebook margin line running the length of the page */
+@media (min-width: 1000px) {
+	.book::before {
+		content: "";
+		position: absolute;
+		top: 4px; bottom: 8px;
+		right: -18px;
+		width: 1.5px;
+		background: var(--rule);
+	}
+}
+
+/* ---- header ---- */
+.head {
+	display: grid;
+	grid-template-columns: 148px minmax(0, 1fr);
+	gap: 40px;
+	align-items: start;
+}
+.plate {
+	margin: 6px 0 0;
+	transform: rotate(-1.8deg);
+	transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.plate:hover { transform: rotate(0deg); }
+.plate img {
+	display: block;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 1;
+	object-fit: cover;
+	object-position: center 24%;
+	background: #fff;
+	border: 6px solid #fdfaf3;
+	border-radius: 2px;
+	box-shadow: 0 10px 26px -12px rgba(42, 32, 24, 0.5), 0 0 0 1px var(--hair);
+}
+@media (prefers-color-scheme: dark) {
+	.plate img { border-color: #382d1f; }
+}
+.plate figcaption {
+	font-family: var(--hand);
+	font-size: 18px;
+	line-height: 1.05;
+	color: var(--rubric);
+	text-align: center;
+	margin-top: 9px;
+	transform: rotate(-1.2deg);
+}
+
+.intro { position: relative; min-width: 0; }
+.name {
+	font-weight: 500;
+	font-size: clamp(2.7rem, 8vw, 4.6rem);
+	line-height: 0.98;
+	letter-spacing: -0.02em;
+	color: var(--ink);
+}
+.name .dot { color: var(--rubric); font-style: italic; }
+.role {
+	font-style: italic;
+	font-size: clamp(1.05rem, 2.6vw, 1.3rem);
+	color: var(--body);
+	margin-top: 12px;
+	position: relative;
+}
+.lede {
+	position: relative;
+	max-width: 34em;
+	font-size: clamp(1.06rem, 2.4vw, 1.18rem);
+	line-height: 1.72;
+	color: var(--body);
+	margin-top: 20px;
+}
+.lede em { font-style: italic; color: var(--ink); }
+/* a hand mark under one phrase, like a reader who underlined it */
+.mark { color: var(--ink); font-style: normal; position: relative; white-space: nowrap; }
+.mark svg {
+	position: absolute;
+	left: 0; right: 0;
+	bottom: -0.42em;
+	width: 100%;
+	height: 0.5em;
+	color: var(--rubric);
+	overflow: visible;
+}
+
+/* ---- margin notes ---- */
+.note {
+	display: block;
+	font-family: var(--hand);
+	font-size: 1.28rem;
+	line-height: 1.16;
+	color: var(--rubric);
+	margin: 12px 0 4px;
+	max-width: 30em;
+}
+.note .arw { display: inline-block; width: 34px; height: 17px; vertical-align: -2px; margin-right: 4px; color: var(--rubric); opacity: 0.85; }
+.note.tilt { transform: rotate(-2deg); }
+
+/* ---- section ---- */
+.section { margin-top: clamp(48px, 8vw, 82px); position: relative; }
+.section-head { position: relative; display: inline-block; }
+.section-head h2,
+.section-head h1 {
+	font-weight: 500;
+	font-size: clamp(1.5rem, 4vw, 2.05rem);
+	letter-spacing: -0.015em;
+	color: var(--ink);
+}
+.section-head .ul { display: block; width: 96%; height: 12px; margin-top: 2px; color: var(--rubric); overflow: visible; }
+.section-intro {
+	max-width: 38em;
+	font-size: clamp(1.02rem, 2.3vw, 1.12rem);
+	color: var(--body);
+	margin-top: 14px;
+	position: relative;
+}
+
+/* ---- works ---- */
+.works { margin-top: 30px; display: flex; flex-direction: column; gap: 30px; }
+.work {
+	position: relative;
+	display: grid;
+	grid-template-columns: 220px minmax(0, 1fr);
+	gap: 26px;
+	align-items: start;
+	text-decoration: none;
+	color: inherit;
+	padding-bottom: 30px;
+	border-bottom: 1px solid var(--hair);
+}
+.work:last-child { border-bottom: 0; padding-bottom: 4px; }
+.plate2 { transform: rotate(-1.3deg); transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
+.work:nth-child(even) .plate2 { transform: rotate(1.3deg); }
+.work:hover .plate2, .work:focus-visible .plate2 { transform: rotate(0deg); }
+.plate2 img {
+	display: block;
+	width: 100%;
+	height: auto;
+	aspect-ratio: 16 / 10;
+	object-fit: cover;
+	object-position: top center;
+	background: #efe7d6;
+	border: 5px solid #fdfaf3;
+	border-radius: 2px;
+	box-shadow: 0 9px 22px -12px rgba(42, 32, 24, 0.5), 0 0 0 1px var(--hair);
+	transition: box-shadow 0.3s ease;
+}
+@media (prefers-color-scheme: dark) {
+	.plate2 img { border-color: #382d1f; background: #382d1f; }
+}
+.work:hover .plate2 img, .work:focus-visible .plate2 img { box-shadow: 0 16px 30px -14px rgba(158, 47, 39, 0.4), 0 0 0 1px var(--hair); }
+
+.cat { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+.tline { position: relative; display: inline-block; margin-top: 5px; }
+.tline h3 { font-weight: 500; font-size: clamp(1.4rem, 3.4vw, 1.68rem); letter-spacing: -0.01em; color: var(--ink); }
+.tline .ul {
+	display: block; width: 100%; height: 10px; margin-top: 1px; color: var(--rubric); overflow: visible;
+	opacity: 0;
+	transition: opacity 0.25s ease;
+}
+.tline .ul path { stroke-dasharray: 240; stroke-dashoffset: 240; transition: stroke-dashoffset 0.55s cubic-bezier(0.22, 1, 0.36, 1); }
+.work:hover .tline .ul, .work:focus-visible .tline .ul { opacity: 1; }
+.work:hover .tline .ul path, .work:focus-visible .tline .ul path { stroke-dashoffset: 0; }
+
+.visit { font-family: var(--hand); font-size: 1.15rem; color: var(--rubric); white-space: nowrap; margin-left: 4px; }
+.visit .a { display: inline-block; transition: transform 0.25s ease; }
+.work:hover .visit .a, .work:focus-visible .visit .a { transform: translate(3px, -3px); }
+.desc { font-size: clamp(1rem, 2.3vw, 1.08rem); line-height: 1.6; color: var(--body); margin-top: 9px; max-width: 42ch; }
+
+/* ---- penciled in: coming work, deliberately a quieter register ---- */
+.pencil-head { position: relative; display: inline-block; margin-top: 40px; }
+.pencil-head h3 {
+	font-weight: 500;
+	font-size: 13px;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: var(--muted);
+}
+.pencil-head .ul { display: block; width: 100%; height: 9px; color: var(--rubric); overflow: visible; opacity: 0.8; }
+.penciled { margin-top: 18px; display: flex; flex-direction: column; gap: 18px; }
+.penciled-row { position: relative; }
+.penciled-row h4 { font-weight: 500; font-size: clamp(1.15rem, 2.8vw, 1.3rem); letter-spacing: -0.01em; color: var(--ink); display: inline; }
+.penciled-row p { display: inline; font-size: clamp(0.98rem, 2.2vw, 1.05rem); color: var(--body); margin-left: 8px; }
+
+/* ---- On paper: the typed CV sheet, corrected in red ---- */
+.onpaper {
+	position: relative;
+	margin-top: 26px;
+	background: var(--sheet2);
+	border: 1px solid var(--hair);
+	border-radius: 2px;
+	box-shadow: 0 10px 30px -18px rgba(42, 32, 24, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.35) inset;
+	padding: clamp(22px, 4vw, 40px) clamp(18px, 4vw, 44px) clamp(24px, 4vw, 38px);
+}
+@media (prefers-color-scheme: dark) {
+	.onpaper { box-shadow: 0 10px 30px -18px rgba(0, 0, 0, 0.7); }
+}
+.onpaper .tab {
+	position: absolute;
+	top: -12px; left: 26px;
+	font-family: var(--mono);
+	font-size: 10.5px;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--muted);
+	background: var(--paper);
+	border: 1px solid var(--hair);
+	border-radius: 2px;
+	padding: 2px 10px;
+}
+.cvgroup { margin-top: 22px; }
+.cvgroup:first-of-type { margin-top: 0; }
+.cvgroup .glabel {
+	font-family: var(--mono);
+	font-size: 10.5px;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	color: var(--muted);
+	border-bottom: 1px solid var(--hair);
+	padding-bottom: 5px;
+	margin-bottom: 4px;
+}
+.cvrow {
+	display: grid;
+	grid-template-columns: minmax(0, 11fr) minmax(0, 9fr);
+	gap: 6px 28px;
+	align-items: baseline;
+	padding: 9px 0;
+	border-bottom: 1px dashed var(--hair);
+}
+.cvrow:last-child { border-bottom: 0; }
+.cvrow .fact {
+	font-family: var(--mono);
+	font-size: clamp(0.86rem, 2vw, 0.95rem);
+	line-height: 1.5;
+	color: var(--ink);
+}
+.cvrow .corr {
+	font-family: var(--hand);
+	font-size: 1.22rem;
+	line-height: 1.12;
+	color: var(--rubric);
+	transform: rotate(-0.8deg);
+}
+.onpaper .foot {
+	margin-top: 20px;
+	padding-top: 14px;
+	border-top: 1px solid var(--hair);
+	font-family: var(--mono);
+	font-size: clamp(0.82rem, 1.9vw, 0.9rem);
+	color: var(--body);
+	position: relative;
+}
+.onpaper .foot a { color: var(--ink); text-decoration: none; border-bottom: 1.5px solid var(--rule); }
+.onpaper .foot a:hover { color: var(--rubric); border-bottom-color: var(--rubric); }
+.onpaper .foot .corr { display: inline-block; margin-left: 14px; font-family: var(--hand); font-size: 1.18rem; color: var(--rubric); transform: rotate(-1deg); }
+
+/* ---- the notebook (blog) ---- */
+.entries { margin-top: 24px; }
+.year {
+	font-family: var(--mono);
+	font-size: 10.5px;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	color: var(--muted);
+	margin: 26px 0 6px;
+}
+.entry {
+	display: grid;
+	grid-template-columns: 92px minmax(0, 1fr);
+	gap: 18px;
+	align-items: baseline;
+	padding: 12px 0;
+	border-bottom: 1px dashed var(--hair);
+	text-decoration: none;
+}
+.entry:last-child { border-bottom: 0; }
+.entry time { font-family: var(--mono); font-size: 0.82rem; color: var(--muted); white-space: nowrap; }
+.entry .etitle { font-size: clamp(1.12rem, 2.6vw, 1.3rem); font-weight: 500; color: var(--ink); border-bottom: 1.5px solid transparent; transition: color 0.18s ease; }
+.entry:hover .etitle { color: var(--rubric); }
+.entry .gist { display: block; font-size: 0.98rem; color: var(--body); margin-top: 2px; }
+
+/* home teaser: titles only, so a quiet month never looks stale */
+.teaser { margin-top: 22px; display: flex; flex-direction: column; gap: 10px; }
+.teaser a {
+	font-size: clamp(1.1rem, 2.6vw, 1.28rem);
+	font-weight: 500;
+	color: var(--ink);
+	text-decoration: none;
+	border-bottom: 1.5px solid var(--rule);
+	align-self: flex-start;
+	transition: color 0.18s ease, border-color 0.18s ease;
+}
+.teaser a:hover { color: var(--rubric); border-bottom-color: var(--rubric); }
+.handlink {
+	display: inline-block;
+	font-family: var(--hand);
+	font-size: 1.3rem;
+	color: var(--rubric);
+	text-decoration: none;
+	margin-top: 16px;
+	border-bottom: 1px solid transparent;
+}
+.handlink:hover { border-bottom-color: var(--rubric); }
+
+/* ---- a post ---- */
+.post { max-width: 660px; }
+.post h1 {
+	font-weight: 500;
+	font-size: clamp(1.9rem, 5.5vw, 2.7rem);
+	line-height: 1.12;
+	letter-spacing: -0.015em;
+	text-wrap: balance;
+}
+.post .dateline { font-family: var(--mono); font-size: 0.85rem; color: var(--muted); margin-top: 10px; }
+.post .body { margin-top: 26px; position: relative; }
+.post .body p { font-size: clamp(1.04rem, 2.4vw, 1.14rem); line-height: 1.75; color: var(--body); margin-top: 18px; }
+.post .body p:first-child { margin-top: 0; }
+.post .body h2 { font-weight: 500; font-size: clamp(1.3rem, 3.2vw, 1.55rem); color: var(--ink); margin-top: 34px; }
+.post .body ul, .post .body ol { margin: 16px 0 0 22px; color: var(--body); }
+.post .body li { margin-top: 8px; line-height: 1.7; }
+.post .body blockquote {
+	margin-top: 20px;
+	padding-left: 18px;
+	border-left: 2px solid var(--rule);
+	font-style: italic;
+	color: var(--ink);
+}
+.post .body a { color: var(--ink); text-decoration: none; border-bottom: 1.5px solid var(--rule); }
+.post .body a:hover { color: var(--rubric); border-bottom-color: var(--rubric); }
+.postfoot { margin-top: 44px; padding-top: 18px; border-top: 1px solid var(--hair); display: flex; flex-wrap: wrap; gap: 8px 30px; }
+
+/* ---- write to me ---- */
+.letter { position: relative; }
+.emailrow { position: relative; }
+.email-big {
+	display: inline-block;
+	font-size: clamp(1.15rem, 3.4vw, 1.7rem);
+	font-weight: 500;
+	letter-spacing: -0.01em;
+	color: var(--ink);
+	text-decoration: none;
+	border-bottom: 2px solid var(--rule);
+	margin-top: 18px;
+	word-break: break-all;
+	transition: color 0.18s ease, border-color 0.18s ease;
+}
+.email-big:hover { color: var(--rubric); border-bottom-color: var(--rubric); }
+.letter .others { display: flex; flex-wrap: wrap; gap: 8px 26px; margin-top: 18px; font-size: 1.05rem; }
+.letter .others a { text-decoration: none; color: var(--ink); padding-bottom: 2px; border-bottom: 1.5px solid var(--rule); transition: color 0.18s ease, border-color 0.18s ease; }
+.letter .others a:hover { color: var(--rubric); border-bottom-color: var(--rubric); }
+.letter .place { font-style: italic; color: var(--muted); font-size: 1rem; }
+
+/* ---- contact quick links (header) ---- */
+.says { position: relative; margin-top: 26px; }
+.hi { font-style: italic; font-size: 1.12rem; color: var(--ink); }
+.contact { display: flex; flex-wrap: wrap; gap: 10px 26px; margin-top: 10px; font-size: 1.08rem; }
+.contact a {
+	text-decoration: none; color: var(--ink);
+	padding-bottom: 2px;
+	border-bottom: 1.5px solid var(--rule);
+	transition: color 0.18s ease, border-color 0.18s ease;
+}
+.contact a:hover { color: var(--rubric); border-bottom-color: var(--rubric); }
+
+/* ---- colophon ---- */
+.colophon {
+	margin-top: clamp(46px, 7vw, 70px);
+	padding-top: 20px;
+	border-top: 1px solid var(--hair);
+	display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 18px;
+	font-size: 12.5px; color: var(--muted); font-style: italic;
+}
+.colophon .hand { font-family: var(--hand); font-style: normal; font-size: 16px; color: var(--rubric); }
+.colophon a { text-decoration: none; border-bottom: 1px solid var(--hair); padding: 8px 4px; margin: -8px -4px; }
+.colophon a:hover { color: var(--rubric); }
+
+/* quiet inline text link (feed line etc.) */
+.qlink { color: inherit; text-decoration: none; border-bottom: 1.5px solid var(--rule); }
+.qlink:hover { color: var(--rubric); border-bottom-color: var(--rubric); }
+.feedline { margin-top: 16px; }
+
+/* ---- desktop: notes go out into the true margin ---- */
+@media (min-width: 1000px) {
+	:root { --pad-r: 208px; }
+	.note {
+		position: absolute;
+		top: 0;
+		left: calc(100% + 30px);
+		width: 150px;
+		margin: 0;
+		font-size: 1.34rem;
+	}
+	.note.tilt { transform: rotate(-2.5deg); }
+	.intro > .note { top: -2px; }
+	.lede .note { top: 26px; }
+	.says .note { top: 20px; }
+	.work .note { top: 4px; }
+	.role .note { top: -6px; }
+	.penciled-row .note { top: -2px; }
+	/* the pencil rows are one line tall; two-line notes on every row merge into one scribble,
+	   so the margin keeps only the first note on desktop */
+	.penciled-row .note.mobile-rest { display: none; }
+	/* intro paragraphs are width-capped, so their own box cannot anchor a margin note:
+	   let the note escape to the full-width section instead */
+	.section-intro { position: static; }
+	.section-intro .note { top: 84px; }
+	.emailrow .note { top: 8px; }
+	/* post bodies are capped at 660px, narrower than the book: notes anchor to their own
+	   paragraph and jump 86px so they land beyond the margin rule, not bisected by it */
+	.post .body p { position: relative; }
+	.post .body .note { position: absolute; left: calc(100% + 86px); width: 150px; margin: 0; top: 0; }
+	/* On paper: corrections live ON the typed sheet, so its rows keep the two-column grid instead */
+}
+
+/* ---- mid widths ---- */
+@media (max-width: 999px) {
+	.note .arw { transform: rotate(-8deg); }
+}
+
+/* ---- narrower than the two-column CV sheet wants ---- */
+@media (max-width: 700px) {
+	.cvrow { grid-template-columns: 1fr; gap: 2px; padding: 10px 0; }
+	.cvrow .corr { transform: rotate(-1deg); margin-left: 10px; }
+}
+
+/* ---- mobile: compact and dense, contact on the first screen ---- */
+@media (max-width: 620px) {
+	body { padding: 12px 10px 26px; line-height: 1.55; }
+	.sheet { padding: 24px 20px 30px; border-radius: 2px; }
+	.runhead { padding-bottom: 13px; margin-bottom: 18px; font-size: 10.5px; letter-spacing: 0.16em; }
+	.runhead .rh-right { gap: 14px; }
+	.runhead .folio { font-size: 15px; }
+	.head { grid-template-columns: 66px minmax(0, 1fr); gap: 15px; align-items: center; }
+	.plate { transform: rotate(-2.2deg); margin: 0; }
+	.plate img { border-width: 4px; }
+	.plate figcaption { display: none; }
+	.name { font-size: 2.05rem; line-height: 0.96; }
+	.role { font-size: 1rem; margin-top: 6px; }
+	.lede { font-size: 1rem; line-height: 1.55; margin-top: 14px; max-width: none; }
+	/* the underlined phrase must be allowed to wrap on a narrow page */
+	.mark { white-space: normal; }
+	.mark svg { display: none; }
+	.mark {
+		text-decoration: underline;
+		text-decoration-style: wavy;
+		text-decoration-color: var(--rubric);
+		text-decoration-thickness: 1.5px;
+		text-underline-offset: 4px;
+	}
+	.note { font-size: 1.18rem; margin: 8px 0 2px; }
+	/* mobile keeps roughly one note per section: the extras rest */
+	.note.mobile-rest { display: none; }
+	.section { margin-top: 30px; }
+	.section-intro { margin-top: 10px; font-size: 0.98rem; }
+	.works { margin-top: 18px; gap: 22px; }
+	/* minmax(0,…): a plain 1fr track refuses to shrink below the 640px intrinsic image width */
+	.work { grid-template-columns: minmax(0, 1fr); gap: 12px; padding-bottom: 22px; }
+	.plate2 { min-width: 0; }
+	.plate2, .work:nth-child(even) .plate2 { transform: rotate(-1deg); }
+	.plate2 img { border-width: 4px; }
+	.tline .ul { opacity: 1; }
+	.tline .ul path { stroke-dashoffset: 0; }
+	.desc { margin-top: 7px; }
+	.says { margin-top: 16px; }
+	.hi { font-size: 1.02rem; }
+	.contact { margin-top: 8px; gap: 8px 20px; font-size: 1.02rem; }
+	.pencil-head { margin-top: 26px; }
+	.penciled { margin-top: 12px; gap: 14px; }
+	.onpaper { margin-top: 18px; }
+	.cvgroup { margin-top: 16px; }
+	.entry { grid-template-columns: 1fr; gap: 2px; padding: 10px 0; }
+	.post .dateline { margin-top: 8px; }
+	.post .body { margin-top: 18px; }
+	.postfoot { margin-top: 30px; }
+	.colophon { margin-top: 30px; }
+}
+@media (max-width: 360px) {
+	.head { grid-template-columns: 56px minmax(0, 1fr); gap: 12px; }
+	.name { font-size: 1.85rem; }
+}
+
+/* ---- motion ---- */
+@media (prefers-reduced-motion: no-preference) {
+	.reveal { opacity: 0; animation: fade 0.7s ease forwards; }
+	.note { opacity: 0; animation: fadeUp 0.7s ease forwards; animation-delay: 0.35s; }
+	.section-head .ul path { stroke-dasharray: 260; stroke-dashoffset: 260; animation: draw 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards; }
+	.work:nth-child(1) .note { animation-delay: 0.4s; }
+	.work:nth-child(2) .note { animation-delay: 0.5s; }
+	.work:nth-child(3) .note { animation-delay: 0.6s; }
+	@keyframes fade { to { opacity: 1; } }
+	@keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+	@keyframes draw { to { stroke-dashoffset: 0; } }
+}
+@media (prefers-reduced-motion: reduce) {
+	.plate, .plate2, .work:nth-child(even) .plate2, .visit .a { transition: none; }
+	.plate:hover, .work:hover .plate2, .work:focus-visible .plate2 { transform: inherit; }
+	.work:hover .visit .a, .work:focus-visible .visit .a { transform: none; }
+	.tline .ul, .tline .ul path { transition: none; }
+	.tline .ul path { stroke-dashoffset: 0; }
+}

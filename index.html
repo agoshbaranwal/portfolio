@@ -3,223 +3,290 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Agosh Baranwal</title>
-		<meta name="description" content="Agosh Baranwal, performance and product marketer. I've scaled products across Sweden, Spain, and India, founded my own startup, and earned an MBA at Esade. I build my own products too." />
-		<meta name="theme-color" content="#faf9f5" />
+		<title>Agosh Baranwal · Performance &amp; Product Marketer</title>
+		<meta name="description" content="Agosh Baranwal. I grow products for a living and build my own on the side. Founder, MBA at Esade, engineer at IIT." />
+		<meta name="theme-color" media="(prefers-color-scheme: light)" content="#e5d9bf" />
+		<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171209" />
+		<link rel="canonical" href="https://agoshportfolio.vercel.app/" />
 		<meta property="og:title" content="Agosh Baranwal" />
-		<meta property="og:description" content="Performance and product marketer. I've scaled products across Sweden, Spain, and India, founded my own startup, and earned an MBA at Esade. I build my own products too." />
+		<meta property="og:description" content="Performance and product marketer. I grow products for a living and build my own on the side. Founder, MBA at Esade, engineer at IIT." />
 		<meta property="og:type" content="website" />
 		<meta property="og:image" content="https://agoshportfolio.vercel.app/og.png" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content="A warm paper card reading Agosh Baranwal, performance and product marketer, with the credentials Founder, MBA at Esade, Engineer at IIT, and a handwritten red note saying hi, so glad you wandered in." />
 		<meta property="og:url" content="https://agoshportfolio.vercel.app/" />
 		<meta name="twitter:card" content="summary_large_image" />
-		<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231c1813'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' font-weight='600' fill='%23faf9f5' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E" />
+		<meta name="twitter:image:alt" content="A warm paper card reading Agosh Baranwal, performance and product marketer, with the credentials Founder, MBA at Esade, Engineer at IIT, and a handwritten red note saying hi, so glad you wandered in." />
+		<link rel="alternate" type="application/rss+xml" title="Agosh Baranwal · the notebook" href="/feed.xml" />
+		<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23f0e6d0'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-style='italic' font-weight='600' fill='%239e2f27' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" crossorigin />
-		<style>
-			:root {
-				--bg: #faf9f5;
-				--ink: #1c1813;
-				--muted: #5d574d;
-				--faint: #8b847a;
-				--line: #e8e3d7;
-				--line-2: #ded8ca;
-				--card: #ffffff;
-				--accent: #4338ca;
-				--serif: 'Fraunces', Georgia, 'Times New Roman', serif;
-				--sans: 'Inter', system-ui, -apple-system, sans-serif;
-			}
-			* { box-sizing: border-box; margin: 0; padding: 0; }
-			html { -webkit-text-size-adjust: 100%; }
-			body {
-				background: var(--bg);
-				background-image:
-					radial-gradient(58% 50% at 104% 2%, rgba(194, 112, 58, 0.06), transparent 60%),
-					radial-gradient(70% 60% at 98% 116%, rgba(79, 99, 212, 0.05), transparent 62%);
-				background-attachment: fixed;
-				color: var(--ink);
-				font-family: var(--sans);
-				line-height: 1.55;
-				-webkit-font-smoothing: antialiased;
-				letter-spacing: -0.01em;
-				min-height: 100vh;
-			}
-			::selection { background: color-mix(in srgb, var(--accent) 18%, transparent); }
-			a { color: inherit; }
-			:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 5px; }
-
-			.wrap { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 92px 32px 64px; }
-			@media (max-width: 700px) { .wrap { padding: 52px 22px 48px; } }
-
-			.layout { display: grid; grid-template-columns: 1fr; gap: 48px; }
-			@media (min-width: 880px) {
-				.layout { grid-template-columns: 330px 1fr; gap: 80px; align-items: start; }
-				.intro { position: sticky; top: 92px; }
-			}
-
-			/* Structural bold: the intro sits on a deep indigo panel, light type on it. */
-			.intro {
-				background: #1d1b30;
-				background-image: radial-gradient(120% 80% at 0% 0%, rgba(99, 102, 241, 0.18), transparent 60%);
-				border-radius: 22px;
-				padding: 42px 34px 38px;
-				color: #c7c3d6;
-			}
-			.avatar {
-				width: 104px; height: 104px; display: block; border-radius: 50%;
-				object-fit: cover; object-position: center 26%;
-				border: 1px solid rgba(255, 255, 255, 0.2);
-				box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
-			}
-			.name {
-				margin-top: 26px; font-family: var(--serif); font-optical-sizing: auto;
-				font-size: clamp(2.5rem, 5.4vw, 3.35rem); font-weight: 600; line-height: 1.0; letter-spacing: -0.018em;
-				color: #faf9f5;
-			}
-			.subtitle {
-				margin-top: 14px; font-size: 12.5px; font-weight: 600; letter-spacing: 0.11em;
-				color: #a5b4fc; text-transform: uppercase;
-			}
-			.rule { width: 38px; height: 2px; background: #a5b4fc; opacity: 0.9; margin-top: 22px; border-radius: 2px; }
-			.bio { color: #c7c3d6; font-size: 1.02rem; line-height: 1.62; margin-top: 22px; max-width: 42ch; }
-			.contact { display: flex; flex-wrap: wrap; gap: 14px 20px; margin-top: 26px; font-size: 14px; font-weight: 500; }
-			.contact a {
-				text-decoration: none; color: #faf9f5; padding-bottom: 2px;
-				border-bottom: 1px solid rgba(255, 255, 255, 0.3); transition: color 0.16s ease, border-color 0.16s ease;
-			}
-			.contact a:hover { color: #a5b4fc; border-bottom-color: #a5b4fc; }
-
-			.section-label {
-				font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
-				color: var(--faint); margin-bottom: 20px; display: flex; align-items: center; gap: 12px;
-			}
-			.section-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
-			.projects { display: flex; flex-direction: column; gap: 18px; }
-
-			.card {
-				position: relative; display: flex; gap: 22px; align-items: center; text-decoration: none;
-				background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--a);
-				border-radius: 16px; padding: 20px;
-				box-shadow: 0 1px 2px rgba(28, 24, 19, 0.03);
-				transition: border-color 0.2s ease, box-shadow 0.24s ease, transform 0.2s ease;
-			}
-			.card:hover,
-			.card:focus-visible {
-				border-color: color-mix(in srgb, var(--a) 50%, var(--line));
-				box-shadow: 0 18px 40px color-mix(in srgb, var(--a) 18%, transparent);
-				transform: translateY(-4px);
-			}
-			.shot {
-				width: 210px; flex-shrink: 0; aspect-ratio: 16 / 10; object-fit: cover; object-position: top center;
-				border: 1px solid var(--line-2); border-radius: 10px; background: #f1efe9;
-				box-shadow: 0 2px 8px rgba(28, 24, 19, 0.06);
-				transition: filter 0.2s ease;
-			}
-			.card:hover .shot { filter: brightness(1.03); }
-			.info { min-width: 0; }
-			.idx {
-				position: absolute; top: 17px; right: 19px; font-family: var(--serif); font-size: 14px; font-weight: 500;
-				color: var(--faint); font-variant-numeric: tabular-nums; transition: color 0.2s ease;
-			}
-			.card:hover .idx, .card:focus-visible .idx { color: var(--a); }
-			.cat { font-size: 10.5px; font-weight: 600; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); }
-			.title-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 11px; margin-top: 6px; }
-			.title { font-family: var(--serif); font-size: 1.32rem; font-weight: 500; letter-spacing: -0.01em; }
-			.visit { font-size: 12.5px; font-weight: 500; color: var(--faint); white-space: nowrap; transition: color 0.18s ease; }
-			.arrow { display: inline-block; transition: transform 0.2s ease; }
-			.card:hover .visit, .card:focus-visible .visit { color: var(--a); }
-			.card:hover .arrow, .card:focus-visible .arrow { transform: translate(2px, -2px); }
-			.desc { color: var(--muted); font-size: 0.93rem; line-height: 1.55; margin-top: 9px; }
-
-			@media (max-width: 560px) {
-				/* Compact intro so the contact links sit on the first screen. */
-				.wrap { padding-top: 32px; }
-				.intro { padding: 24px 22px 26px; }
-				.avatar { width: 64px; height: 64px; }
-				.name { margin-top: 15px; font-size: 1.95rem; }
-				.subtitle { margin-top: 7px; }
-				.rule { margin-top: 13px; }
-				.bio { margin-top: 13px; font-size: 0.95rem; line-height: 1.52; }
-				.contact { margin-top: 15px; }
-				.card { flex-direction: column; align-items: stretch; gap: 15px; padding: 15px; }
-				.shot { width: 100%; }
-				.idx { top: auto; bottom: 18px; right: 18px; }
-			}
-
-			footer {
-				margin-top: 76px; padding-top: 24px; border-top: 1px solid var(--line);
-				display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px;
-				color: var(--faint); font-size: 13px;
-			}
-
-			@media (prefers-reduced-motion: no-preference) {
-				.reveal { opacity: 0; transform: translateY(12px); animation: rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
-				.reveal:nth-child(2) { animation-delay: 0.08s; }
-				.reveal:nth-child(3) { animation-delay: 0.16s; }
-				@keyframes rise { to { opacity: 1; transform: none; } }
-			}
-		</style>
+		<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
+		<link rel="stylesheet" href="/site.css" />
 	</head>
 	<body>
-		<div class="wrap">
-			<div class="layout">
-				<aside class="intro">
-					<img class="avatar" src="avatar.jpg" alt="Portrait of Agosh Baranwal" width="104" height="104" />
-					<h1 class="name">Agosh Baranwal</h1>
-					<p class="subtitle">Performance &amp; Product Marketer</p>
-					<div class="rule"></div>
-					<p class="bio">
-						I grow products for a living and build my own on the side. I've run growth across
-						Sweden, Spain, and India, founded a company, and recently finished my MBA at Esade
-						(engineer first, at IIT). Everything here I made because I wanted it to exist.
-					</p>
-					<nav class="contact">
-						<a href="mailto:agosh.baranwal@alumni.esade.edu">Email</a>
-						<a href="https://www.linkedin.com/in/agoshbaranwal" target="_blank" rel="noopener">LinkedIn</a>
-						<a href="https://github.com/agoshbaranwal" target="_blank" rel="noopener">GitHub</a>
-					</nav>
-				</aside>
+		<div class="sheet">
+			<nav class="runhead" aria-label="Site">
+				<span>Agosh Baranwal</span>
+				<span class="rh-right">
+					<a href="/writing">Writing</a>
+					<span class="folio">a page about me &middot; Barcelona</span>
+				</span>
+			</nav>
 
-				<main class="work">
-					<p class="section-label">Things I am building</p>
-					<div class="projects">
-						<!-- admenow -->
-						<a class="card reveal" style="--a: #d6502f" href="https://admenow.vercel.app/" target="_blank" rel="noopener" aria-label="Visit admenow">
-							<img class="shot" src="previews/admenow.jpg" alt="Screenshot of the admenow website homepage" loading="lazy" width="210" height="131" />
-							<div class="info">
-								<div class="cat">Performance Marketing</div>
-								<div class="title-row"><span class="title">admenow</span><span class="visit">Visit&nbsp;<span class="arrow">↗</span></span></div>
-								<p class="desc">Daily-use tools for performance marketers.</p>
-							</div>
-						</a>
+			<div class="book">
+				<!-- ===== header ===== -->
+				<header class="head reveal">
+					<figure class="plate">
+						<img src="/avatar.jpg" alt="Portrait of Agosh Baranwal" width="148" height="148" />
+						<figcaption>Agosh, mid&#8209;thought</figcaption>
+					</figure>
 
-						<!-- Utsav -->
-						<a class="card reveal" style="--a: #c2703a" href="https://utsav-pi.vercel.app/" target="_blank" rel="noopener" aria-label="Visit Utsav">
-							<img class="shot" src="previews/utsav.jpg" alt="Screenshot of the Utsav website homepage" loading="lazy" width="210" height="131" />
-							<div class="info">
-								<div class="cat">Food · Personal</div>
-								<div class="title-row"><span class="title">Utsav · उत्सव</span><span class="visit">Visit&nbsp;<span class="arrow">↗</span></span></div>
-								<p class="desc">A personal food blog, told through hand-drawn scenes with little animations you can click around.</p>
-							</div>
-						</a>
+					<div class="intro">
+						<h1 class="name">Agosh Baranwal<span class="dot">.</span></h1>
+						<p class="role">Performance &amp; product marketer, and a maker of small things.
+							<span class="note tilt mobile-rest">
+								<svg class="arw" viewBox="0 0 34 17" fill="none" aria-hidden="true"><path d="M32 4 C 20 1 8 5 3 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 14 L11 12 M3 14 L7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+								jolly, in a quiet sort of way
+							</span>
+						</p>
+						<span class="note tilt">
+							<svg class="arw" viewBox="0 0 34 17" fill="none" aria-hidden="true"><path d="M32 4 C 20 1 8 5 3 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 14 L11 12 M3 14 L7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+							hi, so glad you wandered in
+						</span>
 
-						<!-- tvbadger -->
-						<a class="card reveal" style="--a: #4f63d4" href="https://tvbadger.vercel.app/" target="_blank" rel="noopener" aria-label="Visit tvbadger">
-							<img class="shot" src="previews/tvbadger.jpg" alt="Screenshot of the tvbadger website homepage" loading="lazy" width="210" height="131" />
-							<div class="info">
-								<div class="cat">Film &amp; TV · Product</div>
-								<div class="title-row"><span class="title">tvbadger</span><span class="visit">Visit&nbsp;<span class="arrow">↗</span></span></div>
-								<p class="desc">Honest, personal verdicts on what to watch.</p>
-							</div>
-						</a>
+						<p class="lede">
+							I grow products for a living, and I <span class="mark">build my own after hours<svg viewBox="0 0 220 14" fill="none" aria-hidden="true"><path d="M3 9 C 45 3 82 12 122 7 S 192 4 217 8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></span>. I have run growth across Sweden, Spain, and India, founded a company, and finished an MBA at Esade. Before any of that I trained as an engineer at IIT. Everything on this page I made simply because I wanted it to exist.
+							<span class="note mobile-rest">
+								<svg class="arw" viewBox="0 0 34 17" fill="none" aria-hidden="true"><path d="M32 4 C 20 1 8 5 3 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 14 L11 12 M3 14 L7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+								this bit is the fun part
+							</span>
+						</p>
+
+						<div class="says">
+							<p class="hi">Come say hello.</p>
+							<nav class="contact" aria-label="Contact">
+								<a href="mailto:agosh.baranwal@alumni.esade.edu">Email</a>
+								<a href="https://www.linkedin.com/in/agoshbaranwal" target="_blank" rel="noopener">LinkedIn</a>
+								<a href="https://github.com/agoshbaranwal" target="_blank" rel="noopener">GitHub</a>
+							</nav>
+							<span class="note tilt">
+								<svg class="arw" viewBox="0 0 34 17" fill="none" aria-hidden="true"><path d="M32 4 C 20 1 8 5 3 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 14 L11 12 M3 14 L7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+								I always write back, promise
+							</span>
+						</div>
 					</div>
-				</main>
-			</div>
+				</header>
 
-			<footer>
-				<span>© 2026 Agosh Baranwal</span>
-				<span>Barcelona</span>
-			</footer>
+				<main>
+					<!-- ===== things I am building ===== -->
+					<section class="section" aria-labelledby="building">
+						<div class="section-head">
+							<h2 id="building">Things I am building</h2>
+							<svg class="ul" viewBox="0 0 320 12" fill="none" aria-hidden="true"><path d="M3 8 C 70 3 130 11 190 6 S 300 4 317 8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+						</div>
+
+						<div class="works">
+							<!-- admenow -->
+							<a class="work" href="https://admenow.vercel.app/" target="_blank" rel="noopener">
+								<figure class="plate2"><img src="/previews/admenow.jpg" alt="" width="640" height="400" /></figure>
+								<div>
+									<div class="cat">Performance Marketing</div>
+									<span class="tline">
+										<h3>admenow <span class="visit">visit<span class="a" aria-hidden="true"> &#8599;</span></span></h3>
+										<svg class="ul" viewBox="0 0 220 12" fill="none" aria-hidden="true"><path d="M3 8 C 45 3 90 11 135 6 S 200 4 217 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+									</span>
+									<p class="desc">Daily-use tools for performance marketers.</p>
+								</div>
+								<span class="note tilt">
+									<svg class="arw" viewBox="0 0 34 17" fill="none" aria-hidden="true"><path d="M32 4 C 20 1 8 5 3 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 14 L11 12 M3 14 L7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+									my day work, made a little gentler
+								</span>
+							</a>
+
+							<!-- Utsav -->
+							<a class="work" href="https://utsav-pi.vercel.app/" target="_blank" rel="noopener">
+								<figure class="plate2"><img src="/previews/utsav.jpg" alt="" loading="lazy" width="640" height="400" /></figure>
+								<div>
+									<div class="cat">Food &middot; Personal</div>
+									<span class="tline">
+										<h3>Utsav &middot; <span lang="hi">उत्सव</span> <span class="visit">visit<span class="a" aria-hidden="true"> &#8599;</span></span></h3>
+										<svg class="ul" viewBox="0 0 220 12" fill="none" aria-hidden="true"><path d="M3 8 C 45 3 90 11 135 6 S 200 4 217 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+									</span>
+									<p class="desc">A personal food blog, told through hand-drawn scenes with little animations you can click around.</p>
+								</div>
+								<span class="note tilt">
+									<svg class="arw" viewBox="0 0 34 17" fill="none" aria-hidden="true"><path d="M32 4 C 20 1 8 5 3 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 14 L11 12 M3 14 L7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+									do click the little animations
+								</span>
+							</a>
+
+							<!-- tvbadger -->
+							<a class="work" href="https://tvbadger.vercel.app/" target="_blank" rel="noopener">
+								<figure class="plate2"><img src="/previews/tvbadger.jpg" alt="" loading="lazy" width="640" height="400" /></figure>
+								<div>
+									<div class="cat">Film &amp; TV &middot; Product</div>
+									<span class="tline">
+										<h3>tvbadger <span class="visit">visit<span class="a" aria-hidden="true"> &#8599;</span></span></h3>
+										<svg class="ul" viewBox="0 0 220 12" fill="none" aria-hidden="true"><path d="M3 8 C 45 3 90 11 135 6 S 200 4 217 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+									</span>
+									<p class="desc">Honest, personal verdicts on what to watch.</p>
+								</div>
+								<span class="note tilt">
+									<svg class="arw" viewBox="0 0 34 17" fill="none" aria-hidden="true"><path d="M32 4 C 20 1 8 5 3 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 14 L11 12 M3 14 L7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+									I will always give it to you straight
+								</span>
+							</a>
+						</div>
+
+						<!-- penciled in: real work, not yet ink -->
+						<div class="pencil-head">
+							<h3>Penciled in</h3>
+							<svg class="ul" viewBox="0 0 150 10" fill="none" aria-hidden="true"><path d="M3 6 C 45 3 95 8 147 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="7 6"/></svg>
+						</div>
+						<div class="penciled">
+							<div class="penciled-row">
+								<h4>On Record</h4><p>A climate site that tries to make the crisis honestly felt, place by place.</p>
+								<span class="note tilt">
+									<svg class="arw" viewBox="0 0 34 17" fill="none" aria-hidden="true"><path d="M32 4 C 20 1 8 5 3 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 14 L11 12 M3 14 L7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+									the big one. it scares me a little
+								</span>
+							</div>
+							<div class="penciled-row">
+								<h4>Witness</h4><p>A small tool for keeping honest company with your own days.</p>
+								<span class="note tilt mobile-rest">
+									<svg class="arw" viewBox="0 0 34 17" fill="none" aria-hidden="true"><path d="M32 4 C 20 1 8 5 3 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 14 L11 12 M3 14 L7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+									built for me first
+								</span>
+							</div>
+							<div class="penciled-row">
+								<h4>An air-quality monitor</h4><p>My first hardware, built from parts, no kit.</p>
+								<span class="note tilt mobile-rest">
+									<svg class="arw" viewBox="0 0 34 17" fill="none" aria-hidden="true"><path d="M32 4 C 20 1 8 5 3 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 14 L11 12 M3 14 L7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+									solder burns and all
+								</span>
+							</div>
+						</div>
+					</section>
+
+					<!-- ===== on paper ===== -->
+					<section class="section" aria-labelledby="onpaper">
+						<div class="section-head">
+							<h2 id="onpaper">On paper</h2>
+							<svg class="ul" viewBox="0 0 320 12" fill="none" aria-hidden="true"><path d="M3 8 C 70 3 130 11 190 6 S 300 4 317 8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+						</div>
+						<p class="section-intro">A piece of my CV, corrected in red, the way I would tell it over coffee.
+							<span class="note tilt">
+								<svg class="arw" viewBox="0 0 34 17" fill="none" aria-hidden="true"><path d="M32 4 C 20 1 8 5 3 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 14 L11 12 M3 14 L7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+								recruiters, I wrote this page for you too
+							</span>
+						</p>
+
+						<div class="onpaper">
+							<span class="tab">the record</span>
+
+							<div class="cvgroup">
+								<div class="glabel">Experience</div>
+								<div class="cvrow">
+									<span class="fact">Brand Manager &middot; Abicart, Gothenburg</span>
+									<span class="corr">my Sweden years. an eCommerce platform, a retention engine, and one very long winter</span>
+								</div>
+								<div class="cvrow">
+									<span class="fact">Marketing Lead &middot; eFeed, Lucknow</span>
+									<span class="corr">a biotech's India arm, at India speed. still my favourite market to build in</span>
+								</div>
+							</div>
+
+							<div class="cvgroup">
+								<div class="glabel">Education</div>
+								<div class="cvrow">
+									<span class="fact">B.Tech, Petroleum Engineering &middot; IIT ISM Dhanbad</span>
+									<span class="corr">chosen the way everyone chooses at that age. the engineering stayed; the petroleum did not</span>
+								</div>
+								<div class="cvrow">
+									<span class="fact">MBA &middot; Esade Business School, Barcelona</span>
+									<span class="corr">where the instincts got names, and the names got tested</span>
+								</div>
+							</div>
+
+							<div class="cvgroup">
+								<div class="glabel">Leadership</div>
+								<div class="cvrow">
+									<span class="fact">Licensee, TEDxIITDhanbad</span>
+									<span class="corr">the first one our district ever had. I mostly remember the sponsorship calls</span>
+								</div>
+								<div class="cvrow">
+									<span class="fact">President, Toastmasters club &middot; IIT Dhanbad</span>
+									<span class="corr">an introvert joins the speaking club on purpose. it worked, mostly</span>
+								</div>
+							</div>
+
+							<div class="cvgroup">
+								<div class="glabel">Ventures</div>
+								<div class="cvrow">
+									<span class="fact">Co-founder, Washut &middot; door-to-door laundry, built during undergrad</span>
+									<span class="corr">washut came, washut went. nothing has taught me faster, before or since</span>
+								</div>
+							</div>
+
+							<div class="cvgroup">
+								<div class="glabel">Distinctions</div>
+								<div class="cvrow">
+									<span class="fact">Coordinator, Brainomania &middot; 50k+ student participation</span>
+									<span class="corr">my first growth job, before I knew the word for it. the real work was chairs, queues, and asking nicely</span>
+								</div>
+								<div class="cvrow">
+									<span class="fact">Winner, HP Innovation Bootcamp</span>
+									<span class="corr">no correction on this line. we won, and I let myself enjoy it</span>
+								</div>
+							</div>
+
+							<p class="foot">The complete document, with dates and references, is available on request. The formal version lives on <a href="https://www.linkedin.com/in/agoshbaranwal" target="_blank" rel="noopener">LinkedIn</a>.<span class="corr">the long version exists, dates and all. just ask</span></p>
+						</div>
+					</section>
+
+					<!-- ===== from the notebook ===== -->
+					<section class="section" aria-labelledby="notebook">
+						<div class="section-head">
+							<h2 id="notebook">From the notebook</h2>
+							<svg class="ul" viewBox="0 0 320 12" fill="none" aria-hidden="true"><path d="M3 8 C 70 3 130 11 190 6 S 300 4 317 8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+						</div>
+						<p class="section-intro">Notes on whatever has my attention. Food, football, the odd argument with the news.</p>
+						<div class="teaser">
+							<a href="/writing/first-note">The first note</a>
+						</div>
+						<a class="handlink" href="/writing">the whole notebook<span aria-hidden="true"> &#8594;</span></a>
+					</section>
+
+					<!-- ===== write to me ===== -->
+					<section class="section letter" aria-labelledby="write">
+						<div class="section-head">
+							<h2 id="write">Write to me</h2>
+							<svg class="ul" viewBox="0 0 320 12" fill="none" aria-hidden="true"><path d="M3 8 C 70 3 130 11 190 6 S 300 4 317 8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+						</div>
+						<p class="section-intro">The best things on this site started as someone else's message. Write about work, about a note you think I got wrong, about where to eat. I read everything.</p>
+						<div class="emailrow">
+							<a class="email-big" href="mailto:agosh.baranwal@alumni.esade.edu">agosh.baranwal@alumni.esade.edu</a>
+							<span class="note tilt">
+								<svg class="arw" viewBox="0 0 34 17" fill="none" aria-hidden="true"><path d="M32 4 C 20 1 8 5 3 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 14 L11 12 M3 14 L7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+								told you I write back
+							</span>
+						</div>
+						<div class="others">
+							<a href="https://www.linkedin.com/in/agoshbaranwal" target="_blank" rel="noopener">LinkedIn</a>
+							<a href="https://github.com/agoshbaranwal" target="_blank" rel="noopener">GitHub</a>
+							<span class="place">Barcelona, most days.</span>
+						</div>
+						<p class="section-intro feedline">There is also <a class="qlink" href="/feed.xml">a feed</a>, if you keep a reader.</p>
+					</section>
+				</main>
+
+				<footer class="colophon">
+					<span>Set in Newsreader &amp; <span class="hand">Caveat</span>. Drawn by hand, no template.</span>
+					<span>&copy; Agosh Baranwal</span>
+				</footer>
+			</div>
 		</div>
 	</body>
 </html>
