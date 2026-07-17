@@ -4,289 +4,323 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>Agosh Baranwal · Performance &amp; Product Marketer</title>
-		<meta name="description" content="Agosh Baranwal. I grow products for a living and build my own on the side. Founder, MBA at Esade, engineer at IIT." />
-		<meta name="theme-color" media="(prefers-color-scheme: light)" content="#e5d9bf" />
-		<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171209" />
+		<meta name="description" content="Agosh Baranwal. Growth by day, products after hours, dinner most nights. Performance and product marketer in Barcelona." />
 		<link rel="canonical" href="https://agoshportfolio.vercel.app/" />
 		<meta property="og:title" content="Agosh Baranwal" />
-		<meta property="og:description" content="Performance and product marketer. I grow products for a living and build my own on the side. Founder, MBA at Esade, engineer at IIT." />
+		<meta property="og:description" content="Growth by day. Products after hours. Dinner most nights. Performance and product marketer in Barcelona." />
 		<meta property="og:type" content="website" />
 		<meta property="og:image" content="https://agoshportfolio.vercel.app/og.png" />
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="630" />
-		<meta property="og:image:alt" content="A warm paper card reading Agosh Baranwal, performance and product marketer, with the credentials Founder, MBA at Esade, Engineer at IIT, and a handwritten red note saying hi, so glad you wandered in." />
+		<meta property="og:image:alt" content="A bright paper card: Agosh Baranwal, performance and product marketer. Growth by day, products after hours, dinner most nights. A photo of Agosh by the sea, and a handwritten note saying hi, so glad you wandered in." />
 		<meta property="og:url" content="https://agoshportfolio.vercel.app/" />
 		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:image:alt" content="A warm paper card reading Agosh Baranwal, performance and product marketer, with the credentials Founder, MBA at Esade, Engineer at IIT, and a handwritten red note saying hi, so glad you wandered in." />
+		<meta name="twitter:image:alt" content="A bright paper card: Agosh Baranwal, performance and product marketer. Growth by day, products after hours, dinner most nights. A photo of Agosh by the sea, and a handwritten note saying hi, so glad you wandered in." />
 		<link rel="alternate" type="application/rss+xml" title="Agosh Baranwal · the notebook" href="/feed.xml" />
-		<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23f0e6d0'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-style='italic' font-weight='600' fill='%239e2f27' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E" />
+		<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23fbfbf8'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-style='italic' font-weight='700' fill='%231d3a63' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css2?family=Vollkorn:ital,wght@0,400..900;1,400..700&family=Kalam:wght@300;400;700&family=Noto+Serif+Devanagari:wght@400..600&display=swap" rel="stylesheet" />
 		<link rel="stylesheet" href="/site.css" />
 	</head>
 	<body>
-		<div class="sheet">
-			<nav class="runhead" aria-label="Site">
-				<span>Agosh Baranwal</span>
-				<span class="rh-right">
+		<!-- ===================================================================
+		     THE MASTHEAD. Two destinations and a switch. No section anchors:
+		     this page is a read, not a directory. A menu of parts would be the
+		     fragmentation problem restated as navigation.
+		     =================================================================== -->
+		<header class="masthead">
+			<div class="masthead-in">
+				<a class="wordmark" href="/" aria-label="Agosh Baranwal, home">
+					<svg viewBox="0 0 132 34" fill="none" aria-hidden="true">
+						<text x="0" y="21" font-family="Kalam, cursive" font-size="21" font-weight="700" fill="currentColor">Agosh</text>
+						<path d="M1 28.5 C 22 25.6, 44 31.2, 66 27.8 S 104 25.4, 126 29.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" pathLength="1" />
+					</svg>
+				</a>
+				<nav class="nav" aria-label="Site">
 					<a href="/writing">Writing</a>
-					<span class="folio">a page about me &middot; Barcelona</span>
-				</span>
-			</nav>
+					<a href="#write">Write to me</a>
+					<label class="night-toggle" for="night">
+						<input type="checkbox" id="night" />
+						<span class="night-track" aria-hidden="true"></span>
+						<span class="night-label">Night</span>
+					</label>
+				</nav>
+			</div>
+		</header>
 
-			<div class="book">
-				<!-- ===== header ===== -->
-				<header class="head reveal">
-					<figure class="plate">
-						<img src="/avatar.jpg" alt="Portrait of Agosh Baranwal" width="148" height="148" />
-						<figcaption>Agosh, mid&#8209;thought</figcaption>
-					</figure>
-
-					<div class="intro">
-						<h1 class="name">Agosh Baranwal<span class="dot">.</span></h1>
-						<p class="role">Performance &amp; product marketer, and a maker of small things.
-							<span class="note tilt mobile-rest">
-								<svg class="arw" viewBox="0 0 34 17" fill="none" aria-hidden="true"><path d="M32 4 C 20 1 8 5 3 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 14 L11 12 M3 14 L7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-								jolly, in a quiet sort of way
-							</span>
-						</p>
-						<span class="note tilt">
-							<svg class="arw" viewBox="0 0 34 17" fill="none" aria-hidden="true"><path d="M32 4 C 20 1 8 5 3 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 14 L11 12 M3 14 L7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-							hi, so glad you wandered in
-						</span>
+		<main class="page">
+			<div class="spine" aria-hidden="true"></div>
+			<!-- ===============================================================
+			     THE OPENING. Name, what he is, and four sentences that quietly
+			     announce the shape of the whole page: by day, after hours, most
+			     nights. The sections that follow are those three phrases. The
+			     reader is never told this; they just never feel lost.
+			     =============================================================== -->
+			<section class="band opening">
+				<div class="inner">
+					<div class="col">
+						<h1 class="name">Agosh Baranwal</h1>
+						<svg class="name-rule" viewBox="0 0 400 11" fill="none" aria-hidden="true">
+							<path d="M2 7.4 C 62 3.1, 128 9.8, 196 5.6 S 322 2.4, 398 7.1" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" pathLength="1" vector-effect="non-scaling-stroke" />
+						</svg>
+						<p class="role">Performance and product marketer &middot; Barcelona</p>
 
 						<p class="lede">
-							I grow products for a living, and I <span class="mark">build my own after hours<svg viewBox="0 0 220 14" fill="none" aria-hidden="true"><path d="M3 9 C 45 3 82 12 122 7 S 192 4 217 8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></span>. I have run growth across Sweden, Spain, and India, founded a company, and finished an MBA at Esade. Before any of that I trained as an engineer at IIT. Everything on this page I made simply because I wanted it to exist.
-							<span class="note mobile-rest">
-								<svg class="arw" viewBox="0 0 34 17" fill="none" aria-hidden="true"><path d="M32 4 C 20 1 8 5 3 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 14 L11 12 M3 14 L7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-								this bit is the fun part
-							</span>
+							I run growth for a living. Paid, retention, and the funnels underneath, proven across Sweden, Spain, and India. After hours I <span class="mark">build my own products<svg viewBox="0 0 200 8" fill="none" aria-hidden="true" preserveAspectRatio="none"><path d="M2 5 C 44 2, 86 7.4, 128 4 S 176 2.4, 198 5.6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" pathLength="1" vector-effect="non-scaling-stroke"/></svg></span>, because I want them to exist. Most nights I cook. Same instinct, shorter feedback loop.
 						</p>
 
-						<div class="says">
-							<p class="hi">Come say hello.</p>
-							<nav class="contact" aria-label="Contact">
-								<a href="mailto:agosh.baranwal@alumni.esade.edu">Email</a>
-								<a href="https://www.linkedin.com/in/agoshbaranwal" target="_blank" rel="noopener">LinkedIn</a>
-								<a href="https://github.com/agoshbaranwal" target="_blank" rel="noopener">GitHub</a>
-							</nav>
-							<span class="note tilt">
-								<svg class="arw" viewBox="0 0 34 17" fill="none" aria-hidden="true"><path d="M32 4 C 20 1 8 5 3 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 14 L11 12 M3 14 L7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-								I always write back, promise
-							</span>
+						<a class="door" href="mailto:agosh.baranwal@alumni.esade.edu">
+							<span class="door-t">Write to me</span>
+							<span class="door-a">agosh.baranwal@alumni.esade.edu</span>
+						</a>
+						<span class="door-side"><a href="https://www.linkedin.com/in/agoshbaranwal" target="_blank" rel="noopener">LinkedIn</a></span>
+					</div>
+
+					<div class="col">
+						<span class="note">
+							<svg class="tick" viewBox="0 0 30 15" fill="none" aria-hidden="true"><path d="M28 3.5 C 18 1, 7 4.5, 2 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M2 12.5 L9 11 M2 12.5 L5.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+							hi, so glad you wandered in
+						</span>
+						<figure class="pin">
+							<img src="avatar.jpg" alt="Agosh Baranwal by the sea near Barcelona" width="190" height="190" />
+							<figcaption>off the clock</figcaption>
+						</figure>
+					</div>
+				</div>
+			</section>
+
+			<!-- ===============================================================
+			     BY DAY. The entire professional beat in one place: what the work
+			     produced, then where it happened. The numbers and the record are
+			     one thought, so they live together. This is the only section
+			     that speaks in credentials, and it is deliberately the shortest
+			     serious thing on the page.
+			     =============================================================== -->
+			<section class="band section" aria-labelledby="byday">
+				<div class="inner">
+					<div class="col">
+						<svg class="divider" viewBox="0 0 720 10" fill="none" preserveAspectRatio="none" aria-hidden="true">
+							<path d="M1 5.6 C 92 3.1, 168 7.6, 264 5.2 S 432 2.8, 528 5.9 S 654 7.4, 719 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" pathLength="1" vector-effect="non-scaling-stroke" />
+						</svg>
+						<h2 class="h2" id="byday">By day</h2>
+						<p class="say">The day job. Three numbers carry it.</p>
+
+						<div class="figures">
+							<div class="figure">
+								<span class="fig-n ringed">10x ROAS
+									<svg class="ring" viewBox="0 0 300 92" fill="none" aria-hidden="true" preserveAspectRatio="none">
+										<path d="M156 5 C 74 3, 9 21, 7 45 C 5 71, 76 88, 156 87 C 238 86, 294 67, 293 43 C 292 20, 232 5, 142 6 C 116 6, 90 10, 68 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" pathLength="1" vector-effect="non-scaling-stroke" />
+									</svg>
+								</span>
+								<span class="fig-d">paid campaigns, end to end</span>
+							</div>
+							<div class="figure">
+								<span class="fig-n">$3M</span>
+								<span class="fig-d">added annual revenue</span>
+							</div>
+							<div class="figure">
+								<span class="fig-n">$100k</span>
+								<span class="fig-d">a month in paid budget</span>
+							</div>
+						</div>
+
+						<p class="record">
+							Abicart in Gothenburg. eFeed in Lucknow. An MBA at Esade; engineering at IIT ISM Dhanbad before that. Washut, the laundry startup I co-founded in college, ended and taught me more than anything since. Add a TEDx licence, a Toastmasters presidency, Brainomania, and an HP Innovation Bootcamp win. Dates on <a href="https://www.linkedin.com/in/agoshbaranwal" target="_blank" rel="noopener">LinkedIn</a>.
+						</p>
+					</div>
+
+					<div class="col">
+						<span class="note">
+							<svg class="tick" viewBox="0 0 30 15" fill="none" aria-hidden="true"><path d="M28 3.5 C 18 1, 7 4.5, 2 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M2 12.5 L9 11 M2 12.5 L5.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+							when a marketer shows you ten numbers, ask which seven are padding
+						</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ===============================================================
+			     AFTER HOURS. The opening promised these. Same person, later in
+			     the day, nobody paying him.
+			     =============================================================== -->
+			<section class="band section" aria-labelledby="building">
+				<div class="inner">
+					<div class="col">
+						<svg class="divider" viewBox="0 0 720 10" fill="none" preserveAspectRatio="none" aria-hidden="true">
+							<path d="M1 4.8 C 88 7.2, 176 2.9, 268 5.8 S 448 8.1, 542 4.6 S 648 3.2, 719 6.1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" pathLength="1" vector-effect="non-scaling-stroke" />
+						</svg>
+						<h2 class="h2" id="building">Things I am building</h2>
+						<p class="say">Nobody asked for any of them.</p>
+
+						<div class="things">
+							<a class="thing" href="https://admenow.vercel.app/" target="_blank" rel="noopener">
+								<figure class="thing-shot"><img src="previews/admenow.jpg" alt="" width="640" height="400" /></figure>
+								<div>
+									<h3 class="thing-t">admenow</h3>
+									<p class="thing-d">Daily-use tools for performance marketers.</p>
+									<span class="thing-v">admenow.vercel.app
+										<svg viewBox="0 0 160 6" fill="none" aria-hidden="true" preserveAspectRatio="none"><path d="M1 3.4 C 40 1.4, 82 5.2, 120 2.8 S 148 2.2, 159 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" pathLength="1" vector-effect="non-scaling-stroke"/></svg>
+									</span>
+								</div>
+							</a>
+
+							<a class="thing" href="https://utsav-pi.vercel.app/" target="_blank" rel="noopener">
+								<figure class="thing-shot"><img src="previews/utsav.jpg" alt="" loading="lazy" width="640" height="400" /></figure>
+								<div>
+									<h3 class="thing-t">Utsav &middot; <span class="deva" lang="hi">उत्सव</span></h3>
+									<p class="thing-d">A personal food blog, told through hand-drawn scenes with little animations you can click around.</p>
+									<span class="thing-v">utsav-pi.vercel.app
+										<svg viewBox="0 0 160 6" fill="none" aria-hidden="true" preserveAspectRatio="none"><path d="M1 3.4 C 40 1.4, 82 5.2, 120 2.8 S 148 2.2, 159 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" pathLength="1" vector-effect="non-scaling-stroke"/></svg>
+									</span>
+								</div>
+							</a>
+
+							<a class="thing" href="https://tvbadger.vercel.app/" target="_blank" rel="noopener">
+								<figure class="thing-shot"><img src="previews/tvbadger.jpg" alt="" loading="lazy" width="640" height="400" /></figure>
+								<div>
+									<h3 class="thing-t">tvbadger</h3>
+									<p class="thing-d">Honest, personal verdicts on what to watch.</p>
+									<span class="thing-v">tvbadger.vercel.app
+										<svg viewBox="0 0 160 6" fill="none" aria-hidden="true" preserveAspectRatio="none"><path d="M1 3.4 C 40 1.4, 82 5.2, 120 2.8 S 148 2.2, 159 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" pathLength="1" vector-effect="non-scaling-stroke"/></svg>
+									</span>
+								</div>
+							</a>
+						</div>
+
+						<div class="bench">
+							<p class="bench-say">Three on the bench. Links when they earn them.</p>
+							<div class="bench-list">
+								<div class="bench-row">
+									<p class="bench-t">On Record</p>
+									<p class="bench-d">The climate crisis, made honestly felt.</p>
+								</div>
+								<div class="bench-row">
+									<p class="bench-t">Witness</p>
+									<p class="bench-d">Honest company with your own days.</p>
+								</div>
+								<div class="bench-row">
+									<p class="bench-t">An air-quality monitor</p>
+									<p class="bench-d">First hardware. From parts, no kit.</p>
+								</div>
+							</div>
 						</div>
 					</div>
-				</header>
 
-				<main>
-					<!-- ===== things I am building ===== -->
-					<section class="section" aria-labelledby="building">
-						<div class="section-head">
-							<h2 id="building">Things I am building</h2>
-							<svg class="ul" viewBox="0 0 320 12" fill="none" aria-hidden="true"><path d="M3 8 C 70 3 130 11 190 6 S 300 4 317 8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+					<div class="col">
+						<span class="note note-low">
+							<svg class="tick" viewBox="0 0 30 15" fill="none" aria-hidden="true"><path d="M28 3.5 C 18 1, 7 4.5, 2 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M2 12.5 L9 11 M2 12.5 L5.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+							do click the little animations
+						</span>
+					</div>
+				</div>
+			</section>
+
+			<!-- ===============================================================
+			     MOST NIGHTS. The third phrase from the opening. It is here, and
+			     not next to the numbers, because it is what happens after the
+			     building. The one line does the connective work: it is the same
+			     making, on a shorter clock.
+			     =============================================================== -->
+			<section class="band section" aria-labelledby="nights">
+				<div class="inner">
+					<div class="col">
+						<svg class="divider" viewBox="0 0 720 10" fill="none" preserveAspectRatio="none" aria-hidden="true">
+							<path d="M1 6.2 C 104 3.4, 190 7.9, 286 4.9 S 458 2.6, 556 6.3 S 662 7.1, 719 4.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" pathLength="1" vector-effect="non-scaling-stroke" />
+						</svg>
+						<h2 class="h2" id="nights">Most nights</h2>
+						<p class="say">The only thing I make that ships the same day.</p>
+
+						<div class="plates">
+							<figure class="plate">
+								<img src="food-naan-curry.jpg" alt="" loading="lazy" width="900" height="1200" />
+								<figcaption>naan and curry, from scratch</figcaption>
+							</figure>
+							<figure class="plate">
+								<img src="food-shakshuka.jpg" alt="" loading="lazy" width="900" height="1200" />
+								<figcaption>shakshuka, a slow Sunday</figcaption>
+							</figure>
+							<figure class="plate">
+								<img src="food-spaghetti.jpg" alt="" loading="lazy" width="900" height="1200" />
+								<figcaption>spaghetti, past midnight</figcaption>
+							</figure>
 						</div>
+					</div>
 
-						<div class="works">
-							<!-- admenow -->
-							<a class="work" href="https://admenow.vercel.app/" target="_blank" rel="noopener">
-								<figure class="plate2"><img src="/previews/admenow.jpg" alt="" width="640" height="400" /></figure>
-								<div>
-									<div class="cat">Performance Marketing</div>
-									<span class="tline">
-										<h3>admenow <span class="visit">visit<span class="a" aria-hidden="true"> &#8599;</span></span></h3>
-										<svg class="ul" viewBox="0 0 220 12" fill="none" aria-hidden="true"><path d="M3 8 C 45 3 90 11 135 6 S 200 4 217 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
-									</span>
-									<p class="desc">Daily-use tools for performance marketers.</p>
-								</div>
-								<span class="note tilt">
-									<svg class="arw" viewBox="0 0 34 17" fill="none" aria-hidden="true"><path d="M32 4 C 20 1 8 5 3 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 14 L11 12 M3 14 L7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-									my day work, made a little gentler
-								</span>
-							</a>
+					<div class="col">
+						<span class="note">
+							<svg class="tick" viewBox="0 0 30 15" fill="none" aria-hidden="true"><path d="M28 3.5 C 18 1, 7 4.5, 2 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M2 12.5 L9 11 M2 12.5 L5.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+							no recipes.
+						</span>
+					</div>
+				</div>
+			</section>
 
-							<!-- Utsav -->
-							<a class="work" href="https://utsav-pi.vercel.app/" target="_blank" rel="noopener">
-								<figure class="plate2"><img src="/previews/utsav.jpg" alt="" loading="lazy" width="640" height="400" /></figure>
-								<div>
-									<div class="cat">Food &middot; Personal</div>
-									<span class="tline">
-										<h3>Utsav &middot; <span lang="hi">उत्सव</span> <span class="visit">visit<span class="a" aria-hidden="true"> &#8599;</span></span></h3>
-										<svg class="ul" viewBox="0 0 220 12" fill="none" aria-hidden="true"><path d="M3 8 C 45 3 90 11 135 6 S 200 4 217 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
-									</span>
-									<p class="desc">A personal food blog, told through hand-drawn scenes with little animations you can click around.</p>
-								</div>
-								<span class="note tilt">
-									<svg class="arw" viewBox="0 0 34 17" fill="none" aria-hidden="true"><path d="M32 4 C 20 1 8 5 3 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 14 L11 12 M3 14 L7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-									do click the little animations
-								</span>
-							</a>
+			<!-- ===============================================================
+			     THE NOTEBOOK. Deliberately silent in the margin: the hand does
+			     not comment on every section, or it stops sounding like a person.
+			     The empty ruled lines are honest and on-concept: a page with room.
+			     =============================================================== -->
+			<section class="band section" aria-labelledby="notebook">
+				<div class="inner">
+					<div class="col">
+						<svg class="divider" viewBox="0 0 720 10" fill="none" preserveAspectRatio="none" aria-hidden="true">
+							<path d="M1 4.4 C 96 6.8, 184 2.7, 278 5.4 S 442 7.8, 548 4.4 S 660 3.6, 719 6.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" pathLength="1" vector-effect="non-scaling-stroke" />
+						</svg>
+						<h2 class="h2" id="notebook">The notebook</h2>
+						<p class="say">Food, football, politics, philosophy. Notes land here when they are ready.</p>
 
-							<!-- tvbadger -->
-							<a class="work" href="https://tvbadger.vercel.app/" target="_blank" rel="noopener">
-								<figure class="plate2"><img src="/previews/tvbadger.jpg" alt="" loading="lazy" width="640" height="400" /></figure>
-								<div>
-									<div class="cat">Film &amp; TV &middot; Product</div>
-									<span class="tline">
-										<h3>tvbadger <span class="visit">visit<span class="a" aria-hidden="true"> &#8599;</span></span></h3>
-										<svg class="ul" viewBox="0 0 220 12" fill="none" aria-hidden="true"><path d="M3 8 C 45 3 90 11 135 6 S 200 4 217 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
-									</span>
-									<p class="desc">Honest, personal verdicts on what to watch.</p>
-								</div>
-								<span class="note tilt">
-									<svg class="arw" viewBox="0 0 34 17" fill="none" aria-hidden="true"><path d="M32 4 C 20 1 8 5 3 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 14 L11 12 M3 14 L7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-									I will always give it to you straight
-								</span>
-							</a>
-						</div>
-
-						<!-- penciled in: real work, not yet ink -->
-						<div class="pencil-head">
-							<h3>Penciled in</h3>
-							<svg class="ul" viewBox="0 0 150 10" fill="none" aria-hidden="true"><path d="M3 6 C 45 3 95 8 147 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="7 6"/></svg>
-						</div>
-						<div class="penciled">
-							<div class="penciled-row">
-								<h4>On Record</h4><p>A climate site that tries to make the crisis honestly felt, place by place.</p>
-								<span class="note tilt">
-									<svg class="arw" viewBox="0 0 34 17" fill="none" aria-hidden="true"><path d="M32 4 C 20 1 8 5 3 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 14 L11 12 M3 14 L7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-									the big one. it scares me a little
-								</span>
+						<div class="shelf">
+							<div class="shelf-row empty">
+								<span class="shelf-t">The first one is on its way.</span>
+								<span class="shelf-m">soon</span>
 							</div>
-							<div class="penciled-row">
-								<h4>Witness</h4><p>A small tool for keeping honest company with your own days.</p>
-								<span class="note tilt mobile-rest">
-									<svg class="arw" viewBox="0 0 34 17" fill="none" aria-hidden="true"><path d="M32 4 C 20 1 8 5 3 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 14 L11 12 M3 14 L7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-									built for me first
-								</span>
-							</div>
-							<div class="penciled-row">
-								<h4>An air-quality monitor</h4><p>My first hardware, built from parts, no kit.</p>
-								<span class="note tilt mobile-rest">
-									<svg class="arw" viewBox="0 0 34 17" fill="none" aria-hidden="true"><path d="M32 4 C 20 1 8 5 3 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 14 L11 12 M3 14 L7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-									solder burns and all
-								</span>
-							</div>
+							<div class="shelf-row empty" aria-hidden="true"><span class="shelf-t">&nbsp;</span><span class="shelf-m"></span></div>
+							<div class="shelf-row empty" aria-hidden="true"><span class="shelf-t">&nbsp;</span><span class="shelf-m"></span></div>
 						</div>
-					</section>
+						<a class="shelf-link" href="/writing">the notebook, when it fills</a>
+					</div>
+					<div class="col"></div>
+				</div>
+			</section>
 
-					<!-- ===== on paper ===== -->
-					<section class="section" aria-labelledby="onpaper">
-						<div class="section-head">
-							<h2 id="onpaper">On paper</h2>
-							<svg class="ul" viewBox="0 0 320 12" fill="none" aria-hidden="true"><path d="M3 8 C 70 3 130 11 190 6 S 300 4 317 8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
-						</div>
-						<p class="section-intro">A piece of my CV, corrected in red, the way I would tell it over coffee.
-							<span class="note tilt">
-								<svg class="arw" viewBox="0 0 34 17" fill="none" aria-hidden="true"><path d="M32 4 C 20 1 8 5 3 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 14 L11 12 M3 14 L7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-								recruiters, I wrote this page for you too
-							</span>
-						</p>
-
-						<div class="onpaper">
-							<span class="tab">the record</span>
-
-							<div class="cvgroup">
-								<div class="glabel">Experience</div>
-								<div class="cvrow">
-									<span class="fact">Brand Manager &middot; Abicart, Gothenburg</span>
-									<span class="corr">my Sweden years. an eCommerce platform, a retention engine, and one very long winter</span>
-								</div>
-								<div class="cvrow">
-									<span class="fact">Marketing Lead &middot; eFeed, Lucknow</span>
-									<span class="corr">a biotech's India arm, at India speed. still my favourite market to build in</span>
-								</div>
-							</div>
-
-							<div class="cvgroup">
-								<div class="glabel">Education</div>
-								<div class="cvrow">
-									<span class="fact">B.Tech, Petroleum Engineering &middot; IIT ISM Dhanbad</span>
-									<span class="corr">chosen the way everyone chooses at that age. the engineering stayed; the petroleum did not</span>
-								</div>
-								<div class="cvrow">
-									<span class="fact">MBA &middot; Esade Business School, Barcelona</span>
-									<span class="corr">where the instincts got names, and the names got tested</span>
-								</div>
-							</div>
-
-							<div class="cvgroup">
-								<div class="glabel">Leadership</div>
-								<div class="cvrow">
-									<span class="fact">Licensee, TEDxIITDhanbad</span>
-									<span class="corr">the first one our district ever had. I mostly remember the sponsorship calls</span>
-								</div>
-								<div class="cvrow">
-									<span class="fact">President, Toastmasters club &middot; IIT Dhanbad</span>
-									<span class="corr">an introvert joins the speaking club on purpose. it worked, mostly</span>
-								</div>
-							</div>
-
-							<div class="cvgroup">
-								<div class="glabel">Ventures</div>
-								<div class="cvrow">
-									<span class="fact">Co-founder, Washut &middot; door-to-door laundry, built during undergrad</span>
-									<span class="corr">washut came, washut went. nothing has taught me faster, before or since</span>
-								</div>
-							</div>
-
-							<div class="cvgroup">
-								<div class="glabel">Distinctions</div>
-								<div class="cvrow">
-									<span class="fact">Coordinator, Brainomania &middot; 50k+ student participation</span>
-									<span class="corr">my first growth job, before I knew the word for it. the real work was chairs, queues, and asking nicely</span>
-								</div>
-								<div class="cvrow">
-									<span class="fact">Winner, HP Innovation Bootcamp</span>
-									<span class="corr">no correction on this line. we won, and I let myself enjoy it</span>
-								</div>
-							</div>
-
-							<p class="foot">The complete document, with dates and references, is available on request. The formal version lives on <a href="https://www.linkedin.com/in/agoshbaranwal" target="_blank" rel="noopener">LinkedIn</a>.<span class="corr">the long version exists, dates and all. just ask</span></p>
-						</div>
-					</section>
-
-					<!-- ===== from the notebook ===== -->
-					<section class="section" aria-labelledby="notebook">
-						<div class="section-head">
-							<h2 id="notebook">From the notebook</h2>
-							<svg class="ul" viewBox="0 0 320 12" fill="none" aria-hidden="true"><path d="M3 8 C 70 3 130 11 190 6 S 300 4 317 8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
-						</div>
-						<p class="section-intro">Notes on whatever has my attention. Food, football, the odd argument with the news.</p>
-						<div class="teaser">
-							<a href="/writing/first-note">The first note</a>
-						</div>
-						<a class="handlink" href="/writing">the whole notebook<span aria-hidden="true"> &#8594;</span></a>
-					</section>
-
-					<!-- ===== write to me ===== -->
-					<section class="section letter" aria-labelledby="write">
-						<div class="section-head">
-							<h2 id="write">Write to me</h2>
-							<svg class="ul" viewBox="0 0 320 12" fill="none" aria-hidden="true"><path d="M3 8 C 70 3 130 11 190 6 S 300 4 317 8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
-						</div>
-						<p class="section-intro">The best things on this site started as someone else's message. Write about work, about a note you think I got wrong, about where to eat. I read everything.</p>
-						<div class="emailrow">
-							<a class="email-big" href="mailto:agosh.baranwal@alumni.esade.edu">agosh.baranwal@alumni.esade.edu</a>
-							<span class="note tilt">
-								<svg class="arw" viewBox="0 0 34 17" fill="none" aria-hidden="true"><path d="M32 4 C 20 1 8 5 3 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 14 L11 12 M3 14 L7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-								told you I write back
-							</span>
-						</div>
-						<div class="others">
+			<!-- ===============================================================
+			     WRITE TO ME. The door, again, at the end of the read. The
+			     address is set as real selectable text because recruiters paste
+			     addresses into systems.
+			     =============================================================== -->
+			<section class="band section closing" id="write" aria-labelledby="writeto">
+				<div class="inner">
+					<div class="col">
+						<svg class="divider" viewBox="0 0 720 10" fill="none" preserveAspectRatio="none" aria-hidden="true">
+							<path d="M1 5.1 C 86 2.8, 178 7.4, 272 4.8 S 452 2.9, 546 6.2 S 656 6.8, 719 3.9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" pathLength="1" vector-effect="non-scaling-stroke" />
+						</svg>
+						<h2 class="h2" id="writeto">Write to me</h2>
+						<p class="say">Hiring, building, or disagreeing with something here? Good. I read everything.</p>
+						<a class="address" href="mailto:agosh.baranwal@alumni.esade.edu">agosh.baranwal@alumni.esade.edu</a>
+						<div class="elsewhere">
 							<a href="https://www.linkedin.com/in/agoshbaranwal" target="_blank" rel="noopener">LinkedIn</a>
 							<a href="https://github.com/agoshbaranwal" target="_blank" rel="noopener">GitHub</a>
-							<span class="place">Barcelona, most days.</span>
+							<span>Barcelona, most days.</span>
 						</div>
-						<p class="section-intro feedline">There is also <a class="qlink" href="/feed.xml">a feed</a>, if you keep a reader.</p>
-					</section>
-				</main>
+					</div>
+					<div class="col">
+						<span class="note">
+							<svg class="tick" viewBox="0 0 30 15" fill="none" aria-hidden="true"><path d="M28 3.5 C 18 1, 7 4.5, 2 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M2 12.5 L9 11 M2 12.5 L5.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+							I always write back, promise
+						</span>
+					</div>
+				</div>
+			</section>
+		</main>
 
-				<footer class="colophon">
-					<span>Set in Newsreader &amp; <span class="hand">Caveat</span>. Drawn by hand, no template.</span>
-					<span>&copy; Agosh Baranwal</span>
-				</footer>
+		<footer class="foot">
+			<div class="foot-in">
+				<svg viewBox="0 0 132 34" fill="none" aria-hidden="true">
+					<text x="0" y="21" font-family="Kalam, cursive" font-size="21" font-weight="700" fill="currentColor">Agosh</text>
+					<path d="M1 28.5 C 22 25.6, 44 31.2, 66 27.8 S 104 25.4, 126 29.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" pathLength="1" />
+				</svg>
+				<span>&copy; Agosh Baranwal</span>
 			</div>
-		</div>
+		</footer>
 	</body>
 </html>

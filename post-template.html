@@ -3,17 +3,17 @@
 	To publish a post "<slug>" (lowercase-kebab, no dates in slug, permanent forever):
 	1. Copy this file to writing/<slug>.html. Fill every [BRACKET]. Zero <style> tags,
 	   zero inline style attributes: new elements become a generic class in site.css.
-	2. Add one entry (date, title, one-line gist) at the top of the current year group
-	   in writing/index.html (add the year group if new).
-	3. Prepend an <item> to feed.xml, bump <lastBuildDate>, drop the oldest item past 20.
-	4. Rotate the home "From the notebook" teaser in index.html: TITLES ONLY, newest first, max 3.
+	2. Replace the first empty shelf-row in writing/index.html with the post's row
+	   (title links to /writing/<slug>, date in the shelf-m slot). Keep 2-3 empty
+	   ruled rows below the real ones; drop them once there are four real posts.
+	3. Update the home notebook shelf the same way: TITLES ONLY, newest first, max 3.
+	4. Prepend an <item> to feed.xml, bump <lastBuildDate>.
 	5. Deploy: cd /Users/agosh/Game/portfolio && npx --yes vercel --prod --yes
 	   Then curl-verify the live post URL, /writing, and /feed.xml. Run ./check.sh <slug>.
-	CONTENT RULES: no em dashes; never a year attached to a job or degree; no anniversary
-	framings; human voice, no oversell; post dates themselves are fine. If the draft touches
-	chargeable ground (politics etc.), tell Agosh before deploying; he decides per post.
-	A mistyped slug that already shipped is fixed with a redirects entry in vercel.json,
-	never by renaming the file.
+	CONTENT RULES: no em dashes; never a year attached to a job or degree; confident
+	and bold, not formal, not sloppy; post dates are fine. Chargeable topics
+	(politics etc.): flag to Agosh before deploying; he decides per post.
+	A shipped slug is fixed with a vercel.json redirect, never a rename.
 -->
 <!doctype html>
 <html lang="en">
@@ -22,8 +22,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>[TITLE] · Agosh Baranwal</title>
 		<meta name="description" content="[ONE-LINE GIST, REUSED IN INDEX AND FEED]" />
-		<meta name="theme-color" media="(prefers-color-scheme: light)" content="#e5d9bf" />
-		<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171209" />
 		<link rel="canonical" href="https://agoshportfolio.vercel.app/writing/[SLUG]" />
 		<meta property="og:title" content="[TITLE]" />
 		<meta property="og:description" content="[ONE-LINE GIST]" />
@@ -32,53 +30,70 @@
 		<meta property="og:image" content="https://agoshportfolio.vercel.app/og.png" />
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="630" />
-		<meta property="og:image:alt" content="A warm paper card reading Agosh Baranwal, performance and product marketer, with the credentials Founder, MBA at Esade, Engineer at IIT, and a handwritten red note saying hi, so glad you wandered in." />
-		<meta name="twitter:image:alt" content="A warm paper card reading Agosh Baranwal, performance and product marketer, with the credentials Founder, MBA at Esade, Engineer at IIT, and a handwritten red note saying hi, so glad you wandered in." />
 		<meta property="og:url" content="https://agoshportfolio.vercel.app/writing/[SLUG]" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<link rel="alternate" type="application/rss+xml" title="Agosh Baranwal · the notebook" href="/feed.xml" />
-		<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23f0e6d0'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-style='italic' font-weight='600' fill='%239e2f27' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E" />
+		<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23fbfbf8'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-style='italic' font-weight='700' fill='%231d3a63' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css2?family=Vollkorn:ital,wght@0,400..900;1,400..700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet" />
 		<link rel="stylesheet" href="/site.css" />
 	</head>
 	<body>
-		<div class="sheet">
-			<nav class="runhead" aria-label="Site">
-				<a href="/">Agosh Baranwal</a>
-				<span class="rh-right">
-					<span class="folio">from the notebook</span>
-				</span>
-			</nav>
-
-			<div class="book">
-				<main>
-					<article class="post">
-						<header>
-							<h1>[TITLE]</h1>
-							<p class="dateline"><time datetime="[YYYY-MM-DD]">[17 July 2026]</time> &middot; Barcelona</p>
-						</header>
-						<div class="body">
-							<p>[BODY. Paragraphs as <p>. Subheads as <h2>. Optional red margin note:]
-								<span class="note tilt">
-									<svg class="arw" viewBox="0 0 34 17" fill="none" aria-hidden="true"><path d="M32 4 C 20 1 8 5 3 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 14 L11 12 M3 14 L7 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-									[the signature move: one honest aside]
-								</span>
-							</p>
-						</div>
-						<footer class="postfoot">
-							<a class="handlink" href="/writing">back to the notebook<span aria-hidden="true"> &#8594;</span></a>
-							<a class="handlink" href="/#write">write to me<span aria-hidden="true"> &#8594;</span></a>
-						</footer>
-					</article>
-				</main>
-
-				<footer class="colophon">
-					<span><a href="/">back to the front page</a></span>
-					<span>&copy; Agosh Baranwal</span>
-				</footer>
+		<header class="masthead">
+			<div class="masthead-in">
+				<a class="wordmark" href="/" aria-label="Agosh Baranwal, home">
+					<svg viewBox="0 0 132 34" fill="none" aria-hidden="true">
+						<text x="0" y="21" font-family="Kalam, cursive" font-size="21" font-weight="700" fill="currentColor">Agosh</text>
+						<path d="M1 28.5 C 22 25.6, 44 31.2, 66 27.8 S 104 25.4, 126 29.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" pathLength="1" />
+					</svg>
+				</a>
+				<nav class="nav" aria-label="Site">
+					<a href="/writing">Writing</a>
+					<a href="/#write">Write to me</a>
+					<label class="night-toggle" for="night">
+						<input type="checkbox" id="night" />
+						<span class="night-track" aria-hidden="true"></span>
+						<span class="night-label">Night</span>
+					</label>
+				</nav>
 			</div>
-		</div>
+		</header>
+
+		<main class="page">
+			<article class="band opening">
+				<div class="inner">
+					<div class="col">
+						<h1 class="name page-title">[TITLE]</h1>
+						<svg class="name-rule" viewBox="0 0 400 11" fill="none" aria-hidden="true">
+							<path d="M2 7.4 C 62 3.1, 128 9.8, 196 5.6 S 322 2.4, 398 7.1" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" pathLength="1" vector-effect="non-scaling-stroke" />
+						</svg>
+						<p class="say say-top"><time datetime="[YYYY-MM-DD]">[17 July 2026]</time> &middot; Barcelona</p>
+
+						<div class="post-body">
+							<p>[BODY. Paragraphs as p. Subheads as h2 class="h2".]</p>
+						</div>
+
+						<a class="shelf-link" href="/writing">back to the notebook</a>&nbsp;&nbsp;&nbsp;<a class="shelf-link" href="/#write">write to me</a>
+					</div>
+					<div class="col">
+						<span class="note">
+							<svg class="tick" viewBox="0 0 30 15" fill="none" aria-hidden="true"><path d="M28 3.5 C 18 1, 7 4.5, 2 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M2 12.5 L9 11 M2 12.5 L5.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+							[optional aside in his hand; delete if none]
+						</span>
+					</div>
+				</div>
+			</article>
+		</main>
+
+		<footer class="foot">
+			<div class="foot-in">
+				<svg viewBox="0 0 132 34" fill="none" aria-hidden="true">
+					<text x="0" y="21" font-family="Kalam, cursive" font-size="21" font-weight="700" fill="currentColor">Agosh</text>
+					<path d="M1 28.5 C 22 25.6, 44 31.2, 66 27.8 S 104 25.4, 126 29.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" pathLength="1" />
+				</svg>
+				<span>&copy; Agosh Baranwal</span>
+			</div>
+		</footer>
 	</body>
 </html>

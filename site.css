@@ -1,613 +1,510 @@
-/* ============================================================
-   Agosh Baranwal · the book
-   One stylesheet for every page. Posts carry NO inline styles:
-   if a post needs a new element, add a generic class here once.
-   ============================================================ */
+/* ============================================================================
+   Agosh Baranwal
+   ----------------------------------------------------------------------------
+   WHAT THIS SITE IS: an introduction to one person. Not a portfolio, not a CV.
+   THE LOGIC: the page is shaped like his day. By day he grows other people's
+   products (the work, the numbers). After hours he builds his own (the
+   products). Most nights he cooks (dinner). Underneath it all he thinks (the
+   notebook). Every section is the same person making something at a different
+   hour, which is why numbers and food can share a page: they are the same
+   instinct on different clocks. Nothing says this out loud. The order says it.
+   THE SPINE: one hand, in one pen, drawing the whole way down. Every section
+   break is a stroke from that hand, drawn as you reach it. The line separates
+   and joins at the same time. That is the demarcation AND the cohesion.
+   ============================================================================ */
 
+/* --- TOKENS -------------------------------------------------------------- */
 :root {
-	/* Warm oat paper, a page from a well-loved book. No grain: warmth is earned in colour, ink and hand. */
-	--ground: #e5d9bf;      /* the desk the page rests on */
-	--paper: #f5eede;       /* the sheet */
-	--sheet2: #fcf8ee;      /* the whiter typed insert (On paper) */
-	--ink: #2a2018;         /* warm sepia-black, 13.5:1 on paper */
-	--body: #4a3d2f;        /* secondary reading ink, 8.9:1 */
-	--muted: #655746;       /* labels / running head, 5.95:1 */
-	--rubric: #9e2f27;      /* the annotator's red hand, 6.18:1 */
-	--rule: rgba(158, 47, 39, 0.26);   /* the margin line */
-	--hair: rgba(42, 32, 24, 0.14);
-	--serif: 'Newsreader', Georgia, 'Kohinoor Devanagari', 'Noto Serif Devanagari', 'Nirmala UI', 'Devanagari Sangam MN', serif;
-	--hand: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
-	--mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
-	--pad-r: 40px;
-}
-/* Night reading: same book under a lamp. Token-level only; components never change. */
-@media (min-width: 999999px) {
-	:root {
-		--ground: #171209;
-		--paper: #251d12;
-		--sheet2: #2d2417;
-		--ink: #f0e7d4;
-		--body: #d6c8ae;
-		--muted: #b3a084;
-		--rubric: #e79880;
-		--rule: rgba(231, 152, 128, 0.34);
-		--hair: rgba(240, 231, 212, 0.16);
-	}
+	color-scheme: light;
+
+	/* Paper: a fresh sheet, not an aged book. Cool, bright, barely warm.
+	   (Deliberately NOT the cream that read as a template.) */
+	--paper:   #fbfbf8;
+	--mat:     #ffffff;   /* the white border a photo sits in */
+
+	/* Ink: what the printer laid down. */
+	--ink:     #21232a;   /* 14.6:1 on paper */
+	--ink-2:   #494d57;   /* 8.0:1  running text */
+	--ink-3:   #6b6f7a;   /* 4.9:1  captions, meta. AA floor respected. */
+
+	/* Pen: what HE laid down. One ink, fountain-pen blue-black. It is his hand,
+	   his rules, his links, his one button. Nothing else is ever this colour. */
+	--pen:     #1d3a63;   /* 10.0:1 on paper */
+	--pen-2:   #2f5793;   /* the lighter stroke for hairline rules */
+	--pen-mat: rgba(29, 58, 99, 0.28);
+
+	--hair:    rgba(33, 35, 42, 0.13);
+
+	/* Type: two faces, each chosen for a reason.
+	   Vollkorn: a reading serif with real quirks, built for body text at length,
+	   sturdy enough at 800 to carry the figures. Not a fashionable display face.
+	   Kalam: an Indian foundry's pen. It is his hand and his script in one file,
+	   so उत्सव is native rather than a fallback. */
+	--print: 'Vollkorn', Georgia, 'Times New Roman', serif;
+	--hand:  'Kalam', 'Segoe Print', cursive;
+	--deva:  'Noto Serif Devanagari', 'Kohinoor Devanagari', 'Nirmala UI', serif;
+
+	/* Scale: a major third (1.25) at the small end, with one display jump.
+	   Every size on the page is one of these. There are no other sizes. */
+	--t-micro: 0.75rem;     /* 12px  colophon */
+	--t-small: 0.875rem;    /* 14px  captions, the record */
+	--t-body:  1.0625rem;   /* 17px  reading */
+	--t-lead:  1.1875rem;   /* 19px  the opening */
+	--t-hand:  1.3125rem;   /* 21px  the pen reads small; it needs the size */
+	--t-h3:    1.3125rem;   /* 21px  project titles */
+	--t-h2:    clamp(1.6rem, 3.4vw, 2.15rem);
+	--t-fig:   clamp(2.6rem, 5.8vw, 4.1rem);
+	--t-name:  clamp(2.9rem, 8.6vw, 5.6rem);
+
+	/* Space: an 8px grid. Sections breathe at 112; nothing invents its own gap. */
+	--s-1: 8px;  --s-2: 16px; --s-3: 24px; --s-4: 32px;
+	--s-5: 48px; --s-6: 64px; --s-7: 88px; --s-8: 112px;
+
+	--margin-col: 190px;   /* where the hand lives */
+	--gutter: 46px;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { -webkit-text-size-adjust: 100%; }
+/* Night: the same sheet under a lamp. Tokens only; no component knows. */
+html:has(#night:checked) {
+	color-scheme: dark;
+	--paper: #15161a;
+	--mat:   #24262c;
+	--ink:   #ecedf0;   /* 14.4:1 */
+	--ink-2: #c2c5cd;   /* 9.6:1  */
+	--ink-3: #8e929c;   /* 5.1:1  */
+	--pen:   #8fb3e0;   /* 7.5:1  the same pen, seen by lamplight */
+	--pen-2: #6f95c8;
+	--pen-mat: rgba(143, 179, 224, 0.32);
+	--hair:  rgba(236, 237, 240, 0.15);
+}
+
+/* --- RESET --------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
 body {
-	background: var(--ground);
-	background-image:
-		radial-gradient(120% 90% at 8% -6%, rgba(255, 249, 235, 0.55), transparent 55%),
-		radial-gradient(90% 80% at 108% 112%, rgba(158, 47, 39, 0.06), transparent 60%);
+	background: var(--paper);
 	color: var(--ink);
-	font-family: var(--serif);
-	font-optical-sizing: auto;
+	font-family: var(--print);
+	font-size: var(--t-body);
 	line-height: 1.62;
 	-webkit-font-smoothing: antialiased;
 	overflow-x: hidden;
-	min-height: 100vh;
-	padding: clamp(14px, 4vw, 56px) clamp(12px, 3vw, 40px);
+	transition: background-color 0.4s ease, color 0.4s ease;
 }
-@media (min-width: 999999px) {
-	body {
-		background-image:
-			radial-gradient(120% 90% at 8% -6%, rgba(255, 244, 214, 0.05), transparent 55%),
-			radial-gradient(90% 80% at 108% 112%, rgba(231, 152, 128, 0.05), transparent 60%);
-	}
-}
-::selection { background: rgba(158, 47, 39, 0.18); }
-@media (min-width: 999999px) {
-	::selection { background: rgba(231, 152, 128, 0.3); }
-}
+img { display: block; max-width: 100%; }
 a { color: inherit; }
-:focus-visible { outline: 2px solid var(--rubric); outline-offset: 3px; border-radius: 3px; }
+::selection { background: var(--pen-mat); }
+:focus-visible { outline: 2px solid var(--pen); outline-offset: 3px; border-radius: 2px; }
 
-/* ---- the sheet ---- */
-.sheet {
-	position: relative;
-	max-width: 1000px;
-	margin: 0 auto;
-	background: var(--paper);
-	background-image: linear-gradient(180deg, rgba(255, 252, 244, 0.6), transparent 24%);
-	border: 1px solid var(--hair);
-	border-radius: 3px;
-	box-shadow:
-		0 1px 0 rgba(255, 255, 255, 0.7) inset,
-		0 18px 50px -22px rgba(42, 32, 24, 0.4),
-		0 2px 8px -2px rgba(42, 32, 24, 0.14);
-	padding: clamp(30px, 5vw, 70px) var(--pad-r) clamp(34px, 5vw, 60px) clamp(24px, 5vw, 76px);
+/* --- THE PAGE ------------------------------------------------------------ */
+/* One column of print, one margin for the hand. Everything printed lives in
+   the left column. Everything handwritten lives in the right. No exceptions:
+   that rule is what stops the page fragmenting. */
+.page { max-width: 1000px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 40px); position: relative; }
+
+/* THE SPINE: one continuous pen line between the print and the hand, running
+   the full length of the page and growing as you read. Every section hangs off
+   the same line, which is what makes them one page instead of five. */
+.spine {
+	position: absolute;
+	top: 30px; bottom: 30px;
+	right: calc(clamp(20px, 5vw, 40px) + var(--margin-col) + var(--gutter) / 2);
+	width: 1.5px;
+	background: var(--pen-mat);
+	transform-origin: top;
 }
-@media (min-width: 999999px) {
-	.sheet {
-		background-image: linear-gradient(180deg, rgba(255, 246, 224, 0.04), transparent 24%);
-		box-shadow: 0 18px 50px -22px rgba(0, 0, 0, 0.7), 0 2px 8px -2px rgba(0, 0, 0, 0.4);
+@media (max-width: 860px) { .spine { display: none; } }
+@media (prefers-reduced-motion: no-preference) {
+	@supports (animation-timeline: scroll()) {
+		.spine {
+			animation: spine-grow linear both;
+			animation-timeline: scroll();
+		}
 	}
 }
+@keyframes spine-grow { from { transform: scaleY(0.05); } to { transform: scaleY(1); } }
 
-/* running head, like the top of a printed page */
-.runhead {
-	display: flex;
-	justify-content: space-between;
-	align-items: baseline;
-	gap: 14px;
-	font-size: 11.5px;
-	letter-spacing: 0.2em;
-	text-transform: uppercase;
-	color: var(--muted);
-	padding-bottom: 22px;
-	margin-bottom: 30px;
-	border-bottom: 1px solid var(--hair);
-}
-.runhead a { text-decoration: none; padding: 8px 6px; margin: -8px -6px; }
-.runhead a:hover { color: var(--rubric); }
-.runhead .rh-right { display: flex; align-items: baseline; gap: 22px; }
-.runhead .folio { font-family: var(--hand); font-size: 17px; letter-spacing: 0; text-transform: none; color: var(--rubric); }
-
-.book { position: relative; }
-
-/* the notebook margin line running the length of the page */
-@media (min-width: 1000px) {
-	.book::before {
-		content: "";
-		position: absolute;
-		top: 4px; bottom: 8px;
-		right: -18px;
-		width: 1.5px;
-		background: var(--rule);
-	}
-}
-
-/* ---- header ---- */
-.head {
+.band { position: relative; }
+.band > .inner {
 	display: grid;
-	grid-template-columns: 148px minmax(0, 1fr);
-	gap: 40px;
+	grid-template-columns: minmax(0, 1fr) var(--margin-col);
+	gap: var(--gutter);
 	align-items: start;
 }
-.plate {
-	margin: 6px 0 0;
-	transform: rotate(-1.8deg);
-	transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.plate:hover { transform: rotate(0deg); }
-.plate img {
-	display: block;
-	width: 100%;
-	height: auto;
-	aspect-ratio: 1;
-	object-fit: cover;
-	object-position: center 24%;
-	background: #fff;
-	border: 6px solid #fdfaf3;
-	border-radius: 2px;
-	box-shadow: 0 10px 26px -12px rgba(42, 32, 24, 0.5), 0 0 0 1px var(--hair);
-}
-@media (min-width: 999999px) {
-	.plate img { border-color: #382d1f; }
-}
-.plate figcaption {
-	font-family: var(--hand);
-	font-size: 18px;
-	line-height: 1.05;
-	color: var(--rubric);
-	text-align: center;
-	margin-top: 9px;
-	transform: rotate(-1.2deg);
-}
+.col { min-width: 0; }
 
-.intro { position: relative; min-width: 0; }
+/* --- THE MASTHEAD -------------------------------------------------------- */
+.masthead {
+	position: sticky; top: 0; z-index: 20;
+	background: color-mix(in srgb, var(--paper) 88%, transparent);
+	backdrop-filter: blur(8px);
+	border-bottom: 1px solid transparent;
+	transition: border-color 0.3s ease;
+}
+.masthead-in {
+	max-width: 1000px; margin: 0 auto;
+	padding: var(--s-2) clamp(20px, 5vw, 40px);
+	display: flex; align-items: center; justify-content: space-between; gap: var(--s-3);
+}
+.wordmark { display: inline-flex; align-items: center; text-decoration: none; color: var(--ink); }
+.wordmark svg { height: 26px; width: auto; color: var(--pen); overflow: visible; }
+.nav { display: flex; align-items: center; gap: clamp(14px, 2.4vw, 26px); }
+.nav a {
+	font-size: var(--t-small);
+	text-decoration: none; color: var(--ink-2);
+	padding: 8px 2px;
+	white-space: nowrap;
+	border-bottom: 1.5px solid transparent;
+	transition: color 0.2s ease, border-color 0.2s ease;
+}
+.nav a:hover { color: var(--pen); border-bottom-color: var(--pen); }
+
+/* the toggle: a real control, not a decoration */
+.night-toggle { display: inline-flex; align-items: center; gap: 7px; cursor: pointer; user-select: none; }
+#night { position: absolute; opacity: 0; width: 0; height: 0; }
+.night-track {
+	width: 34px; height: 18px; border-radius: 999px;
+	border: 1.5px solid var(--pen-mat);
+	position: relative; transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+.night-track::after {
+	content: ""; position: absolute; top: 1.5px; left: 1.5px;
+	width: 11px; height: 11px; border-radius: 50%;
+	background: var(--pen);
+	transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+html:has(#night:checked) .night-track::after { transform: translateX(16px); }
+#night:focus-visible + .night-track { outline: 2px solid var(--pen); outline-offset: 3px; }
+.night-label { font-size: var(--t-micro); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); }
+
+/* --- THE OPENING --------------------------------------------------------- */
+.opening { padding: clamp(48px, 9vw, 86px) 0 var(--s-5); }
 .name {
-	font-weight: 500;
-	font-size: clamp(2.7rem, 8vw, 4.6rem);
-	line-height: 0.98;
-	letter-spacing: -0.02em;
+	font-family: var(--print);
+	font-size: var(--t-name);
+	font-weight: 600;
+	line-height: 1.0;
+	letter-spacing: -0.024em;
 	color: var(--ink);
 }
-.name .dot { color: var(--rubric); font-style: italic; }
+.name-rule { display: block; width: min(400px, 78%); height: 11px; margin-top: 10px; color: var(--pen); overflow: visible; }
 .role {
-	font-style: italic;
-	font-size: clamp(1.05rem, 2.6vw, 1.3rem);
-	color: var(--body);
-	margin-top: 12px;
-	position: relative;
+	font-size: var(--t-small);
+	letter-spacing: 0.15em; text-transform: uppercase;
+	color: var(--ink-3);
+	margin-top: var(--s-3);
 }
 .lede {
-	position: relative;
-	max-width: 34em;
-	font-size: clamp(1.06rem, 2.4vw, 1.18rem);
-	line-height: 1.72;
-	color: var(--body);
-	margin-top: 20px;
+	font-size: var(--t-lead);
+	line-height: 1.68;
+	color: var(--ink-2);
+	max-width: 47ch;
+	margin-top: var(--s-3);
 }
-.lede em { font-style: italic; color: var(--ink); }
-/* a hand mark under one phrase, like a reader who underlined it */
-.mark { color: var(--ink); font-style: normal; position: relative; white-space: nowrap; }
-.mark svg {
-	position: absolute;
-	left: 0; right: 0;
-	bottom: -0.42em;
-	width: 100%;
-	height: 0.5em;
-	color: var(--rubric);
-	overflow: visible;
-}
+.lede strong { font-weight: 600; color: var(--ink); }
+/* the one phrase the hand underlines, because it is the sentence's real point */
+.mark { position: relative; white-space: nowrap; color: var(--ink); font-weight: 600; }
+.mark svg { position: absolute; left: 0; right: 0; bottom: -0.36em; width: 100%; height: 0.42em; color: var(--pen); overflow: visible; }
+.mark svg path { stroke-dasharray: 1; stroke-dashoffset: 0; }
 
-/* ---- margin notes ---- */
+/* the one button on the page. The only filled block anywhere. */
+.door {
+	display: inline-flex; flex-direction: column; gap: 2px;
+	margin-top: var(--s-5);
+	padding: 13px 22px;
+	background: var(--pen);
+	color: var(--paper);
+	text-decoration: none;
+	border-radius: 2px;
+	transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s ease;
+	box-shadow: 0 1px 0 var(--pen);
+}
+.door-t { font-size: var(--t-small); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+.door-a { font-size: var(--t-small); opacity: 0.82; }
+.door:hover { transform: translateY(-2px); box-shadow: 0 6px 18px -6px var(--pen); }
+.door-side { display: block; margin-top: var(--s-2); font-size: var(--t-small); }
+.door-side a { color: var(--ink-2); text-decoration: none; border-bottom: 1px solid var(--pen-mat); }
+.door-side a:hover { color: var(--pen); border-bottom-color: var(--pen); }
+
+/* the photo, pinned to the page like a photo on a desk */
+.pin { margin-top: 6px; }
+.pin img {
+	width: 100%; aspect-ratio: 1; object-fit: cover; object-position: center 22%;
+	border: 7px solid var(--mat);
+	box-shadow: 0 10px 26px -14px rgba(20, 22, 28, 0.55), 0 0 0 1px var(--hair);
+	filter: saturate(0.55) contrast(1.03);
+	transform: rotate(-2.2deg);
+	transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), filter 0.45s ease;
+}
+.pin:hover img { transform: rotate(0deg); filter: saturate(0.9) contrast(1); }
+.pin figcaption { font-family: var(--hand); font-size: var(--t-hand); color: var(--pen); text-align: center; margin-top: 8px; transform: rotate(-1deg); }
+
+/* --- THE HAND ------------------------------------------------------------ */
+/* Notes live in the margin column and nowhere else. */
 .note {
 	display: block;
 	font-family: var(--hand);
-	font-size: 1.28rem;
-	line-height: 1.16;
-	color: var(--rubric);
-	margin: 12px 0 4px;
-	max-width: 30em;
+	font-size: var(--t-hand);
+	line-height: 1.3;
+	color: var(--pen);
 }
-.note .arw { display: inline-block; width: 34px; height: 17px; vertical-align: -2px; margin-right: 4px; color: var(--rubric); opacity: 0.85; }
-.note.tilt { transform: rotate(-2deg); }
+.note em { font-style: normal; }
+.tick { display: block; width: 30px; height: 15px; margin-bottom: 3px; color: var(--pen); opacity: 0.9; }
+/* a note that comments on something further down its section, not its top */
+.note-low { margin-top: 292px; }
+@media (max-width: 860px) { .note-low { margin-top: var(--s-3); } }
 
-/* ---- section ---- */
-.section { margin-top: clamp(48px, 8vw, 82px); position: relative; }
-.section-head { position: relative; display: inline-block; }
-.section-head h2,
-.section-head h1 {
-	font-weight: 500;
-	font-size: clamp(1.5rem, 4vw, 2.05rem);
-	letter-spacing: -0.015em;
+/* --- SECTIONS ------------------------------------------------------------ */
+/* The demarcation: one stroke from the same hand, drawn as you arrive. */
+.section { padding-top: var(--s-8); }
+.divider { display: block; width: 100%; height: 10px; color: var(--pen-2); overflow: visible; opacity: 0.75; }
+.h2 {
+	font-size: var(--t-h2);
+	font-weight: 600;
+	letter-spacing: -0.014em;
 	color: var(--ink);
+	margin-top: var(--s-5);
 }
-.section-head .ul { display: block; width: 96%; height: 12px; margin-top: 2px; color: var(--rubric); overflow: visible; }
-.section-intro {
-	max-width: 38em;
-	font-size: clamp(1.02rem, 2.3vw, 1.12rem);
-	color: var(--body);
-	margin-top: 14px;
-	position: relative;
-}
+.say { font-size: var(--t-body); color: var(--ink-2); max-width: 44ch; margin-top: var(--s-2); }
 
-/* ---- works ---- */
-.works { margin-top: 30px; display: flex; flex-direction: column; gap: 30px; }
-.work {
-	position: relative;
-	display: grid;
-	grid-template-columns: 220px minmax(0, 1fr);
-	gap: 26px;
-	align-items: start;
-	text-decoration: none;
-	color: inherit;
-	padding-bottom: 30px;
+/* --- BY DAY: the figures ------------------------------------------------- */
+/* One ledger line, read left to right: quiet, confident, not in your face.
+   The pen still rings the best one; that ring does the emphasis so the
+   type does not have to. */
+.figures {
+	margin-top: var(--s-4);
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--s-3) var(--s-6);
+	padding: var(--s-3) 0;
+	border-top: 1px solid var(--hair);
 	border-bottom: 1px solid var(--hair);
 }
-.work:last-child { border-bottom: 0; padding-bottom: 4px; }
-.plate2 { transform: rotate(-1.3deg); transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
-.work:nth-child(even) .plate2 { transform: rotate(1.3deg); }
-.work:hover .plate2, .work:focus-visible .plate2 { transform: rotate(0deg); }
-.plate2 img {
+.figure { flex: 0 1 auto; }
+.fig-n {
 	display: block;
-	width: 100%;
-	height: auto;
-	aspect-ratio: 16 / 10;
-	object-fit: cover;
-	object-position: top center;
-	background: #efe7d6;
-	border: 5px solid #fdfaf3;
-	border-radius: 2px;
-	box-shadow: 0 9px 22px -12px rgba(42, 32, 24, 0.5), 0 0 0 1px var(--hair);
-	transition: box-shadow 0.3s ease;
-}
-@media (min-width: 999999px) {
-	.plate2 img { border-color: #382d1f; background: #382d1f; }
-}
-.work:hover .plate2 img, .work:focus-visible .plate2 img { box-shadow: 0 16px 30px -14px rgba(158, 47, 39, 0.4), 0 0 0 1px var(--hair); }
-
-.cat { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
-.tline { position: relative; display: inline-block; margin-top: 5px; }
-.tline h3 { font-weight: 500; font-size: clamp(1.4rem, 3.4vw, 1.68rem); letter-spacing: -0.01em; color: var(--ink); }
-.tline .ul {
-	display: block; width: 100%; height: 10px; margin-top: 1px; color: var(--rubric); overflow: visible;
-	opacity: 0;
-	transition: opacity 0.25s ease;
-}
-.tline .ul path { stroke-dasharray: 240; stroke-dashoffset: 240; transition: stroke-dashoffset 0.55s cubic-bezier(0.22, 1, 0.36, 1); }
-.work:hover .tline .ul, .work:focus-visible .tline .ul { opacity: 1; }
-.work:hover .tline .ul path, .work:focus-visible .tline .ul path { stroke-dashoffset: 0; }
-
-.visit { font-family: var(--hand); font-size: 1.15rem; color: var(--rubric); white-space: nowrap; margin-left: 4px; }
-.visit .a { display: inline-block; transition: transform 0.25s ease; }
-.work:hover .visit .a, .work:focus-visible .visit .a { transform: translate(3px, -3px); }
-.desc { font-size: clamp(1rem, 2.3vw, 1.08rem); line-height: 1.6; color: var(--body); margin-top: 9px; max-width: 42ch; }
-
-/* ---- penciled in: coming work, deliberately a quieter register ---- */
-.pencil-head { position: relative; display: inline-block; margin-top: 40px; }
-.pencil-head h3 {
-	font-weight: 500;
-	font-size: 13px;
-	letter-spacing: 0.18em;
-	text-transform: uppercase;
-	color: var(--muted);
-}
-.pencil-head .ul { display: block; width: 100%; height: 9px; color: var(--rubric); overflow: visible; opacity: 0.8; }
-.penciled { margin-top: 18px; display: flex; flex-direction: column; gap: 18px; }
-.penciled-row { position: relative; }
-.penciled-row h4 { font-weight: 500; font-size: clamp(1.15rem, 2.8vw, 1.3rem); letter-spacing: -0.01em; color: var(--ink); display: inline; }
-.penciled-row p { display: inline; font-size: clamp(0.98rem, 2.2vw, 1.05rem); color: var(--body); margin-left: 8px; }
-
-/* ---- On paper: the typed CV sheet, corrected in red ---- */
-.onpaper {
-	position: relative;
-	margin-top: 26px;
-	background: var(--sheet2);
-	border: 1px solid var(--hair);
-	border-radius: 2px;
-	box-shadow: 0 10px 30px -18px rgba(42, 32, 24, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.35) inset;
-	padding: clamp(22px, 4vw, 40px) clamp(18px, 4vw, 44px) clamp(24px, 4vw, 38px);
-}
-@media (min-width: 999999px) {
-	.onpaper { box-shadow: 0 10px 30px -18px rgba(0, 0, 0, 0.7); }
-}
-.onpaper .tab {
-	position: absolute;
-	top: -12px; left: 26px;
-	font-family: var(--mono);
-	font-size: 10.5px;
-	letter-spacing: 0.14em;
-	text-transform: uppercase;
-	color: var(--muted);
-	background: var(--paper);
-	border: 1px solid var(--hair);
-	border-radius: 2px;
-	padding: 2px 10px;
-}
-.cvgroup { margin-top: 22px; }
-.cvgroup:first-of-type { margin-top: 0; }
-.cvgroup .glabel {
-	font-family: var(--mono);
-	font-size: 10.5px;
-	letter-spacing: 0.2em;
-	text-transform: uppercase;
-	color: var(--muted);
-	border-bottom: 1px solid var(--hair);
-	padding-bottom: 5px;
-	margin-bottom: 4px;
-}
-.cvrow {
-	display: grid;
-	grid-template-columns: minmax(0, 11fr) minmax(0, 9fr);
-	gap: 6px 28px;
-	align-items: baseline;
-	padding: 9px 0;
-	border-bottom: 1px dashed var(--hair);
-}
-.cvrow:last-child { border-bottom: 0; }
-.cvrow .fact {
-	font-family: var(--mono);
-	font-size: clamp(0.86rem, 2vw, 0.95rem);
-	line-height: 1.5;
-	color: var(--ink);
-}
-.cvrow .corr {
-	font-family: var(--hand);
-	font-size: 1.22rem;
-	line-height: 1.12;
-	color: var(--rubric);
-	transform: rotate(-0.8deg);
-}
-.onpaper .foot {
-	margin-top: 20px;
-	padding-top: 14px;
-	border-top: 1px solid var(--hair);
-	font-family: var(--mono);
-	font-size: clamp(0.82rem, 1.9vw, 0.9rem);
-	color: var(--body);
-	position: relative;
-}
-.onpaper .foot a { color: var(--ink); text-decoration: none; border-bottom: 1.5px solid var(--rule); }
-.onpaper .foot a:hover { color: var(--rubric); border-bottom-color: var(--rubric); }
-.onpaper .foot .corr { display: inline-block; margin-left: 14px; font-family: var(--hand); font-size: 1.18rem; color: var(--rubric); transform: rotate(-1deg); }
-
-/* ---- the notebook (blog) ---- */
-.entries { margin-top: 24px; }
-.year {
-	font-family: var(--mono);
-	font-size: 10.5px;
-	letter-spacing: 0.2em;
-	text-transform: uppercase;
-	color: var(--muted);
-	margin: 26px 0 6px;
-}
-.entry {
-	display: grid;
-	grid-template-columns: 92px minmax(0, 1fr);
-	gap: 18px;
-	align-items: baseline;
-	padding: 12px 0;
-	border-bottom: 1px dashed var(--hair);
-	text-decoration: none;
-}
-.entry:last-child { border-bottom: 0; }
-.entry time { font-family: var(--mono); font-size: 0.82rem; color: var(--muted); white-space: nowrap; }
-.entry .etitle { font-size: clamp(1.12rem, 2.6vw, 1.3rem); font-weight: 500; color: var(--ink); border-bottom: 1.5px solid transparent; transition: color 0.18s ease; }
-.entry:hover .etitle { color: var(--rubric); }
-.entry .gist { display: block; font-size: 0.98rem; color: var(--body); margin-top: 2px; }
-
-/* home teaser: titles only, so a quiet month never looks stale */
-.teaser { margin-top: 22px; display: flex; flex-direction: column; gap: 10px; }
-.teaser a {
-	font-size: clamp(1.1rem, 2.6vw, 1.28rem);
-	font-weight: 500;
-	color: var(--ink);
-	text-decoration: none;
-	border-bottom: 1.5px solid var(--rule);
-	align-self: flex-start;
-	transition: color 0.18s ease, border-color 0.18s ease;
-}
-.teaser a:hover { color: var(--rubric); border-bottom-color: var(--rubric); }
-.handlink {
-	display: inline-block;
-	font-family: var(--hand);
-	font-size: 1.3rem;
-	color: var(--rubric);
-	text-decoration: none;
-	margin-top: 16px;
-	border-bottom: 1px solid transparent;
-}
-.handlink:hover { border-bottom-color: var(--rubric); }
-
-/* ---- a post ---- */
-.post { max-width: 660px; }
-.post h1 {
-	font-weight: 500;
-	font-size: clamp(1.9rem, 5.5vw, 2.7rem);
-	line-height: 1.12;
+	font-size: clamp(1.35rem, 2.6vw, 1.7rem);
+	font-weight: 700;
+	line-height: 1.05;
 	letter-spacing: -0.015em;
-	text-wrap: balance;
-}
-.post .dateline { font-family: var(--mono); font-size: 0.85rem; color: var(--muted); margin-top: 10px; }
-.post .body { margin-top: 26px; position: relative; }
-.post .body p { font-size: clamp(1.04rem, 2.4vw, 1.14rem); line-height: 1.75; color: var(--body); margin-top: 18px; }
-.post .body p:first-child { margin-top: 0; }
-.post .body h2 { font-weight: 500; font-size: clamp(1.3rem, 3.2vw, 1.55rem); color: var(--ink); margin-top: 34px; }
-.post .body ul, .post .body ol { margin: 16px 0 0 22px; color: var(--body); }
-.post .body li { margin-top: 8px; line-height: 1.7; }
-.post .body blockquote {
-	margin-top: 20px;
-	padding-left: 18px;
-	border-left: 2px solid var(--rule);
-	font-style: italic;
 	color: var(--ink);
+	font-variant-numeric: lining-nums;
 }
-.post .body a { color: var(--ink); text-decoration: none; border-bottom: 1.5px solid var(--rule); }
-.post .body a:hover { color: var(--rubric); border-bottom-color: var(--rubric); }
-.postfoot { margin-top: 44px; padding-top: 18px; border-top: 1px solid var(--hair); display: flex; flex-wrap: wrap; gap: 8px 30px; }
+.fig-d { display: block; font-size: var(--t-micro); color: var(--ink-3); margin-top: 4px; }
 
-/* ---- write to me ---- */
-.letter { position: relative; }
-.emailrow { position: relative; }
-.email-big {
-	display: inline-block;
-	font-size: clamp(1.15rem, 3.4vw, 1.7rem);
-	font-weight: 500;
-	letter-spacing: -0.01em;
-	color: var(--ink);
-	text-decoration: none;
-	border-bottom: 2px solid var(--rule);
-	margin-top: 18px;
-	word-break: break-all;
-	transition: color 0.18s ease, border-color 0.18s ease;
+/* One number is circled, the way a person rings the figure that matters on a
+   printout. It is the page's loudest moment and the only one of its kind:
+   hierarchy drawn by hand rather than announced. */
+.ringed { position: relative; display: inline-block; padding: 7px 16px; margin-left: -16px; }
+.ring {
+	position: absolute; inset: 0; width: 100%; height: 100%;
+	color: var(--pen); overflow: visible; pointer-events: none;
 }
-.email-big:hover { color: var(--rubric); border-bottom-color: var(--rubric); }
-.letter .others { display: flex; flex-wrap: wrap; gap: 8px 26px; margin-top: 18px; font-size: 1.05rem; }
-.letter .others a { text-decoration: none; color: var(--ink); padding-bottom: 2px; border-bottom: 1.5px solid var(--rule); transition: color 0.18s ease, border-color 0.18s ease; }
-.letter .others a:hover { color: var(--rubric); border-bottom-color: var(--rubric); }
-.letter .place { font-style: italic; color: var(--muted); font-size: 1rem; }
+.ring path { stroke-dasharray: 1; stroke-dashoffset: 0; }
 
-/* ---- contact quick links (header) ---- */
-.says { position: relative; margin-top: 26px; }
-.hi { font-style: italic; font-size: 1.12rem; color: var(--ink); }
-.contact { display: flex; flex-wrap: wrap; gap: 10px 26px; margin-top: 10px; font-size: 1.08rem; }
-.contact a {
-	text-decoration: none; color: var(--ink);
-	padding-bottom: 2px;
-	border-bottom: 1.5px solid var(--rule);
-	transition: color 0.18s ease, border-color 0.18s ease;
+/* the record: small, on purpose. It is the footnote to the work, not the work. */
+.record {
+	font-size: var(--t-small);
+	line-height: 1.68;
+	color: var(--ink-2);
+	max-width: 58ch;
+	margin-top: var(--s-5);
+	padding-left: var(--s-3);
+	border-left: 2px solid var(--pen-mat);
 }
-.contact a:hover { color: var(--rubric); border-bottom-color: var(--rubric); }
+.record a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--pen-mat); }
+.record a:hover { color: var(--pen); border-bottom-color: var(--pen); }
 
-/* ---- colophon ---- */
-.colophon {
-	margin-top: clamp(46px, 7vw, 70px);
-	padding-top: 20px;
-	border-top: 1px solid var(--hair);
-	display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 18px;
-	font-size: 12.5px; color: var(--muted); font-style: italic;
+/* --- AFTER HOURS: the things ---------------------------------------------- */
+.things { margin-top: var(--s-5); display: flex; flex-direction: column; gap: var(--s-6); }
+.thing { display: grid; grid-template-columns: minmax(0, 268px) minmax(0, 1fr); gap: var(--s-5); align-items: center; text-decoration: none; color: inherit; }
+.thing-shot { min-width: 0; }
+.thing-shot img {
+	width: 100%; aspect-ratio: 16 / 10; height: auto; object-fit: cover; object-position: top center;
+	border: 5px solid var(--mat);
+	box-shadow: 0 8px 20px -12px rgba(20, 22, 28, 0.5), 0 0 0 1px var(--hair);
+	transform: rotate(-1deg);
+	transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
 }
-.colophon .hand { font-family: var(--hand); font-style: normal; font-size: 16px; color: var(--rubric); }
-.colophon a { text-decoration: none; border-bottom: 1px solid var(--hair); padding: 8px 4px; margin: -8px -4px; }
-.colophon a:hover { color: var(--rubric); }
-
-/* quiet inline text link (feed line etc.) */
-.qlink { color: inherit; text-decoration: none; border-bottom: 1.5px solid var(--rule); }
-.qlink:hover { color: var(--rubric); border-bottom-color: var(--rubric); }
-.feedline { margin-top: 16px; }
-
-/* ---- desktop: notes go out into the true margin ---- */
-@media (min-width: 1000px) {
-	:root { --pad-r: 208px; }
-	.note {
-		position: absolute;
-		top: 0;
-		left: calc(100% + 30px);
-		width: 150px;
-		margin: 0;
-		font-size: 1.34rem;
-	}
-	.note.tilt { transform: rotate(-2.5deg); }
-	.intro > .note { top: -2px; }
-	.lede .note { top: 26px; }
-	.says .note { top: 20px; }
-	.work .note { top: 4px; }
-	.role .note { top: -6px; }
-	.penciled-row .note { top: -2px; }
-	/* the pencil rows are one line tall; two-line notes on every row merge into one scribble,
-	   so the margin keeps only the first note on desktop */
-	.penciled-row .note.mobile-rest { display: none; }
-	/* intro paragraphs are width-capped, so their own box cannot anchor a margin note:
-	   let the note escape to the full-width section instead */
-	.section-intro { position: static; }
-	.section-intro .note { top: 84px; }
-	.emailrow .note { top: 8px; }
-	/* post bodies are capped at 660px, narrower than the book: notes anchor to their own
-	   paragraph and jump 86px so they land beyond the margin rule, not bisected by it */
-	.post .body p { position: relative; }
-	.post .body .note { position: absolute; left: calc(100% + 86px); width: 150px; margin: 0; top: 0; }
-	/* On paper: corrections live ON the typed sheet, so its rows keep the two-column grid instead */
+.thing:nth-child(even) .thing-shot img { transform: rotate(1deg); }
+.thing:hover .thing-shot img, .thing:focus-visible .thing-shot img { transform: rotate(0deg); box-shadow: 0 14px 30px -14px var(--pen-mat), 0 0 0 1px var(--hair); }
+.thing-t { font-size: var(--t-h3); font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+.thing-t .deva { font-family: var(--deva); font-weight: 500; }
+.thing-d { font-size: var(--t-body); color: var(--ink-2); margin-top: 5px; max-width: 42ch; }
+.thing-v {
+	display: inline-block; margin-top: var(--s-2);
+	font-size: var(--t-small); color: var(--pen);
+	position: relative; padding-bottom: 3px;
 }
+.thing-v svg { position: absolute; left: 0; bottom: -1px; width: 100%; height: 6px; overflow: visible; }
+.thing-v svg path { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+.thing:hover .thing-v svg path, .thing:focus-visible .thing-v svg path { stroke-dashoffset: 0; }
 
-/* ---- mid widths ---- */
-@media (max-width: 999px) {
-	.note .arw { transform: rotate(-8deg); }
-}
+/* the bench: same hand, lighter pressure. Pencil, not ink. */
+.bench { margin-top: var(--s-7); }
+.bench-say { font-size: var(--t-small); color: var(--ink-3); }
+.bench-list { margin-top: var(--s-3); display: flex; flex-direction: column; gap: var(--s-3); }
+.bench-row { padding-top: var(--s-3); border-top: 1px dashed var(--pen-mat); }
+.bench-t { font-size: var(--t-body); font-weight: 600; color: var(--ink-2); }
+.bench-d { font-size: var(--t-small); color: var(--ink-3); margin-top: 2px; }
 
-/* ---- narrower than the two-column CV sheet wants ---- */
-@media (max-width: 700px) {
-	.cvrow { grid-template-columns: 1fr; gap: 2px; padding: 10px 0; }
-	.cvrow .corr { transform: rotate(-1deg); margin-left: 10px; }
+/* --- MOST NIGHTS: the plates --------------------------------------------- */
+/* The plates keep to the print column like everything else: cohesion beats
+   spectacle. They earn their presence through size within the column. */
+.plates {
+	margin-top: var(--s-4);
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: var(--s-3);
 }
+.plate img {
+	width: 100%; aspect-ratio: 3 / 4; height: auto; object-fit: cover;
+	border: 6px solid var(--mat);
+	box-shadow: 0 9px 22px -14px rgba(20, 22, 28, 0.5), 0 0 0 1px var(--hair);
+	transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.plate:nth-child(1) img { transform: rotate(-1.6deg); }
+.plate:nth-child(2) img { transform: rotate(0.8deg); }
+.plate:nth-child(3) img { transform: rotate(-0.6deg); }
+.plate:hover img { transform: rotate(0deg) scale(1.015); }
+.plate figcaption { font-size: var(--t-micro); color: var(--ink-3); margin-top: 8px; }
 
-/* ---- mobile: compact and dense, contact on the first screen ---- */
-@media (max-width: 620px) {
-	body { padding: 12px 10px 26px; line-height: 1.55; }
-	.sheet { padding: 24px 20px 30px; border-radius: 2px; }
-	.runhead { padding-bottom: 13px; margin-bottom: 18px; font-size: 10.5px; letter-spacing: 0.16em; }
-	.runhead .rh-right { gap: 14px; }
-	.runhead .folio { font-size: 15px; }
-	.head { grid-template-columns: 66px minmax(0, 1fr); gap: 15px; align-items: center; }
-	.plate { transform: rotate(-2.2deg); margin: 0; }
-	.plate img { border-width: 4px; }
-	.plate figcaption { display: none; }
-	.name { font-size: 2.05rem; line-height: 0.96; }
-	.role { font-size: 1rem; margin-top: 6px; }
-	.lede { font-size: 1rem; line-height: 1.55; margin-top: 14px; max-width: none; }
-	/* the underlined phrase must be allowed to wrap on a narrow page */
-	.mark { white-space: normal; }
-	.mark svg { display: none; }
-	.mark {
-		text-decoration: underline;
-		text-decoration-style: wavy;
-		text-decoration-color: var(--rubric);
-		text-decoration-thickness: 1.5px;
-		text-underline-offset: 4px;
-	}
-	.note { font-size: 1.18rem; margin: 8px 0 2px; }
-	/* mobile keeps roughly one note per section: the extras rest */
-	.note.mobile-rest { display: none; }
-	.section { margin-top: 30px; }
-	.section-intro { margin-top: 10px; font-size: 0.98rem; }
-	.works { margin-top: 18px; gap: 22px; }
-	/* minmax(0,…): a plain 1fr track refuses to shrink below the 640px intrinsic image width */
-	.work { grid-template-columns: minmax(0, 1fr); gap: 12px; padding-bottom: 22px; }
-	.plate2 { min-width: 0; }
-	.plate2, .work:nth-child(even) .plate2 { transform: rotate(-1deg); }
-	.plate2 img { border-width: 4px; }
-	.tline .ul { opacity: 1; }
-	.tline .ul path { stroke-dashoffset: 0; }
-	.desc { margin-top: 7px; }
-	.says { margin-top: 16px; }
-	.hi { font-size: 1.02rem; }
-	.contact { margin-top: 8px; gap: 8px 20px; font-size: 1.02rem; }
-	.pencil-head { margin-top: 26px; }
-	.penciled { margin-top: 12px; gap: 14px; }
-	.onpaper { margin-top: 18px; }
-	.cvgroup { margin-top: 16px; }
-	.entry { grid-template-columns: 1fr; gap: 2px; padding: 10px 0; }
-	.post .dateline { margin-top: 8px; }
-	.post .body { margin-top: 18px; }
-	.postfoot { margin-top: 30px; }
-	.colophon { margin-top: 30px; }
-}
-@media (max-width: 360px) {
-	.head { grid-template-columns: 56px minmax(0, 1fr); gap: 12px; }
-	.name { font-size: 1.85rem; }
-}
+/* --- THE NOTEBOOK -------------------------------------------------------- */
+.shelf { margin-top: var(--s-5); border-top: 1px solid var(--hair); }
+.shelf-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--s-3); align-items: baseline; padding: var(--s-3) 0; border-bottom: 1px solid var(--hair); }
+.shelf-t { font-size: var(--t-h3); font-weight: 600; color: var(--ink); }
+.shelf-row.empty .shelf-t { color: var(--ink-3); font-weight: 400; font-style: italic; }
+.shelf-m { font-size: var(--t-small); color: var(--ink-3); }
+.shelf-link { display: inline-block; margin-top: var(--s-4); font-size: var(--t-small); color: var(--pen); text-decoration: none; border-bottom: 1px solid var(--pen-mat); padding-bottom: 2px; }
+.shelf-link:hover { border-bottom-color: var(--pen); }
 
-/* ---- motion ---- */
+/* --- WRITE TO ME --------------------------------------------------------- */
+.closing { padding-bottom: var(--s-8); }
+.address {
+	display: inline-block; margin-top: var(--s-4);
+	font-size: clamp(1.1rem, 2.9vw, 1.55rem);
+	font-weight: 600; letter-spacing: -0.01em;
+	color: var(--ink); text-decoration: none;
+	border-bottom: 2px solid var(--pen-mat);
+	word-break: break-word;
+	transition: color 0.2s ease, border-color 0.2s ease;
+}
+.address:hover { color: var(--pen); border-bottom-color: var(--pen); }
+.elsewhere { margin-top: var(--s-4); display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: var(--t-small); }
+.elsewhere a { color: var(--ink-2); text-decoration: none; border-bottom: 1px solid var(--pen-mat); padding-bottom: 2px; }
+.elsewhere a:hover { color: var(--pen); border-bottom-color: var(--pen); }
+.elsewhere span { color: var(--ink-3); }
+
+/* --- FOOT ---------------------------------------------------------------- */
+.foot { border-top: 1px solid var(--hair); margin-top: var(--s-8); }
+.foot-in {
+	max-width: 1000px; margin: 0 auto;
+	padding: var(--s-5) clamp(20px, 5vw, 40px) var(--s-6);
+	display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-3);
+	font-size: var(--t-micro); color: var(--ink-3);
+}
+.foot svg { height: 20px; width: auto; color: var(--pen-2); opacity: 0.8; }
+
+/* ==========================================================================
+   MOTION: every animation on this page is the same hand, moving.
+   Rules draw themselves as you reach them. Notes appear a beat later, the way
+   a note is written after the line it comments on. Nothing moves that is not
+   the pen. Progressive enhancement: without scroll-driven support the page is
+   simply complete and still.
+   ========================================================================== */
+.name-rule path, .divider path { stroke-dasharray: 1; stroke-dashoffset: 0; }
+
 @media (prefers-reduced-motion: no-preference) {
-	.reveal { opacity: 0; animation: fade 0.7s ease forwards; }
-	.note { opacity: 0; animation: fadeUp 0.7s ease forwards; animation-delay: 0.35s; }
-	.section-head .ul path { stroke-dasharray: 260; stroke-dashoffset: 260; animation: draw 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards; }
-	.work:nth-child(1) .note { animation-delay: 0.4s; }
-	.work:nth-child(2) .note { animation-delay: 0.5s; }
-	.work:nth-child(3) .note { animation-delay: 0.6s; }
-	@keyframes fade { to { opacity: 1; } }
-	@keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-	@keyframes draw { to { stroke-dashoffset: 0; } }
+	/* the name signs itself once, on arrival, then the hand marks its phrase */
+	.name-rule path { animation: draw 1.05s cubic-bezier(0.22, 1, 0.36, 1) 0.15s backwards; }
+	.mark svg path { animation: draw 0.65s cubic-bezier(0.22, 1, 0.36, 1) 1.05s backwards; }
+	.opening .note { animation: note-in 0.7s ease 1.4s backwards; }
+
+	@supports (animation-timeline: view()) {
+		/* the ring is drawn as you arrive at the number it is about */
+		.ring path {
+			animation: draw linear both;
+			animation-timeline: view();
+			animation-range: entry 18% entry 74%;
+		}
+		.divider path {
+			animation: draw linear both;
+			animation-timeline: view();
+			animation-range: entry 8% entry 78%;
+		}
+		.section .note {
+			animation: note-in linear both;
+			animation-timeline: view();
+			animation-range: entry 14% entry 62%;
+		}
+		.figure {
+			animation: settle linear both;
+			animation-timeline: view();
+			animation-range: entry 6% entry 52%;
+		}
+		.plate img, .thing-shot img {
+			animation: place linear both;
+			animation-timeline: view();
+			animation-range: entry 4% entry 46%;
+		}
+		/* the pen's own hover strokes stay instant; only arrival is scroll-driven */
+	}
 }
-@media (prefers-reduced-motion: reduce) {
-	.plate, .plate2, .work:nth-child(even) .plate2, .visit .a { transition: none; }
-	.plate:hover, .work:hover .plate2, .work:focus-visible .plate2 { transform: inherit; }
-	.work:hover .visit .a, .work:focus-visible .visit .a { transform: none; }
-	.tline .ul, .tline .ul path { transition: none; }
-	.tline .ul path { stroke-dashoffset: 0; }
+
+@keyframes draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes note-in { from { opacity: 0; transform: translateY(7px) rotate(-1.6deg); } to { opacity: 1; transform: none; } }
+@keyframes settle { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes place { from { opacity: 0; transform: rotate(0deg) scale(0.985); } to { opacity: 1; } }
+
+/* ==========================================================================
+   MOBILE: dense, and the hand comes down off the margin to sit under its line.
+   ========================================================================== */
+@media (max-width: 860px) {
+	:root { --margin-col: 0px; --gutter: 0px; }
+	.band > .inner { grid-template-columns: minmax(0, 1fr); }
+	.note { margin-top: var(--s-3); max-width: 34ch; }
+	.pin { max-width: 150px; margin-top: var(--s-4); }
+	.pin figcaption { text-align: left; }
+	.figure { padding: var(--s-2) 0; }
 }
+
+@media (max-width: 620px) {
+	:root { --s-8: 64px; --s-7: 52px; --s-6: 40px; --s-5: 32px; }
+	body { font-size: 1rem; line-height: 1.56; }
+	.opening { padding-top: var(--s-5); }
+	.name { font-size: 2.3rem; }
+	.lede { font-size: 1.0625rem; max-width: none; }
+	.role { margin-top: var(--s-2); }
+	.door { margin-top: var(--s-4); width: 100%; }
+	.pin { display: none; }               /* the desk photo is a desk thing */
+	.thing { grid-template-columns: minmax(0, 1fr); gap: var(--s-3); }
+	.thing-shot img, .thing:nth-child(even) .thing-shot img { transform: rotate(0deg); }
+	/* three tiny thumbnails waste the photographs. Two portraits, then one wide:
+	   a composition rather than a shrunken strip. */
+	.plates { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-2); }
+	.plate:nth-child(3) { grid-column: 1 / -1; }
+	.plate:nth-child(3) img { aspect-ratio: 16 / 10; object-position: center 62%; }
+	.plate figcaption { display: none; }
+	.record { font-size: 0.8125rem; }
+	.note { font-size: 1.2rem; }
+	.shelf-row { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+
+	/* the masthead earns its space back: the button is already on this screen,
+	   so the nav does not need to repeat it, and the switch speaks for itself */
+	.nav a[href="#write"] { display: none; }
+	.night-label { display: none; }
+	.masthead-in { padding: 10px clamp(20px, 5vw, 40px); }
+	.wordmark svg { height: 22px; }
+	.role { font-size: 0.8125rem; letter-spacing: 0.12em; }
+	.lede { margin-top: var(--s-2); }
+	.h2 { margin-top: var(--s-4); }
+}
+
+/* --- inner pages --------------------------------------------------------- */
+.page-title { font-size: clamp(2rem, 5vw, 3.2rem); }
+.say-top { margin-top: var(--s-3); }
+.post-body { max-width: 58ch; margin-top: var(--s-4); }
+.post-body p { margin-top: var(--s-2); }
+.post-body .h2 { margin-top: var(--s-4); }

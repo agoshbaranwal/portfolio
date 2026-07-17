@@ -17,6 +17,14 @@ if grep -l "—" index.html 404.html feed.xml writing/*.html 2>/dev/null; then
 	echo "FAIL: em dash found in copy"; fail=1
 fi
 
+# 2b. Exactly the three approved figures, and no percentage stats anywhere.
+if [ "$(grep -oE '10x ROAS|\$3M|\$100k' index.html | wc -l | tr -d ' ')" != "3" ]; then
+	echo "FAIL: the three approved figures (10x ROAS, \$3M, \$100k) are not exactly present"; fail=1
+fi
+if grep -oE '[0-9]+%' index.html >/dev/null 2>&1; then
+	echo "FAIL: percentage stat found (owner ruled: no percentages)"; fail=1
+fi
+
 # 3. Never a stated number of years of experience.
 if grep -liE "[0-9]+\+? (yrs|years)" index.html 404.html writing/*.html 2>/dev/null; then
 	echo "FAIL: years-of-experience figure found"; fail=1
@@ -38,7 +46,7 @@ if [ -n "$1" ]; then
 fi
 
 # 6. The locked project order on the homepage: admenow, Utsav, tvbadger.
-order=$(grep -oE 'admenow\.vercel|utsav-pi\.vercel|tvbadger\.vercel' index.html | head -3 | tr '\n' ' ')
+order=$(grep -oE 'href="https://(admenow|utsav-pi|tvbadger)\.vercel' index.html | sed 's/href="https:\/\///' | head -3 | tr '\n' ' ')
 [ "$order" = "admenow.vercel utsav-pi.vercel tvbadger.vercel " ] || { echo "FAIL: project order changed: $order"; fail=1; }
 
 # 7. The locked section heading.

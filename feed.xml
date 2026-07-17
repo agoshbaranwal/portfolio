@@ -3,16 +3,9 @@
 	<channel>
 		<title>Agosh Baranwal · the notebook</title>
 		<link>https://agoshportfolio.vercel.app/writing</link>
-		<description>Notes and takes on whatever has my attention: food, football, politics, philosophy.</description>
+		<description>Notes on food, football, politics, philosophy. They land here when they are ready.</description>
 		<language>en</language>
-		<lastBuildDate>Fri, 17 Jul 2026 12:00:00 +0200</lastBuildDate>
+		<lastBuildDate>Fri, 17 Jul 2026 22:00:00 +0200</lastBuildDate>
 		<atom:link href="https://agoshportfolio.vercel.app/feed.xml" rel="self" type="application/rss+xml" />
-		<item>
-			<title>The first note</title>
-			<link>https://agoshportfolio.vercel.app/writing/first-note</link>
-			<guid isPermaLink="true">https://agoshportfolio.vercel.app/writing/first-note</guid>
-			<pubDate>Fri, 17 Jul 2026 12:00:00 +0200</pubDate>
-			<description>The notebook opens. A real note is on its way.</description>
-		</item>
 	</channel>
 </rss>
