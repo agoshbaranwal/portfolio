@@ -135,13 +135,31 @@ a { color: inherit; }
 }
 .col { min-width: 0; }
 
+/* skip past the masthead, drawn only for the keyboard */
+.skip {
+	position: absolute; left: -9999px; top: 10px; z-index: 40;
+	background: var(--pen); color: var(--paper);
+	padding: 10px 18px; border-radius: 2px;
+	font-size: var(--t-small); text-decoration: none;
+}
+.skip:focus-visible { left: 10px; }
+
 /* --- THE MASTHEAD -------------------------------------------------------- */
 .masthead {
 	position: sticky; top: 0; z-index: 20;
 	background: color-mix(in srgb, var(--paper) 88%, transparent);
 	backdrop-filter: blur(8px);
 	border-bottom: 1px solid transparent;
-	transition: border-color 0.3s ease;
+}
+@media (prefers-reduced-motion: no-preference) {
+	@supports (animation-timeline: scroll()) {
+		.masthead { animation: masthead-line linear both; animation-timeline: scroll(); animation-range: 0 140px; }
+	}
+}
+@keyframes masthead-line { to { border-bottom-color: var(--hair); } }
+@media (prefers-reduced-motion: reduce) {
+	.keep-pick:active .strum, .keep-pick:focus-visible .strum { animation: none; }
+	.night-track::after, .door, .pin img, .thing-shot img, .keepsake, .plate2 { transition-duration: 0.01s; }
 }
 .masthead-in {
 	max-width: 1000px; margin: 0 auto;
@@ -150,6 +168,10 @@ a { color: inherit; }
 }
 .wordmark { display: inline-flex; align-items: center; text-decoration: none; color: var(--ink); }
 .wordmark svg { height: 30px; width: auto; color: var(--pen); overflow: visible; }
+.wordmark path { stroke-dasharray: 1; stroke-dashoffset: 0; }
+@media (prefers-reduced-motion: no-preference) {
+	.wordmark:hover path, .wordmark:focus-visible path { animation: draw 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+}
 .nav { display: flex; align-items: center; gap: clamp(14px, 2.4vw, 26px); }
 .nav a {
 	font-size: 1rem;
@@ -162,7 +184,8 @@ a { color: inherit; }
 .nav a:hover { color: var(--pen); border-bottom-color: var(--pen); }
 
 /* the toggle: a real control, not a decoration */
-.night-toggle { display: inline-flex; align-items: center; gap: 7px; cursor: pointer; user-select: none; }
+.night-toggle { display: inline-flex; align-items: center; gap: 7px; cursor: pointer; user-select: none; min-height: 24px; padding: 6px 0; }
+.night-toggle:hover .night-track { border-color: var(--pen); }
 #night { position: absolute; opacity: 0; width: 0; height: 0; }
 .night-track {
 	width: 34px; height: 18px; border-radius: 999px;
@@ -181,7 +204,7 @@ html:has(#night:checked) .night-track::after { transform: translateX(16px); }
 .night-marquee { width: 22px; height: 19px; color: var(--pen); opacity: 0.9; }
 
 /* --- THE OPENING --------------------------------------------------------- */
-.opening { padding: clamp(48px, 9vw, 86px) 0 var(--s-5); }
+.opening { padding: clamp(48px, 9vw, 86px) 0 var(--s-2); }
 .name {
 	font-family: var(--print);
 	font-size: var(--t-name);
@@ -247,9 +270,10 @@ html:has(#night:checked) .night-track::after { transform: translateX(16px); }
 }
 .note em { font-style: normal; }
 .tick { display: block; width: 30px; height: 15px; margin-bottom: 3px; color: var(--pen); opacity: 0.9; }
-/* a note that comments on something further down its section, not its top */
-.note-low { margin-top: 425px; }
-@media (max-width: 860px) { .note-low { margin-top: var(--s-3); } }
+/* the after-hours note is placed structurally beside the live cards */
+.col-note { align-self: center; }
+@media (max-width: 860px) { .col-note { align-self: start; } }
+.col-bench { grid-column: 1; }
 
 /* --- SECTIONS ------------------------------------------------------------ */
 /* The demarcation: one stroke from the same hand, drawn as you arrive. */
@@ -292,7 +316,7 @@ html:has(#night:checked) .night-track::after { transform: translateX(16px); }
 /* One number is circled, the way a person rings the figure that matters on a
    printout. It is the page's loudest moment and the only one of its kind:
    hierarchy drawn by hand rather than announced. */
-.ringed { position: relative; display: inline-block; padding: 7px 16px; margin-left: -16px; }
+.ringed { position: relative; display: inline-block; padding: 7px 16px; margin: -7px 0 -7px -16px; }
 .ring {
 	position: absolute; inset: 0; width: 100%; height: 100%;
 	color: var(--pen); overflow: visible; pointer-events: none;
@@ -342,6 +366,7 @@ html:has(#night:checked) .night-track::after { transform: translateX(16px); }
 .bench-say { font-size: var(--t-small); color: var(--ink-3); }
 .bench-list { margin-top: var(--s-3); display: flex; flex-direction: column; gap: var(--s-3); }
 .bench-row { padding-top: var(--s-3); border-top: 1px dashed var(--pen-mat); }
+.bench-row:last-child { border-bottom: 1px dashed var(--pen-mat); padding-bottom: var(--s-3); }
 .bench-t { font-size: var(--t-body); font-weight: 600; color: var(--ink-2); }
 .bench-d { font-size: var(--t-small); color: var(--ink-3); margin-top: 2px; }
 
@@ -413,11 +438,6 @@ html:has(#night:checked) .night-track::after { transform: translateX(16px); }
 			animation-timeline: view();
 			animation-range: entry 14% entry 62%;
 		}
-		.figure {
-			animation: settle linear both;
-			animation-timeline: view();
-			animation-range: entry 6% entry 52%;
-		}
 		.thing-shot img {
 			animation: place linear both;
 			animation-timeline: view();
@@ -428,7 +448,7 @@ html:has(#night:checked) .night-track::after { transform: translateX(16px); }
 }
 
 @keyframes draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
-@keyframes note-in { from { opacity: 0; transform: translateY(7px) rotate(-1.6deg); } to { opacity: 1; transform: none; } }
+@keyframes note-in { from { opacity: 0; transform: translateY(7px) rotate(-1.6deg); } to { opacity: 1; } }
 @keyframes settle { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 @keyframes place { from { opacity: 0; transform: rotate(0deg) scale(0.985); } to { opacity: 1; } }
 
@@ -514,6 +534,7 @@ html:has(#night:checked) .night-track::after { transform: translateX(16px); }
 @media (prefers-reduced-motion: no-preference) {
 	@supports (animation-timeline: view()) {
 		.keepsake, .keepsake-stub { animation: note-in linear both; animation-timeline: view(); animation-range: entry 16% entry 64%; }
+		.postmark path, .postmark circle { stroke-dasharray: 1; stroke-dashoffset: 0; animation: draw linear both; animation-timeline: view(); animation-range: entry 20% entry 70%; }
 	}
 }
 .keepsake svg { display: block; }
@@ -523,9 +544,9 @@ html:has(#night:checked) .night-track::after { transform: translateX(16px); }
 .keep-leaf { width: 46px; transform: rotate(-11deg); }
 .keepsake:hover, .keepsake:focus-visible { transform: rotate(0deg) translateY(-3px); }
 /* the pick strums when pressed: the one keepsake that is an instrument, not a door */
-.keep-pick:active .strum { animation: strum 0.45s ease; }
-.keep-pick:active .s2 { animation-delay: 0.06s; }
-.keep-pick:active .s3 { animation-delay: 0.12s; }
+.keep-pick:active .strum, .keep-pick:focus-visible .strum { animation: strum 0.45s ease; }
+.keep-pick:active .s2, .keep-pick:focus-visible .s2 { animation-delay: 0.06s; }
+.keep-pick:active .s3, .keep-pick:focus-visible .s3 { animation-delay: 0.12s; }
 @keyframes strum { 30% { transform: translateY(2.5px); } 60% { transform: translateY(-1.5px); } 100% { transform: none; } }
 
 /* --- the postcard ---------------------------------------------------------- */
@@ -572,5 +593,7 @@ html:has(#night:checked) .postmark { mix-blend-mode: screen; }
 @media (max-width: 620px) {
 	.keeps { justify-content: flex-start; gap: 14px; margin-top: var(--s-3); }
 	.postcard { grid-template-columns: 1fr; transform: none; }
+	.pc-line br { display: none; }
+	.pc-left .address { font-size: 0.95rem; }
 	.pc-right { border-left: 0; border-top: 1.5px dashed var(--hair); padding-top: 56px; }
 }

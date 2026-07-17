@@ -17,13 +17,16 @@
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:image:alt" content="A bright paper card: Agosh Baranwal, performance and product marketer. I run growth for a living and build products of my own after hours. A photo of Agosh by the sea, and a handwritten note saying hi, so glad you wandered in." />
 		<link rel="alternate" type="application/rss+xml" title="Agosh Baranwal · the notebook" href="/feed.xml" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23fbfbf8'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-style='italic' font-weight='700' fill='%231d3a63' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Vollkorn:ital,wght@0,400..900;1,400..700&family=Kalam:wght@300;400;700&family=Noto+Serif+Devanagari:wght@400..600&display=swap" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css2?family=Vollkorn:ital,wght@0,400..900;1,400..700&family=Kalam:wght@400;700&display=swap" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@500&text=%E0%A4%89%E0%A4%A4%E0%A5%8D%E0%A4%B8%E0%A4%B5&display=swap" rel="stylesheet" />
 		<link rel="stylesheet" href="/site.css" />
 	</head>
 	<body>
+		<a class="skip" href="#main">Skip to the page</a>
 		<!-- ===================================================================
 		     THE MASTHEAD. Two destinations and a switch. No section anchors:
 		     this page is a read, not a directory. A menu of parts would be the
@@ -41,7 +44,7 @@
 					<a href="/writing">Writing</a>
 					<a href="#write">Write to me</a>
 					<label class="night-toggle" for="night" title="Lights down. The late show is the night mode.">
-						<input type="checkbox" id="night" />
+						<input type="checkbox" id="night" role="switch" aria-label="Late show: night mode" />
 						<svg class="night-marquee" viewBox="0 0 26 22" fill="none" aria-hidden="true">
 							<rect x="2" y="6" width="22" height="13" rx="2" stroke="currentColor" stroke-width="1.6"/>
 							<path d="M2 10 L24 10" stroke="currentColor" stroke-width="1.3"/>
@@ -55,7 +58,7 @@
 			</div>
 		</header>
 
-		<main class="page">
+		<main class="page" id="main">
 			<div class="spine" aria-hidden="true"></div>
 			<!-- ===============================================================
 			     THE OPENING. Name, what he is, and four sentences that quietly
@@ -224,7 +227,16 @@
 								</div>
 							</a>
 						</div>
+					</div>
 
+					<div class="col col-note">
+						<span class="note">
+							<svg class="tick" viewBox="0 0 30 15" fill="none" aria-hidden="true"><path d="M28 3.5 C 18 1, 7 4.5, 2 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M2 12.5 L9 11 M2 12.5 L5.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+							click around, it's alive
+						</span>
+					</div>
+
+					<div class="col col-bench">
 						<div class="bench">
 							<p class="bench-say">Three on the bench. Links when they earn them.</p>
 							<div class="bench-list">
@@ -242,13 +254,6 @@
 								</div>
 							</div>
 						</div>
-					</div>
-
-					<div class="col">
-						<span class="note note-low">
-							<svg class="tick" viewBox="0 0 30 15" fill="none" aria-hidden="true"><path d="M28 3.5 C 18 1, 7 4.5, 2 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M2 12.5 L9 11 M2 12.5 L5.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-							click around, it's alive
-						</span>
 					</div>
 				</div>
 			</section>
@@ -277,7 +282,7 @@
 						<a class="shelf-link" href="/writing">the notebook, when it fills</a>
 					</div>
 					<div class="col">
-						<svg class="keepsake keepsake-stub" viewBox="0 0 128 66" fill="none" aria-hidden="true">
+						<svg class="keepsake-stub" viewBox="0 0 128 66" fill="none" aria-hidden="true">
 							<rect x="3" y="3" width="122" height="60" rx="6" stroke="currentColor" stroke-width="1.8"/>
 							<path d="M92 4 L92 62" stroke="currentColor" stroke-width="1.3" stroke-dasharray="3.5 4.5" opacity="0.7"/>
 							<text x="47" y="30" text-anchor="middle" font-family="Kalam, cursive" font-size="12.5" letter-spacing="2.5" fill="currentColor">ADMIT</text>
@@ -315,9 +320,9 @@
 							<div class="pc-right">
 								<span class="stamp"><img src="avatar.jpg" alt="" width="64" height="64" /></span>
 								<svg class="postmark" viewBox="0 0 90 44" fill="none" aria-hidden="true">
-									<circle cx="24" cy="22" r="17" stroke="currentColor" stroke-width="1.4" opacity="0.55"/>
-									<circle cx="24" cy="22" r="12.5" stroke="currentColor" stroke-width="1" opacity="0.4"/>
-									<path d="M46 14 C 58 11, 74 11, 88 14 M46 22 C 58 19, 74 19, 88 22 M46 30 C 58 27, 74 27, 88 30" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.45"/>
+									<circle cx="24" cy="22" r="17" stroke="currentColor" stroke-width="1.4" opacity="0.55" pathLength="1"/>
+									<circle cx="24" cy="22" r="12.5" stroke="currentColor" stroke-width="1" opacity="0.4" pathLength="1"/>
+									<path d="M46 14 C 58 11, 74 11, 88 14 M46 22 C 58 19, 74 19, 88 22 M46 30 C 58 27, 74 27, 88 30" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.45" pathLength="1"/>
 								</svg>
 								<p class="pc-to"><span>To:</span> whoever found this page</p>
 								<p class="pc-from"><span>From:</span> Agosh</p>

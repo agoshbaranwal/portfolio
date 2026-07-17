@@ -22,8 +22,8 @@ for fig in "10x ROAS" "\$3M" "\$100k"; do
 	n=$(grep -oF "$fig" index.html | wc -l | tr -d ' ')
 	[ "$n" = "1" ] || { echo "FAIL: figure '$fig' appears $n times (must be exactly 1)"; fail=1; }
 done
-if grep -oE '[0-9]+%' index.html >/dev/null 2>&1; then
-	echo "FAIL: percentage stat found (owner ruled: no percentages)"; fail=1
+if sed 's/href="[^"]*"//g' index.html | grep -oE '[0-9]+%' >/dev/null 2>&1; then
+	echo "FAIL: percentage stat found in visible copy (owner ruled: no percentages)"; fail=1
 fi
 
 # 3. Never a stated number of years of experience.
