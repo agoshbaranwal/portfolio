@@ -2,12 +2,12 @@
    Agosh Baranwal
    ----------------------------------------------------------------------------
    WHAT THIS SITE IS: an introduction to one person. Not a portfolio, not a CV.
-   THE LOGIC: the page is shaped like his day. By day he grows other people's
-   products (the work, the numbers). After hours he builds his own (the
-   products). Most nights he cooks (dinner). Underneath it all he thinks (the
-   notebook). Every section is the same person making something at a different
-   hour, which is why numbers and food can share a page: they are the same
-   instinct on different clocks. Nothing says this out loud. The order says it.
+   THE LOGIC: the page is shaped like his day. By day he runs growth (the
+   figures and the record). After hours he builds products of his own. What he
+   thinks lives in the notebook, and the page ends at a postcard already
+   addressed to the reader. The keepsake drawings under his photo are the doors
+   to the rest of him: the kitchen, the cinema, the climate, the guitar.
+   Nothing says any of this out loud. The order and the objects say it.
    THE SPINE: one hand, in one pen, drawing the whole way down. Every section
    break is a stroke from that hand, drawn as you reach it. The line separates
    and joins at the same time. That is the demarcation AND the cohesion.
@@ -149,10 +149,10 @@ a { color: inherit; }
 	display: flex; align-items: center; justify-content: space-between; gap: var(--s-3);
 }
 .wordmark { display: inline-flex; align-items: center; text-decoration: none; color: var(--ink); }
-.wordmark svg { height: 26px; width: auto; color: var(--pen); overflow: visible; }
+.wordmark svg { height: 30px; width: auto; color: var(--pen); overflow: visible; }
 .nav { display: flex; align-items: center; gap: clamp(14px, 2.4vw, 26px); }
 .nav a {
-	font-size: var(--t-small);
+	font-size: 1rem;
 	text-decoration: none; color: var(--ink-2);
 	padding: 8px 2px;
 	white-space: nowrap;
@@ -177,7 +177,8 @@ a { color: inherit; }
 }
 html:has(#night:checked) .night-track::after { transform: translateX(16px); }
 #night:focus-visible + .night-track { outline: 2px solid var(--pen); outline-offset: 3px; }
-.night-label { font-size: var(--t-micro); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); }
+.night-label { font-size: 0.8125rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--ink-2); }
+.night-marquee { width: 22px; height: 19px; color: var(--pen); opacity: 0.9; }
 
 /* --- THE OPENING --------------------------------------------------------- */
 .opening { padding: clamp(48px, 9vw, 86px) 0 var(--s-5); }
@@ -190,12 +191,6 @@ html:has(#night:checked) .night-track::after { transform: translateX(16px); }
 	color: var(--ink);
 }
 .name-rule { display: block; width: min(400px, 78%); height: 11px; margin-top: 10px; color: var(--pen); overflow: visible; }
-.role {
-	font-size: var(--t-small);
-	letter-spacing: 0.15em; text-transform: uppercase;
-	color: var(--ink-3);
-	margin-top: var(--s-3);
-}
 .lede {
 	font-size: var(--t-lead);
 	line-height: 1.68;
@@ -253,7 +248,7 @@ html:has(#night:checked) .night-track::after { transform: translateX(16px); }
 .note em { font-style: normal; }
 .tick { display: block; width: 30px; height: 15px; margin-bottom: 3px; color: var(--pen); opacity: 0.9; }
 /* a note that comments on something further down its section, not its top */
-.note-low { margin-top: 292px; }
+.note-low { margin-top: 425px; }
 @media (max-width: 860px) { .note-low { margin-top: var(--s-3); } }
 
 /* --- SECTIONS ------------------------------------------------------------ */
@@ -350,34 +345,13 @@ html:has(#night:checked) .night-track::after { transform: translateX(16px); }
 .bench-t { font-size: var(--t-body); font-weight: 600; color: var(--ink-2); }
 .bench-d { font-size: var(--t-small); color: var(--ink-3); margin-top: 2px; }
 
-/* --- MOST NIGHTS: the plates --------------------------------------------- */
-/* The plates keep to the print column like everything else: cohesion beats
-   spectacle. They earn their presence through size within the column. */
-.plates {
-	margin-top: var(--s-4);
-	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: var(--s-3);
-}
-.plate img {
-	width: 100%; aspect-ratio: 3 / 4; height: auto; object-fit: cover;
-	border: 6px solid var(--mat);
-	box-shadow: 0 9px 22px -14px rgba(20, 22, 28, 0.5), 0 0 0 1px var(--hair);
-	transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.plate:nth-child(1) img { transform: rotate(-1.6deg); }
-.plate:nth-child(2) img { transform: rotate(0.8deg); }
-.plate:nth-child(3) img { transform: rotate(-0.6deg); }
-.plate:hover img { transform: rotate(0deg) scale(1.015); }
-.plate figcaption { font-size: var(--t-micro); color: var(--ink-3); margin-top: 8px; }
-
 /* --- THE NOTEBOOK -------------------------------------------------------- */
 .shelf { margin-top: var(--s-5); border-top: 1px solid var(--hair); }
 .shelf-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--s-3); align-items: baseline; padding: var(--s-3) 0; border-bottom: 1px solid var(--hair); }
 .shelf-t { font-size: var(--t-h3); font-weight: 600; color: var(--ink); }
 .shelf-row.empty .shelf-t { color: var(--ink-3); font-weight: 400; font-style: italic; }
 .shelf-m { font-size: var(--t-small); color: var(--ink-3); }
-.shelf-link { display: inline-block; margin-top: var(--s-4); font-size: var(--t-small); color: var(--pen); text-decoration: none; border-bottom: 1px solid var(--pen-mat); padding-bottom: 2px; }
+.shelf-link { display: inline-block; margin-top: var(--s-3); font-size: var(--t-small); color: var(--pen); text-decoration: none; border-bottom: 1px solid var(--pen-mat); padding-bottom: 2px; }
 .shelf-link:hover { border-bottom-color: var(--pen); }
 
 /* --- WRITE TO ME --------------------------------------------------------- */
@@ -444,7 +418,7 @@ html:has(#night:checked) .night-track::after { transform: translateX(16px); }
 			animation-timeline: view();
 			animation-range: entry 6% entry 52%;
 		}
-		.plate img, .thing-shot img {
+		.thing-shot img {
 			animation: place linear both;
 			animation-timeline: view();
 			animation-range: entry 4% entry 46%;
@@ -476,17 +450,10 @@ html:has(#night:checked) .night-track::after { transform: translateX(16px); }
 	.opening { padding-top: var(--s-5); }
 	.name { font-size: 2.3rem; }
 	.lede { font-size: 1.0625rem; max-width: none; }
-	.role { margin-top: var(--s-2); }
-	.door { margin-top: var(--s-4); width: 100%; }
-	.pin { display: none; }               /* the desk photo is a desk thing */
+		.door { margin-top: var(--s-4); width: 100%; }
+	.pin { max-width: 132px; margin-top: var(--s-3); }
 	.thing { grid-template-columns: minmax(0, 1fr); gap: var(--s-3); }
 	.thing-shot img, .thing:nth-child(even) .thing-shot img { transform: rotate(0deg); }
-	/* three tiny thumbnails waste the photographs. Two portraits, then one wide:
-	   a composition rather than a shrunken strip. */
-	.plates { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-2); }
-	.plate:nth-child(3) { grid-column: 1 / -1; }
-	.plate:nth-child(3) img { aspect-ratio: 16 / 10; object-position: center 62%; }
-	.plate figcaption { display: none; }
 	.record { font-size: 0.8125rem; }
 	.note { font-size: 1.2rem; }
 	.shelf-row { grid-template-columns: minmax(0, 1fr); gap: 2px; }
@@ -497,8 +464,7 @@ html:has(#night:checked) .night-track::after { transform: translateX(16px); }
 	.night-label { display: none; }
 	.masthead-in { padding: 10px clamp(20px, 5vw, 40px); }
 	.wordmark svg { height: 22px; }
-	.role { font-size: 0.8125rem; letter-spacing: 0.12em; }
-	.lede { margin-top: var(--s-2); }
+		.lede { margin-top: var(--s-2); }
 	.h2 { margin-top: var(--s-4); }
 }
 
@@ -509,24 +475,102 @@ html:has(#night:checked) .night-track::after { transform: translateX(16px); }
 .post-body p { margin-top: var(--s-2); }
 .post-body .h2 { margin-top: var(--s-4); }
 
-/* --- keepsakes ------------------------------------------------------------ */
-/* Small objects from the desk, drawn in the same pen as everything else.
-   They say what the print never states. No labels, no explanations. */
-.keepsake { display: block; color: var(--pen); opacity: 0.85; }
-.keepsake-pick { width: 44px; margin: 22px auto 0; transform: rotate(14deg); }
-.keepsake-stub { width: 118px; margin: 8px 0 0 6px; transform: rotate(-5deg); }
-.pin:hover ~ .keepsake-pick { transform: rotate(7deg); }
-@media (prefers-reduced-motion: no-preference) {
-	.keepsake { transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
-	@supports (animation-timeline: view()) {
-		.keepsake { animation: note-in linear both; animation-timeline: view(); animation-range: entry 16% entry 64%; }
-	}
-}
-@media (max-width: 860px) {
-	.keepsake-pick { display: none; }   /* the phone margin folds away; keep one object only */
-	.keepsake-stub { margin: 18px 0 0; }
-}
 
 /* the quiet promise under the button */
 .door-quiet { display: inline-block; margin-left: 14px; font-size: var(--t-small); color: var(--ink-3); }
 .night-label { white-space: nowrap; }
+
+/* --- taped in ------------------------------------------------------------- */
+/* Two strips of tape hold the photo to the page, like a photo in a journal. */
+.pin { position: relative; }
+.tape {
+	position: absolute; z-index: 2;
+	width: 54px; height: 17px;
+	background: var(--pen-mat);
+	opacity: 0.5;
+	border-radius: 1px;
+}
+.tape-l { top: -7px; left: 8px; transform: rotate(-32deg); }
+.tape-r { top: -7px; right: 8px; transform: rotate(28deg); }
+
+/* --- the keepsake doors ---------------------------------------------------- */
+/* Four small drawings under the photo. Three are doors to his other rooms
+   (the kitchen, the cinema, the climate); one is just true. Same pen as
+   everything, tilted like objects put down by hand. */
+.keeps {
+	display: flex; align-items: flex-end; justify-content: flex-end;
+	gap: 12px; margin-top: 24px;
+	margin-left: calc(-1 * var(--gutter));   /* the strip may spill into the gutter; it is the hand's space */
+}
+.keepsake {
+	display: inline-flex;
+	flex-shrink: 0;
+	background: none; border: 0; padding: 4px; cursor: pointer;
+	color: var(--pen);
+	transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.keepsake svg { width: 100%; height: auto; display: block; }
+.keepsake-stub { width: 118px; margin: 8px 0 0 6px; transform: rotate(-5deg); display: block; color: var(--pen); }
+@media (prefers-reduced-motion: no-preference) {
+	@supports (animation-timeline: view()) {
+		.keepsake, .keepsake-stub { animation: note-in linear both; animation-timeline: view(); animation-range: entry 16% entry 64%; }
+	}
+}
+.keepsake svg { display: block; }
+.keep-pick { width: 46px; transform: rotate(12deg); }
+.keep-pan  { width: 60px; transform: rotate(-8deg); }
+.keep-clap { width: 54px; transform: rotate(6deg); }
+.keep-leaf { width: 46px; transform: rotate(-11deg); }
+.keepsake:hover, .keepsake:focus-visible { transform: rotate(0deg) translateY(-3px); }
+/* the pick strums when pressed: the one keepsake that is an instrument, not a door */
+.keep-pick:active .strum { animation: strum 0.45s ease; }
+.keep-pick:active .s2 { animation-delay: 0.06s; }
+.keep-pick:active .s3 { animation-delay: 0.12s; }
+@keyframes strum { 30% { transform: translateY(2.5px); } 60% { transform: translateY(-1.5px); } 100% { transform: none; } }
+
+/* --- the postcard ---------------------------------------------------------- */
+/* Write to me, literally: a postcard already addressed to whoever is reading. */
+.postcard {
+	margin-top: var(--s-4);
+	display: grid;
+	grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+	background: var(--mat);
+	border: 1.5px solid var(--hair);
+	border-radius: 4px;
+	box-shadow: 0 12px 30px -18px rgba(20, 22, 28, 0.4);
+	transform: rotate(-0.5deg);
+}
+.pc-left { padding: var(--s-4); }
+.pc-line { font-size: var(--t-small); color: var(--ink-2); }
+.pc-left .address { margin-top: var(--s-3); font-size: 1.05rem; word-break: normal; overflow-wrap: anywhere; letter-spacing: 0; }
+.pc-left .elsewhere { margin-top: var(--s-3); }
+.pc-right {
+	position: relative;
+	border-left: 1.5px dashed var(--hair);
+	padding: var(--s-4);
+	display: flex; flex-direction: column; justify-content: flex-end; gap: 8px;
+}
+.stamp {
+	position: absolute; top: 14px; right: 14px;
+	padding: 5px;
+	background: var(--mat);
+	border: 1.5px dashed var(--pen-mat);
+	transform: rotate(3deg);
+}
+.stamp img { display: block; width: 56px; height: 56px; object-fit: cover; filter: saturate(0.7); }
+.postmark { position: absolute; top: 22px; right: 52px; width: 86px; color: var(--pen); mix-blend-mode: multiply; pointer-events: none; }
+html:has(#night:checked) .postmark { mix-blend-mode: screen; }
+.pc-to, .pc-from {
+	font-family: var(--hand);
+	font-size: 1.15rem; line-height: 1.3;
+	color: var(--pen);
+	border-bottom: 1px solid var(--hair);
+	padding-bottom: 4px;
+}
+.pc-to span, .pc-from span { color: var(--ink-3); font-size: 0.95rem; margin-right: 6px; }
+
+@media (max-width: 620px) {
+	.keeps { justify-content: flex-start; gap: 14px; margin-top: var(--s-3); }
+	.postcard { grid-template-columns: 1fr; transform: none; }
+	.pc-right { border-left: 0; border-top: 1.5px dashed var(--hair); padding-top: 56px; }
+}

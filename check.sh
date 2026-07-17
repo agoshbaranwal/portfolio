@@ -8,19 +8,20 @@ fail=0
 if grep -l "<style" writing/*.html 2>/dev/null; then
 	echo "FAIL: <style> tag found in writing/ (all styling belongs in site.css)"; fail=1
 fi
-if grep -lE '<[a-z][^>]* style="' writing/*.html 2>/dev/null; then
+if grep -lE '<[a-z][^>]* style="' index.html 404.html writing/*.html 2>/dev/null; then
 	echo "FAIL: inline style attribute found in writing/ (add a class to site.css instead)"; fail=1
 fi
 
 # 2. No em dashes anywhere in shipped HTML copy.
-if grep -l "—" index.html 404.html feed.xml writing/*.html 2>/dev/null; then
+if grep -l "—" index.html 404.html feed.xml post-template.html site.css writing/*.html 2>/dev/null; then
 	echo "FAIL: em dash found in copy"; fail=1
 fi
 
 # 2b. Exactly the three approved figures, and no percentage stats anywhere.
-if [ "$(grep -oE '10x ROAS|\$3M|\$100k' index.html | wc -l | tr -d ' ')" != "3" ]; then
-	echo "FAIL: the three approved figures (10x ROAS, \$3M, \$100k) are not exactly present"; fail=1
-fi
+for fig in "10x ROAS" "\$3M" "\$100k"; do
+	n=$(grep -oF "$fig" index.html | wc -l | tr -d ' ')
+	[ "$n" = "1" ] || { echo "FAIL: figure '$fig' appears $n times (must be exactly 1)"; fail=1; }
+done
 if grep -oE '[0-9]+%' index.html >/dev/null 2>&1; then
 	echo "FAIL: percentage stat found (owner ruled: no percentages)"; fail=1
 fi
@@ -46,7 +47,7 @@ if [ -n "$1" ]; then
 fi
 
 # 6. The locked project order on the homepage: admenow, Utsav, tvbadger.
-order=$(grep -oE 'href="https://(admenow|utsav-pi|tvbadger)\.vercel' index.html | sed 's/href="https:\/\///' | head -3 | tr '\n' ' ')
+order=$(sed -n '/>Things I am building</,$p' index.html | grep -oE 'href="https://(admenow|utsav-pi|tvbadger)\.vercel' | sed 's/href="https:\/\///' | head -3 | tr '\n' ' ')
 [ "$order" = "admenow.vercel utsav-pi.vercel tvbadger.vercel " ] || { echo "FAIL: project order changed: $order"; fail=1; }
 
 # 7. The locked section heading.
