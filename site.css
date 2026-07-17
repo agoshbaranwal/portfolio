@@ -508,3 +508,25 @@ html:has(#night:checked) .night-track::after { transform: translateX(16px); }
 .post-body { max-width: 58ch; margin-top: var(--s-4); }
 .post-body p { margin-top: var(--s-2); }
 .post-body .h2 { margin-top: var(--s-4); }
+
+/* --- keepsakes ------------------------------------------------------------ */
+/* Small objects from the desk, drawn in the same pen as everything else.
+   They say what the print never states. No labels, no explanations. */
+.keepsake { display: block; color: var(--pen); opacity: 0.85; }
+.keepsake-pick { width: 44px; margin: 22px auto 0; transform: rotate(14deg); }
+.keepsake-stub { width: 118px; margin: 8px 0 0 6px; transform: rotate(-5deg); }
+.pin:hover ~ .keepsake-pick { transform: rotate(7deg); }
+@media (prefers-reduced-motion: no-preference) {
+	.keepsake { transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
+	@supports (animation-timeline: view()) {
+		.keepsake { animation: note-in linear both; animation-timeline: view(); animation-range: entry 16% entry 64%; }
+	}
+}
+@media (max-width: 860px) {
+	.keepsake-pick { display: none; }   /* the phone margin folds away; keep one object only */
+	.keepsake-stub { margin: 18px 0 0; }
+}
+
+/* the quiet promise under the button */
+.door-quiet { display: inline-block; margin-left: 14px; font-size: var(--t-small); color: var(--ink-3); }
+.night-label { white-space: nowrap; }
