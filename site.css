@@ -162,7 +162,7 @@ html { scrollbar-color: var(--pen-mat) transparent; }
 @keyframes masthead-line { to { border-bottom-color: var(--hair); } }
 @media (prefers-reduced-motion: reduce) {
 	.keep-pick:active .strum, .keep-pick:focus-visible .strum { animation: none; }
-	.night-track::after, .door, .pin img, .thing-shot img, .keepsake, .plate2 { transition-duration: 0.01s; }
+	.night-track::after, .door, .pin img, .thing-ic svg, .keepsake, .plate2 { transition-duration: 0.01s; }
 }
 .masthead-in {
 	max-width: 1000px; margin: 0 auto;
@@ -202,7 +202,7 @@ html { scrollbar-color: var(--pen-mat) transparent; }
 	transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
 }
 html:has(#night:checked) .night-track::after, html.night .night-track::after { transform: translateX(16px); }
-#night:focus-visible + .night-track { outline: 2px solid var(--pen); outline-offset: 3px; }
+#night:focus-visible ~ .night-track { outline: 2px dashed var(--pen); outline-offset: 3px; }
 .night-label { font-size: 0.8125rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--ink-2); }
 .night-marquee { width: 22px; height: 19px; color: var(--pen); opacity: 0.9; }
 
@@ -351,32 +351,48 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .record a:hover { color: var(--pen); border-bottom-color: var(--pen); }
 
 /* --- AFTER HOURS: the things ---------------------------------------------- */
-.things { margin-top: var(--s-5); display: flex; flex-direction: column; gap: var(--s-6); }
-.thing { display: grid; grid-template-columns: minmax(0, 268px) minmax(0, 1fr); gap: var(--s-5); align-items: center; text-decoration: none; color: inherit; }
-.thing-shot { min-width: 0; }
-.thing-shot img {
-	width: 100%; aspect-ratio: 16 / 10; height: auto; object-fit: cover; object-position: top center;
-	border: 5px solid var(--mat);
-	box-shadow: 0 8px 20px -12px rgba(20, 22, 28, 0.5), 0 0 0 1px var(--hair);
-	transform: rotate(-1deg);
-	transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+/* A compact ledger: one row per thing, the object drawn beside the name in
+   the same pen as the keepsake doors. Same rooms, same objects, less paper.
+   The drawings perform on hover exactly like their keepsake twins. */
+.things { margin-top: var(--s-4); border-top: 1px solid var(--hair); }
+.thing {
+	display: grid;
+	grid-template-columns: 68px minmax(0, 1fr) auto;
+	gap: var(--s-1) var(--s-4);
+	align-items: center;
+	padding: 18px 0;
+	border-bottom: 1px solid var(--hair);
+	text-decoration: none; color: inherit;
 }
-.thing:nth-child(even) .thing-shot img { transform: rotate(1deg); }
-.thing:hover .thing-shot img, .thing:focus-visible .thing-shot img { transform: rotate(0deg); box-shadow: 0 14px 30px -14px var(--pen-mat), 0 0 0 1px var(--hair); }
-.thing-t { font-size: var(--t-h3); font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+.thing-ic { display: inline-flex; justify-content: center; align-items: center; color: var(--pen); }
+.thing-ic svg { width: 56px; height: auto; display: block; }
+.thing:nth-child(1) .thing-ic svg { transform: rotate(-3deg); }
+.thing:nth-child(2) .thing-ic svg { transform: rotate(2.5deg); }
+.thing:nth-child(3) .thing-ic svg { transform: rotate(-2deg); }
+.thing:hover .thing-ic svg, .thing:focus-visible .thing-ic svg { transform: rotate(0deg); }
+.thing-ic svg { transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
+.thing:hover .steam, .thing:focus-visible .steam { animation: steam-rise 1.3s ease-in-out infinite; }
+.thing:hover .clap-top, .thing:focus-visible .clap-top { animation: clap 0.55s cubic-bezier(0.36, 0.07, 0.19, 0.97); }
+.thing:hover .wave, .thing:focus-visible .wave { animation: shout 0.5s ease; }
+.thing:hover .w2, .thing:focus-visible .w2 { animation-delay: 0.08s; }
+@keyframes shout { 40% { transform: translateX(2.5px); opacity: 1; } }
+.thing-t { font-size: var(--t-h3); font-weight: 600; letter-spacing: -0.01em; color: var(--ink); transition: color 0.2s ease; }
+.thing:hover .thing-t, .thing:focus-visible .thing-t { color: var(--pen); }
 .thing-t .deva { font-family: var(--deva); font-weight: 500; }
-.thing-d { font-size: var(--t-body); color: var(--ink-2); margin-top: 5px; max-width: 42ch; }
+.thing-d { font-size: var(--t-small); color: var(--ink-2); margin-top: 2px; max-width: 52ch; }
+.thing-body { min-width: 0; }
 .thing-v {
-	display: inline-block; margin-top: var(--s-2);
+	display: inline-block;
 	font-size: var(--t-small); color: var(--pen);
 	position: relative; padding-bottom: 3px;
+	white-space: nowrap;
 }
 .thing-v svg { position: absolute; left: 0; bottom: -1px; width: 100%; height: 6px; overflow: visible; }
 .thing-v svg path { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
 .thing:hover .thing-v svg path, .thing:focus-visible .thing-v svg path { stroke-dashoffset: 0; }
 
 /* the bench: same hand, lighter pressure. Pencil, not ink. */
-.bench { margin-top: var(--s-7); }
+.bench { margin-top: var(--s-5); }
 .bench-say { font-size: var(--t-small); color: var(--ink-3); }
 .bench-list { margin-top: var(--s-3); display: flex; flex-direction: column; gap: var(--s-3); }
 .bench-row { padding-top: var(--s-3); border-top: 1px dashed var(--pen-mat); }
@@ -458,10 +474,14 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 			mask-size: 280% 100%;
 			mask-repeat: no-repeat;
 		}
-		.thing-shot img {
-			animation: place linear both;
+		/* fill backwards, NOT both: an after-phase fill would own opacity forever
+		   and silently kill the lamplight dim on .thing (animations beat the
+		   normal cascade). backwards hides rows before entry, then hands
+		   opacity back to the stylesheet once the entrance is done. */
+		.thing {
+			animation: settle linear backwards;
 			animation-timeline: view();
-			animation-range: entry 4% entry 46%;
+			animation-range: entry 4% entry 42%;
 		}
 		/* the pen's own hover strokes stay instant; only arrival is scroll-driven */
 	}
@@ -494,8 +514,10 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 	.lede { font-size: 1.0625rem; max-width: none; }
 		.door { margin-top: var(--s-4); width: 100%; }
 	.pin { max-width: 132px; margin-top: var(--s-3); }
-	.thing { grid-template-columns: minmax(0, 1fr); gap: var(--s-3); }
-	.thing-shot img, .thing:nth-child(even) .thing-shot img { transform: rotate(0deg); }
+	.thing { grid-template-columns: 46px minmax(0, 1fr); gap: 4px var(--s-2); padding: 14px 0; }
+	.thing-ic { align-self: start; margin-top: 3px; }
+	.thing-ic svg { width: 40px; }
+	.thing-v { grid-column: 2; justify-self: start; }
 	.record { font-size: 0.8125rem; }
 	.note { font-size: 1.2rem; }
 	.shelf-row { grid-template-columns: minmax(0, 1fr); gap: 2px; }
@@ -719,6 +741,9 @@ html:has(#night:checked) .night-marquee circle:nth-of-type(3) { animation-delay:
 @media (prefers-reduced-motion: reduce) {
 	.keep-clap:hover .clap-top, .keep-pan:hover .steam, .keep-leaf:hover svg,
 	.keep-clap:focus-visible .clap-top, .keep-pan:focus-visible .steam, .keep-leaf:focus-visible svg,
+	.thing:hover .steam, .thing:focus-visible .steam,
+	.thing:hover .clap-top, .thing:focus-visible .clap-top,
+	.thing:hover .wave, .thing:focus-visible .wave,
 	html:has(#night:checked) body, html:has(#night:checked) .night-marquee circle { animation: none; }
 }
 
@@ -974,6 +999,38 @@ html:has(#night:checked) .inktrail, html.night .inktrail { mix-blend-mode: scree
 	.dogear, .pin img, .lost-map .lm-draw, .lost-map .lm-x { animation: none; }
 	.stub-main, .stub-tab, .stub-say { transition-duration: 0.01s; }
 }
+
+/* ==========================================================================
+   THE FULL SHELF: how the notebook reads once real posts exist. The list
+   stays a ledger, never a card grid: a drawn topic mark, the title, one
+   quiet line of gist, the date on the right. Years are written in by hand
+   between groups. The newest post says so in ink. No thumbnails on the
+   shelf, ever: photos live inside the posts, taped in like the hero photo.
+   ========================================================================== */
+.topic { display: inline-block; width: 22px; height: 22px; color: var(--pen); opacity: 0.85; margin-right: 10px; vertical-align: -4px; flex-shrink: 0; }
+.shelf-a { color: inherit; text-decoration: none; border-bottom: 1px solid transparent; transition: color 0.2s ease, border-color 0.2s ease; }
+.shelf-row:hover .shelf-a, .shelf-a:focus-visible { color: var(--pen); border-bottom-color: var(--pen-mat); }
+.shelf-g { display: block; font-size: var(--t-small); font-weight: 400; color: var(--ink-3); margin-top: 3px; max-width: 52ch; }
+.shelf-year { font-family: var(--hand); font-size: var(--t-hand); color: var(--pen); padding: var(--s-4) 0 6px; transform: rotate(-1deg); }
+.shelf > .shelf-year:first-child { padding-top: var(--s-3); }
+.shelf-m { text-align: right; }
+.shelf-m .fresh { display: block; font-style: normal; font-family: var(--hand); font-size: 0.95rem; color: var(--pen); transform: rotate(-2deg); }
+@media (max-width: 620px) { .shelf-m { text-align: left; } .shelf-m .fresh { transform: rotate(-2deg) translateX(-2px); } }
+
+/* inside a post, a photo is taped into the text column; while it waits,
+   the frame is drawn empty */
+.post-fig { margin-top: var(--s-4); max-width: 58ch; }
+.post-ph {
+	aspect-ratio: 16 / 10;
+	background:
+		linear-gradient(to top right, transparent 49.5%, var(--hair) 49.8%, var(--hair) 50.2%, transparent 50.5%),
+		linear-gradient(to top left, transparent 49.5%, var(--hair) 49.8%, var(--hair) 50.2%, transparent 50.5%),
+		var(--mat);
+	border: 5px solid var(--mat);
+	box-shadow: 0 0 0 1px var(--hair), 0 8px 20px -14px rgba(20, 22, 28, 0.4);
+}
+.post-fig img { border: 5px solid var(--mat); box-shadow: 0 0 0 1px var(--hair), 0 8px 20px -14px rgba(20, 22, 28, 0.4); }
+.post-fig figcaption { font-family: var(--hand); font-size: 1.05rem; color: var(--pen); margin-top: 9px; transform: rotate(-1deg); }
 
 /* ==========================================================================
    PRINT: the page becomes the letter it always was. A gift for whoever
