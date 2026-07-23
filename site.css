@@ -90,7 +90,7 @@ body {
 	font-size: var(--t-body);
 	line-height: 1.62;
 	-webkit-font-smoothing: antialiased;
-	overflow-x: hidden;
+	overflow-x: clip;
 	transition: background-color 0.4s ease, color 0.4s ease;
 }
 img { display: block; max-width: 100%; }
@@ -120,7 +120,7 @@ a { color: inherit; }
 	@supports (animation-timeline: scroll()) {
 		.spine {
 			animation: spine-grow linear both;
-			animation-timeline: scroll();
+			animation-timeline: scroll(root);
 		}
 	}
 }
@@ -153,7 +153,7 @@ a { color: inherit; }
 }
 @media (prefers-reduced-motion: no-preference) {
 	@supports (animation-timeline: scroll()) {
-		.masthead { animation: masthead-line linear both; animation-timeline: scroll(); animation-range: 0 140px; }
+		.masthead { animation: masthead-line linear both; animation-timeline: scroll(root); animation-range: 0 140px; }
 	}
 }
 @keyframes masthead-line { to { border-bottom-color: var(--hair); } }
@@ -534,7 +534,7 @@ html:has(#night:checked) .night-track::after { transform: translateX(16px); }
 @media (prefers-reduced-motion: no-preference) {
 	@supports (animation-timeline: view()) {
 		.keepsake, .keepsake-stub { animation: note-in linear both; animation-timeline: view(); animation-range: entry 16% entry 64%; }
-		.postmark path, .postmark circle { stroke-dasharray: 1; stroke-dashoffset: 0; animation: draw linear both; animation-timeline: view(); animation-range: entry 20% entry 70%; }
+		.postmark path, .postmark circle { stroke-dasharray: 1; stroke-dashoffset: 0; animation: draw linear both; animation-timeline: view(); animation-range: entry 56% entry 88%; }
 	}
 }
 .keepsake svg { display: block; }
@@ -596,4 +596,109 @@ html:has(#night:checked) .postmark { mix-blend-mode: screen; }
 	.pc-line br { display: none; }
 	.pc-left .address { font-size: 0.95rem; }
 	.pc-right { border-left: 0; border-top: 1.5px dashed var(--hair); padding-top: 56px; }
+}
+
+/* ==========================================================================
+   THE PERFORMANCE (v5): the pen writes the page in front of the reader.
+   Every device below degrades to a complete, still page.
+   ========================================================================== */
+
+/* --- the cursor is the pen ------------------------------------------------ */
+html { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M3 21 L7.5 9.5 C 8.5 6.5 11 4.5 14 4.5 L19.5 10 C 19.5 13 17.5 15.8 14.5 16.8 L3 21 Z' fill='%231d3a63' stroke='white' stroke-width='1.3'/%3E%3Ccircle cx='12.6' cy='11.2' r='1.5' fill='white'/%3E%3C/svg%3E") 2 22, auto; }
+
+/* --- the signature -------------------------------------------------------- */
+/* The printed name arrives first; then the hand signs it, stroke by stroke,
+   in the order a hand would. The flourish is the page's rule. */
+.namewrap { position: relative; }
+.sig {
+	position: absolute;
+	left: 6px; bottom: -66px;
+	width: min(370px, 66%);
+	color: var(--pen);
+	overflow: visible;
+	transform: rotate(-2deg);
+	pointer-events: none;
+}
+.sig .st { stroke: currentColor; fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.namewrap .name { animation: none; }
+@media (prefers-reduced-motion: no-preference) {
+	.name { animation: fadein 0.5s ease backwards; }
+	.sig .st { animation: draw 0.34s cubic-bezier(0.3, 0, 0.4, 1) backwards; }
+	.sig .st1 { animation-delay: 0.55s; }
+	.sig .st2 { animation-delay: 0.92s; animation-duration: 0.2s; }
+	.sig .st3 { animation-delay: 1.14s; animation-duration: 0.42s; }
+	.sig .st4 { animation-delay: 1.6s; animation-duration: 0.26s; }
+	.sig .st5 { animation-delay: 1.9s; animation-duration: 0.24s; }
+	.sig .st6 { animation-delay: 2.18s; animation-duration: 0.2s; }
+	.sig .st7 { animation-delay: 2.4s; animation-duration: 0.24s; }
+	.sig .st8 { animation-delay: 2.72s; animation-duration: 0.45s; }
+}
+@keyframes fadein { from { opacity: 0; } }
+/* the hero makes room for the flourish */
+.opening .lede { margin-top: 84px; }
+
+/* --- the nib rides the spine ---------------------------------------------- */
+.nib-track {
+	position: absolute;
+	top: 30px; bottom: 48px;
+	right: calc(clamp(20px, 5vw, 40px) + var(--margin-col) + var(--gutter) / 2 - 8px);
+	width: 17px;
+	pointer-events: none;
+	z-index: 2;
+}
+.nib { position: absolute; top: 0; width: 17px; height: 17px; color: var(--pen); }
+@media (max-width: 860px) { .nib-track { display: none; } }
+@media (prefers-reduced-motion: no-preference) {
+	@supports (animation-timeline: scroll()) {
+		.nib { animation: nib-ride linear both; animation-timeline: scroll(root); }
+	}
+}
+@media (prefers-reduced-motion: reduce) { .nib-track { display: none; } }
+@keyframes nib-ride { from { top: 0; } to { top: calc(100% - 17px); } }
+
+/* --- the late show is a scene change -------------------------------------- */
+html:has(#night:checked) body { animation: flicker 0.5s ease-out 1; }
+@keyframes flicker {
+	0% { filter: brightness(1); }
+	18% { filter: brightness(0.5); }
+	34% { filter: brightness(1.12); }
+	52% { filter: brightness(0.72); }
+	70% { filter: brightness(1.04); }
+	100% { filter: brightness(1); }
+}
+html:has(#night:checked) .night-marquee circle { animation: bulbs 2.6s ease-in-out infinite; }
+html:has(#night:checked) .night-marquee circle:nth-of-type(2) { animation-delay: 0.4s; }
+html:has(#night:checked) .night-marquee circle:nth-of-type(3) { animation-delay: 0.8s; }
+@keyframes bulbs { 50% { opacity: 0.3; } }
+
+/* --- the keepsakes perform their objects ---------------------------------- */
+.clap-top { transform-origin: 4px 22px; }
+.keep-clap:hover .clap-top, .keep-clap:focus-visible .clap-top { animation: clap 0.55s cubic-bezier(0.36, 0.07, 0.19, 0.97); }
+@keyframes clap { 40% { transform: rotate(-17deg); } }
+.keep-pan:hover .steam, .keep-pan:focus-visible .steam { animation: steam-rise 1.3s ease-in-out infinite; }
+@keyframes steam-rise { 0% { transform: translateY(0); opacity: 0.55; } 60% { transform: translateY(-3.5px); opacity: 0.25; } 100% { transform: translateY(-6px); opacity: 0; } }
+.keep-leaf:hover svg, .keep-leaf:focus-visible svg { animation: sway 1.5s ease-in-out infinite; transform-origin: 50% 90%; }
+@keyframes sway { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(7deg); } }
+
+/* --- the postcard assembles itself ---------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+	@supports (animation-timeline: view()) {
+		.postcard { animation: card-in linear both; animation-timeline: view(); animation-range: entry 4% entry 42%; }
+		.stamp { animation: place-stamp linear both; animation-timeline: view(); animation-range: entry 34% entry 58%; }
+	}
+}
+@keyframes card-in { from { opacity: 0; transform: translateY(18px) rotate(0deg); } to { opacity: 1; } }
+@keyframes place-stamp { from { opacity: 0; transform: rotate(11deg) scale(1.3); } to { opacity: 1; } }
+
+/* the hover loops stay still for reduced-motion readers */
+@media (prefers-reduced-motion: reduce) {
+	.keep-clap:hover .clap-top, .keep-pan:hover .steam, .keep-leaf:hover svg,
+	.keep-clap:focus-visible .clap-top, .keep-pan:focus-visible .steam, .keep-leaf:focus-visible svg,
+	html:has(#night:checked) body, html:has(#night:checked) .night-marquee circle { animation: none; }
+}
+
+/* --- signature on small screens ------------------------------------------- */
+@media (max-width: 620px) {
+	.sig { width: 210px; bottom: -44px; left: 2px; }
+	.opening .lede { margin-top: 58px; }
 }
