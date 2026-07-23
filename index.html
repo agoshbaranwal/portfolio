@@ -3,6 +3,8 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="theme-color" content="#fbfbf8" />
+		<script>try{if(localStorage.getItem("late")==="1")document.documentElement.classList.add("night")}catch(e){}</script>
 		<title>Agosh Baranwal · Performance &amp; Product Marketer</title>
 		<meta name="description" content="Agosh Baranwal. I run growth for a living and build products of my own after hours. Come say hi." />
 		<link rel="canonical" href="https://agoshportfolio.vercel.app/" />
@@ -24,6 +26,7 @@
 		<link href="https://fonts.googleapis.com/css2?family=Vollkorn:ital,wght@0,400..900;1,400..700&family=Kalam:wght@400;700&display=swap" rel="stylesheet" />
 		<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@500&text=%E0%A4%89%E0%A4%A4%E0%A5%8D%E0%A4%B8%E0%A4%B5&display=swap" rel="stylesheet" />
 		<link rel="stylesheet" href="/site.css" />
+		<script src="/pen.js" defer></script>
 	</head>
 	<body>
 		<a class="skip" href="#main">Skip to the page</a>
@@ -173,11 +176,11 @@
 								<span class="fig-d">paid campaigns, end to end</span>
 							</div>
 							<div class="figure">
-								<span class="fig-n">$3M</span>
+								<span class="fig-n"><span class="flicked">$3M<svg class="flick" viewBox="0 0 90 8" fill="none" aria-hidden="true" preserveAspectRatio="none"><path d="M2 5.5 C 24 2.5, 56 6.5, 88 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" pathLength="1" vector-effect="non-scaling-stroke"/></svg></span></span>
 								<span class="fig-d">added annual revenue</span>
 							</div>
 							<div class="figure">
-								<span class="fig-n">$100k</span>
+								<span class="fig-n"><span class="flicked">$100k<svg class="flick" viewBox="0 0 90 8" fill="none" aria-hidden="true" preserveAspectRatio="none"><path d="M2 4 C 30 6.5, 60 2.5, 88 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" pathLength="1" vector-effect="non-scaling-stroke"/></svg></span></span>
 								<span class="fig-d">a month in paid budget</span>
 							</div>
 						</div>
@@ -293,19 +296,28 @@
 								<span class="shelf-t">The first one is on its way.</span>
 								<span class="shelf-m">soon</span>
 							</div>
-							<div class="shelf-row empty" aria-hidden="true"><span class="shelf-t">&nbsp;</span><span class="shelf-m"></span></div>
+							<div class="shelf-row empty" aria-hidden="true"><span class="shelf-t"><svg class="trail-off" viewBox="0 0 200 14" fill="none"><path d="M2 8 C 26 4, 46 11, 70 7 S 112 4, 138 8 C 150 9.5, 158 11, 166 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" pathLength="1"/></svg></span><span class="shelf-m"></span></div>
 						</div>
 						<a class="shelf-link" href="/writing">the notebook, when it fills</a>
 					</div>
-					<div class="col">
-						<svg class="keepsake-stub" viewBox="0 0 128 66" fill="none" aria-hidden="true">
-							<rect x="3" y="3" width="122" height="60" rx="6" stroke="currentColor" stroke-width="1.8"/>
-							<path d="M92 4 L92 62" stroke="currentColor" stroke-width="1.3" stroke-dasharray="3.5 4.5" opacity="0.7"/>
-							<text x="47" y="30" text-anchor="middle" font-family="Kalam, cursive" font-size="12.5" letter-spacing="2.5" fill="currentColor">ADMIT</text>
-							<text x="47" y="47" text-anchor="middle" font-family="Kalam, cursive" font-size="12.5" letter-spacing="2.5" fill="currentColor">ONE</text>
-							<path d="M108 18 L108 48" stroke="currentColor" stroke-width="1.3" opacity="0.5"/>
-							<path d="M102 24 L114 24 M102 32 L114 32 M102 40 L114 40" stroke="currentColor" stroke-width="1.1" opacity="0.4"/>
-						</svg>
+					<div class="col col-stub">
+						<label class="stub-wrap" for="tear" title="Tear it">
+							<input type="checkbox" id="tear" aria-label="Tear the ticket stub" />
+							<svg class="keepsake-stub" viewBox="0 0 128 66" fill="none" aria-hidden="true">
+								<g class="stub-main">
+									<path d="M92 3 L9 3 Q3 3 3 9 L3 57 Q3 63 9 63 L92 63" stroke="currentColor" stroke-width="1.8"/>
+									<path d="M92 4 L92 62" stroke="currentColor" stroke-width="1.3" stroke-dasharray="3.5 4.5" opacity="0.7"/>
+									<text x="47" y="30" text-anchor="middle" font-family="Kalam, cursive" font-size="12.5" letter-spacing="2.5" fill="currentColor">ADMIT</text>
+									<text x="47" y="47" text-anchor="middle" font-family="Kalam, cursive" font-size="12.5" letter-spacing="2.5" fill="currentColor">ONE</text>
+								</g>
+								<g class="stub-tab">
+									<path d="M92 3 L119 3 Q125 3 125 9 L125 57 Q125 63 119 63 L92 63" stroke="currentColor" stroke-width="1.8"/>
+									<path d="M108 18 L108 48" stroke="currentColor" stroke-width="1.3" opacity="0.5"/>
+									<path d="M102 24 L114 24 M102 32 L114 32 M102 40 L114 40" stroke="currentColor" stroke-width="1.1" opacity="0.4"/>
+								</g>
+							</svg>
+							<span class="stub-say" aria-hidden="true">enjoy the show</span>
+						</label>
 					</div>
 				</div>
 			</section>
@@ -354,6 +366,12 @@
 				</div>
 			</section>
 		</main>
+
+		<a class="dogear" href="#" aria-label="Back to the top of the page" title="Back to the top">
+			<svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+				<path d="M4.5 14 L10 4.5 L15.5 14 M10 5.5 L10 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+			</svg>
+		</a>
 
 		<footer class="foot">
 			<div class="foot-in">

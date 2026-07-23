@@ -64,8 +64,10 @@
 	--gutter: 46px;
 }
 
-/* Night: the same sheet under a lamp. Tokens only; no component knows. */
-html:has(#night:checked) {
+/* Night: the same sheet under a lamp. Tokens only; no component knows.
+   html.night is the same state set before first paint by the tiny head script,
+   so the late show survives page turns with no white flash. */
+html:has(#night:checked), html.night {
 	color-scheme: dark;
 	--paper: #15161a;
 	--mat:   #24262c;
@@ -96,7 +98,8 @@ body {
 img { display: block; max-width: 100%; }
 a { color: inherit; }
 ::selection { background: var(--pen-mat); }
-:focus-visible { outline: 2px solid var(--pen); outline-offset: 3px; border-radius: 2px; }
+:focus-visible { outline: 2px dashed var(--pen); outline-offset: 3px; border-radius: 2px; }
+html { scrollbar-color: var(--pen-mat) transparent; }
 
 /* --- THE PAGE ------------------------------------------------------------ */
 /* One column of print, one margin for the hand. Everything printed lives in
@@ -198,7 +201,7 @@ a { color: inherit; }
 	background: var(--pen);
 	transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
 }
-html:has(#night:checked) .night-track::after { transform: translateX(16px); }
+html:has(#night:checked) .night-track::after, html.night .night-track::after { transform: translateX(16px); }
 #night:focus-visible + .night-track { outline: 2px solid var(--pen); outline-offset: 3px; }
 .night-label { font-size: 0.8125rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--ink-2); }
 .night-marquee { width: 22px; height: 19px; color: var(--pen); opacity: 0.9; }
@@ -323,7 +326,8 @@ html:has(#night:checked) .night-track::after { transform: translateX(16px); }
 }
 .ring path { stroke-dasharray: 1; stroke-dashoffset: 0; }
 
-/* the record: small, on purpose. It is the footnote to the work, not the work. */
+/* the record: small, on purpose. It is the footnote to the work, not the work.
+   Its pen rule is a pseudo so the stroke can draw itself top-down on arrival. */
 .record {
 	font-size: var(--t-small);
 	line-height: 1.68;
@@ -331,8 +335,18 @@ html:has(#night:checked) .night-track::after { transform: translateX(16px); }
 	max-width: 58ch;
 	margin-top: var(--s-5);
 	padding-left: var(--s-3);
-	border-left: 2px solid var(--pen-mat);
+	position: relative;
 }
+.record::before {
+	content: ""; position: absolute; left: 0; top: 2px; bottom: 2px;
+	width: 2px; background: var(--pen-mat); transform-origin: top;
+}
+@media (prefers-reduced-motion: no-preference) {
+	@supports (animation-timeline: view()) {
+		.record::before { animation: rule-down linear both; animation-timeline: view(); animation-range: entry 10% entry 60%; }
+	}
+}
+@keyframes rule-down { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 .record a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--pen-mat); }
 .record a:hover { color: var(--pen); border-bottom-color: var(--pen); }
 
@@ -433,10 +447,16 @@ html:has(#night:checked) .night-track::after { transform: translateX(16px); }
 			animation-timeline: view();
 			animation-range: entry 8% entry 78%;
 		}
+		/* notes WRITE themselves: a left-to-right ink wipe, not a fade. The mask
+		   lives only in this block, so without view() support notes are simply
+		   visible. Transform is untouched; hand-placed tilts survive. */
 		.section .note {
-			animation: note-in linear both;
+			animation: note-wipe linear both;
 			animation-timeline: view();
-			animation-range: entry 14% entry 62%;
+			animation-range: entry 14% entry 70%;
+			mask-image: linear-gradient(100deg, #000 44%, transparent 56%);
+			mask-size: 280% 100%;
+			mask-repeat: no-repeat;
 		}
 		.thing-shot img {
 			animation: place linear both;
@@ -449,8 +469,10 @@ html:has(#night:checked) .night-track::after { transform: translateX(16px); }
 
 @keyframes draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 @keyframes note-in { from { opacity: 0; transform: translateY(7px) rotate(-1.6deg); } to { opacity: 1; } }
+@keyframes note-wipe { from { mask-position: 100% 0; } to { mask-position: 0% 0; } }
 @keyframes settle { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-@keyframes place { from { opacity: 0; transform: rotate(0deg) scale(0.985); } to { opacity: 1; } }
+/* photos DEVELOP as they arrive, like a print in the tray: grey first, then true */
+@keyframes place { from { opacity: 0; filter: grayscale(0.85) contrast(0.85); transform: rotate(0deg) scale(0.985); } to { opacity: 1; filter: none; } }
 
 /* ==========================================================================
    MOBILE: dense, and the hand comes down off the margin to sit under its line.
@@ -580,7 +602,7 @@ html:has(#night:checked) .night-track::after { transform: translateX(16px); }
 }
 .stamp img { display: block; width: 56px; height: 56px; object-fit: cover; filter: saturate(0.7); }
 .postmark { position: absolute; top: 22px; right: 52px; width: 86px; color: var(--pen); mix-blend-mode: multiply; pointer-events: none; }
-html:has(#night:checked) .postmark { mix-blend-mode: screen; }
+html:has(#night:checked) .postmark, html.night .postmark { mix-blend-mode: screen; }
 .pc-to, .pc-from {
 	font-family: var(--hand);
 	font-size: 1.15rem; line-height: 1.3;
@@ -657,7 +679,10 @@ html { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'
 @keyframes nib-ride { from { top: 0; } to { top: calc(100% - 17px); } }
 
 /* --- the late show is a scene change -------------------------------------- */
-html:has(#night:checked) body { animation: flicker 0.5s ease-out 1; }
+/* Without JS the flicker keys off the checkbox directly. With JS (html.js),
+   pen.js fires it via body.flick instead, so restoring a saved night mode at
+   load never sputters the projector. */
+html:not(.js):has(#night:checked) body, body.flick { animation: flicker 0.5s ease-out 1; }
 @keyframes flicker {
 	0% { filter: brightness(1); }
 	18% { filter: brightness(0.5); }
@@ -701,4 +726,277 @@ html:has(#night:checked) .night-marquee circle:nth-of-type(3) { animation-delay:
 @media (max-width: 620px) {
 	.sig { width: 210px; bottom: -44px; left: 2px; }
 	.opening .lede { margin-top: 58px; }
+}
+
+/* ==========================================================================
+   HOUSE LIGHTS (v6): the sheet becomes an object, the night becomes a cinema,
+   and the pages turn. Everything below degrades to a complete, still page.
+   ========================================================================== */
+
+/* --- the desk -------------------------------------------------------------- */
+/* On wide screens the paper stops being the screen and becomes a SHEET lying
+   on a desk. At night the desk is the dark of the room and the sheet is the
+   thing the projector lights. */
+@media (min-width: 1100px) {
+	html { --desk: #edecE4; background: var(--desk); }
+	html:has(#night:checked), html.night { --desk: #0b0c10; }
+	body { background: var(--desk); }
+	.page {
+		background: var(--paper);
+		border-radius: 4px;
+		margin-top: 22px; margin-bottom: 34px;
+		box-shadow:
+			0 1px 2px rgba(20, 22, 28, 0.07),
+			0 22px 55px -28px rgba(20, 22, 28, 0.3),
+			0 0 0 1px rgba(20, 22, 28, 0.045);
+		transition: background-color 0.4s ease, box-shadow 0.5s ease;
+	}
+	html:has(#night:checked) .page, html.night .page {
+		box-shadow:
+			0 0 0 1px rgba(236, 237, 240, 0.05),
+			0 0 120px rgba(143, 179, 224, 0.06),
+			0 26px 60px -30px rgba(0, 0, 0, 0.85);
+	}
+	.masthead { background: color-mix(in srgb, var(--desk) 78%, transparent); }
+	.foot { border-top: 0; }
+}
+html { transition: background-color 0.4s ease; }
+
+/* --- pages turn: cross-document view transitions --------------------------- */
+@view-transition { navigation: auto; }
+.wordmark { view-transition-name: wordmark; }
+@media (prefers-reduced-motion: no-preference) {
+	::view-transition-old(root) { animation: vt-out 0.24s ease both; }
+	::view-transition-new(root) { animation: vt-in 0.32s ease 0.04s both; }
+}
+@media (prefers-reduced-motion: reduce) {
+	::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation-duration: 0.01s; }
+}
+@keyframes vt-out { to { opacity: 0; transform: translateY(-8px); } }
+@keyframes vt-in { from { opacity: 0; transform: translateY(10px); } }
+
+/* --- the pen keeps score: reading progress under the masthead -------------- */
+.masthead::after {
+	content: ""; position: absolute; left: 0; bottom: -1px;
+	width: 100%; height: 2px;
+	background: var(--pen);
+	transform: scaleX(0); transform-origin: left;
+	opacity: 0.8;
+}
+@media (prefers-reduced-motion: no-preference) {
+	@supports (animation-timeline: scroll()) {
+		.masthead::after { animation: progress linear both; animation-timeline: scroll(root); }
+	}
+}
+@keyframes progress { to { transform: scaleX(1); } }
+
+/* --- the night is a cinema -------------------------------------------------- */
+/* Film grain over everything, a projector beam falling on the opening, and
+   dust drifting in the light. All of it sits at zero until the show starts. */
+body::after {
+	content: ""; position: fixed; inset: -80px;
+	pointer-events: none; z-index: 100;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+	opacity: 0;
+	mix-blend-mode: overlay;
+	transition: opacity 0.7s ease;
+}
+html:has(#night:checked) body::after, html.night body::after { opacity: 0.07; }
+@media (prefers-reduced-motion: no-preference) {
+	html:has(#night:checked) body::after, html.night body::after { animation: grain-jump 0.7s steps(1, end) infinite; }
+}
+@keyframes grain-jump {
+	0%, 100% { transform: translate(0, 0); }
+	25% { transform: translate(-38px, 22px); }
+	50% { transform: translate(24px, -30px); }
+	75% { transform: translate(-14px, -12px); }
+}
+.opening { isolation: isolate; }
+.opening::before {
+	content: ""; position: absolute; z-index: -1;
+	top: -100px; left: -14%; width: 82%; height: 460px;
+	pointer-events: none; opacity: 0;
+	background: radial-gradient(58% 55% at 32% 0%, rgba(186, 212, 255, 0.10), rgba(186, 212, 255, 0.035) 55%, transparent 76%);
+	transition: opacity 0.9s ease;
+}
+.opening::after {
+	content: ""; position: absolute; z-index: -1;
+	left: 0; right: 34%; top: -60%; height: 200%;
+	pointer-events: none; opacity: 0;
+	background-image:
+		radial-gradient(1.6px 1.6px at 21% 11%, rgba(198, 219, 255, 0.6), transparent 100%),
+		radial-gradient(1.1px 1.1px at 47% 33%, rgba(198, 219, 255, 0.5), transparent 100%),
+		radial-gradient(1.3px 1.3px at 66% 57%, rgba(198, 219, 255, 0.45), transparent 100%),
+		radial-gradient(1px 1px at 33% 79%, rgba(198, 219, 255, 0.5), transparent 100%),
+		radial-gradient(1.2px 1.2px at 56% 92%, rgba(198, 219, 255, 0.35), transparent 100%);
+	background-size: 100% 50%;
+	transition: opacity 1.2s ease;
+}
+html:has(#night:checked) .opening::before, html.night .opening::before { opacity: 1; }
+html:has(#night:checked) .opening::after, html.night .opening::after { opacity: 0.5; }
+@media (prefers-reduced-motion: no-preference) {
+	html:has(#night:checked) .opening::after, html.night .opening::after { animation: motes 26s linear infinite; }
+}
+@keyframes motes { to { transform: translateY(-50%); } }
+html:has(#night:checked) .night-marquee, html.night .night-marquee { filter: drop-shadow(0 0 5px currentColor); }
+
+/* --- lamplight: attend to one thing and the others wait -------------------- */
+.thing { transition: opacity 0.35s ease; }
+.things:has(.thing:hover) .thing:not(:hover),
+.things:has(.thing:focus-visible) .thing:not(:focus-visible) { opacity: 0.45; }
+
+/* --- the hand underlines its other two figures on arrival ------------------- */
+.flicked { position: relative; display: inline-block; }
+.flick {
+	position: absolute; left: -3px; bottom: -7px;
+	width: calc(100% + 6px); height: 8px;
+	color: var(--pen); overflow: visible; pointer-events: none;
+}
+.flick path { stroke-dasharray: 1; stroke-dashoffset: 0; }
+@media (prefers-reduced-motion: no-preference) {
+	@supports (animation-timeline: view()) {
+		.flick path { animation: draw linear both; animation-timeline: view(); animation-range: entry 24% entry 72%; }
+		.bench-row { animation: settle linear both; animation-timeline: view(); animation-range: entry 10% entry 52%; }
+	}
+}
+
+/* --- the photo develops on arrival ------------------------------------------ */
+@media (prefers-reduced-motion: no-preference) {
+	.pin img { animation: develop 1.15s ease 0.45s backwards; }
+}
+@keyframes develop { from { opacity: 0.1; filter: grayscale(1) contrast(0.72); } }
+
+/* --- the ticket stub tears -------------------------------------------------- */
+.stub-wrap { display: inline-block; position: relative; cursor: pointer; }
+#tear { position: absolute; opacity: 0; width: 0; height: 0; }
+.stub-main, .stub-tab { transform-box: fill-box; transition: transform 0.6s cubic-bezier(0.34, 1.4, 0.5, 1), opacity 0.6s ease; }
+.stub-tab { transform-origin: 8% 96%; }
+.stub-main { transform-origin: 60% 50%; }
+#tear:checked ~ .keepsake-stub .stub-tab { transform: translate(9px, 13px) rotate(13deg); opacity: 0.7; }
+#tear:checked ~ .keepsake-stub .stub-main { transform: rotate(-1.6deg) translateX(-2px); }
+.stub-say {
+	display: block;
+	font-family: var(--hand); font-size: 1.05rem; color: var(--pen);
+	margin: 4px 0 0 12px;
+	transform: rotate(-3deg) translateY(-5px); opacity: 0;
+	transition: opacity 0.45s ease 0.18s, transform 0.45s ease 0.18s;
+}
+#tear:checked ~ .stub-say { opacity: 1; transform: rotate(-3deg) translateY(0); }
+.stub-wrap:has(#tear:focus-visible) { outline: 2px dashed var(--pen); outline-offset: 5px; border-radius: 4px; }
+/* linger a moment and the perforation offers itself */
+@media (prefers-reduced-motion: no-preference) {
+	.stub-wrap:hover #tear:not(:checked) ~ .keepsake-stub .stub-tab { animation: perf-hint 0.8s ease 0.9s; }
+}
+@keyframes perf-hint { 30% { transform: translateX(1.6px) rotate(0.8deg); } 65% { transform: translateX(-1.2px); } }
+
+/* --- the pen trails off where the notebook waits ----------------------------- */
+.trail-off { display: block; width: 150px; height: 14px; color: var(--pen); opacity: 0.45; overflow: visible; }
+.trail-off path { stroke-dasharray: 1; stroke-dashoffset: 0; }
+@media (prefers-reduced-motion: no-preference) {
+	@supports (animation-timeline: view()) {
+		.trail-off path { animation: draw linear both; animation-timeline: view(); animation-range: entry 20% entry 80%; }
+	}
+}
+
+/* --- the postcard straightens when you reach for it -------------------------- */
+.postcard { transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s ease; }
+.postcard:hover { transform: rotate(0deg); box-shadow: 0 16px 40px -20px rgba(20, 22, 28, 0.5); }
+
+/* --- the dog-eared corner takes you back to the top --------------------------- */
+.dogear {
+	position: fixed; right: 12px; bottom: 12px;
+	width: 48px; height: 48px; z-index: 15;
+	filter: drop-shadow(-4px -4px 9px rgba(20, 22, 28, 0.16));
+	transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.dogear::before {
+	content: ""; position: absolute; inset: 0;
+	background: linear-gradient(315deg, var(--mat) 52%, color-mix(in srgb, var(--mat) 82%, var(--pen)) 53%, transparent 53.5%);
+	clip-path: polygon(100% 0, 100% 100%, 0 100%);
+	border-radius: 0 0 3px 0;
+}
+.dogear svg { position: absolute; right: 5px; bottom: 4px; width: 19px; height: 19px; color: var(--pen); }
+.dogear:hover { transform: translate(-2px, -2px); }
+@media (max-width: 860px) { .dogear { display: none; } }
+@media (prefers-reduced-motion: no-preference) {
+	@supports (animation-timeline: scroll()) {
+		.dogear { animation: dog-in linear both; animation-timeline: scroll(root); animation-range: 200px 700px; }
+	}
+}
+@keyframes dog-in { from { opacity: 0; visibility: hidden; } to { opacity: 1; visibility: visible; } }
+
+/* --- a ring left by the cup that kept the writer company ---------------------- */
+.col-stub { position: relative; }
+.col-stub::after {
+	content: ""; position: absolute;
+	right: -18px; top: 96px;
+	width: 104px; height: 100px;
+	pointer-events: none;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 104 100'%3E%3Cellipse cx='52' cy='50' rx='44' ry='41' fill='none' stroke='%238a6a45' stroke-width='6' opacity='0.55'/%3E%3Cellipse cx='52' cy='50' rx='37' ry='34' fill='none' stroke='%238a6a45' stroke-width='2' opacity='0.35'/%3E%3C/svg%3E");
+	opacity: 0.09;
+	transform: rotate(8deg);
+}
+html:has(#night:checked) .col-stub::after, html.night .col-stub::after { opacity: 0.14; filter: invert(0.8); }
+@media (max-width: 860px) { .col-stub::after { display: none; } }
+
+/* --- the signature signs again (pen.js toggles .sign-again on tap) ------------ */
+.sign-again .sig .st { animation: draw 0.3s cubic-bezier(0.3, 0, 0.4, 1) backwards; }
+.sign-again .sig .st1 { animation-delay: 0s; }
+.sign-again .sig .st2 { animation-delay: 0.1s; animation-duration: 0.16s; }
+.sign-again .sig .st3 { animation-delay: 0.28s; animation-duration: 0.34s; }
+.sign-again .sig .st4 { animation-delay: 0.64s; animation-duration: 0.2s; }
+.sign-again .sig .st5 { animation-delay: 0.86s; animation-duration: 0.18s; }
+.sign-again .sig .st6 { animation-delay: 1.06s; animation-duration: 0.16s; }
+.sign-again .sig .st7 { animation-delay: 1.24s; animation-duration: 0.18s; }
+.sign-again .sig .st8 { animation-delay: 1.44s; animation-duration: 0.36s; }
+
+/* --- the ink trail canvas (created by pen.js, hero only) ----------------------- */
+.inktrail {
+	position: fixed; inset: 0; width: 100%; height: 100%;
+	pointer-events: none; z-index: 8;
+	mix-blend-mode: multiply;
+}
+html:has(#night:checked) .inktrail, html.night .inktrail { mix-blend-mode: screen; }
+
+/* --- the lost map on the 404 ---------------------------------------------------- */
+.lost-map { display: block; width: 172px; margin: 20px 0 0 4px; color: var(--pen); opacity: 0.9; transform: rotate(-2deg); overflow: visible; }
+.lost-map .lm-draw { stroke-dasharray: 1; stroke-dashoffset: 0; }
+@media (prefers-reduced-motion: no-preference) {
+	.lost-map .lm-draw { animation: draw 1.3s cubic-bezier(0.22, 1, 0.36, 1) 0.5s backwards; }
+	.lost-map .lm-x { animation: draw 0.4s ease 1.8s backwards; }
+}
+.lost-map .lm-x { stroke-dasharray: 1; stroke-dashoffset: 0; }
+
+/* --- late additions to the reduced-motion contract ------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+	body::after, .opening::after, body.flick,
+	.stub-wrap:hover #tear:not(:checked) ~ .keepsake-stub .stub-tab,
+	.dogear, .pin img, .lost-map .lm-draw, .lost-map .lm-x { animation: none; }
+	.stub-main, .stub-tab, .stub-say { transition-duration: 0.01s; }
+}
+
+/* ==========================================================================
+   PRINT: the page becomes the letter it always was. A gift for whoever
+   presses ctrl-P, because somebody always does.
+   ========================================================================== */
+@media print {
+	html, html.night, html:has(#night:checked) {
+		--paper: #ffffff; --mat: #ffffff;
+		--ink: #21232a; --ink-2: #494d57; --ink-3: #6b6f7a;
+		--pen: #1d3a63; --pen-2: #2f5793; --pen-mat: rgba(29, 58, 99, 0.28);
+		--hair: rgba(33, 35, 42, 0.13);
+	}
+	* { animation: none !important; transition: none !important; }
+	html, body, .page { background: #fff !important; box-shadow: none !important; }
+	.masthead, .nib-track, .spine, .dogear, .skip, .inktrail, .night-toggle { display: none !important; }
+	body::after, .opening::before, .opening::after { display: none !important; }
+	.sig .st, .name-rule path, .divider path, .mark svg path, .ring path,
+	.thing-v svg path, .postmark path, .postmark circle, .flick path, .trail-off path { stroke-dashoffset: 0 !important; }
+	.note, .section .note { mask-image: none !important; opacity: 1 !important; }
+	.thing, .figure, .postcard, .bench-row { break-inside: avoid; }
+	.foot::after {
+		content: "P.S. You printed me. Fold twice and keep me in a pocket.";
+		display: block; width: 100%;
+		font-family: var(--hand); font-size: 1.05rem; color: var(--pen);
+	}
 }
