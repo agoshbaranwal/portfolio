@@ -35,6 +35,13 @@
 
 	--hair:    rgba(33, 35, 42, 0.13);
 
+	/* Sealing wax: the pen's own blue-black, poured. Three stops make the dome,
+	   a fourth is the recessed face of the pressed initial. (Night swaps below.) */
+	--wax-1: #4a6b9c;   /* lit crest */
+	--wax-2: #274a7d;   /* body */
+	--wax-3: #10233f;   /* shaded rim / impression shadow */
+	--wax-face: #1f3d69;
+
 	/* Type: two faces, each chosen for a reason.
 	   Vollkorn: a reading serif with real quirks, built for body text at length,
 	   sturdy enough at 800 to carry the figures. Not a fashionable display face.
@@ -78,6 +85,10 @@ html:has(#night:checked), html.night {
 	--pen-2: #6f95c8;
 	--pen-mat: rgba(143, 179, 224, 0.32);
 	--hair:  rgba(236, 237, 240, 0.15);
+	--wax-1: #cfe0f6;   /* wax by lamplight: a brighter blue so it reads on the dark sheet */
+	--wax-2: #7ea6db;
+	--wax-3: #3c5c8c;
+	--wax-face: #6f97cc;
 }
 
 /* --- RESET --------------------------------------------------------------- */
@@ -821,6 +832,27 @@ html:has(#night:checked) .postmark, html.night .postmark { mix-blend-mode: scree
 	padding-bottom: 4px;
 }
 .pc-to span, .pc-from span { color: var(--ink-3); font-size: var(--t-small); margin-right: 6px; }
+/* the caption that turns the To/From around: this postcard is his reply,
+   written and addressed before you have even sent yours */
+.pc-reply { font-family: var(--hand); font-size: var(--t-small); color: var(--pen); opacity: 0.85; margin-bottom: 5px; transform: rotate(-1.5deg); }
+
+/* --- the wax seal: his own blue-black wax, poured and pressed with an A ------
+   A real seal: a domed radial gradient for the wax, a fractal-noise diffuse
+   light for the matte grain, a raised rim, a gloss, and a debossed monogram
+   (a light lip below, a dark shade above, the recessed face on top). */
+.col-wax { align-self: center; }
+@media (max-width: 860px) { .col-wax { align-self: start; } }
+.wax {
+	display: block; width: 118px; height: auto;
+	margin: 6px 0 0 10px; overflow: visible;
+	filter: drop-shadow(0 7px 10px rgba(20, 22, 28, 0.32));
+	transform: rotate(-5deg);
+	transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.wax-gloss { fill: #ffffff; opacity: 0.14; }
+.wax:hover { transform: rotate(-1.5deg) scale(1.035); }
+@media (prefers-reduced-motion: reduce) { .wax { transition-duration: 0.01s; } }
+@media (max-width: 620px) { .wax { width: 96px; } }
 
 @media (max-width: 620px) {
 	.keeps { justify-content: flex-start; gap: 14px; margin-top: var(--s-3); }
