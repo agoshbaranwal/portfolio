@@ -230,11 +230,11 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .mark svg { position: absolute; left: 0; right: 0; bottom: -0.36em; width: 100%; height: 0.42em; color: var(--pen); overflow: visible; }
 .mark svg path { stroke-dasharray: 1; stroke-dashoffset: 0; }
 
-/* THE LETTER. The one button on the page is the act it performs: a written
-   sheet standing in an open envelope. Reach for it and the letter is posted,
-   in the order a person does it. The letter drops in, the flap folds down
-   and seals, the stamp is pressed on, and the whole thing lifts off the desk.
-   Leave, and it unseals and comes back out, ready to be written again. */
+/* THE LETTER. The button is the act it performs. At rest it is a sealed
+   envelope. Reach for it and the seal breaks, the flap lifts, and the written
+   sheet rises up OUT of the envelope and IN FRONT of it, then flows up and
+   away, carried off to me. Leave, and it is a sealed envelope again.
+   The sheet is painted LAST in the SVG, so whenever it shows it is in front. */
 .door {
 	display: inline-flex; align-items: center; gap: 18px;
 	position: relative;
@@ -243,33 +243,38 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 	text-decoration: none; color: inherit;
 }
 .letter-mark {
-	width: 104px; height: 76px; flex-shrink: 0;
+	width: 112px; height: 88px; flex-shrink: 0;
 	color: var(--pen);
 	overflow: visible;
-	transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0s;
 }
-/* the paper fill MUST outrank the stroke rule: it is what makes the envelope
-   opaque, and the whole illusion is the sheet vanishing behind it */
+/* paper fill must outrank the stroke rule (that contest shipped broken once) */
 .letter-mark .lm-paper { fill: var(--mat); }
-.lm-line { stroke: currentColor; stroke-width: 2.4; stroke-linejoin: round; stroke-linecap: round; }
+.lm-line { stroke: currentColor; fill: none; stroke-width: 2.4; stroke-linejoin: round; stroke-linecap: round; }
 .lm-thin { stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; opacity: 0.5; }
+.lm-shadow { fill: rgba(20, 22, 28, 0.16); opacity: 0.5; }
 
-/* the sheet: written on, standing proud of the envelope mouth */
-.lm-letter { transform-box: fill-box; transform-origin: 50% 100%; transition: transform 0.42s cubic-bezier(0.4, 0, 0.2, 1) 0.34s; }
-/* the flap is DRAWN closed and folded open at rest, so closing is honest 3D */
+/* the flap: closed and sealed at rest, hinged at its own top edge */
 .lm-flap {
 	transform-box: fill-box; transform-origin: 50% 0%;
-	transform: perspective(330px) rotateX(178deg);
-	transition: transform 0.44s cubic-bezier(0.45, 0, 0.25, 1) 0s;
+	transform: perspective(360px) rotateX(0deg);
+	transition: transform 0.4s cubic-bezier(0.45, 0, 0.3, 1) 0s;
 }
-.lm-seal { opacity: 0; transform-box: fill-box; transform-origin: 50% 50%; transform: scale(1.5) rotate(-14deg); transition: opacity 0.22s ease 0s, transform 0.22s ease 0s; }
-.lm-shadow { fill: rgba(20, 22, 28, 0.16); opacity: 0.5; transition: opacity 0.4s ease, transform 0.4s ease; }
+.lm-seal { transform-box: fill-box; transform-origin: 50% 50%; transition: opacity 0.28s ease 0s, transform 0.28s ease 0s; }
+/* the sheet lives on top of the mark, hidden inside the envelope until it rises */
+.lm-letter { transform-box: fill-box; transform-origin: 50% 100%; opacity: 0; transform: translateY(24px) scale(0.92); }
 
-.door:hover .lm-letter, .door:focus-visible .lm-letter { transform: translateY(27px); transition-delay: 0s; }
-.door:hover .lm-flap, .door:focus-visible .lm-flap { transform: perspective(330px) rotateX(0deg); transition-delay: 0.34s; }
-.door:hover .lm-seal, .door:focus-visible .lm-seal { opacity: 1; transform: scale(1) rotate(-8deg); transition-delay: 0.76s; }
-.door:hover .letter-mark, .door:focus-visible .letter-mark { transform: translateY(-6px) rotate(-3.5deg); transition-delay: 0.88s; }
-.door:hover .lm-shadow, .door:focus-visible .lm-shadow { opacity: 0.85; transform: translateY(5px); transition-delay: 0.88s; }
+/* reach for it: flap opens, seal breaks, and the letter is posted up to me */
+.door:hover .lm-flap, .door:focus-visible .lm-flap { transform: perspective(360px) rotateX(-162deg); }
+.door:hover .lm-seal, .door:focus-visible .lm-seal { opacity: 0; transform: scale(0.55); }
+.door:hover .lm-letter, .door:focus-visible .lm-letter { animation: post-out 2s cubic-bezier(0.4, 0, 0.2, 1) 0.18s forwards; }
+
+@keyframes post-out {
+	0%   { opacity: 0; transform: translateY(24px) scale(0.92); }
+	22%  { opacity: 0; transform: translateY(24px) scale(0.92); }
+	46%  { opacity: 1; transform: translateY(0) scale(1); }
+	60%  { opacity: 1; transform: translateY(-3px) rotate(-1.2deg); }
+	100% { opacity: 0; transform: translateY(-72px) translateX(30px) rotate(9deg) scale(0.97); }
+}
 
 .door-t { display: block; font-size: var(--t-small); font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--pen); }
 .door-a {
@@ -279,16 +284,12 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 	transition: border-color 0.25s ease, color 0.25s ease;
 }
 .door:hover .door-a, .door:focus-visible .door-a { color: var(--pen); border-bottom-color: var(--pen); }
-/* motion-sensitive readers get the end state, not the performance. These need
-   !important: the hover rules that set the stagger are more specific. */
+
+/* motion-sensitive readers get a still sealed envelope, never the flight.
+   !important because the hover selectors are more specific than this block. */
 @media (prefers-reduced-motion: reduce) {
-	.lm-letter, .lm-flap, .lm-seal, .letter-mark, .lm-shadow,
-	.door:hover .lm-letter, .door:hover .lm-flap, .door:hover .lm-seal, .door:hover .letter-mark, .door:hover .lm-shadow,
-	.door:focus-visible .lm-letter, .door:focus-visible .lm-flap, .door:focus-visible .lm-seal,
-	.door:focus-visible .letter-mark, .door:focus-visible .lm-shadow {
-		transition-duration: 0.01s !important;
-		transition-delay: 0s !important;
-	}
+	.lm-flap, .lm-seal { transition-duration: 0.01s !important; }
+	.door:hover .lm-letter, .door:focus-visible .lm-letter { animation: none !important; }
 }
 .door-side { display: block; margin-top: var(--s-2); font-size: var(--t-small); }
 .door-side a { color: var(--ink-2); text-decoration: none; border-bottom: 1px solid var(--pen-mat); }
@@ -475,7 +476,6 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .thing:nth-child(3) .thing-plate { transform: rotate(-0.6deg); }
 .thing-plate svg { width: 46%; height: auto; color: var(--pen); opacity: 0.5; }
 .thing-static .thing-t { color: var(--ink-2); }
-.thing-soon { display: inline-block; margin-top: 6px; font-family: var(--hand); font-size: 1.02rem; color: var(--pen); opacity: 0.75; transform: rotate(-1.5deg); }
 
 /* --- THE NOTEBOOK -------------------------------------------------------- */
 .shelf { margin-top: var(--s-5); border-top: 1px solid var(--hair); }
@@ -1120,6 +1120,13 @@ html:has(#night:checked) .inktrail, html.night .inktrail { mix-blend-mode: scree
 .notebook .shelf-year { padding: 0; min-height: 0; line-height: 34px; margin: 0; }
 .notebook .shelf-m .fresh { line-height: 34px; }
 .notebook .topic { vertical-align: -6px; }
+
+/* The front-page digest is a quiet taster, not the full index. Its three
+   entries are set as titles of works, in italic at a calmer weight, so they
+   read as writing rather than as headings shouting under the section title.
+   The full /writing list stays upright and bold, where scannability wins. */
+.digest .shelf-a { font-style: italic; font-weight: 500; font-size: 1.1875rem; letter-spacing: 0; }
+.digest .shelf-m { font-style: italic; }
 @media (max-width: 620px) {
 	.notebook { padding-left: 30px; background-image: repeating-linear-gradient(to bottom, transparent 0 29px, var(--hair) 29px 30px); }
 	.notebook::before { left: 16px; }
