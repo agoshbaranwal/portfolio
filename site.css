@@ -232,14 +232,12 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .mark svg { position: absolute; left: 0; right: 0; bottom: -0.36em; width: 100%; height: 0.42em; color: var(--pen); overflow: visible; }
 .mark svg path { stroke-dasharray: 1; stroke-dashoffset: 0; }
 
-/* THE LETTER. The button is the act it performs. At rest it is a sealed
-   envelope. Reach for it and the seal breaks, the flap swings wide open, and
-   the written sheet is drawn up OUT of the envelope and IN FRONT of it, then
-   flies up and away, carried off to me. Leave, and it seals again.
-   Construction that keeps it honest: the FRONT pocket is a permanent part of
-   the envelope (open or closed), so the flap is the ONLY thing that reads as
-   "sealed" and once it swings away nothing closed remains. The sheet is
-   painted LAST, so whenever it shows it is genuinely in front. */
+/* THE LETTER. At rest it is exactly that: a written letter tucked into an
+   envelope, its top peeking out of the mouth. One envelope pocket, one sheet,
+   no doubled lines. Reach for it and the letter is drawn up out of the pocket
+   and posted, flying up and away to me. Leave, and a fresh one sits in the
+   envelope again. The pocket is painted AFTER the sheet, so the sheet is
+   genuinely tucked inside (its lower half hidden) and slides out as it rises. */
 .door {
 	display: inline-flex; align-items: center; gap: 20px;
 	position: relative;
@@ -248,46 +246,31 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 	text-decoration: none; color: inherit;
 }
 .letter-mark {
-	width: 118px; height: 96px; flex-shrink: 0;
+	width: 116px; height: 98px; flex-shrink: 0;
 	color: var(--pen);
 	overflow: visible;
-	perspective: 460px;
 }
 /* paper fill must outrank the stroke rule (that contest shipped broken once) */
 .letter-mark .lm-paper { fill: var(--mat); }
 .lm-line { stroke: currentColor; fill: none; stroke-width: 2.7; stroke-linejoin: round; stroke-linecap: round; }
 .lm-thin { stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; opacity: 0.5; }
-.lm-shadow { fill: rgba(20, 22, 28, 0.18); opacity: 0.45; transition: opacity 0.5s ease, transform 0.5s ease; }
-
-/* the flap: a real lid. Closed and sealed at rest, hinged at the mouth line.
-   It swings fully open (past vertical) so it clears the mouth entirely. */
-.lm-flap {
-	transform-box: fill-box; transform-origin: 50% 0%;
-	transform: rotateX(0deg);
-	transition: transform 0.46s cubic-bezier(0.5, -0.2, 0.3, 1) 0s;
-	backface-visibility: hidden;
-}
-.lm-seal { transform-box: fill-box; transform-origin: 50% 50%; transition: opacity 0.24s ease 0s, transform 0.24s ease 0s; }
-/* the sheet lives on top of the mark, hidden inside the envelope until it rises */
+.lm-shadow { fill: rgba(20, 22, 28, 0.18); opacity: 0.4; transition: opacity 0.5s ease, transform 0.5s ease; }
+/* the written sheet, sitting in the envelope, clipped by the pocket in front */
 .lm-letter {
 	transform-box: fill-box; transform-origin: 50% 100%;
-	opacity: 0; transform: translateY(30px) scale(0.9);
-	filter: drop-shadow(0 5px 6px rgba(20, 22, 28, 0.16));
+	opacity: 1; transform: translateY(0);
+	filter: drop-shadow(0 3px 4px rgba(20, 22, 28, 0.14));
 }
 
-/* reach for it: the flap swings wide, the seal breaks, the letter is posted */
-.door:hover .lm-flap, .door:focus-visible .lm-flap { transform: rotateX(-178deg); }
-.door:hover .lm-seal, .door:focus-visible .lm-seal { opacity: 0; transform: scale(0.5); }
-.door:hover .lm-shadow, .door:focus-visible .lm-shadow { opacity: 0.7; transform: scaleX(0.9); }
-.door:hover .lm-letter, .door:focus-visible .lm-letter { animation: post-out 2.1s cubic-bezier(0.34, 0, 0.24, 1) 0.24s forwards; }
+/* reach for it: the letter is drawn up out of the envelope and posted to me */
+.door:hover .lm-letter, .door:focus-visible .lm-letter { animation: post-out 1.9s cubic-bezier(0.34, 0, 0.22, 1) forwards; }
+.door:hover .lm-shadow, .door:focus-visible .lm-shadow { opacity: 0.62; transform: scaleX(0.92); }
 
 @keyframes post-out {
-	0%   { opacity: 0; transform: translateY(30px) scale(0.9); }
-	16%  { opacity: 0; transform: translateY(30px) scale(0.9); }
-	38%  { opacity: 1; transform: translateY(-10px) scale(1.05); }   /* leaps up and in front, slight overshoot */
-	52%  { opacity: 1; transform: translateY(-4px) scale(1); }
-	66%  { opacity: 1; transform: translateY(-8px) rotate(-2deg); }
-	100% { opacity: 0; transform: translateY(-104px) translateX(46px) rotate(14deg) scale(0.88); }  /* posted, off to me */
+	0%   { opacity: 1; transform: translateY(0); }
+	34%  { opacity: 1; transform: translateY(-16px) rotate(0.5deg); }   /* drawn up and out of the pocket */
+	50%  { opacity: 1; transform: translateY(-12px) rotate(-1.5deg); }
+	100% { opacity: 0; transform: translateY(-102px) translateX(46px) rotate(13deg) scale(0.88); }  /* posted, off to me */
 }
 
 .door-t { display: block; font-size: var(--t-small); font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--pen); }
@@ -299,10 +282,10 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 }
 .door:hover .door-a, .door:focus-visible .door-a { color: var(--pen); border-bottom-color: var(--pen); }
 
-/* motion-sensitive readers get a still sealed envelope, never the flight.
+/* motion-sensitive readers get a still letter resting in its envelope.
    !important because the hover selectors are more specific than this block. */
 @media (prefers-reduced-motion: reduce) {
-	.lm-flap, .lm-seal, .lm-shadow { transition-duration: 0.01s !important; }
+	.lm-shadow { transition-duration: 0.01s !important; }
 	.door:hover .lm-letter, .door:focus-visible .lm-letter { animation: none !important; }
 }
 .door-side { display: block; margin-top: var(--s-2); font-size: var(--t-small); }

@@ -98,24 +98,18 @@
 						</p>
 
 						<a class="door" href="mailto:agosh.baranwal@alumni.esade.edu">
-							<svg class="letter-mark" viewBox="0 0 120 96" fill="none" aria-hidden="true">
-								<ellipse class="lm-shadow" cx="60" cy="91" rx="44" ry="4.5"/>
-								<!-- envelope back -->
-								<rect class="lm-paper lm-line" x="10" y="34" width="100" height="54" rx="5"/>
-								<!-- the front pocket: a permanent part of the envelope, open or closed -->
-								<path class="lm-paper lm-line" d="M16 88 Q10 88 10 82 L10 52 L60 66 L110 52 L110 82 Q110 88 104 88 Z"/>
-								<!-- the flap: the only thing that reads as sealed. It swings fully away. -->
-								<path class="lm-flap lm-paper lm-line" d="M10 34 L110 34 L60 61 Z"/>
-								<!-- the wax seal, sitting ON the closed flap (painted above it) -->
-								<g class="lm-seal">
-									<circle cx="60" cy="47" r="6.6" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.8"/>
-									<path d="M56.6 47 L63.4 47 M60 43.6 L60 50.4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.65"/>
-								</g>
-								<!-- the written sheet, painted last so it truly rises in front -->
+							<svg class="letter-mark" viewBox="0 0 120 98" fill="none" aria-hidden="true">
+								<ellipse class="lm-shadow" cx="60" cy="93" rx="43" ry="4.5"/>
+								<!-- the written letter, tucked into the envelope with its top peeking out.
+								     Painted BEFORE the pocket, so the pocket hides its lower half. -->
 								<g class="lm-letter">
-									<rect class="lm-paper lm-line" x="28" y="6" width="64" height="55" rx="3"/>
-									<path class="lm-thin" d="M36 18 C 48 15.4, 66 20, 80 16.4 M36 27 C 50 24.2, 70 29, 84 25.4 M36 36 C 48 33.4, 64 38, 76 34.6 M36 45 C 46 43, 58 46, 66 44.2"/>
+									<rect class="lm-paper lm-line" x="31" y="8" width="58" height="62" rx="3"/>
+									<path class="lm-thin" d="M39 21 C 51 18.4, 66 23, 81 19.4 M39 30 C 53 27.4, 70 32, 82 28.6 M39 39 C 50 36.6, 63 41, 75 37.6"/>
 								</g>
+								<!-- the envelope: one pocket with a mouth the letter rises out of -->
+								<path class="lm-paper lm-line" d="M13 46 L60 62 L107 46 L107 86 Q107 92 101 92 L19 92 Q13 92 13 86 Z"/>
+								<!-- the open flap, folded down behind, framing the mouth -->
+								<path class="lm-thin" d="M13 46 L60 62 L107 46 L107 40 L60 56 L13 40 Z" fill="currentColor" opacity="0.07" stroke="none"/>
 							</svg>
 							<span>
 								<span class="door-t">Write to me</span>
