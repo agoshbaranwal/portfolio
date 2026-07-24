@@ -414,6 +414,39 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .record a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--pen-mat); }
 .record a:hover { color: var(--pen); border-bottom-color: var(--pen); }
 
+/* --- THE TOOLKIT: skills, folded away until reached for ----------------------
+   One tidy line at rest. It opens on hover (desktop) and toggles on click or
+   tap (everywhere, keyboard included) via a hidden checkbox: zero JS, and it
+   never sprawls. A brief read of what he knows and what he can do. */
+.toolkit { margin-top: var(--s-4); max-width: 72ch; position: relative; }
+.kit-check { position: absolute; opacity: 0; width: 0; height: 0; }
+.kit-summary {
+	display: inline-flex; align-items: baseline; gap: 12px;
+	cursor: pointer; user-select: none; padding: 4px 0;
+}
+.kit-label { font-family: var(--hand); font-size: var(--t-hand); color: var(--pen); line-height: 1; }
+.kit-teaser { font-size: var(--t-small); color: var(--ink-3); }
+.kit-cue { width: 14px; height: 14px; color: var(--pen); align-self: center; transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); flex-shrink: 0; }
+.toolkit:hover .kit-cue, .kit-check:checked ~ .kit-summary .kit-cue { transform: rotate(-180deg); }
+.kit-check:focus-visible ~ .kit-summary { outline: 2px dashed var(--pen); outline-offset: 4px; border-radius: 3px; }
+.kit-body {
+	max-height: 0; opacity: 0; overflow: hidden;
+	transition: max-height 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+}
+.toolkit:hover .kit-body, .kit-check:checked ~ .kit-body { max-height: 340px; opacity: 1; }
+.kit-row { margin-top: var(--s-3); padding-left: var(--s-3); border-left: 2px solid var(--pen-mat); }
+.kit-cat { display: block; font-family: var(--hand); font-size: 1.02rem; color: var(--pen); }
+.kit-items { display: block; font-size: var(--t-small); line-height: 1.55; color: var(--ink-2); margin-top: 1px; }
+@media (hover: none) { .toolkit:hover .kit-body { max-height: 0; opacity: 0; } .kit-check:checked ~ .kit-body { max-height: 340px; opacity: 1; } .toolkit:hover .kit-cue { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .kit-body, .kit-cue { transition-duration: 0.01s; } }
+
+/* the résumé, one drawn document mark and a quiet link */
+.cv-link { display: inline-flex; align-items: center; gap: 9px; margin-top: var(--s-4); font-size: var(--t-body); color: var(--pen); text-decoration: none; }
+.cv-link svg { width: 20px; height: auto; color: var(--pen); flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
+.cv-link span { border-bottom: 1px solid var(--pen-mat); padding-bottom: 2px; transition: border-color 0.2s ease; }
+.cv-link:hover svg, .cv-link:focus-visible svg { transform: translateY(-2px) rotate(-3deg); }
+.cv-link:hover span, .cv-link:focus-visible span { border-bottom-color: var(--pen); }
+
 /* --- AFTER HOURS: the things ---------------------------------------------- */
 /* Three screenshots taped to the page in one row, like photos in a journal:
    the same tape and tilt as the hero portrait. At rest each shows only its
@@ -637,6 +670,52 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .post-body { max-width: 58ch; margin-top: var(--s-4); }
 .post-body p { margin-top: var(--s-2); }
 .post-body .h2 { margin-top: var(--s-4); }
+
+/* --- THE CV PAGE: his résumé, kept in his format, on the site's paper -------
+   Deliberately restrained: a clean, professional record, not a reinvented
+   layout. The one styling the site lends it is its paper, ink and one pen. */
+.cv { padding-top: var(--s-5); padding-bottom: var(--s-8); max-width: 880px; }
+.cv-head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--s-4); flex-wrap: wrap; }
+.cv-head .name { font-size: clamp(2rem, 5vw, 2.8rem); }
+.cv-role { font-size: var(--t-lead); color: var(--ink-2); margin-top: 4px; }
+.cv-contact { display: flex; align-items: center; gap: 16px; margin-top: var(--s-2); }
+.cv-download {
+	display: inline-flex; align-items: center; gap: 10px;
+	padding: 11px 18px; border: 1.6px solid var(--pen); border-radius: 3px;
+	color: var(--pen); text-decoration: none; font-size: var(--t-small); font-weight: 600;
+	white-space: nowrap; transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.cv-download svg { width: 18px; height: auto; }
+.cv-download:hover, .cv-download:focus-visible { background: color-mix(in srgb, var(--pen) 8%, transparent); transform: translateY(-1px); }
+.cv-rule { margin-top: var(--s-4); }
+.cv-sec { margin-top: var(--s-6); }
+.cv-h { font-family: var(--print); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--pen); padding-bottom: 6px; border-bottom: 1.5px solid var(--pen-mat); }
+.cv-summary { font-size: var(--t-small); line-height: 1.62; color: var(--ink-2); margin-top: var(--s-3); max-width: 92ch; }
+.cv-summary strong { color: var(--ink); font-weight: 700; }
+.cv-entry { margin-top: var(--s-4); }
+.cv-row { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s-3); }
+.cv-org { font-size: var(--t-h3); font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
+.cv-org .cv-note { font-weight: 400; font-style: italic; font-size: var(--t-small); color: var(--ink-3); }
+.cv-place { font-size: var(--t-small); color: var(--ink-3); text-align: right; white-space: nowrap; }
+.cv-sub { margin-top: 2px; }
+.cv-sub > span:first-child { font-size: var(--t-small); color: var(--ink-2); }
+.cv-sub em { font-style: italic; }
+.cv-date { font-size: var(--t-small); color: var(--ink-3); white-space: nowrap; font-variant-numeric: lining-nums; }
+.cv-points { margin-top: 8px; padding-left: 20px; list-style: none; }
+.cv-points li { font-size: var(--t-small); line-height: 1.58; color: var(--ink-2); margin-top: 5px; position: relative; }
+.cv-points li::before { content: ""; position: absolute; left: -15px; top: 0.62em; width: 5px; height: 5px; border-radius: 50%; background: var(--pen-mat); }
+.cv-skill-row { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: var(--s-3); margin-top: var(--s-3); align-items: baseline; }
+.cv-skill-cat { font-family: var(--hand); font-size: 1.05rem; color: var(--pen); }
+.cv-skill-items { font-size: var(--t-small); line-height: 1.55; color: var(--ink-2); }
+.cv-foot-links { margin-top: var(--s-7); display: flex; align-items: center; gap: var(--s-5); flex-wrap: wrap; }
+@media (max-width: 620px) {
+	.cv { padding-top: var(--s-4); }
+	.cv-head { gap: var(--s-3); }
+	.cv-download { width: 100%; justify-content: center; }
+	.cv-row { flex-direction: column; gap: 1px; }
+	.cv-place { text-align: left; }
+	.cv-skill-row { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+}
 
 
 /* the quiet promise under the button */

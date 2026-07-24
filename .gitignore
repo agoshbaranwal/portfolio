@@ -3,3 +3,6 @@ node_modules/
 .vercel
 .env*
 CLAUDE.md
+
+# CV PDF carries the real phone number: deploy it, but keep it out of the public repo
+agosh-baranwal-cv.pdf

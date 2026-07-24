@@ -8,12 +8,13 @@ fail=0
 if grep -l "<style" writing/*.html 2>/dev/null; then
 	echo "FAIL: <style> tag found in writing/ (all styling belongs in site.css)"; fail=1
 fi
-if grep -lE '<[a-z][^>]* style="' index.html 404.html writing/*.html 2>/dev/null; then
-	echo "FAIL: inline style attribute found in writing/ (add a class to site.css instead)"; fail=1
+if grep -lE '<[a-z][^>]* style="' index.html 404.html cv.html writing/*.html 2>/dev/null; then
+	echo "FAIL: inline style attribute found (add a class to site.css instead)"; fail=1
 fi
 
-# 2. No em dashes anywhere in shipped HTML copy.
-if grep -l "—" index.html 404.html feed.xml post-template.html site.css writing/*.html 2>/dev/null; then
+# 2. No em dashes anywhere in shipped HTML copy. (cv.html included; the CV keeps
+#    its own years-of-experience wording, so it is exempt from the years check.)
+if grep -l "—" index.html 404.html cv.html feed.xml post-template.html site.css writing/*.html 2>/dev/null; then
 	echo "FAIL: em dash found in copy"; fail=1
 fi
 
