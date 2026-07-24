@@ -13,6 +13,8 @@
 	   ruled-page plate with the topic drawn small (copy an existing card).
 	3. Update the home notebook shelf the same way: TITLES ONLY, newest first, max 3.
 	   Never write a post count or a cadence promise anywhere.
+	   Also point the bookmark ribbon at this new post: on index.html set
+	   <a class="ribbon" href="/writing/<slug>" aria-label="The latest note: <title>">.
 	4. Prepend an <item> to feed.xml, bump <lastBuildDate>.
 	5. Deploy: cd /Users/agosh/Game/portfolio && npx --yes vercel --prod --yes
 	   Then curl-verify the live post URL, /writing, and /feed.xml. Run ./check.sh <slug>.

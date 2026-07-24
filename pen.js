@@ -3,13 +3,30 @@
    1. the late show follows you across pages (and never flashes white),
    2. the guitar pick actually plays,
    3. the signature signs again when you tap the name,
-   4. the cursor leaves a fading line of ink across the opening.
+   4. the nib faces the way you scroll,
+   5. the cursor leaves ink ONLY where you are meant to write (Write to me).
    Every effect respects prefers-reduced-motion. No frameworks, no tracking. */
 (() => {
 	"use strict";
 	const doc = document, root = doc.documentElement;
 	root.classList.add("js");
 	const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+	/* ---- the nib faces the way it travels. Point-down going down (drawing the
+	   page), point-up going back up. The line it rides is drawn by CSS. */
+	const nib = doc.querySelector(".nib");
+	if (nib) {
+		let lastY = scrollY, ticking = false;
+		addEventListener("scroll", () => {
+			if (ticking) return;
+			ticking = true;
+			requestAnimationFrame(() => {
+				const y = scrollY, dy = y - lastY;
+				if (Math.abs(dy) > 2) { nib.classList.toggle("nib-up", dy < 0); lastY = y; }
+				ticking = false;
+			});
+		}, { passive: true });
+	}
 
 	/* ---- the late show: persist, repaint the browser chrome, run the flicker */
 	const night = doc.getElementById("night");
@@ -66,11 +83,11 @@
 		setTimeout(() => wrap.classList.remove("sign-again"), 2000);
 	});
 
-	/* ---- the ink trail: the pen follows the reader across the opening only.
-	   Mouse and stylus, motion-tolerant readers, and nowhere near the prose
-	   below the hero: restraint is the feature. */
-	const opening = doc.querySelector(".opening");
-	if (opening && !reduce && matchMedia("(pointer: fine)").matches) {
+	/* ---- the ink trail means one thing: here you can write. So it appears in
+	   exactly ONE place, the Write to me section, and nowhere else on any page.
+	   The pen only leaves ink where the reader is invited to put words down. */
+	const writezone = doc.querySelector("#write");
+	if (writezone && !reduce && matchMedia("(pointer: fine)").matches) {
 		const c = doc.createElement("canvas");
 		c.className = "inktrail";
 		doc.body.appendChild(c);
@@ -106,8 +123,8 @@
 		};
 		addEventListener("pointermove", (e) => {
 			if (e.pointerType !== "mouse" && e.pointerType !== "pen") return;
-			const r = opening.getBoundingClientRect();
-			if (e.clientY < r.top || e.clientY > r.bottom) return;
+			const r = writezone.getBoundingClientRect();
+			if (e.clientY < r.top || e.clientY > r.bottom || e.clientX < r.left || e.clientX > r.right) return;
 			pts.push({ x: e.clientX, y: e.clientY, t: performance.now() });
 			if (!raf) raf = requestAnimationFrame(tick);
 		}, { passive: true });

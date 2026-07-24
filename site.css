@@ -127,7 +127,9 @@ html { scrollbar-color: var(--pen-mat) transparent; }
 		}
 	}
 }
-@keyframes spine-grow { from { transform: scaleY(0.05); } to { transform: scaleY(1); } }
+/* the line does not exist until the nib has drawn it: at the very top there is
+   no line below the nib, and it grows downward exactly as the nib descends */
+@keyframes spine-grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 
 .band { position: relative; }
 .band > .inner {
@@ -338,8 +340,10 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 
 /* --- SECTIONS ------------------------------------------------------------ */
 /* The demarcation: one stroke from the same hand, drawn as you arrive. */
-/* anchors land clear of the sticky masthead, never tucked under it */
-.section { padding-top: var(--s-8); scroll-margin-top: 96px; }
+/* anchors land clear of the sticky masthead, never tucked under it. The
+   section rhythm is deliberately tighter than a full --s-8: the page reads as
+   one continuous letter, so the movements sit closer than separate pages would */
+.section { padding-top: clamp(52px, 6vw, 78px); scroll-margin-top: 96px; }
 @media (max-width: 620px) { .section { scroll-margin-top: 64px; } }
 .divider { display: block; width: 100%; height: 10px; color: var(--pen-2); overflow: visible; opacity: 0.75; }
 .h2 {
@@ -392,8 +396,8 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 	font-size: var(--t-small);
 	line-height: 1.68;
 	color: var(--ink-2);
-	max-width: 58ch;
-	margin-top: var(--s-5);
+	max-width: 72ch;
+	margin-top: var(--s-4);
 	padding-left: var(--s-3);
 	position: relative;
 }
@@ -777,15 +781,20 @@ html { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'
 .opening .lede { margin-top: 84px; }
 
 /* --- the nib rides the spine ---------------------------------------------- */
+/* the nib rides the leading edge of the line it draws. Its track matches the
+   spine exactly (top 30 / bottom 30) so the nib sits where the ink ends. */
 .nib-track {
 	position: absolute;
-	top: 30px; bottom: 48px;
+	top: 30px; bottom: 30px;
 	right: calc(clamp(20px, 5vw, 40px) + var(--margin-col) + var(--gutter) / 2 - 8px);
 	width: 17px;
 	pointer-events: none;
 	z-index: 2;
 }
-.nib { position: absolute; top: 0; width: 17px; height: 17px; color: var(--pen); }
+.nib { position: absolute; top: 0; width: 17px; height: 17px; color: var(--pen); transition: transform 0.25s ease; }
+/* the nib faces the way it travels: point-down as you scroll down, and pen.js
+   flips it point-up (.nib-up) when you scroll back up */
+.nib-up { transform: scaleY(-1); }
 @media (max-width: 860px) { .nib-track { display: none; } }
 @media (prefers-reduced-motion: no-preference) {
 	@supports (animation-timeline: scroll()) {
@@ -1016,12 +1025,31 @@ html:has(#night:checked) .night-marquee, html.night .night-marquee { filter: dro
 @keyframes perf-hint { 30% { transform: translateX(2px) rotate(1deg); } 65% { transform: translateX(-1.4px); } }
 
 /* --- the bookmark ribbon (in the margin of the notebook) --------------------
-   A satin marker hanging in the page, the one object that belongs to a
-   notebook and nothing else. It lifts a little when you reach for it. */
-.ribbon { display: block; width: 30px; margin: 2px 0 0 10px; color: var(--pen); overflow: visible; transform-origin: 50% 0; transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
-.ribbon-body { fill: currentColor; opacity: 0.09; }
-.ribbon:hover { transform: rotate(3deg) translateY(-2px); }
-@media (prefers-reduced-motion: reduce) { .ribbon { transition-duration: 0.01s; } }
+   A satin marker threaded over the rule above the notebook, hanging down the
+   margin. It marks the newest note and is a link to it: reach for it and it
+   lifts a little, as if you are tugging the page open, and says which note. */
+.col-ribbon { position: relative; align-self: start; }
+.ribbon { display: block; position: relative; width: 54px; margin: 0 0 0 14px; color: var(--pen); text-decoration: none; }
+.ribbon-svg { display: block; width: 54px; height: auto; overflow: visible; transform-origin: 50% 8px; transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+.ribbon-body { fill: currentColor; opacity: 0.11; }
+.ribbon:hover .ribbon-svg, .ribbon:focus-visible .ribbon-svg { transform: translateY(-9px); }
+.ribbon-hint {
+	display: block; width: 84px; margin: 8px 0 0 -19px;
+	font-family: var(--hand); font-size: 1rem; line-height: 1.15; color: var(--pen); text-align: center;
+	opacity: 0; transform: translateY(-5px); transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.ribbon:hover .ribbon-hint, .ribbon:focus-visible .ribbon-hint { opacity: 0.9; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) { .ribbon-svg, .ribbon-hint { transition-duration: 0.01s; } }
+
+/* --- brand marks: the logo instead of the word ------------------------------
+   `a.brand` (0,1,1) so it outranks the container link rules (.record a etc.)
+   that would otherwise draw a text underline under the logo box. */
+a.brand { display: inline-flex; align-items: center; justify-content: center; color: var(--ink-2); vertical-align: -0.28em; border-bottom: 0; padding-bottom: 0; transition: color 0.2s ease, transform 0.2s ease; }
+.brand-ic { width: 1.35em; height: 1.35em; display: block; }
+a.brand:hover, a.brand:focus-visible { color: var(--pen); transform: translateY(-1px); }
+.record .brand { vertical-align: -0.24em; margin-left: 1px; }
+.elsewhere .brand { width: 26px; height: 26px; }
+.elsewhere .brand .brand-ic { width: 22px; height: 22px; }
 
 /* --- the pen trails off where the notebook waits ----------------------------- */
 .trail-off { display: block; width: 150px; height: 14px; color: var(--pen); opacity: 0.45; overflow: visible; }
@@ -1059,19 +1087,6 @@ html:has(#night:checked) .night-marquee, html.night .night-marquee { filter: dro
 }
 @keyframes dog-in { from { opacity: 0; visibility: hidden; } to { opacity: 1; visibility: visible; } }
 
-/* --- a ring left by the cup that kept the writer company (by the notebook) --- */
-.col-ribbon { position: relative; }
-.col-ribbon::after {
-	content: ""; position: absolute;
-	right: 4px; top: 120px;
-	width: 104px; height: 100px;
-	pointer-events: none;
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 104 100'%3E%3Cellipse cx='52' cy='50' rx='44' ry='41' fill='none' stroke='%238a6a45' stroke-width='6' opacity='0.55'/%3E%3Cellipse cx='52' cy='50' rx='37' ry='34' fill='none' stroke='%238a6a45' stroke-width='2' opacity='0.35'/%3E%3C/svg%3E");
-	opacity: 0.09;
-	transform: rotate(8deg);
-}
-html:has(#night:checked) .col-ribbon::after, html.night .col-ribbon::after { opacity: 0.14; filter: invert(0.8); }
-@media (max-width: 860px) { .col-ribbon::after { display: none; } }
 
 /* --- the signature signs again (pen.js toggles .sign-again on tap) ------------ */
 .sign-again .sig .st { animation: draw 0.3s cubic-bezier(0.3, 0, 0.4, 1) backwards; }
