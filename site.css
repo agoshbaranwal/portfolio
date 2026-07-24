@@ -248,8 +248,10 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 	overflow: visible;
 	transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0s;
 }
-.lm-paper { fill: var(--mat); }
-.lm-line { stroke: currentColor; fill: none; stroke-width: 2.4; stroke-linejoin: round; stroke-linecap: round; }
+/* the paper fill MUST outrank the stroke rule: it is what makes the envelope
+   opaque, and the whole illusion is the sheet vanishing behind it */
+.letter-mark .lm-paper { fill: var(--mat); }
+.lm-line { stroke: currentColor; stroke-width: 2.4; stroke-linejoin: round; stroke-linecap: round; }
 .lm-thin { stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; opacity: 0.5; }
 
 /* the sheet: written on, standing proud of the envelope mouth */
@@ -277,8 +279,16 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 	transition: border-color 0.25s ease, color 0.25s ease;
 }
 .door:hover .door-a, .door:focus-visible .door-a { color: var(--pen); border-bottom-color: var(--pen); }
+/* motion-sensitive readers get the end state, not the performance. These need
+   !important: the hover rules that set the stagger are more specific. */
 @media (prefers-reduced-motion: reduce) {
-	.lm-letter, .lm-flap, .lm-seal, .letter-mark, .lm-shadow { transition-duration: 0.01s; transition-delay: 0s; }
+	.lm-letter, .lm-flap, .lm-seal, .letter-mark, .lm-shadow,
+	.door:hover .lm-letter, .door:hover .lm-flap, .door:hover .lm-seal, .door:hover .letter-mark, .door:hover .lm-shadow,
+	.door:focus-visible .lm-letter, .door:focus-visible .lm-flap, .door:focus-visible .lm-seal,
+	.door:focus-visible .letter-mark, .door:focus-visible .lm-shadow {
+		transition-duration: 0.01s !important;
+		transition-delay: 0s !important;
+	}
 }
 .door-side { display: block; margin-top: var(--s-2); font-size: var(--t-small); }
 .door-side a { color: var(--ink-2); text-decoration: none; border-bottom: 1px solid var(--pen-mat); }
@@ -1095,16 +1105,34 @@ html:has(#night:checked) .inktrail, html.night .inktrail { mix-blend-mode: scree
 	background-size: 16px 118px;
 	background-repeat: repeat-y;
 }
-/* entries sit ON the ruled lines: two rules to a row, so the list keeps the
-   page's printed rhythm instead of inventing its own */
+/* Entries sit ON the ruled lines. The only way this survives wrapped titles
+   and every screen width is to put EVERY line of type on the same 34px
+   rhythm as the printed rules, the way a hand writes on a real page. Never
+   go back to min-height snapping: a two-line title breaks it instantly. */
 .notebook .shelf { border-top: 0; margin-top: 0; }
-.notebook .shelf-row { border-bottom: 0; padding: 6px 0 0; min-height: 68px; align-content: start; }
-.notebook .shelf-year { padding: 10px 0 4px; min-height: 34px; }
-.notebook .shelf-g { margin-top: 1px; }
+.notebook .shelf-row {
+	border-bottom: 0; padding: 0; min-height: 0;
+	align-content: start; align-items: start;
+	line-height: 34px;
+}
+.notebook .shelf-t, .notebook .shelf-g, .notebook .shelf-m, .notebook .shelf-a { line-height: 34px; }
+.notebook .shelf-g { margin-top: 0; display: block; }
+.notebook .shelf-year { padding: 0; min-height: 0; line-height: 34px; margin: 0; }
+.notebook .shelf-m .fresh { line-height: 34px; }
+.notebook .topic { vertical-align: -6px; }
 @media (max-width: 620px) {
 	.notebook { padding-left: 30px; background-image: repeating-linear-gradient(to bottom, transparent 0 29px, var(--hair) 29px 30px); }
 	.notebook::before { left: 16px; }
-	.notebook::after { left: 1px; width: 11px; background-size: 11px 33.3%; }
+	.notebook::after { left: 1px; width: 12px; background-size: 12px 90px; background-image: radial-gradient(circle at 6px 6px, color-mix(in srgb, var(--ink) 13%, var(--paper)) 0 4.5px, var(--hair) 4.5px 5.5px, transparent 6px); }
+	/* the type rhythm has to follow the tighter rule pitch, or the printed
+	   lines cut straight through the titles */
+	.notebook .shelf-row, .notebook .shelf-t, .notebook .shelf-g,
+	.notebook .shelf-m, .notebook .shelf-a, .notebook .shelf-year,
+	.notebook .shelf-m .fresh { line-height: 30px; }
+	.notebook .topic { vertical-align: -5px; }
+	/* the stacked-row gap is off-grid: any gap at all pushes every following
+	   line off the printed rules */
+	.notebook .shelf-row { gap: 0; }
 }
 
 /* the latest entries get their picture pinned above the fold, so the page

@@ -3,10 +3,16 @@
 	To publish a post "<slug>" (lowercase-kebab, no dates in slug, permanent forever):
 	1. Copy this file to writing/<slug>.html. Fill every [BRACKET]. Zero <style> tags,
 	   zero inline style attributes: new elements become a generic class in site.css.
-	2. Replace the first empty shelf-row in writing/index.html with the post's row
-	   (title links to /writing/<slug>, date in the shelf-m slot). Keep 2-3 empty
-	   ruled rows below the real ones; drop them once there are four real posts.
+	2. On writing/index.html the newest TWO posts are the featured previews in
+	   <div class="latest"> (taped card + h2.late-t + p.late-g + span.late-m; the
+	   newest carries <span class="fresh">still drying</span>). Promote this post
+	   into .latest, demote the one that falls out into the ruled list below, and
+	   add its row inside <div class="notebook"><div class="shelf">: topic svg +
+	   a.shelf-a + span.shelf-g, date in span.shelf-m, under the right
+	   p.shelf-year. The card art is the post's own photo if it has one, else the
+	   ruled-page plate with the topic drawn small (copy an existing card).
 	3. Update the home notebook shelf the same way: TITLES ONLY, newest first, max 3.
+	   Never write a post count or a cadence promise anywhere.
 	4. Prepend an <item> to feed.xml, bump <lastBuildDate>.
 	5. Deploy: cd /Users/agosh/Game/portfolio && npx --yes vercel --prod --yes
 	   Then curl-verify the live post URL, /writing, and /feed.xml. Run ./check.sh <slug>.
@@ -82,8 +88,12 @@
 						</svg>
 						<p class="say say-top"><time datetime="[YYYY-MM-DD]">[17 July 2026]</time></p>
 
+						<div class="notebook lite">
 						<div class="post-body">
 							<p>[BODY. Paragraphs as p. Subheads as h2 class="h2".]</p>
+							<!-- A photo: <figure class="post-fig"><img src="/previews/[FILE].jpg" alt="[ALT]" width="640" height="400" /><figcaption>[caption in his hand]</figcaption></figure>
+							     If the photo is not ready, use <div class="post-ph" role="img" aria-label="[what it will show]"></div> in place of the img. -->
+						</div>
 						</div>
 
 						<a class="shelf-link" href="/writing">back to the notebook</a>&nbsp;&nbsp;&nbsp;<a class="shelf-link" href="/#write">write to me</a>

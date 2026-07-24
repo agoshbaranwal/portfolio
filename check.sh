@@ -46,6 +46,32 @@ if [ -n "$1" ]; then
 	done
 fi
 
+# 5b. Every anchor must actually be a link. A swallowed quote (class="x href="/")
+#     tokenizes into a styled element with NO href: it looks live and is dead.
+#     This shipped once. It never ships again.
+python3 - "$PWD" <<'PY' || fail=1
+import sys, glob, os
+from html.parser import HTMLParser
+os.chdir(sys.argv[1])
+class P(HTMLParser):
+	def __init__(self, f):
+		super().__init__(); self.f = f; self.bad = []
+	def handle_starttag(self, tag, attrs):
+		if tag != "a": return
+		d = dict(attrs)
+		if not (d.get("href") or "").strip():
+			self.bad.append((self.getpos()[0], "no href", attrs))
+		for k, _ in attrs:
+			if '"' in k or k.endswith("href="):
+				self.bad.append((self.getpos()[0], "malformed attribute", attrs))
+bad = 0
+for f in sorted(glob.glob("*.html") + glob.glob("writing/*.html")):
+	p = P(f); p.feed(open(f, encoding="utf-8").read())
+	for line, why, attrs in p.bad:
+		print(f"FAIL: {f}:{line} anchor {why}: {attrs}"); bad += 1
+sys.exit(1 if bad else 0)
+PY
+
 # 6. The locked project order on the homepage: admenow, Utsav, tvbadger.
 order=$(sed -n '/>Things I am building</,$p' index.html | grep -oE 'href="https://(admenow|utsav-pi|tvbadger)\.vercel' | sed 's/href="https:\/\///' | head -3 | tr '\n' ' ')
 [ "$order" = "admenow.vercel utsav-pi.vercel tvbadger.vercel " ] || { echo "FAIL: project order changed: $order"; fail=1; }
