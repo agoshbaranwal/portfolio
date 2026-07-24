@@ -230,34 +230,55 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .mark svg { position: absolute; left: 0; right: 0; bottom: -0.36em; width: 100%; height: 0.42em; color: var(--pen); overflow: visible; }
 .mark svg path { stroke-dasharray: 1; stroke-dashoffset: 0; }
 
-/* the one button on the page: not a filled block from some design system,
-   but a box the pen drew around the words. It draws itself on arrival and
-   washes with ink when reached for. */
+/* THE LETTER. The one button on the page is the act it performs: a written
+   sheet standing in an open envelope. Reach for it and the letter is posted,
+   in the order a person does it. The letter drops in, the flap folds down
+   and seals, the stamp is pressed on, and the whole thing lifts off the desk.
+   Leave, and it unseals and comes back out, ready to be written again. */
 .door {
-	display: inline-block; position: relative;
+	display: inline-flex; align-items: center; gap: 18px;
+	position: relative;
 	margin-top: var(--s-5);
-	padding: 13px 26px 12px;
-	color: var(--ink);
-	text-decoration: none;
-	transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+	padding: 6px 4px;
+	text-decoration: none; color: inherit;
 }
-.door-frame {
-	position: absolute; inset: 0; width: 100%; height: 100%;
-	color: var(--pen); overflow: visible; pointer-events: none;
+.letter-mark {
+	width: 104px; height: 76px; flex-shrink: 0;
+	color: var(--pen);
+	overflow: visible;
+	transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0s;
 }
-.door-frame path { fill: none; stroke: currentColor; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
-.door::before {
-	content: ""; position: absolute; inset: 4px;
-	background: var(--pen); opacity: 0; border-radius: 8px;
-	transition: opacity 0.25s ease;
+.lm-paper { fill: var(--mat); }
+.lm-line { stroke: currentColor; fill: none; stroke-width: 2.4; stroke-linejoin: round; stroke-linecap: round; }
+.lm-thin { stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; opacity: 0.5; }
+
+/* the sheet: written on, standing proud of the envelope mouth */
+.lm-letter { transform-box: fill-box; transform-origin: 50% 100%; transition: transform 0.42s cubic-bezier(0.4, 0, 0.2, 1) 0.34s; }
+/* the flap is DRAWN closed and folded open at rest, so closing is honest 3D */
+.lm-flap {
+	transform-box: fill-box; transform-origin: 50% 0%;
+	transform: perspective(330px) rotateX(178deg);
+	transition: transform 0.44s cubic-bezier(0.45, 0, 0.25, 1) 0s;
 }
-.door:hover::before, .door:focus-visible::before { opacity: 0.08; }
-.door:hover { transform: translateY(-2px); }
-.door-t { position: relative; display: block; font-size: var(--t-small); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--pen); }
-.door-a { position: relative; display: block; font-size: var(--t-small); color: var(--ink-2); margin-top: 2px; }
-@media (prefers-reduced-motion: no-preference) {
-	.door-frame .df1 { animation: draw 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.3s backwards; }
-	.door-frame .df2 { animation: draw 0.35s ease 0.85s backwards; }
+.lm-seal { opacity: 0; transform-box: fill-box; transform-origin: 50% 50%; transform: scale(1.5) rotate(-14deg); transition: opacity 0.22s ease 0s, transform 0.22s ease 0s; }
+.lm-shadow { fill: rgba(20, 22, 28, 0.16); opacity: 0.5; transition: opacity 0.4s ease, transform 0.4s ease; }
+
+.door:hover .lm-letter, .door:focus-visible .lm-letter { transform: translateY(27px); transition-delay: 0s; }
+.door:hover .lm-flap, .door:focus-visible .lm-flap { transform: perspective(330px) rotateX(0deg); transition-delay: 0.34s; }
+.door:hover .lm-seal, .door:focus-visible .lm-seal { opacity: 1; transform: scale(1) rotate(-8deg); transition-delay: 0.76s; }
+.door:hover .letter-mark, .door:focus-visible .letter-mark { transform: translateY(-6px) rotate(-3.5deg); transition-delay: 0.88s; }
+.door:hover .lm-shadow, .door:focus-visible .lm-shadow { opacity: 0.85; transform: translateY(5px); transition-delay: 0.88s; }
+
+.door-t { display: block; font-size: var(--t-small); font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--pen); }
+.door-a {
+	display: inline-block; margin-top: 3px;
+	font-size: var(--t-small); color: var(--ink-2);
+	border-bottom: 1px solid var(--pen-mat); padding-bottom: 2px;
+	transition: border-color 0.25s ease, color 0.25s ease;
+}
+.door:hover .door-a, .door:focus-visible .door-a { color: var(--pen); border-bottom-color: var(--pen); }
+@media (prefers-reduced-motion: reduce) {
+	.lm-letter, .lm-flap, .lm-seal, .letter-mark, .lm-shadow { transition-duration: 0.01s; transition-delay: 0s; }
 }
 .door-side { display: block; margin-top: var(--s-2); font-size: var(--t-small); }
 .door-side a { color: var(--ink-2); text-decoration: none; border-bottom: 1px solid var(--pen-mat); }
@@ -421,14 +442,30 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .thing-v svg path { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
 .thing:hover .thing-v svg path, .thing:focus-visible .thing-v svg path { stroke-dashoffset: 0; }
 
-/* the bench: same hand, lighter pressure. Pencil, not ink. */
-.bench { margin-top: var(--s-5); }
+/* the bench: the SAME cards as the built things, because they are the same
+   kind of object. The only honest difference is that their picture has not
+   been taken yet, so the frame holds a drawing of the thing instead of a
+   screenshot, and there is no address to write under it. */
+.bench { margin-top: var(--s-6); }
 .bench-say { font-size: var(--t-small); color: var(--ink-3); }
-.bench-list { margin-top: var(--s-3); display: flex; flex-direction: column; gap: var(--s-3); }
-.bench-row { padding-top: var(--s-3); border-top: 1px dashed var(--pen-mat); }
-.bench-row:last-child { border-bottom: 1px dashed var(--pen-mat); padding-bottom: var(--s-3); }
-.bench-t { font-size: var(--t-body); font-weight: 600; color: var(--ink-2); }
-.bench-d { font-size: var(--t-small); color: var(--ink-3); margin-top: 2px; }
+.bench .things { margin-top: var(--s-3); }
+.thing-static { cursor: default; }
+.thing-static .thing-more { max-height: none; opacity: 1; }
+.thing-plate {
+	position: relative;
+	width: 100%; aspect-ratio: 16 / 10;
+	display: flex; align-items: center; justify-content: center;
+	background: var(--mat);
+	border: 4px solid var(--mat);
+	box-shadow: 0 6px 16px -10px rgba(20, 22, 28, 0.5), 0 0 0 1px var(--hair);
+	transform: rotate(-1.2deg);
+	overflow: hidden;
+}
+.thing:nth-child(2) .thing-plate { transform: rotate(1deg); }
+.thing:nth-child(3) .thing-plate { transform: rotate(-0.6deg); }
+.thing-plate svg { width: 46%; height: auto; color: var(--pen); opacity: 0.5; }
+.thing-static .thing-t { color: var(--ink-2); }
+.thing-soon { display: inline-block; margin-top: 6px; font-family: var(--hand); font-size: 1.02rem; color: var(--pen); opacity: 0.75; transform: rotate(-1.5deg); }
 
 /* --- THE NOTEBOOK -------------------------------------------------------- */
 .shelf { margin-top: var(--s-5); border-top: 1px solid var(--hair); }
@@ -915,7 +952,7 @@ html:has(#night:checked) .night-marquee, html.night .night-marquee { filter: dro
 @media (prefers-reduced-motion: no-preference) {
 	@supports (animation-timeline: view()) {
 		.flick path { animation: draw linear both; animation-timeline: view(); animation-range: entry 24% entry 72%; }
-		.bench-row { animation: settle linear both; animation-timeline: view(); animation-range: entry 10% entry 52%; }
+		.latest a { animation: settle linear backwards; animation-timeline: view(); animation-range: entry 6% entry 46%; }
 	}
 }
 
@@ -1035,6 +1072,78 @@ html:has(#night:checked) .inktrail, html.night .inktrail { mix-blend-mode: scree
 }
 
 /* ==========================================================================
+   THE NOTEBOOK, AS AN OBJECT. Where the writing lives, the paper stops
+   being a letter and becomes a notebook page: punched holes down the left,
+   a margin rule just inside them, and ruled lines under the entries. The
+   rules are printed (hair), never pen: the pen is reserved for his hand.
+   ========================================================================== */
+.notebook {
+	position: relative;
+	padding-left: 52px;
+	background-image: repeating-linear-gradient(to bottom, transparent 0 33px, var(--hair) 33px 34px);
+	background-position: 0 0;
+}
+.notebook::before {
+	content: ""; position: absolute; top: 0; bottom: 0; left: 30px;
+	width: 1.5px; background: var(--pen-mat); opacity: 0.55;
+}
+/* the punched holes: real circles at a fixed rhythm, sunk into the sheet */
+.notebook::after {
+	content: ""; position: absolute; top: 40px; bottom: 20px; left: 5px;
+	width: 16px;
+	background-image: radial-gradient(circle at 8px 8px, color-mix(in srgb, var(--ink) 13%, var(--paper)) 0 6px, var(--hair) 6px 7px, transparent 7.5px);
+	background-size: 16px 118px;
+	background-repeat: repeat-y;
+}
+/* entries sit ON the ruled lines: two rules to a row, so the list keeps the
+   page's printed rhythm instead of inventing its own */
+.notebook .shelf { border-top: 0; margin-top: 0; }
+.notebook .shelf-row { border-bottom: 0; padding: 6px 0 0; min-height: 68px; align-content: start; }
+.notebook .shelf-year { padding: 10px 0 4px; min-height: 34px; }
+.notebook .shelf-g { margin-top: 1px; }
+@media (max-width: 620px) {
+	.notebook { padding-left: 30px; background-image: repeating-linear-gradient(to bottom, transparent 0 29px, var(--hair) 29px 30px); }
+	.notebook::before { left: 16px; }
+	.notebook::after { left: 1px; width: 11px; background-size: 11px 33.3%; }
+}
+
+/* the latest entries get their picture pinned above the fold, so the page
+   opens with something to look at rather than a wall of titles */
+.latest { margin-top: var(--s-4); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-4) var(--s-3); }
+.latest .thing-shot { margin-bottom: 10px; }
+.latest .thing-shot img, .latest .thing-plate { aspect-ratio: 16 / 10; }
+.late-t { font-size: var(--t-h3); font-weight: 600; color: var(--ink); letter-spacing: -0.01em; transition: color 0.2s ease; }
+.latest a:hover .late-t, .latest a:focus-visible .late-t { color: var(--pen); }
+.late-g { font-size: var(--t-small); color: var(--ink-2); margin-top: 3px; }
+.late-m { display: block; font-size: var(--t-micro); color: var(--ink-3); margin-top: 6px; }
+.late-m .fresh { font-family: var(--hand); font-size: 0.95rem; color: var(--pen); margin-left: 8px; }
+.latest a { text-decoration: none; color: inherit; display: block; min-width: 0; }
+/* a post with no photo yet shows what it actually is: a page of the notebook,
+   ruled, with its subject drawn small in the corner of the sheet */
+.latest .thing-plate {
+	background-image: repeating-linear-gradient(to bottom, transparent 0 15px, var(--hair) 15px 16px);
+	background-position: 0 26px;
+	align-items: flex-start; justify-content: flex-start;
+	padding: 14px 0 0 16px;
+}
+.latest .thing-plate svg { width: 15%; opacity: 0.62; }
+.latest a:nth-child(2) .thing-plate { transform: rotate(1.1deg); }
+.latest .thing-plate { transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease; }
+.latest a:hover .thing-plate, .latest a:focus-visible .thing-plate {
+	transform: rotate(0deg) translateY(-3px);
+	box-shadow: 0 14px 28px -14px var(--pen-mat), 0 0 0 1px var(--hair);
+}
+/* a post is a page from the same notebook: the holes and the margin rule,
+   but no ruled lines, because prose has to stay readable */
+.notebook.lite { background-image: none; }
+@media (max-width: 620px) {
+	.latest { grid-template-columns: minmax(0, 1fr); gap: var(--s-3); }
+	.latest a { display: grid; grid-template-columns: 118px minmax(0, 1fr); gap: 2px var(--s-2); align-items: start; }
+	.latest .thing-shot { grid-row: 1 / 4; margin-bottom: 0; }
+	.late-t { font-size: 1rem; }
+}
+
+/* ==========================================================================
    THE FULL SHELF: how the notebook reads once real posts exist. The list
    stays a ledger, never a card grid: a drawn topic mark, the title, one
    quiet line of gist, the date on the right. Years are written in by hand
@@ -1054,15 +1163,25 @@ html:has(#night:checked) .inktrail, html.night .inktrail { mix-blend-mode: scree
 /* inside a post, a photo is taped into the text column; while it waits,
    the frame is drawn empty */
 .post-fig { margin-top: var(--s-4); max-width: 58ch; }
+/* a photo that has not been taken yet: the frame is taped up and waiting,
+   never a broken-image cross */
+.post-fig { position: relative; }
 .post-ph {
 	aspect-ratio: 16 / 10;
-	background:
-		linear-gradient(to top right, transparent 49.5%, var(--hair) 49.8%, var(--hair) 50.2%, transparent 50.5%),
-		linear-gradient(to top left, transparent 49.5%, var(--hair) 49.8%, var(--hair) 50.2%, transparent 50.5%),
-		var(--mat);
+	background-image: repeating-linear-gradient(to bottom, transparent 0 21px, var(--hair) 21px 22px);
+	background-color: var(--mat);
+	background-position: 0 20px;
 	border: 5px solid var(--mat);
 	box-shadow: 0 0 0 1px var(--hair), 0 8px 20px -14px rgba(20, 22, 28, 0.4);
+	transform: rotate(-0.7deg);
 }
+.post-fig::before, .post-fig::after {
+	content: ""; position: absolute; z-index: 2; top: -8px;
+	width: 52px; height: 16px;
+	background: var(--pen-mat); opacity: 0.45; border-radius: 1px;
+}
+.post-fig::before { left: 22px; transform: rotate(-28deg); }
+.post-fig::after { right: 22px; transform: rotate(26deg); }
 .post-fig img { border: 5px solid var(--mat); box-shadow: 0 0 0 1px var(--hair), 0 8px 20px -14px rgba(20, 22, 28, 0.4); }
 .post-fig figcaption { font-family: var(--hand); font-size: 1.05rem; color: var(--pen); margin-top: 9px; transform: rotate(-1deg); }
 
@@ -1084,7 +1203,9 @@ html:has(#night:checked) .inktrail, html.night .inktrail { mix-blend-mode: scree
 	.sig .st, .name-rule path, .divider path, .mark svg path, .ring path,
 	.thing-v svg path, .postmark path, .postmark circle, .flick path, .trail-off path { stroke-dashoffset: 0 !important; }
 	.note, .section .note { mask-image: none !important; opacity: 1 !important; }
-	.thing, .figure, .postcard, .bench-row { break-inside: avoid; }
+	.thing, .figure, .postcard, .shelf-row, .latest a { break-inside: avoid; }
+	.notebook::before, .notebook::after { display: none !important; }
+	.notebook { background-image: none !important; padding-left: 0 !important; }
 	.foot::after {
 		content: "P.S. You printed me. Fold twice and keep me in a pocket.";
 		display: block; width: 100%;
