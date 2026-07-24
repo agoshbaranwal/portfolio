@@ -2,7 +2,7 @@
    Everything here is delight on top of a page that is complete without JS:
    1. the late show follows you across pages (and never flashes white),
    2. the guitar pick actually plays,
-   3. the signature signs again when you tap the name,
+   3. the wax seal re-stamps a different life each time you press it,
    4. the nib faces the way you scroll,
    5. the cursor leaves ink ONLY where you are meant to write (Write to me).
    Every effect respects prefers-reduced-motion. No frameworks, no tracking. */
@@ -74,14 +74,29 @@
 		});
 	});
 
-	/* ---- tap the name, he signs it again */
-	const wrap = doc.querySelector(".namewrap");
-	if (wrap && !reduce) wrap.addEventListener("click", () => {
-		wrap.classList.remove("sign-again");
-		void wrap.offsetWidth;
-		wrap.classList.add("sign-again");
-		setTimeout(() => wrap.classList.remove("sign-again"), 2000);
-	});
+	/* ---- press the wax seal, it re-stamps with a different life: the nib
+	   (writing), a chef's toque (cooking), a pick (music), a TV, a paper plane
+	   (travel). Cycles on every click/Enter; with JS off it rests on the nib. */
+	const seal = doc.querySelector(".seal-btn");
+	const sealWrap = seal && seal.closest(".seam-wrap");
+	const emblems = [...doc.querySelectorAll(".seam .emblem")];
+	if (seal && sealWrap && emblems.length) {
+		const labels = seal.dataset.labels ? seal.dataset.labels.split("|") : [];
+		let i = emblems.findIndex(e => e.classList.contains("is-active"));
+		if (i < 0) i = 0;
+		seal.addEventListener("click", () => {
+			emblems[i].classList.remove("is-active");
+			i = (i + 1) % emblems.length;
+			emblems[i].classList.add("is-active");
+			if (labels[i]) seal.setAttribute("aria-label", labels[i]);
+			if (!reduce) {
+				sealWrap.classList.remove("restamp");
+				void sealWrap.offsetWidth;
+				sealWrap.classList.add("restamp");
+				setTimeout(() => sealWrap.classList.remove("restamp"), 480);
+			}
+		});
+	}
 
 	/* ---- the ink trail means one thing: here you can write. So it appears in
 	   exactly ONE place, the Write to me section, and nowhere else on any page.

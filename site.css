@@ -238,10 +238,6 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 	margin-top: var(--s-3);
 }
 .lede strong { font-weight: 600; color: var(--ink); }
-/* the one phrase the hand underlines, because it is the sentence's real point */
-.mark { position: relative; white-space: nowrap; color: var(--ink); font-weight: 600; }
-.mark svg { position: absolute; left: 0; right: 0; bottom: -0.36em; width: 100%; height: 0.42em; color: var(--pen); overflow: visible; }
-.mark svg path { stroke-dasharray: 1; stroke-dashoffset: 0; }
 
 /* THE LETTER. At rest it is exactly that: a written letter tucked into an
    envelope, its top peeking out of the mouth. One envelope pocket, one sheet,
@@ -563,9 +559,8 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .name-rule path, .divider path { stroke-dasharray: 1; stroke-dashoffset: 0; }
 
 @media (prefers-reduced-motion: no-preference) {
-	/* the name signs itself once, on arrival, then the hand marks its phrase */
+	/* the title's underline draws itself in on arrival, as on every page */
 	.name-rule path { animation: draw 1.05s cubic-bezier(0.22, 1, 0.36, 1) 0.15s backwards; }
-	.mark svg path { animation: draw 0.65s cubic-bezier(0.22, 1, 0.36, 1) 1.05s backwards; }
 	.opening .note { animation: note-in 0.7s ease 1.4s backwards; }
 
 	@supports (animation-timeline: view()) {
@@ -814,9 +809,35 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .seam { display: block; width: 100%; height: auto; overflow: visible; }
 .env-left { display: none; }
 @media (max-width: 860px) {
-	.seam-wrap { position: static; width: 216px; margin: var(--s-5) auto 0; }
+	.seam-wrap { position: relative; width: 216px; margin: var(--s-5) auto 0; }
 	.env-left { display: block; }   /* whole envelope where there is no spine */
 	.env-ghost { display: none; }
+}
+
+/* the seal is a button: press it and it re-stamps a different emblem. Only one
+   emblem shows at a time; the nib is the default, so JS-off rests on writing. */
+.emblem { display: none; }
+.emblem.is-active { display: block; }
+.wax-seal-press { transform-box: fill-box; transform-origin: center; transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
+.seal-btn {
+	position: absolute; left: 50%; top: 44.8%; transform: translate(-50%, -50%);
+	width: 42%; aspect-ratio: 1; margin: 0; padding: 0;
+	border: 0; background: none; border-radius: 50%;
+	cursor: pointer; pointer-events: auto; -webkit-tap-highlight-color: transparent;
+}
+/* without JS the seal cannot cycle, so do not present a dead control */
+html:not(.js) .seal-btn { display: none; }
+.seal-btn:focus-visible { outline: 2.5px solid var(--pen); outline-offset: 3px; }
+.seam-wrap:has(.seal-btn:hover) .wax-seal-press,
+.seam-wrap:has(.seal-btn:focus-visible) .wax-seal-press { transform: scale(1.05); }
+@media (prefers-reduced-motion: no-preference) {
+	.seam-wrap.restamp .wax-seal-press { animation: restamp 0.46s cubic-bezier(0.3, 0, 0.35, 1); }
+}
+@keyframes restamp {
+	0%   { transform: scale(1); }
+	28%  { transform: scale(0.88) rotate(-2.5deg); }
+	55%  { transform: scale(1.05) rotate(1.5deg); }
+	100% { transform: scale(1); }
 }
 
 @media (max-width: 620px) {
@@ -835,36 +856,14 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 /* --- the cursor is the pen ------------------------------------------------ */
 html { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M3 21 L7.5 9.5 C 8.5 6.5 11 4.5 14 4.5 L19.5 10 C 19.5 13 17.5 15.8 14.5 16.8 L3 21 Z' fill='%231d3a63' stroke='white' stroke-width='1.3'/%3E%3Ccircle cx='12.6' cy='11.2' r='1.5' fill='white'/%3E%3C/svg%3E") 2 22, auto; }
 
-/* --- the signature -------------------------------------------------------- */
-/* The printed name arrives first; then the hand signs it, stroke by stroke,
-   in the order a hand would. The flourish is the page's rule. */
+/* --- the hero title ------------------------------------------------------- */
+/* The printed name fades in on arrival; its flourish is the same hand-drawn
+   name-rule underline every other page uses, kept consistent on purpose. */
 .namewrap { position: relative; }
-.sig {
-	position: absolute;
-	left: 6px; bottom: -66px;
-	width: min(370px, 66%);
-	color: var(--pen);
-	overflow: visible;
-	transform: rotate(-2deg);
-	pointer-events: none;
-}
-.sig .st { stroke: currentColor; fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
-.namewrap .name { animation: none; }
 @media (prefers-reduced-motion: no-preference) {
 	.name { animation: fadein 0.5s ease backwards; }
-	.sig .st { animation: draw 0.34s cubic-bezier(0.3, 0, 0.4, 1) backwards; }
-	.sig .st1 { animation-delay: 0.55s; }
-	.sig .st2 { animation-delay: 0.92s; animation-duration: 0.2s; }
-	.sig .st3 { animation-delay: 1.14s; animation-duration: 0.42s; }
-	.sig .st4 { animation-delay: 1.6s; animation-duration: 0.26s; }
-	.sig .st5 { animation-delay: 1.9s; animation-duration: 0.24s; }
-	.sig .st6 { animation-delay: 2.18s; animation-duration: 0.2s; }
-	.sig .st7 { animation-delay: 2.4s; animation-duration: 0.24s; }
-	.sig .st8 { animation-delay: 2.72s; animation-duration: 0.45s; }
 }
 @keyframes fadein { from { opacity: 0; } }
-/* the hero makes room for the flourish */
-.opening .lede { margin-top: 84px; }
 
 /* --- the nib rides the spine ---------------------------------------------- */
 /* the nib rides the leading edge of the line it draws. Its track matches the
@@ -935,11 +934,6 @@ html:has(#night:checked) .night-marquee circle:nth-of-type(3) { animation-delay:
 	.thing-more { transition-duration: 0.01s; }
 }
 
-/* --- signature on small screens ------------------------------------------- */
-@media (max-width: 620px) {
-	.sig { width: 210px; bottom: -44px; left: 2px; }
-	.opening .lede { margin-top: 58px; }
-}
 
 /* ==========================================================================
    HOUSE LIGHTS (v6): the sheet becomes an object, the night becomes a cinema,
@@ -1179,17 +1173,6 @@ a.brand:hover, a.brand:focus-visible { color: var(--pen); transform: translateY(
 @keyframes dog-in { from { opacity: 0; visibility: hidden; } to { opacity: 1; visibility: visible; } }
 
 
-/* --- the signature signs again (pen.js toggles .sign-again on tap) ------------ */
-.sign-again .sig .st { animation: draw 0.3s cubic-bezier(0.3, 0, 0.4, 1) backwards; }
-.sign-again .sig .st1 { animation-delay: 0s; }
-.sign-again .sig .st2 { animation-delay: 0.1s; animation-duration: 0.16s; }
-.sign-again .sig .st3 { animation-delay: 0.28s; animation-duration: 0.34s; }
-.sign-again .sig .st4 { animation-delay: 0.64s; animation-duration: 0.2s; }
-.sign-again .sig .st5 { animation-delay: 0.86s; animation-duration: 0.18s; }
-.sign-again .sig .st6 { animation-delay: 1.06s; animation-duration: 0.16s; }
-.sign-again .sig .st7 { animation-delay: 1.24s; animation-duration: 0.18s; }
-.sign-again .sig .st8 { animation-delay: 1.44s; animation-duration: 0.36s; }
-
 /* --- the ink trail canvas (created by pen.js, hero only) ----------------------- */
 .inktrail {
 	position: fixed; inset: 0; width: 100%; height: 100%;
@@ -1396,7 +1379,7 @@ html:has(#night:checked) .inktrail, html.night .inktrail { mix-blend-mode: scree
 	   already gets this via the <=860px query; this also covers wide/landscape) */
 	.closing { padding-bottom: var(--s-8) !important; }
 	body::after, .opening::before, .opening::after { display: none !important; }
-	.sig .st, .name-rule path, .divider path, .mark svg path, .ring path,
+	.name-rule path, .divider path, .ring path,
 	.thing-v svg path, .flick path, .trail-off path { stroke-dashoffset: 0 !important; }
 	.note, .section .note { mask-image: none !important; opacity: 1 !important; }
 	.thing, .figure, .postcard, .shelf-row, .latest a { break-inside: avoid; }
