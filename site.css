@@ -319,7 +319,11 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 /* the after-hours note is placed structurally beside the live cards */
 .col-ticket { align-self: center; }
 @media (max-width: 860px) { .col-ticket { align-self: start; } }
+/* the bench sits in the grid's second row; kill that row's gap so the ONLY
+   space between the live things and the bench is one deliberate margin, not a
+   doubled one (was a 110px gap: 46px grid row-gap + 64px margin) */
 .col-bench { grid-column: 1; }
+#building > .inner { row-gap: 0; }
 
 /* --- SECTIONS ------------------------------------------------------------ */
 /* The demarcation: one stroke from the same hand, drawn as you arrive. */
@@ -489,7 +493,7 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
    kind of object. The only honest difference is that their picture has not
    been taken yet, so the frame holds a drawing of the thing instead of a
    screenshot, and there is no address to write under it. */
-.bench { margin-top: var(--s-6); }
+.bench { margin-top: var(--s-5); }
 .bench-say { font-size: var(--t-small); color: var(--ink-3); }
 .bench .things { margin-top: var(--s-3); }
 .thing-static { cursor: default; }
@@ -670,8 +674,9 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 }
 .cv-download svg { width: 18px; height: auto; }
 .cv-download:hover, .cv-download:focus-visible { background: color-mix(in srgb, var(--pen) 8%, transparent); transform: translateY(-1px); }
-.cv-rule { margin-top: var(--s-4); }
 .cv-sec { margin-top: var(--s-6); }
+.cv-head { padding-bottom: var(--s-3); }
+.cv-sec-first { margin-top: var(--s-4); }
 .cv-h { font-family: var(--print); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--pen); padding-bottom: 6px; border-bottom: 1.5px solid var(--pen-mat); }
 .cv-summary { font-size: var(--t-small); line-height: 1.62; color: var(--ink-2); margin-top: var(--s-3); max-width: 92ch; }
 .cv-summary strong { color: var(--ink); font-weight: 700; }
@@ -1086,22 +1091,27 @@ html:has(#night:checked) .night-marquee, html.night .night-marquee { filter: dro
 }
 @keyframes perf-hint { 30% { transform: translateX(2px) rotate(1deg); } 65% { transform: translateX(-1.4px); } }
 
-/* --- the bookmark ribbon (in the margin of the notebook) --------------------
-   A satin marker threaded over the rule above the notebook, hanging down the
-   margin. It marks the newest note and is a link to it: reach for it and it
-   lifts a little, as if you are tugging the page open, and says which note. */
-.col-ribbon { position: relative; align-self: start; }
-.ribbon { display: block; position: relative; width: 54px; margin: 0 0 0 14px; color: var(--pen); text-decoration: none; }
-.ribbon-svg { display: block; width: 54px; height: auto; overflow: visible; transform-origin: 50% 8px; transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
-.ribbon-body { fill: currentColor; opacity: 0.11; }
-.ribbon:hover .ribbon-svg, .ribbon:focus-visible .ribbon-svg { transform: translateY(-9px); }
-.ribbon-hint {
-	display: block; width: 84px; margin: 8px 0 0 -19px;
-	font-family: var(--hand); font-size: 1rem; line-height: 1.15; color: var(--pen); text-align: center;
-	opacity: 0; transform: translateY(-5px); transition: opacity 0.3s ease, transform 0.3s ease;
+/* --- the bookmark ribbon: it comes out of the notebook itself ---------------
+   Threaded over the top-right corner of the notebook page and hanging down
+   into the gutter beside it, a real satin marker, with "newest" always shown
+   so its job is clear at a glance. It links to the newest note and lifts when
+   you reach for it, as if you are tugging that page open. */
+.notebook.digest { position: relative; }
+.digest .ribbon {
+	position: absolute; top: -12px; right: -46px; z-index: 3;
+	width: 38px; color: var(--pen); text-decoration: none; text-align: center;
 }
-.ribbon:hover .ribbon-hint, .ribbon:focus-visible .ribbon-hint { opacity: 0.9; transform: translateY(0); }
-@media (prefers-reduced-motion: reduce) { .ribbon-svg, .ribbon-hint { transition-duration: 0.01s; } }
+.ribbon-svg { display: block; width: 38px; height: auto; overflow: visible; transform-origin: 50% 0; transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
+.ribbon-body { fill: currentColor; opacity: 0.12; }
+.ribbon:hover .ribbon-svg, .ribbon:focus-visible .ribbon-svg { transform: translateY(-7px); }
+.ribbon-hint {
+	display: block; margin-top: 5px;
+	font-family: var(--hand); font-size: 0.92rem; color: var(--pen); opacity: 0.85;
+	transition: opacity 0.25s ease;
+}
+.ribbon:hover .ribbon-hint, .ribbon:focus-visible .ribbon-hint { opacity: 1; }
+.digest .ribbon:focus-visible { outline: 2px dashed var(--pen); outline-offset: 4px; border-radius: 3px; }
+@media (prefers-reduced-motion: reduce) { .ribbon-svg { transition-duration: 0.01s; } }
 
 /* --- brand marks: the logo instead of the word ------------------------------
    `a.brand` (0,1,1) so it outranks the container link rules (.record a etc.)
@@ -1232,6 +1242,30 @@ html:has(#night:checked) .inktrail, html.night .inktrail { mix-blend-mode: scree
    The full /writing list stays upright and bold, where scannability wins. */
 .digest .shelf-a { font-style: italic; font-weight: 500; font-size: 1.1875rem; letter-spacing: 0; }
 .digest .shelf-m { font-style: italic; }
+
+/* On the front page the notebook is a real page you can see: a bound sheet
+   lying on the desk, holes down its spine, ruled, with a satin marker threaded
+   over its top corner. The ribbon lives IN the page's own right lane, not out
+   in the margin, so it reads as this notebook's bookmark. */
+.notebook.digest {
+	background-color: var(--mat);
+	border-radius: 4px;
+	box-shadow: 0 14px 30px -20px rgba(20, 22, 28, 0.3), 0 0 0 1px var(--hair);
+	padding-top: 14px; padding-bottom: 16px; padding-right: 58px;
+	background-position: 0 14px;
+	margin-top: var(--s-4);
+}
+.notebook.digest::after { top: 26px; }
+.digest .ribbon { top: -12px; right: 14px; }
+/* Mobile tuning MUST come after the base .notebook.digest/.digest .ribbon rules
+   above: media queries add no specificity, so an earlier @media block would be
+   overridden by these later equal-specificity rules (that trap shipped once). */
+@media (max-width: 860px) {
+	.notebook.digest { padding-right: 34px; }
+	.digest .ribbon { top: -10px; right: 4px; width: 26px; }
+	.digest .ribbon .ribbon-svg { width: 26px; }
+	.digest .ribbon-hint { display: none; }
+}
 @media (max-width: 620px) {
 	.notebook { padding-left: 30px; background-image: repeating-linear-gradient(to bottom, transparent 0 29px, var(--hair) 29px 30px); }
 	.notebook::before { left: 16px; }
