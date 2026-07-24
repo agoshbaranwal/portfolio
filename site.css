@@ -37,10 +37,10 @@
 
 	/* Sealing wax: the pen's own blue-black, poured. Three stops make the dome,
 	   a fourth is the recessed face of the pressed initial. (Night swaps below.) */
-	--wax-1: #4a6b9c;   /* lit crest */
-	--wax-2: #274a7d;   /* body */
-	--wax-3: #10233f;   /* shaded rim / impression shadow */
-	--wax-face: #1f3d69;
+	--wax-1: #b0454a;   /* lit crest, where the light catches the raised wax */
+	--wax-2: #8a2229;   /* the body: classic oxblood sealing wax */
+	--wax-3: #490d13;   /* shaded rim / the shadow in the pressed well */
+	--wax-face: #74171d; /* the recessed face the die stamped */
 
 	/* Type: two faces, each chosen for a reason.
 	   Vollkorn: a reading serif with real quirks, built for body text at length,
@@ -85,10 +85,10 @@ html:has(#night:checked), html.night {
 	--pen-2: #6f95c8;
 	--pen-mat: rgba(143, 179, 224, 0.32);
 	--hair:  rgba(236, 237, 240, 0.15);
-	--wax-1: #cfe0f6;   /* wax by lamplight: a brighter blue so it reads on the dark sheet */
-	--wax-2: #7ea6db;
-	--wax-3: #3c5c8c;
-	--wax-face: #6f97cc;
+	--wax-1: #cf5c60;   /* wax by lamplight: a touch brighter so it reads on the dark sheet */
+	--wax-2: #a12e34;
+	--wax-3: #5c141a;
+	--wax-face: #8a2129;
 }
 
 /* --- RESET --------------------------------------------------------------- */
@@ -265,44 +265,14 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .letter-mark .lm-paper { fill: var(--mat); }
 .lm-line { stroke: currentColor; fill: none; stroke-width: 2.7; stroke-linejoin: round; stroke-linecap: round; }
 .lm-thin { stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; opacity: 0.5; }
-.lm-shadow { fill: rgba(20, 22, 28, 0.18); opacity: 0.4; transition: opacity 0.5s ease, transform 0.5s ease; }
-/* the written sheet, sitting in the envelope, clipped by the pocket in front.
-   Three nested groups so the flight is LAYERED motion, not one tween:
-   .lm-letter draws the arc + recede, .lm-tumble rolls it on desynced axes,
-   .lm-flutter is the fast air-catch riding on top. Each pivots on its centre. */
-.lm-letter, .lm-tumble, .lm-flutter { transform-box: fill-box; transform-origin: 50% 50%; }
-.lm-flutter { filter: drop-shadow(0 3px 4px rgba(20, 22, 28, 0.14)); }
+.lm-shadow { fill: rgba(20, 22, 28, 0.18); opacity: 0.4; transition: opacity 0.5s ease; }
+/* the written sheet, sitting in the envelope, clipped by the pocket in front */
+.lm-letter { transform-box: fill-box; transform-origin: 50% 100%; transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1); filter: drop-shadow(0 3px 4px rgba(20, 22, 28, 0.13)); }
 
-/* reach for it: the letter lifts out, catches air, tumbles and flies off to me,
-   receding into the distance up and to the right. Per-segment easing gives it
-   an anticipation settle, an explosive launch, then an air-braked drift. */
-.door:hover .lm-letter, .door:focus-visible .lm-letter { animation: pf-flight 2.4s linear forwards; }
-.door:hover .lm-tumble, .door:focus-visible .lm-tumble { animation: pf-tumble 1.85s ease-in 0.55s forwards; }
-.door:hover .lm-flutter, .door:focus-visible .lm-flutter { animation: pf-flutter 0.42s ease-in-out 0.55s infinite; }
-.door:hover .lm-shadow, .door:focus-visible .lm-shadow { opacity: 0.6; transform: scaleX(0.9); }
-
-/* LAYER 1 - the arc up-and-away, receding (scale down = into the distance) */
-@keyframes pf-flight {
-	0%   { opacity: 1; transform: translate(0, 0) scale(1);          animation-timing-function: cubic-bezier(0.36, 0, 0.66, -0.4); }  /* anticipation dip */
-	9%   { transform: translate(-1px, 4px) scale(0.99);              animation-timing-function: cubic-bezier(0.2, 1, 0.32, 1); }        /* explosive launch */
-	27%  { transform: translate(4px, -18px) scale(1.03);             animation-timing-function: cubic-bezier(0.4, 0, 0.5, 1); }         /* clears the mouth, tips up */
-	54%  { transform: translate(18px, -46px) scale(0.78);           animation-timing-function: cubic-bezier(0.32, 0, 0.67, 0); }        /* air-brake, arcs right */
-	78%  { opacity: 1; transform: translate(48px, -80px) scale(0.44); }
-	100% { opacity: 0; transform: translate(98px, -122px) scale(0.11); }                                                               /* far away, gone to me */
-}
-/* LAYER 2 - tumble: rotate + scaleX through zero (edge-on) fakes an off-axis roll */
-@keyframes pf-tumble {
-	0%   { transform: rotateZ(0deg)   scaleX(1); }
-	25%  { transform: rotateZ(74deg)  scaleX(0.18); }
-	50%  { transform: rotateZ(154deg) scaleX(-0.7); }
-	76%  { transform: rotateZ(242deg) scaleX(0.3); }
-	100% { transform: rotateZ(330deg) scaleX(0.9); }
-}
-/* LAYER 3 - the flutter, small and fast, the paper catching air */
-@keyframes pf-flutter {
-	0%, 100% { transform: rotateZ(-4deg) skewX(1.4deg); }
-	50%      { transform: rotateZ(4deg)  skewX(-1.4deg); }
-}
+/* reach for it and the letter simply slides up out of the envelope, and stays.
+   No flight, no tumble: a smooth, quiet draw. Leave and it settles back in. */
+.door:hover .lm-letter, .door:focus-visible .lm-letter { transform: translateY(-30px); }
+.door:hover .lm-shadow, .door:focus-visible .lm-shadow { opacity: 0.55; }
 
 .door-t { display: block; font-size: var(--t-small); font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--pen); }
 .door-a {
@@ -317,9 +287,7 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
    !important because the hover selectors are more specific than this block. */
 @media (prefers-reduced-motion: reduce) {
 	.lm-shadow { transition-duration: 0.01s !important; }
-	.door:hover .lm-letter, .door:focus-visible .lm-letter,
-	.door:hover .lm-tumble, .door:focus-visible .lm-tumble,
-	.door:hover .lm-flutter, .door:focus-visible .lm-flutter { animation: none !important; }
+	.lm-letter { transition-duration: 0.01s !important; }
 }
 .door-side { display: block; margin-top: var(--s-2); font-size: var(--t-small); }
 .door-side a { color: var(--ink-2); text-decoration: none; border-bottom: 1px solid var(--pen-mat); }
