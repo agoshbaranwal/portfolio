@@ -205,7 +205,7 @@ html { scrollbar-color: var(--pen-mat) transparent; }
 }
 html:has(#night:checked) .night-track::after, html.night .night-track::after { transform: translateX(16px); }
 #night:focus-visible ~ .night-track { outline: 2px dashed var(--pen); outline-offset: 3px; }
-.night-label { font-size: 0.8125rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--ink-2); }
+.night-label { font-size: var(--t-micro); letter-spacing: 0.13em; text-transform: uppercase; color: var(--ink-2); }
 .night-marquee { width: 22px; height: 19px; color: var(--pen); opacity: 0.9; }
 
 /* --- THE OPENING --------------------------------------------------------- */
@@ -255,22 +255,42 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .lm-line { stroke: currentColor; fill: none; stroke-width: 2.7; stroke-linejoin: round; stroke-linecap: round; }
 .lm-thin { stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; opacity: 0.5; }
 .lm-shadow { fill: rgba(20, 22, 28, 0.18); opacity: 0.4; transition: opacity 0.5s ease, transform 0.5s ease; }
-/* the written sheet, sitting in the envelope, clipped by the pocket in front */
-.lm-letter {
-	transform-box: fill-box; transform-origin: 50% 100%;
-	opacity: 1; transform: translateY(0);
-	filter: drop-shadow(0 3px 4px rgba(20, 22, 28, 0.14));
+/* the written sheet, sitting in the envelope, clipped by the pocket in front.
+   Three nested groups so the flight is LAYERED motion, not one tween:
+   .lm-letter draws the arc + recede, .lm-tumble rolls it on desynced axes,
+   .lm-flutter is the fast air-catch riding on top. Each pivots on its centre. */
+.lm-letter, .lm-tumble, .lm-flutter { transform-box: fill-box; transform-origin: 50% 50%; }
+.lm-flutter { filter: drop-shadow(0 3px 4px rgba(20, 22, 28, 0.14)); }
+
+/* reach for it: the letter lifts out, catches air, tumbles and flies off to me,
+   receding into the distance up and to the right. Per-segment easing gives it
+   an anticipation settle, an explosive launch, then an air-braked drift. */
+.door:hover .lm-letter, .door:focus-visible .lm-letter { animation: pf-flight 2.4s linear forwards; }
+.door:hover .lm-tumble, .door:focus-visible .lm-tumble { animation: pf-tumble 1.85s ease-in 0.55s forwards; }
+.door:hover .lm-flutter, .door:focus-visible .lm-flutter { animation: pf-flutter 0.42s ease-in-out 0.55s infinite; }
+.door:hover .lm-shadow, .door:focus-visible .lm-shadow { opacity: 0.6; transform: scaleX(0.9); }
+
+/* LAYER 1 - the arc up-and-away, receding (scale down = into the distance) */
+@keyframes pf-flight {
+	0%   { opacity: 1; transform: translate(0, 0) scale(1);          animation-timing-function: cubic-bezier(0.36, 0, 0.66, -0.4); }  /* anticipation dip */
+	9%   { transform: translate(-1px, 4px) scale(0.99);              animation-timing-function: cubic-bezier(0.2, 1, 0.32, 1); }        /* explosive launch */
+	27%  { transform: translate(4px, -18px) scale(1.03);             animation-timing-function: cubic-bezier(0.4, 0, 0.5, 1); }         /* clears the mouth, tips up */
+	54%  { transform: translate(18px, -46px) scale(0.78);           animation-timing-function: cubic-bezier(0.32, 0, 0.67, 0); }        /* air-brake, arcs right */
+	78%  { opacity: 1; transform: translate(48px, -80px) scale(0.44); }
+	100% { opacity: 0; transform: translate(98px, -122px) scale(0.11); }                                                               /* far away, gone to me */
 }
-
-/* reach for it: the letter is drawn up out of the envelope and posted to me */
-.door:hover .lm-letter, .door:focus-visible .lm-letter { animation: post-out 1.9s cubic-bezier(0.34, 0, 0.22, 1) forwards; }
-.door:hover .lm-shadow, .door:focus-visible .lm-shadow { opacity: 0.62; transform: scaleX(0.92); }
-
-@keyframes post-out {
-	0%   { opacity: 1; transform: translateY(0); }
-	34%  { opacity: 1; transform: translateY(-16px) rotate(0.5deg); }   /* drawn up and out of the pocket */
-	50%  { opacity: 1; transform: translateY(-12px) rotate(-1.5deg); }
-	100% { opacity: 0; transform: translateY(-102px) translateX(46px) rotate(13deg) scale(0.88); }  /* posted, off to me */
+/* LAYER 2 - tumble: rotate + scaleX through zero (edge-on) fakes an off-axis roll */
+@keyframes pf-tumble {
+	0%   { transform: rotateZ(0deg)   scaleX(1); }
+	25%  { transform: rotateZ(74deg)  scaleX(0.18); }
+	50%  { transform: rotateZ(154deg) scaleX(-0.7); }
+	76%  { transform: rotateZ(242deg) scaleX(0.3); }
+	100% { transform: rotateZ(330deg) scaleX(0.9); }
+}
+/* LAYER 3 - the flutter, small and fast, the paper catching air */
+@keyframes pf-flutter {
+	0%, 100% { transform: rotateZ(-4deg) skewX(1.4deg); }
+	50%      { transform: rotateZ(4deg)  skewX(-1.4deg); }
 }
 
 .door-t { display: block; font-size: var(--t-small); font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--pen); }
@@ -286,7 +306,9 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
    !important because the hover selectors are more specific than this block. */
 @media (prefers-reduced-motion: reduce) {
 	.lm-shadow { transition-duration: 0.01s !important; }
-	.door:hover .lm-letter, .door:focus-visible .lm-letter { animation: none !important; }
+	.door:hover .lm-letter, .door:focus-visible .lm-letter,
+	.door:hover .lm-tumble, .door:focus-visible .lm-tumble,
+	.door:hover .lm-flutter, .door:focus-visible .lm-flutter { animation: none !important; }
 }
 .door-side { display: block; margin-top: var(--s-2); font-size: var(--t-small); }
 .door-side a { color: var(--ink-2); text-decoration: none; border-bottom: 1px solid var(--pen-mat); }
@@ -422,7 +444,7 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 }
 .toolkit:hover .kit-body, .kit-check:checked ~ .kit-body { max-height: 340px; opacity: 1; }
 .kit-row { margin-top: var(--s-3); padding-left: var(--s-3); border-left: 2px solid var(--pen-mat); }
-.kit-cat { display: block; font-family: var(--hand); font-size: 1.02rem; color: var(--pen); }
+.kit-cat { display: block; font-family: var(--hand); font-size: var(--t-body); color: var(--pen); }
 .kit-items { display: block; font-size: var(--t-small); line-height: 1.55; color: var(--ink-2); margin-top: 1px; }
 @media (hover: none) { .toolkit:hover .kit-body { max-height: 0; opacity: 0; } .kit-check:checked ~ .kit-body { max-height: 340px; opacity: 1; } .toolkit:hover .kit-cue { transform: none; } }
 @media (prefers-reduced-motion: reduce) { .kit-body, .kit-cue { transition-duration: 0.01s; } }
@@ -624,7 +646,7 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 	body { font-size: 1rem; line-height: 1.56; }
 	.opening { padding-top: var(--s-5); }
 	.name { font-size: 2.3rem; }
-	.lede { font-size: 1.0625rem; max-width: none; }
+	.lede { font-size: var(--t-body); max-width: none; }
 		.door { margin-top: var(--s-4); width: 100%; }
 	.pin { max-width: 132px; margin-top: var(--s-3); }
 	/* on a phone the three photos become dense thumb rows: picture left,
@@ -637,8 +659,8 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 	.thing-t { font-size: 1rem; }
 	.thing-d { margin-top: 2px; }
 	.thing-v { margin-top: 4px; }
-	.record { font-size: 0.8125rem; }
-	.note { font-size: 1.2rem; }
+	.record { font-size: var(--t-small); }
+	.note { font-size: var(--t-lead); }
 	.shelf-row { grid-template-columns: minmax(0, 1fr); gap: 2px; }
 
 	/* the masthead earns its space back: the button is already on this screen,
@@ -677,7 +699,7 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .cv-sec { margin-top: var(--s-6); }
 .cv-head { padding-bottom: var(--s-3); }
 .cv-sec-first { margin-top: var(--s-4); }
-.cv-h { font-family: var(--print); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--pen); padding-bottom: 6px; border-bottom: 1.5px solid var(--pen-mat); }
+.cv-h { font-family: var(--print); font-size: var(--t-micro); font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--pen); padding-bottom: 6px; border-bottom: 1.5px solid var(--pen-mat); }
 .cv-summary { font-size: var(--t-small); line-height: 1.62; color: var(--ink-2); margin-top: var(--s-3); max-width: 92ch; }
 .cv-summary strong { color: var(--ink); font-weight: 700; }
 .cv-entry { margin-top: var(--s-4); }
@@ -693,7 +715,7 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .cv-points li { font-size: var(--t-small); line-height: 1.58; color: var(--ink-2); margin-top: 5px; position: relative; }
 .cv-points li::before { content: ""; position: absolute; left: -15px; top: 0.62em; width: 5px; height: 5px; border-radius: 50%; background: var(--pen-mat); }
 .cv-skill-row { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: var(--s-3); margin-top: var(--s-3); align-items: baseline; }
-.cv-skill-cat { font-family: var(--hand); font-size: 1.05rem; color: var(--pen); }
+.cv-skill-cat { font-family: var(--hand); font-size: var(--t-body); color: var(--pen); }
 .cv-skill-items { font-size: var(--t-small); line-height: 1.55; color: var(--ink-2); }
 .cv-foot-links { margin-top: var(--s-7); display: flex; align-items: center; gap: var(--s-5); flex-wrap: wrap; }
 @media (max-width: 620px) {
@@ -773,7 +795,7 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 }
 .pc-left { padding: var(--s-4); }
 .pc-line { font-size: var(--t-small); color: var(--ink-2); }
-.pc-left .address { margin-top: var(--s-3); font-size: 1.05rem; word-break: normal; overflow-wrap: anywhere; letter-spacing: 0; }
+.pc-left .address { margin-top: var(--s-3); font-size: var(--t-body); word-break: normal; overflow-wrap: anywhere; letter-spacing: 0; }
 .pc-left .elsewhere { margin-top: var(--s-3); }
 .pc-right {
 	position: relative;
@@ -793,18 +815,18 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 html:has(#night:checked) .postmark, html.night .postmark { mix-blend-mode: screen; }
 .pc-to, .pc-from {
 	font-family: var(--hand);
-	font-size: 1.15rem; line-height: 1.3;
+	font-size: var(--t-lead); line-height: 1.3;
 	color: var(--pen);
 	border-bottom: 1px solid var(--hair);
 	padding-bottom: 4px;
 }
-.pc-to span, .pc-from span { color: var(--ink-3); font-size: 0.95rem; margin-right: 6px; }
+.pc-to span, .pc-from span { color: var(--ink-3); font-size: var(--t-small); margin-right: 6px; }
 
 @media (max-width: 620px) {
 	.keeps { justify-content: flex-start; gap: 14px; margin-top: var(--s-3); }
 	.postcard { grid-template-columns: 1fr; transform: none; }
 	.pc-line br { display: none; }
-	.pc-left .address { font-size: 0.95rem; }
+	.pc-left .address { font-size: var(--t-small); }
 	.pc-right { border-left: 0; border-top: 1.5px dashed var(--hair); padding-top: 56px; }
 }
 
@@ -1077,7 +1099,7 @@ html:has(#night:checked) .night-marquee, html.night .night-marquee { filter: dro
 #tear:checked ~ .keepsake-stub .stub-perf { opacity: 0; }
 .stub-say {
 	display: block;
-	font-family: var(--hand); font-size: 1.08rem; color: var(--pen);
+	font-family: var(--hand); font-size: var(--t-body); color: var(--pen);
 	margin: 6px 0 0 10px;
 	transform: rotate(-3deg) translateY(-5px); opacity: 0;
 	transition: opacity 0.45s ease 0.2s, transform 0.45s ease 0.2s;
@@ -1106,7 +1128,7 @@ html:has(#night:checked) .night-marquee, html.night .night-marquee { filter: dro
 .ribbon:hover .ribbon-svg, .ribbon:focus-visible .ribbon-svg { transform: translateY(-7px); }
 .ribbon-hint {
 	display: block; margin-top: 5px;
-	font-family: var(--hand); font-size: 0.92rem; color: var(--pen); opacity: 0.85;
+	font-family: var(--hand); font-size: var(--t-small); color: var(--pen); opacity: 0.85;
 	transition: opacity 0.25s ease;
 }
 .ribbon:hover .ribbon-hint, .ribbon:focus-visible .ribbon-hint { opacity: 1; }
@@ -1240,7 +1262,7 @@ html:has(#night:checked) .inktrail, html.night .inktrail { mix-blend-mode: scree
    entries are set as titles of works, in italic at a calmer weight, so they
    read as writing rather than as headings shouting under the section title.
    The full /writing list stays upright and bold, where scannability wins. */
-.digest .shelf-a { font-style: italic; font-weight: 500; font-size: 1.1875rem; letter-spacing: 0; }
+.digest .shelf-a { font-style: italic; font-weight: 500; font-size: var(--t-lead); letter-spacing: 0; }
 .digest .shelf-m { font-style: italic; }
 
 /* On the front page the notebook is a real page you can see: a bound sheet
@@ -1290,7 +1312,7 @@ html:has(#night:checked) .inktrail, html.night .inktrail { mix-blend-mode: scree
 .latest a:hover .late-t, .latest a:focus-visible .late-t { color: var(--pen); }
 .late-g { font-size: var(--t-small); color: var(--ink-2); margin-top: 3px; }
 .late-m { display: block; font-size: var(--t-micro); color: var(--ink-3); margin-top: 6px; }
-.late-m .fresh { font-family: var(--hand); font-size: 0.95rem; color: var(--pen); margin-left: 8px; }
+.late-m .fresh { font-family: var(--hand); font-size: var(--t-small); color: var(--pen); margin-left: 8px; }
 .latest a { text-decoration: none; color: inherit; display: block; min-width: 0; }
 /* a post with no photo yet shows what it actually is: a page of the notebook,
    ruled, with its subject drawn small in the corner of the sheet */
@@ -1331,7 +1353,7 @@ html:has(#night:checked) .inktrail, html.night .inktrail { mix-blend-mode: scree
 .shelf-year { font-family: var(--hand); font-size: var(--t-hand); color: var(--pen); padding: var(--s-4) 0 6px; transform: rotate(-1deg); }
 .shelf > .shelf-year:first-child { padding-top: var(--s-3); }
 .shelf-m { text-align: right; }
-.shelf-m .fresh { display: block; font-style: normal; font-family: var(--hand); font-size: 0.95rem; color: var(--pen); transform: rotate(-2deg); }
+.shelf-m .fresh { display: block; font-style: normal; font-family: var(--hand); font-size: var(--t-small); color: var(--pen); transform: rotate(-2deg); }
 @media (max-width: 620px) { .shelf-m { text-align: left; } .shelf-m .fresh { transform: rotate(-2deg) translateX(-2px); } }
 
 /* inside a post, a photo is taped into the text column; while it waits,
@@ -1357,7 +1379,7 @@ html:has(#night:checked) .inktrail, html.night .inktrail { mix-blend-mode: scree
 .post-fig::before { left: 22px; transform: rotate(-28deg); }
 .post-fig::after { right: 22px; transform: rotate(26deg); }
 .post-fig img { border: 5px solid var(--mat); box-shadow: 0 0 0 1px var(--hair), 0 8px 20px -14px rgba(20, 22, 28, 0.4); }
-.post-fig figcaption { font-family: var(--hand); font-size: 1.05rem; color: var(--pen); margin-top: 9px; transform: rotate(-1deg); }
+.post-fig figcaption { font-family: var(--hand); font-size: var(--t-body); color: var(--pen); margin-top: 9px; transform: rotate(-1deg); }
 
 /* ==========================================================================
    PRINT: the page becomes the letter it always was. A gift for whoever
@@ -1383,6 +1405,6 @@ html:has(#night:checked) .inktrail, html.night .inktrail { mix-blend-mode: scree
 	.foot::after {
 		content: "P.S. You printed me. Fold twice and keep me in a pocket.";
 		display: block; width: 100%;
-		font-family: var(--hand); font-size: 1.05rem; color: var(--pen);
+		font-family: var(--hand); font-size: var(--t-body); color: var(--pen);
 	}
 }
