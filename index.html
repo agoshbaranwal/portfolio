@@ -31,9 +31,9 @@
 	<body>
 		<a class="skip" href="#main">Skip to the page</a>
 		<!-- ===================================================================
-		     THE MASTHEAD. Two destinations and a switch. No section anchors:
-		     this page is a read, not a directory. A menu of parts would be the
-		     fragmentation problem restated as navigation.
+		     THE MASTHEAD. The nav is a table of contents for a single-page read,
+		     each item a section on THIS page, each behaving the same way: a quiet
+		     scroll to its movement. The full archive is one link deeper, inside.
 		     =================================================================== -->
 		<header class="masthead">
 			<div class="masthead-in">
@@ -45,7 +45,7 @@
 				</a>
 				<nav class="nav" aria-label="Site">
 					<a href="#building">Things</a>
-					<a href="/writing">Notebook</a>
+					<a href="#notebook">Notebook</a>
 					<a href="#write">Write to me</a>
 					<label class="night-toggle" for="night" title="Lights down. The late show is the night mode.">
 						<input type="checkbox" id="night" role="switch" aria-label="Late show: night mode" />
@@ -98,22 +98,22 @@
 						</p>
 
 						<a class="door" href="mailto:agosh.baranwal@alumni.esade.edu">
-							<svg class="letter-mark" viewBox="0 0 120 92" fill="none" aria-hidden="true">
-								<ellipse class="lm-shadow" cx="60" cy="87" rx="43" ry="4"/>
-								<!-- envelope body -->
-								<rect class="lm-paper lm-line" x="9" y="42" width="102" height="42" rx="4"/>
-								<!-- the front seams that give it depth -->
-								<path class="lm-thin" d="M11 45 L60 71 L109 45"/>
-								<path class="lm-thin" d="M11 82 L44 62 M109 82 L76 62"/>
-								<!-- the flap, closed and sealed -->
-								<path class="lm-flap lm-paper lm-line" d="M9 42 L60 69 L111 42 Q111 40 108 40 L12 40 Q9 40 9 42 Z"/>
+							<svg class="letter-mark" viewBox="0 0 120 96" fill="none" aria-hidden="true">
+								<ellipse class="lm-shadow" cx="60" cy="91" rx="44" ry="4.5"/>
+								<!-- envelope back -->
+								<rect class="lm-paper lm-line" x="10" y="34" width="100" height="54" rx="5"/>
+								<!-- the front pocket: a permanent part of the envelope, open or closed -->
+								<path class="lm-paper lm-line" d="M16 88 Q10 88 10 82 L10 52 L60 66 L110 52 L110 82 Q110 88 104 88 Z"/>
+								<!-- the flap: the only thing that reads as sealed. It swings fully away. -->
+								<path class="lm-flap lm-paper lm-line" d="M10 34 L110 34 L60 61 Z"/>
+								<!-- the wax seal, sitting ON the closed flap (painted above it) -->
 								<g class="lm-seal">
-									<circle cx="60" cy="55" r="6.5" stroke="currentColor" stroke-width="1.4" fill="none" opacity="0.75"/>
-									<path d="M56.7 55 L63.3 55 M60 51.7 L60 58.3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+									<circle cx="60" cy="47" r="6.6" stroke="currentColor" stroke-width="1.5" fill="none" opacity="0.8"/>
+									<path d="M56.6 47 L63.4 47 M60 43.6 L60 50.4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.65"/>
 								</g>
-								<!-- the written sheet, painted last so it rises in front -->
+								<!-- the written sheet, painted last so it truly rises in front -->
 								<g class="lm-letter">
-									<rect class="lm-paper lm-line" x="28" y="6" width="64" height="52" rx="2.5"/>
+									<rect class="lm-paper lm-line" x="28" y="6" width="64" height="55" rx="3"/>
 									<path class="lm-thin" d="M36 18 C 48 15.4, 66 20, 80 16.4 M36 27 C 50 24.2, 70 29, 84 25.4 M36 36 C 48 33.4, 64 38, 76 34.6 M36 45 C 46 43, 58 46, 66 44.2"/>
 								</g>
 							</svg>
@@ -186,7 +186,6 @@
 							<path d="M1 5.6 C 92 3.1, 168 7.6, 264 5.2 S 432 2.8, 528 5.9 S 654 7.4, 719 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" pathLength="1" vector-effect="non-scaling-stroke" />
 						</svg>
 						<h2 class="h2" id="byday">By day</h2>
-						<p class="say">The day job. Three numbers carry it.</p>
 
 						<div class="figures">
 							<div class="figure">
@@ -208,7 +207,7 @@
 						</div>
 
 						<p class="record">
-							Abicart in Gothenburg. eFeed in Lucknow. An MBA at Esade; before that IIT ISM Dhanbad, which took some getting into. Washut, the laundry startup I co-founded in college, ended and taught me more than anything since. Add a TEDx licence, a Toastmasters presidency, Brainomania, and an HP Innovation Bootcamp win. Dates on <a href="https://www.linkedin.com/in/agoshbaranwal" target="_blank" rel="noopener">LinkedIn</a>.
+							I learned it on the job, at Abicart in Gothenburg and eFeed in Lucknow, then at Esade for the MBA. Before that, IIT ISM Dhanbad, which took some getting into. What taught me most was Washut, a laundry startup I built with friends in college and watched fold. A TEDx licence, a Toastmasters presidency, an HP Innovation Bootcamp win are in there too. Dates on <a href="https://www.linkedin.com/in/agoshbaranwal" target="_blank" rel="noopener">LinkedIn</a>.
 						</p>
 					</div>
 
@@ -270,11 +269,24 @@
 						</div>
 					</div>
 
-					<div class="col col-note">
-						<span class="note">
-							<svg class="tick" viewBox="0 0 30 15" fill="none" aria-hidden="true"><path d="M28 3.5 C 18 1, 7 4.5, 2 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M2 12.5 L9 11 M2 12.5 L5.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-							click around, it's alive
-						</span>
+					<div class="col col-ticket">
+						<label class="stub-wrap" for="tear" title="Tear the stub">
+							<input type="checkbox" id="tear" aria-label="Tear the ticket stub" />
+							<svg class="keepsake-stub" viewBox="0 0 132 66" fill="none" aria-hidden="true">
+								<g class="stub-main">
+									<path class="stub-fill" d="M13 6 Q5 6 5 14 L5 52 Q5 60 13 60 L90 60 L90 6 Z"/>
+									<text x="46" y="30" text-anchor="middle" font-family="Kalam, cursive" font-size="13" letter-spacing="3" fill="currentColor">ADMIT</text>
+									<text x="46" y="48" text-anchor="middle" font-family="Kalam, cursive" font-size="13" letter-spacing="3" fill="currentColor">ONE</text>
+								</g>
+								<path class="stub-perf" d="M90 11 L90 55" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2.5 4" opacity="0.7"/>
+								<g class="stub-tab">
+									<path class="stub-fill" d="M90 6 L119 6 Q127 6 127 14 L127 52 Q127 60 119 60 L90 60 Z"/>
+									<text x="108" y="27" text-anchor="middle" font-family="Kalam, cursive" font-size="10" letter-spacing="1.5" fill="currentColor" opacity="0.75">No</text>
+									<text x="108" y="45" text-anchor="middle" font-family="Kalam, cursive" font-size="14" fill="currentColor" opacity="0.75">7</text>
+								</g>
+							</svg>
+							<span class="stub-say" aria-hidden="true">enjoy the show</span>
+						</label>
 					</div>
 
 					<div class="col col-bench">
@@ -340,14 +352,14 @@
 			     not comment on every section, or it stops sounding like a person.
 			     The empty ruled lines are honest and on-concept: a page with room.
 			     =============================================================== -->
-			<section class="band section" aria-labelledby="notebook">
+			<section class="band section" id="notebook" aria-labelledby="notebook-h">
 				<div class="inner">
 					<div class="col">
 						<svg class="divider" viewBox="0 0 720 10" fill="none" preserveAspectRatio="none" aria-hidden="true">
 							<path d="M1 4.4 C 96 6.8, 184 2.7, 278 5.4 S 442 7.8, 548 4.4 S 660 3.6, 719 6.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" pathLength="1" vector-effect="non-scaling-stroke" />
 						</svg>
-						<h2 class="h2" id="notebook">The notebook</h2>
-						<p class="say">Food, football, politics, philosophy. Notes land here when they are ready.</p>
+						<h2 class="h2" id="notebook-h">The notebook</h2>
+						<p class="say">Food, football, politics, philosophy.</p>
 
 						<div class="notebook digest">
 							<div class="shelf">
@@ -373,24 +385,12 @@
 						</div>
 						<a class="shelf-link" href="/writing">the rest of the notebook</a>
 					</div>
-					<div class="col col-stub">
-						<label class="stub-wrap" for="tear" title="Tear it">
-							<input type="checkbox" id="tear" aria-label="Tear the ticket stub" />
-							<svg class="keepsake-stub" viewBox="0 0 128 66" fill="none" aria-hidden="true">
-								<g class="stub-main">
-									<path d="M92 3 L9 3 Q3 3 3 9 L3 57 Q3 63 9 63 L92 63" stroke="currentColor" stroke-width="1.8"/>
-									<path d="M92 4 L92 62" stroke="currentColor" stroke-width="1.3" stroke-dasharray="3.5 4.5" opacity="0.7"/>
-									<text x="47" y="30" text-anchor="middle" font-family="Kalam, cursive" font-size="12.5" letter-spacing="2.5" fill="currentColor">ADMIT</text>
-									<text x="47" y="47" text-anchor="middle" font-family="Kalam, cursive" font-size="12.5" letter-spacing="2.5" fill="currentColor">ONE</text>
-								</g>
-								<g class="stub-tab">
-									<path d="M92 3 L119 3 Q125 3 125 9 L125 57 Q125 63 119 63 L92 63" stroke="currentColor" stroke-width="1.8"/>
-									<path d="M108 18 L108 48" stroke="currentColor" stroke-width="1.3" opacity="0.5"/>
-									<path d="M102 24 L114 24 M102 32 L114 32 M102 40 L114 40" stroke="currentColor" stroke-width="1.1" opacity="0.4"/>
-								</g>
-							</svg>
-							<span class="stub-say" aria-hidden="true">enjoy the show</span>
-						</label>
+					<div class="col col-ribbon">
+						<svg class="ribbon" viewBox="0 0 40 150" fill="none" aria-hidden="true">
+							<path class="ribbon-body" d="M8 2 L32 2 L32 128 L20 112 L8 128 Z"/>
+							<path class="ribbon-edge" d="M8 2 L8 128 L20 112 L32 128 L32 2" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+							<path class="ribbon-crease" d="M20 8 L20 108" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/>
+						</svg>
 					</div>
 				</div>
 			</section>

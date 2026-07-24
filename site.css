@@ -231,49 +231,61 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .mark svg path { stroke-dasharray: 1; stroke-dashoffset: 0; }
 
 /* THE LETTER. The button is the act it performs. At rest it is a sealed
-   envelope. Reach for it and the seal breaks, the flap lifts, and the written
-   sheet rises up OUT of the envelope and IN FRONT of it, then flows up and
-   away, carried off to me. Leave, and it is a sealed envelope again.
-   The sheet is painted LAST in the SVG, so whenever it shows it is in front. */
+   envelope. Reach for it and the seal breaks, the flap swings wide open, and
+   the written sheet is drawn up OUT of the envelope and IN FRONT of it, then
+   flies up and away, carried off to me. Leave, and it seals again.
+   Construction that keeps it honest: the FRONT pocket is a permanent part of
+   the envelope (open or closed), so the flap is the ONLY thing that reads as
+   "sealed" and once it swings away nothing closed remains. The sheet is
+   painted LAST, so whenever it shows it is genuinely in front. */
 .door {
-	display: inline-flex; align-items: center; gap: 18px;
+	display: inline-flex; align-items: center; gap: 20px;
 	position: relative;
 	margin-top: var(--s-5);
 	padding: 6px 4px;
 	text-decoration: none; color: inherit;
 }
 .letter-mark {
-	width: 112px; height: 88px; flex-shrink: 0;
+	width: 118px; height: 96px; flex-shrink: 0;
 	color: var(--pen);
 	overflow: visible;
+	perspective: 460px;
 }
 /* paper fill must outrank the stroke rule (that contest shipped broken once) */
 .letter-mark .lm-paper { fill: var(--mat); }
-.lm-line { stroke: currentColor; fill: none; stroke-width: 2.4; stroke-linejoin: round; stroke-linecap: round; }
-.lm-thin { stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; opacity: 0.5; }
-.lm-shadow { fill: rgba(20, 22, 28, 0.16); opacity: 0.5; }
+.lm-line { stroke: currentColor; fill: none; stroke-width: 2.7; stroke-linejoin: round; stroke-linecap: round; }
+.lm-thin { stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; opacity: 0.5; }
+.lm-shadow { fill: rgba(20, 22, 28, 0.18); opacity: 0.45; transition: opacity 0.5s ease, transform 0.5s ease; }
 
-/* the flap: closed and sealed at rest, hinged at its own top edge */
+/* the flap: a real lid. Closed and sealed at rest, hinged at the mouth line.
+   It swings fully open (past vertical) so it clears the mouth entirely. */
 .lm-flap {
 	transform-box: fill-box; transform-origin: 50% 0%;
-	transform: perspective(360px) rotateX(0deg);
-	transition: transform 0.4s cubic-bezier(0.45, 0, 0.3, 1) 0s;
+	transform: rotateX(0deg);
+	transition: transform 0.46s cubic-bezier(0.5, -0.2, 0.3, 1) 0s;
+	backface-visibility: hidden;
 }
-.lm-seal { transform-box: fill-box; transform-origin: 50% 50%; transition: opacity 0.28s ease 0s, transform 0.28s ease 0s; }
+.lm-seal { transform-box: fill-box; transform-origin: 50% 50%; transition: opacity 0.24s ease 0s, transform 0.24s ease 0s; }
 /* the sheet lives on top of the mark, hidden inside the envelope until it rises */
-.lm-letter { transform-box: fill-box; transform-origin: 50% 100%; opacity: 0; transform: translateY(24px) scale(0.92); }
+.lm-letter {
+	transform-box: fill-box; transform-origin: 50% 100%;
+	opacity: 0; transform: translateY(30px) scale(0.9);
+	filter: drop-shadow(0 5px 6px rgba(20, 22, 28, 0.16));
+}
 
-/* reach for it: flap opens, seal breaks, and the letter is posted up to me */
-.door:hover .lm-flap, .door:focus-visible .lm-flap { transform: perspective(360px) rotateX(-162deg); }
-.door:hover .lm-seal, .door:focus-visible .lm-seal { opacity: 0; transform: scale(0.55); }
-.door:hover .lm-letter, .door:focus-visible .lm-letter { animation: post-out 2s cubic-bezier(0.4, 0, 0.2, 1) 0.18s forwards; }
+/* reach for it: the flap swings wide, the seal breaks, the letter is posted */
+.door:hover .lm-flap, .door:focus-visible .lm-flap { transform: rotateX(-178deg); }
+.door:hover .lm-seal, .door:focus-visible .lm-seal { opacity: 0; transform: scale(0.5); }
+.door:hover .lm-shadow, .door:focus-visible .lm-shadow { opacity: 0.7; transform: scaleX(0.9); }
+.door:hover .lm-letter, .door:focus-visible .lm-letter { animation: post-out 2.1s cubic-bezier(0.34, 0, 0.24, 1) 0.24s forwards; }
 
 @keyframes post-out {
-	0%   { opacity: 0; transform: translateY(24px) scale(0.92); }
-	22%  { opacity: 0; transform: translateY(24px) scale(0.92); }
-	46%  { opacity: 1; transform: translateY(0) scale(1); }
-	60%  { opacity: 1; transform: translateY(-3px) rotate(-1.2deg); }
-	100% { opacity: 0; transform: translateY(-72px) translateX(30px) rotate(9deg) scale(0.97); }
+	0%   { opacity: 0; transform: translateY(30px) scale(0.9); }
+	16%  { opacity: 0; transform: translateY(30px) scale(0.9); }
+	38%  { opacity: 1; transform: translateY(-10px) scale(1.05); }   /* leaps up and in front, slight overshoot */
+	52%  { opacity: 1; transform: translateY(-4px) scale(1); }
+	66%  { opacity: 1; transform: translateY(-8px) rotate(-2deg); }
+	100% { opacity: 0; transform: translateY(-104px) translateX(46px) rotate(14deg) scale(0.88); }  /* posted, off to me */
 }
 
 .door-t { display: block; font-size: var(--t-small); font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--pen); }
@@ -288,7 +300,7 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 /* motion-sensitive readers get a still sealed envelope, never the flight.
    !important because the hover selectors are more specific than this block. */
 @media (prefers-reduced-motion: reduce) {
-	.lm-flap, .lm-seal { transition-duration: 0.01s !important; }
+	.lm-flap, .lm-seal, .lm-shadow { transition-duration: 0.01s !important; }
 	.door:hover .lm-letter, .door:focus-visible .lm-letter { animation: none !important; }
 }
 .door-side { display: block; margin-top: var(--s-2); font-size: var(--t-small); }
@@ -320,8 +332,8 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .note em { font-style: normal; }
 .tick { display: block; width: 30px; height: 15px; margin-bottom: 3px; color: var(--pen); opacity: 0.9; }
 /* the after-hours note is placed structurally beside the live cards */
-.col-note { align-self: center; }
-@media (max-width: 860px) { .col-note { align-self: start; } }
+.col-ticket { align-self: center; }
+@media (max-width: 860px) { .col-ticket { align-self: start; } }
 .col-bench { grid-column: 1; }
 
 /* --- SECTIONS ------------------------------------------------------------ */
@@ -972,28 +984,44 @@ html:has(#night:checked) .night-marquee, html.night .night-marquee { filter: dro
 }
 @keyframes develop { from { opacity: 0.1; filter: grayscale(1) contrast(0.72); } }
 
-/* --- the ticket stub tears -------------------------------------------------- */
+/* --- the admission ticket tears (in the margin of Things I am building) ------
+   A clean two-part ticket: the stub tears away along the perforation as one
+   whole piece, and the pen writes "enjoy the show" underneath. This is the
+   invitation to the work: these are the productions, come and see them. */
 .stub-wrap { display: inline-block; position: relative; cursor: pointer; }
 #tear { position: absolute; opacity: 0; width: 0; height: 0; }
-.stub-main, .stub-tab { transform-box: fill-box; transition: transform 0.6s cubic-bezier(0.34, 1.4, 0.5, 1), opacity 0.6s ease; }
-.stub-tab { transform-origin: 8% 96%; }
-.stub-main { transform-origin: 60% 50%; }
-#tear:checked ~ .keepsake-stub .stub-tab { transform: translate(9px, 13px) rotate(13deg); opacity: 0.7; }
-#tear:checked ~ .keepsake-stub .stub-main { transform: rotate(-1.6deg) translateX(-2px); }
+.keepsake-stub { width: 128px; }
+.stub-fill { fill: var(--mat); stroke: currentColor; stroke-width: 1.9; stroke-linejoin: round; }
+.stub-main, .stub-tab { transform-box: fill-box; transition: transform 0.55s cubic-bezier(0.34, 1.3, 0.5, 1), opacity 0.55s ease; }
+.stub-tab { transform-origin: 0% 50%; }   /* hinge at the perforation */
+.stub-main { transform-origin: 50% 50%; }
+.stub-perf { transition: opacity 0.3s ease; }
+#tear:checked ~ .keepsake-stub .stub-tab { transform: translate(15px, 11px) rotate(11deg); opacity: 0.28; }
+#tear:checked ~ .keepsake-stub .stub-main { transform: rotate(-1.5deg); }
+#tear:checked ~ .keepsake-stub .stub-perf { opacity: 0; }
 .stub-say {
 	display: block;
-	font-family: var(--hand); font-size: 1.05rem; color: var(--pen);
-	margin: 4px 0 0 12px;
+	font-family: var(--hand); font-size: 1.08rem; color: var(--pen);
+	margin: 6px 0 0 10px;
 	transform: rotate(-3deg) translateY(-5px); opacity: 0;
-	transition: opacity 0.45s ease 0.18s, transform 0.45s ease 0.18s;
+	transition: opacity 0.45s ease 0.2s, transform 0.45s ease 0.2s;
 }
 #tear:checked ~ .stub-say { opacity: 1; transform: rotate(-3deg) translateY(0); }
-.stub-wrap:has(#tear:focus-visible) { outline: 2px dashed var(--pen); outline-offset: 5px; border-radius: 4px; }
-/* linger a moment and the perforation offers itself */
+/* keyboard focus hugs the ticket, quietly (no page-wide dashed box) */
+.stub-wrap:has(#tear:focus-visible) .keepsake-stub { outline: 2px solid var(--pen); outline-offset: 4px; border-radius: 6px; }
+/* linger a moment and the stub offers itself */
 @media (prefers-reduced-motion: no-preference) {
-	.stub-wrap:hover #tear:not(:checked) ~ .keepsake-stub .stub-tab { animation: perf-hint 0.8s ease 0.9s; }
+	.stub-wrap:hover #tear:not(:checked) ~ .keepsake-stub .stub-tab { animation: perf-hint 0.9s ease 0.8s; }
 }
-@keyframes perf-hint { 30% { transform: translateX(1.6px) rotate(0.8deg); } 65% { transform: translateX(-1.2px); } }
+@keyframes perf-hint { 30% { transform: translateX(2px) rotate(1deg); } 65% { transform: translateX(-1.4px); } }
+
+/* --- the bookmark ribbon (in the margin of the notebook) --------------------
+   A satin marker hanging in the page, the one object that belongs to a
+   notebook and nothing else. It lifts a little when you reach for it. */
+.ribbon { display: block; width: 30px; margin: 2px 0 0 10px; color: var(--pen); overflow: visible; transform-origin: 50% 0; transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+.ribbon-body { fill: currentColor; opacity: 0.09; }
+.ribbon:hover { transform: rotate(3deg) translateY(-2px); }
+@media (prefers-reduced-motion: reduce) { .ribbon { transition-duration: 0.01s; } }
 
 /* --- the pen trails off where the notebook waits ----------------------------- */
 .trail-off { display: block; width: 150px; height: 14px; color: var(--pen); opacity: 0.45; overflow: visible; }
@@ -1031,19 +1059,19 @@ html:has(#night:checked) .night-marquee, html.night .night-marquee { filter: dro
 }
 @keyframes dog-in { from { opacity: 0; visibility: hidden; } to { opacity: 1; visibility: visible; } }
 
-/* --- a ring left by the cup that kept the writer company ---------------------- */
-.col-stub { position: relative; }
-.col-stub::after {
+/* --- a ring left by the cup that kept the writer company (by the notebook) --- */
+.col-ribbon { position: relative; }
+.col-ribbon::after {
 	content: ""; position: absolute;
-	right: -18px; top: 96px;
+	right: 4px; top: 120px;
 	width: 104px; height: 100px;
 	pointer-events: none;
 	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 104 100'%3E%3Cellipse cx='52' cy='50' rx='44' ry='41' fill='none' stroke='%238a6a45' stroke-width='6' opacity='0.55'/%3E%3Cellipse cx='52' cy='50' rx='37' ry='34' fill='none' stroke='%238a6a45' stroke-width='2' opacity='0.35'/%3E%3C/svg%3E");
 	opacity: 0.09;
 	transform: rotate(8deg);
 }
-html:has(#night:checked) .col-stub::after, html.night .col-stub::after { opacity: 0.14; filter: invert(0.8); }
-@media (max-width: 860px) { .col-stub::after { display: none; } }
+html:has(#night:checked) .col-ribbon::after, html.night .col-ribbon::after { opacity: 0.14; filter: invert(0.8); }
+@media (max-width: 860px) { .col-ribbon::after { display: none; } }
 
 /* --- the signature signs again (pen.js toggles .sign-again on tap) ------------ */
 .sign-again .sig .st { animation: draw 0.3s cubic-bezier(0.3, 0, 0.4, 1) backwards; }
