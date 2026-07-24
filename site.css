@@ -162,7 +162,7 @@ html { scrollbar-color: var(--pen-mat) transparent; }
 @keyframes masthead-line { to { border-bottom-color: var(--hair); } }
 @media (prefers-reduced-motion: reduce) {
 	.keep-pick:active .strum, .keep-pick:focus-visible .strum { animation: none; }
-	.night-track::after, .door, .pin img, .thing-ic svg, .keepsake, .plate2 { transition-duration: 0.01s; }
+	.night-track::after, .door, .pin img, .thing-shot img, .keepsake, .plate2 { transition-duration: 0.01s; }
 }
 .masthead-in {
 	max-width: 1000px; margin: 0 auto;
@@ -230,21 +230,35 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .mark svg { position: absolute; left: 0; right: 0; bottom: -0.36em; width: 100%; height: 0.42em; color: var(--pen); overflow: visible; }
 .mark svg path { stroke-dasharray: 1; stroke-dashoffset: 0; }
 
-/* the one button on the page. The only filled block anywhere. */
+/* the one button on the page: not a filled block from some design system,
+   but a box the pen drew around the words. It draws itself on arrival and
+   washes with ink when reached for. */
 .door {
-	display: inline-flex; flex-direction: column; gap: 2px;
+	display: inline-block; position: relative;
 	margin-top: var(--s-5);
-	padding: 13px 22px;
-	background: var(--pen);
-	color: var(--paper);
+	padding: 13px 26px 12px;
+	color: var(--ink);
 	text-decoration: none;
-	border-radius: 2px;
-	transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s ease;
-	box-shadow: 0 1px 0 var(--pen);
+	transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.door-t { font-size: var(--t-small); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
-.door-a { font-size: var(--t-small); opacity: 0.82; }
-.door:hover { transform: translateY(-2px); box-shadow: 0 6px 18px -6px var(--pen); }
+.door-frame {
+	position: absolute; inset: 0; width: 100%; height: 100%;
+	color: var(--pen); overflow: visible; pointer-events: none;
+}
+.door-frame path { fill: none; stroke: currentColor; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.door::before {
+	content: ""; position: absolute; inset: 4px;
+	background: var(--pen); opacity: 0; border-radius: 8px;
+	transition: opacity 0.25s ease;
+}
+.door:hover::before, .door:focus-visible::before { opacity: 0.08; }
+.door:hover { transform: translateY(-2px); }
+.door-t { position: relative; display: block; font-size: var(--t-small); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--pen); }
+.door-a { position: relative; display: block; font-size: var(--t-small); color: var(--ink-2); margin-top: 2px; }
+@media (prefers-reduced-motion: no-preference) {
+	.door-frame .df1 { animation: draw 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.3s backwards; }
+	.door-frame .df2 { animation: draw 0.35s ease 0.85s backwards; }
+}
 .door-side { display: block; margin-top: var(--s-2); font-size: var(--t-small); }
 .door-side a { color: var(--ink-2); text-decoration: none; border-bottom: 1px solid var(--pen-mat); }
 .door-side a:hover { color: var(--pen); border-bottom-color: var(--pen); }
@@ -280,7 +294,9 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 
 /* --- SECTIONS ------------------------------------------------------------ */
 /* The demarcation: one stroke from the same hand, drawn as you arrive. */
-.section { padding-top: var(--s-8); }
+/* anchors land clear of the sticky masthead, never tucked under it */
+.section { padding-top: var(--s-8); scroll-margin-top: 96px; }
+@media (max-width: 620px) { .section { scroll-margin-top: 64px; } }
 .divider { display: block; width: 100%; height: 10px; color: var(--pen-2); overflow: visible; opacity: 0.75; }
 .h2 {
 	font-size: var(--t-h2);
@@ -351,38 +367,52 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .record a:hover { color: var(--pen); border-bottom-color: var(--pen); }
 
 /* --- AFTER HOURS: the things ---------------------------------------------- */
-/* A compact ledger: one row per thing, the object drawn beside the name in
-   the same pen as the keepsake doors. Same rooms, same objects, less paper.
-   The drawings perform on hover exactly like their keepsake twins. */
-.things { margin-top: var(--s-4); border-top: 1px solid var(--hair); }
-.thing {
+/* Three screenshots taped to the page in one row, like photos in a journal:
+   the same tape and tilt as the hero portrait. At rest each shows only its
+   picture and name. Reach for one (hover or keyboard) and it straightens,
+   lifts, and the pen adds the one-liner and address underneath. On screens
+   without hover the details are simply always written. */
+.things {
+	margin-top: var(--s-4);
 	display: grid;
-	grid-template-columns: 68px minmax(0, 1fr) auto;
-	gap: var(--s-1) var(--s-4);
-	align-items: center;
-	padding: 18px 0;
-	border-bottom: 1px solid var(--hair);
-	text-decoration: none; color: inherit;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: var(--s-4) var(--s-3);
+	align-items: start;
 }
-.thing-ic { display: inline-flex; justify-content: center; align-items: center; color: var(--pen); }
-.thing-ic svg { width: 56px; height: auto; display: block; }
-.thing:nth-child(1) .thing-ic svg { transform: rotate(-3deg); }
-.thing:nth-child(2) .thing-ic svg { transform: rotate(2.5deg); }
-.thing:nth-child(3) .thing-ic svg { transform: rotate(-2deg); }
-.thing:hover .thing-ic svg, .thing:focus-visible .thing-ic svg { transform: rotate(0deg); }
-.thing-ic svg { transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
-.thing:hover .steam, .thing:focus-visible .steam { animation: steam-rise 1.3s ease-in-out infinite; }
-.thing:hover .clap-top, .thing:focus-visible .clap-top { animation: clap 0.55s cubic-bezier(0.36, 0.07, 0.19, 0.97); }
-.thing:hover .wave, .thing:focus-visible .wave { animation: shout 0.5s ease; }
-.thing:hover .w2, .thing:focus-visible .w2 { animation-delay: 0.08s; }
-@keyframes shout { 40% { transform: translateX(2.5px); opacity: 1; } }
-.thing-t { font-size: var(--t-h3); font-weight: 600; letter-spacing: -0.01em; color: var(--ink); transition: color 0.2s ease; }
+.thing { display: block; min-width: 0; text-decoration: none; color: inherit; }
+.thing-shot { position: relative; margin: 0 0 12px; }
+.thing-shot::before, .thing-shot::after {
+	content: ""; position: absolute; z-index: 2; top: -7px;
+	width: 44px; height: 15px;
+	background: var(--pen-mat); opacity: 0.5; border-radius: 1px;
+}
+.thing-shot::before { left: 6px; transform: rotate(-31deg); }
+.thing-shot::after { right: 6px; transform: rotate(29deg); }
+.thing-shot img {
+	width: 100%; aspect-ratio: 16 / 10; height: auto; object-fit: cover; object-position: top center;
+	border: 4px solid var(--mat);
+	box-shadow: 0 6px 16px -10px rgba(20, 22, 28, 0.5), 0 0 0 1px var(--hair);
+	transform: rotate(-1.6deg);
+	transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+}
+.thing:nth-child(2) .thing-shot img { transform: rotate(1.3deg); }
+.thing:nth-child(3) .thing-shot img { transform: rotate(-0.9deg); }
+.thing:hover .thing-shot img, .thing:focus-visible .thing-shot img {
+	transform: rotate(0deg) translateY(-3px);
+	box-shadow: 0 14px 28px -14px var(--pen-mat), 0 0 0 1px var(--hair);
+}
+.thing-t { font-size: var(--t-body); font-weight: 600; letter-spacing: -0.01em; color: var(--ink); transition: color 0.2s ease; }
 .thing:hover .thing-t, .thing:focus-visible .thing-t { color: var(--pen); }
 .thing-t .deva { font-family: var(--deva); font-weight: 500; }
-.thing-d { font-size: var(--t-small); color: var(--ink-2); margin-top: 2px; max-width: 52ch; }
-.thing-body { min-width: 0; }
+.thing-more {
+	max-height: 0; opacity: 0; overflow: hidden;
+	transition: max-height 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease 0.05s;
+}
+.thing:hover .thing-more, .thing:focus-visible .thing-more { max-height: 150px; opacity: 1; }
+@media (hover: none) { .thing-more { max-height: none; opacity: 1; } }
+.thing-d { font-size: var(--t-small); color: var(--ink-2); margin-top: 4px; }
 .thing-v {
-	display: inline-block;
+	display: inline-block; margin-top: 6px;
 	font-size: var(--t-small); color: var(--pen);
 	position: relative; padding-bottom: 3px;
 	white-space: nowrap;
@@ -514,17 +544,23 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 	.lede { font-size: 1.0625rem; max-width: none; }
 		.door { margin-top: var(--s-4); width: 100%; }
 	.pin { max-width: 132px; margin-top: var(--s-3); }
-	.thing { grid-template-columns: 46px minmax(0, 1fr); gap: 4px var(--s-2); padding: 14px 0; }
-	.thing-ic { align-self: start; margin-top: 3px; }
-	.thing-ic svg { width: 40px; }
-	.thing-v { grid-column: 2; justify-self: start; }
+	/* on a phone the three photos become dense thumb rows: picture left,
+	   words right, everything already written (no hover to earn) */
+	.things { grid-template-columns: minmax(0, 1fr); gap: var(--s-3); }
+	.thing { display: grid; grid-template-columns: 118px minmax(0, 1fr); gap: 2px var(--s-2); align-items: start; }
+	.thing-shot { grid-row: 1 / 3; margin-bottom: 0; }
+	.thing-shot::before, .thing-shot::after { width: 30px; height: 11px; top: -5px; }
+	.thing-more { max-height: none; opacity: 1; }
+	.thing-t { font-size: 1rem; }
+	.thing-d { margin-top: 2px; }
+	.thing-v { margin-top: 4px; }
 	.record { font-size: 0.8125rem; }
 	.note { font-size: 1.2rem; }
 	.shelf-row { grid-template-columns: minmax(0, 1fr); gap: 2px; }
 
 	/* the masthead earns its space back: the button is already on this screen,
 	   so the nav does not need to repeat it, and the switch speaks for itself */
-	.nav a[href="#write"] { display: none; }
+	.nav a[href$="#write"] { display: none; }
 	.night-label { display: none; }
 	.masthead-in { padding: 10px clamp(20px, 5vw, 40px); }
 	.wordmark svg { height: 22px; }
@@ -741,10 +777,8 @@ html:has(#night:checked) .night-marquee circle:nth-of-type(3) { animation-delay:
 @media (prefers-reduced-motion: reduce) {
 	.keep-clap:hover .clap-top, .keep-pan:hover .steam, .keep-leaf:hover svg,
 	.keep-clap:focus-visible .clap-top, .keep-pan:focus-visible .steam, .keep-leaf:focus-visible svg,
-	.thing:hover .steam, .thing:focus-visible .steam,
-	.thing:hover .clap-top, .thing:focus-visible .clap-top,
-	.thing:hover .wave, .thing:focus-visible .wave,
 	html:has(#night:checked) body, html:has(#night:checked) .night-marquee circle { animation: none; }
+	.thing-more { transition-duration: 0.01s; }
 }
 
 /* --- signature on small screens ------------------------------------------- */
