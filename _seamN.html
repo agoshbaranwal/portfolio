@@ -1,0 +1,85 @@
+<!doctype html><html lang="en" class="night"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Vollkorn:ital,wght@0,400..900;1,400..700&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/site.css">
+<style>body{margin:0}.panel{width:420px;height:720px;background:#15161a;position:relative}
+.seam{position:absolute;top:0;right:40px;width:320px;height:auto;overflow:visible}
+.seam-line{stroke-dasharray:1;stroke-dashoffset:0}</style>
+</head><body><div class="panel"><svg class="seam" viewBox="0 0 320 660" fill="none" aria-hidden="true">
+  <defs>
+    
+								<radialGradient id="wxDome" cx="0.4" cy="0.33" r="0.74">
+									<stop offset="0" stop-color="var(--wax-1)"/>
+									<stop offset="0.5" stop-color="var(--wax-2)"/>
+									<stop offset="1" stop-color="var(--wax-3)"/>
+								</radialGradient>
+								<radialGradient id="wxWell" cx="0.5" cy="0.44" r="0.66">
+									<stop offset="0" stop-color="var(--wax-face)"/>
+									<stop offset="0.66" stop-color="var(--wax-2)"/>
+									<stop offset="1" stop-color="var(--wax-3)"/>
+								</radialGradient>
+								<filter id="wxGrain" x="-0.1" y="-0.1" width="1.2" height="1.2">
+									<feTurbulence type="fractalNoise" baseFrequency="0.026" numOctaves="3" seed="11" result="n"/>
+									<feColorMatrix in="n" type="saturate" values="0" result="g"/>
+									<feComponentTransfer in="g" result="s"><feFuncA type="linear" slope="0.22"/></feComponentTransfer>
+									<feComposite in="s" in2="SourceAlpha" operator="in" result="grain"/>
+									<feBlend in="SourceGraphic" in2="grain" mode="overlay"/>
+								</filter>
+								<filter id="wxRelief" x="-0.5" y="-0.5" width="2" height="2">
+									<feGaussianBlur in="SourceAlpha" stdDeviation="1.5" result="b"/>
+									<feSpecularLighting in="b" surfaceScale="2.6" specularConstant="0.85" specularExponent="15" lighting-color="#eaf1ff" result="sp"><feDistantLight azimuth="228" elevation="54"/></feSpecularLighting>
+									<feComposite in="sp" in2="SourceAlpha" operator="in" result="spC"/>
+									<feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="spC"/></feMerge>
+								</filter>
+								<filter id="wxSoft" x="-0.4" y="-0.4" width="1.8" height="1.8"><feGaussianBlur stdDeviation="6"/></filter>
+								<filter id="wxSoft2" x="-0.5" y="-0.5" width="2" height="2"><feGaussianBlur stdDeviation="3.5"/></filter>
+							
+    <filter id="sealShadow" x="-0.4" y="-0.4" width="1.8" height="1.8"><feDropShadow dx="0" dy="7" stdDeviation="7" flood-color="#141821" flood-opacity="0.34"/></filter>
+    <filter id="envShadow" x="-0.4" y="-0.4" width="1.8" height="1.8"><feDropShadow dx="2" dy="6" stdDeviation="6" flood-color="#141821" flood-opacity="0.17"/></filter>
+  </defs>
+
+  <!-- the left half slips under the fold: a faint, fading continuation -->
+  <g class="env-ghost" stroke="var(--pen)" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="2.5 6" opacity="0.36">
+    <path d="M190 410 L146 410"/>
+    <path d="M190 548 L146 548"/>
+    <path d="M190 476 L150 454"/>
+  </g>
+
+  <!-- the envelope, a card in ink; only the right half is shown (open along the fold) -->
+  <path class="env-fill" d="M190 410 L316 410 L316 548 L190 548 Z" fill="var(--mat)" filter="url(#envShadow)"/>
+  <g class="env" stroke="var(--pen)" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M190 410 L316 410 L316 548 L190 548"/>
+    <path d="M316 410 L190 476"/>
+  </g>
+
+  <!-- the ink line: top to bottom-right, drawn as the page scrolls -->
+  <path class="seam-line" d="M190 6 L190 476 C 190 528, 214 590, 250 654" stroke="var(--pen)" stroke-width="2.2" stroke-linecap="round" pathLength="1"/>
+
+  <!-- the wax seal, pressed on the flap point, on the line -->
+  <g class="wax-seal" filter="url(#sealShadow)" transform="translate(118 404) scale(0.72) rotate(-4 100 100)">
+    
+							<!-- the poured wax, domed and grained -->
+							<path d="M 177.9 100.0 C 177.4 112.0, 172.4 124.0, 167.1 135.2 C 161.9 146.5, 156.2 160.8, 146.5 167.3 C 136.8 173.8, 121.5 173.0, 109.0 174.3 C 96.5 175.6, 82.8 178.9, 71.5 175.2 C 60.2 171.5, 48.7 161.5, 41.3 152.0 C 34.0 142.4, 30.7 129.7, 27.5 117.9 C 24.3 106.0, 19.4 92.0, 22.2 80.8 C 25.0 69.6, 36.0 59.8, 44.3 50.6 C 52.6 41.5, 61.1 30.1, 71.9 25.9 C 82.7 21.8, 97.2 23.7, 109.0 25.7 C 120.8 27.8, 132.5 31.9, 142.7 38.2 C 152.8 44.5, 164.2 52.9, 170.0 63.2 C 175.9 73.5, 178.4 88.0, 177.9 100.0 Z" fill="url(#wxDome)" filter="url(#wxGrain)"/>
+							<!-- darker outer rim + a fine lit edge just inside it -->
+							<path d="M 177.9 100.0 C 177.4 112.0, 172.4 124.0, 167.1 135.2 C 161.9 146.5, 156.2 160.8, 146.5 167.3 C 136.8 173.8, 121.5 173.0, 109.0 174.3 C 96.5 175.6, 82.8 178.9, 71.5 175.2 C 60.2 171.5, 48.7 161.5, 41.3 152.0 C 34.0 142.4, 30.7 129.7, 27.5 117.9 C 24.3 106.0, 19.4 92.0, 22.2 80.8 C 25.0 69.6, 36.0 59.8, 44.3 50.6 C 52.6 41.5, 61.1 30.1, 71.9 25.9 C 82.7 21.8, 97.2 23.7, 109.0 25.7 C 120.8 27.8, 132.5 31.9, 142.7 38.2 C 152.8 44.5, 164.2 52.9, 170.0 63.2 C 175.9 73.5, 178.4 88.0, 177.9 100.0 Z" fill="none" stroke="var(--wax-3)" stroke-width="3.5" opacity="0.55"/>
+							<path d="M 171.5 100.0 C 171.1 111.0, 166.8 122.3, 161.9 132.5 C 157.1 142.7, 151.2 155.1, 142.2 161.2 C 133.3 167.2, 119.7 167.5, 108.3 168.7 C 97.0 170.0, 84.4 172.1, 74.0 168.6 C 63.7 165.0, 53.1 156.3, 46.2 147.6 C 39.4 139.0, 35.7 127.4, 32.9 116.5 C 30.0 105.7, 26.5 92.9, 29.1 82.5 C 31.6 72.1, 40.8 62.6, 48.4 54.3 C 55.9 45.9, 64.3 36.1, 74.3 32.3 C 84.3 28.5, 97.5 29.5, 108.3 31.3 C 119.2 33.0, 130.1 37.0, 139.4 42.9 C 148.7 48.7, 158.7 56.9, 164.1 66.4 C 169.4 75.9, 171.8 89.0, 171.5 100.0 Z" fill="none" stroke="var(--wax-1)" stroke-width="1.6" opacity="0.32"/>
+							<!-- the die-pressed well: recessed, darker, with a shadow at its top rim and a lit lower rim -->
+							<circle cx="100" cy="98" r="64" fill="url(#wxWell)"/>
+							<path d="M40 92 A64 64 0 0 1 160 92" fill="none" stroke="#06121f" stroke-width="8" opacity="0.42" filter="url(#wxSoft2)"/>
+							<path d="M42 118 A62 62 0 0 0 158 118" fill="none" stroke="var(--wax-1)" stroke-width="4" opacity="0.4" filter="url(#wxSoft2)"/>
+							<circle cx="100" cy="100" r="59" fill="none" stroke="var(--wax-3)" stroke-width="1.4" opacity="0.5"/>
+							<!-- the beaded border, raised -->
+							<g fill="var(--wax-1)" filter="url(#wxRelief)"><circle cx="100.0" cy="48.0" r="2.5"/><circle cx="110.8" cy="49.1" r="2.5"/><circle cx="121.2" cy="52.5" r="2.5"/><circle cx="130.6" cy="57.9" r="2.5"/><circle cx="138.6" cy="65.2" r="2.5"/><circle cx="145.0" cy="74.0" r="2.5"/><circle cx="149.5" cy="83.9" r="2.5"/><circle cx="151.7" cy="94.6" r="2.5"/><circle cx="151.7" cy="105.4" r="2.5"/><circle cx="149.5" cy="116.1" r="2.5"/><circle cx="145.0" cy="126.0" r="2.5"/><circle cx="138.6" cy="134.8" r="2.5"/><circle cx="130.6" cy="142.1" r="2.5"/><circle cx="121.2" cy="147.5" r="2.5"/><circle cx="110.8" cy="150.9" r="2.5"/><circle cx="100.0" cy="152.0" r="2.5"/><circle cx="89.2" cy="150.9" r="2.5"/><circle cx="78.8" cy="147.5" r="2.5"/><circle cx="69.4" cy="142.1" r="2.5"/><circle cx="61.4" cy="134.8" r="2.5"/><circle cx="55.0" cy="126.0" r="2.5"/><circle cx="50.5" cy="116.1" r="2.5"/><circle cx="48.3" cy="105.4" r="2.5"/><circle cx="48.3" cy="94.6" r="2.5"/><circle cx="50.5" cy="83.9" r="2.5"/><circle cx="55.0" cy="74.0" r="2.5"/><circle cx="61.4" cy="65.2" r="2.5"/><circle cx="69.4" cy="57.9" r="2.5"/><circle cx="78.8" cy="52.5" r="2.5"/><circle cx="89.2" cy="49.1" r="2.5"/></g>
+							<circle cx="100" cy="100" r="45" fill="none" stroke="var(--wax-3)" stroke-width="1.2" opacity="0.45"/>
+							<!-- the die-pressed emblem: a fountain-pen nib, raised, catching the light.
+							     A cast shadow beneath, the raised face, then the recessed slit + breather. -->
+							<path d="M100 61 C 86 61, 77 64, 73 72 C 70 79, 71 87, 74 95 C 77 112, 86 130, 100 147 C 114 130, 123 112, 126 95 C 129 87, 130 79, 127 72 C 123 64, 114 61, 100 61 Z" fill="#06121f" opacity="0.5" filter="url(#wxSoft2)" transform="translate(1.6 2.6)"/>
+							<path d="M100 61 C 86 61, 77 64, 73 72 C 70 79, 71 87, 74 95 C 77 112, 86 130, 100 147 C 114 130, 123 112, 126 95 C 129 87, 130 79, 127 72 C 123 64, 114 61, 100 61 Z" fill="var(--wax-1)" filter="url(#wxRelief)"/>
+							<circle cx="100" cy="87" r="5.2" fill="var(--wax-3)"/>
+							<circle cx="98.5" cy="85.5" r="1.6" fill="var(--wax-1)" opacity="0.6"/>
+							<path d="M100 91 L100 142" stroke="var(--wax-3)" stroke-width="2.5" stroke-linecap="round"/>
+							<!-- the wet-wax gloss on the dome -->
+							<ellipse cx="72" cy="56" rx="40" ry="22" fill="#ffffff" opacity="0.16" filter="url(#wxSoft)" transform="rotate(-24 72 56)"/>
+							<ellipse cx="66" cy="52" rx="13" ry="6" fill="#ffffff" opacity="0.28" filter="url(#wxSoft2)" transform="rotate(-24 66 52)"/>
+						
+  </g>
+</svg></div></body></html>

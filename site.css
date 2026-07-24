@@ -37,10 +37,10 @@
 
 	/* Sealing wax: the pen's own blue-black, poured. Three stops make the dome,
 	   a fourth is the recessed face of the pressed initial. (Night swaps below.) */
-	--wax-1: #b0454a;   /* lit crest, where the light catches the raised wax */
-	--wax-2: #8a2229;   /* the body: classic oxblood sealing wax */
-	--wax-3: #490d13;   /* shaded rim / the shadow in the pressed well */
-	--wax-face: #74171d; /* the recessed face the die stamped */
+	--wax-1: #5b80ba;   /* lit crest, where the light catches the raised wax */
+	--wax-2: #23406e;   /* the body: the pen's own dark-blue wax */
+	--wax-3: #0b1c38;   /* shaded rim / the shadow in the pressed well */
+	--wax-face: #1b3560; /* the recessed face the die stamped */
 
 	/* Type: two faces, each chosen for a reason.
 	   Vollkorn: a reading serif with real quirks, built for body text at length,
@@ -85,10 +85,10 @@ html:has(#night:checked), html.night {
 	--pen-2: #6f95c8;
 	--pen-mat: rgba(143, 179, 224, 0.32);
 	--hair:  rgba(236, 237, 240, 0.15);
-	--wax-1: #cf5c60;   /* wax by lamplight: a touch brighter so it reads on the dark sheet */
-	--wax-2: #a12e34;
-	--wax-3: #5c141a;
-	--wax-face: #8a2129;
+	--wax-1: #cfe0f6;   /* wax by lamplight: a touch brighter so it reads on the dark sheet */
+	--wax-2: #7ea6db;
+	--wax-3: #35527c;
+	--wax-face: #6f97cc;
 }
 
 /* --- RESET --------------------------------------------------------------- */
@@ -524,7 +524,10 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .shelf-link:hover { border-bottom-color: var(--pen); }
 
 /* --- WRITE TO ME --------------------------------------------------------- */
-.closing { padding-bottom: var(--s-8); }
+/* deep bottom room so the sealed envelope hangs below the postcard, clear of it
+   at every desktop width (the seal sits a fixed ~222px above the section floor) */
+.closing { padding-bottom: 240px; }
+@media (max-width: 860px) { .closing { padding-bottom: var(--s-8); } }
 .address {
 	display: inline-block; margin-top: var(--s-4);
 	font-size: clamp(1.1rem, 2.9vw, 1.55rem);
@@ -745,7 +748,6 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 @media (prefers-reduced-motion: no-preference) {
 	@supports (animation-timeline: view()) {
 		.keepsake, .keepsake-stub { animation: note-in linear both; animation-timeline: view(); animation-range: entry 16% entry 64%; }
-		.postmark path, .postmark circle { stroke-dasharray: 1; stroke-dashoffset: 0; animation: draw linear both; animation-timeline: view(); animation-range: entry 56% entry 88%; }
 	}
 }
 .keepsake svg { display: block; }
@@ -790,8 +792,6 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 	transform: rotate(3deg);
 }
 .stamp img { display: block; width: 56px; height: 56px; object-fit: cover; filter: saturate(0.7); }
-.postmark { position: absolute; top: 22px; right: 52px; width: 86px; color: var(--pen); mix-blend-mode: multiply; pointer-events: none; }
-html:has(#night:checked) .postmark, html.night .postmark { mix-blend-mode: screen; }
 .pc-to, .pc-from {
 	font-family: var(--hand);
 	font-size: var(--t-lead); line-height: 1.3;
@@ -800,27 +800,24 @@ html:has(#night:checked) .postmark, html.night .postmark { mix-blend-mode: scree
 	padding-bottom: 4px;
 }
 .pc-to span, .pc-from span { color: var(--ink-3); font-size: var(--t-small); margin-right: 6px; }
-/* the caption that turns the To/From around: this postcard is his reply,
-   written and addressed before you have even sent yours */
-.pc-reply { font-family: var(--hand); font-size: var(--t-small); color: var(--pen); opacity: 0.85; margin-bottom: 5px; transform: rotate(-1.5deg); }
 
-/* --- the wax seal: his own blue-black wax, poured and pressed with an A ------
-   A real seal: a domed radial gradient for the wax, a fractal-noise diffuse
-   light for the matte grain, a raised rim, a gloss, and a debossed monogram
-   (a light lip below, a dark shade above, the recessed face on top). */
-.col-wax { align-self: center; }
-@media (max-width: 860px) { .col-wax { align-self: start; } }
-.wax {
-	display: block; width: 118px; height: auto;
-	margin: 6px 0 0 10px; overflow: visible;
-	filter: drop-shadow(0 7px 10px rgba(20, 22, 28, 0.32));
-	transform: rotate(-5deg);
-	transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+/* --- the sealed envelope ----------------------------------------------------
+   As the page scrolls, the pen draws an ink line down the right margin to the
+   bottom. A big envelope sits astride it: its right half shown, its left half
+   tucked under the fold. The flap closes on the line, pressed with his own
+   dark-blue wax nib seal (the one real object here, like the photo). */
+/* the composition hangs off the spine itself: right:83px puts the envelope's
+   fold exactly on the spine (which sits a constant 213px in from the section's
+   right edge, the page padding cancelling out). It lives below the postcard,
+   in the section's deep bottom padding, so the page ends on a sealed letter. */
+.seam-wrap { position: absolute; right: 83px; bottom: 40px; width: 260px; pointer-events: none; z-index: 1; }
+.seam { display: block; width: 100%; height: auto; overflow: visible; }
+.env-left { display: none; }
+@media (max-width: 860px) {
+	.seam-wrap { position: static; width: 216px; margin: var(--s-5) auto 0; }
+	.env-left { display: block; }   /* whole envelope where there is no spine */
+	.env-ghost { display: none; }
 }
-.wax-gloss { fill: #ffffff; opacity: 0.14; }
-.wax:hover { transform: rotate(-1.5deg) scale(1.035); }
-@media (prefers-reduced-motion: reduce) { .wax { transition-duration: 0.01s; } }
-@media (max-width: 620px) { .wax { width: 96px; } }
 
 @media (max-width: 620px) {
 	.keeps { justify-content: flex-start; gap: 14px; margin-top: var(--s-3); }
@@ -1394,10 +1391,13 @@ html:has(#night:checked) .inktrail, html.night .inktrail { mix-blend-mode: scree
 	}
 	* { animation: none !important; transition: none !important; }
 	html, body, .page { background: #fff !important; box-shadow: none !important; }
-	.masthead, .nib-track, .spine, .dogear, .skip, .inktrail, .night-toggle { display: none !important; }
+	.masthead, .nib-track, .spine, .dogear, .skip, .inktrail, .night-toggle, .seam { display: none !important; }
+	/* the seal is hidden here, so drop the room reserved for it (portrait paper
+	   already gets this via the <=860px query; this also covers wide/landscape) */
+	.closing { padding-bottom: var(--s-8) !important; }
 	body::after, .opening::before, .opening::after { display: none !important; }
 	.sig .st, .name-rule path, .divider path, .mark svg path, .ring path,
-	.thing-v svg path, .postmark path, .postmark circle, .flick path, .trail-off path { stroke-dashoffset: 0 !important; }
+	.thing-v svg path, .flick path, .trail-off path { stroke-dashoffset: 0 !important; }
 	.note, .section .note { mask-image: none !important; opacity: 1 !important; }
 	.thing, .figure, .postcard, .shelf-row, .latest a { break-inside: avoid; }
 	.notebook::before, .notebook::after { display: none !important; }
