@@ -319,8 +319,6 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 /* the bench sits in the grid's second row; kill that row's gap so the ONLY
    space between the live things and the bench is one deliberate margin, not a
    doubled one (was a 110px gap: 46px grid row-gap + 64px margin) */
-.col-bench { grid-column: 1; }
-#building > .inner { row-gap: 0; }
 
 /* --- SECTIONS ------------------------------------------------------------ */
 /* The demarcation: one stroke from the same hand, drawn as you arrive. */
@@ -462,6 +460,9 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 }
 .thing:nth-child(2) .thing-shot img { transform: rotate(1.3deg); }
 .thing:nth-child(3) .thing-shot img { transform: rotate(-0.9deg); }
+.thing:nth-child(4) .thing-shot img { transform: rotate(0.9deg); }
+.thing:nth-child(5) .thing-shot img { transform: rotate(-1.4deg); }
+.thing:nth-child(6) .thing-shot img { transform: rotate(1.1deg); }
 .thing:hover .thing-shot img, .thing:focus-visible .thing-shot img {
 	transform: rotate(0deg) translateY(-3px);
 	box-shadow: 0 14px 28px -14px var(--pen-mat), 0 0 0 1px var(--hair);
@@ -486,15 +487,11 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .thing-v svg path { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
 .thing:hover .thing-v svg path, .thing:focus-visible .thing-v svg path { stroke-dashoffset: 0; }
 
-/* the bench: the SAME cards as the built things, because they are the same
-   kind of object. The only honest difference is that their picture has not
-   been taken yet, so the frame holds a drawing of the thing instead of a
-   screenshot, and there is no address to write under it. */
-.bench { margin-top: var(--s-5); }
-.bench-say { font-size: var(--t-small); color: var(--ink-3); }
-.bench .things { margin-top: var(--s-3); }
+/* the unbuilt ones sit in the SAME grid as the built things, because they are
+   the same kind of object. The only honest difference: their picture has not
+   been taken yet, so the frame holds a drawing instead of a screenshot, and
+   where a live card writes its address, these say they are still on the bench. */
 .thing-static { cursor: default; }
-.thing-static .thing-more { max-height: none; opacity: 1; }
 .thing-plate {
 	position: relative;
 	width: 100%; aspect-ratio: 16 / 10;
@@ -507,8 +504,16 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 }
 .thing:nth-child(2) .thing-plate { transform: rotate(1deg); }
 .thing:nth-child(3) .thing-plate { transform: rotate(-0.6deg); }
+.thing:nth-child(4) .thing-plate { transform: rotate(0.8deg); }
+.thing:nth-child(5) .thing-plate { transform: rotate(-1deg); }
+.thing:nth-child(6) .thing-plate { transform: rotate(0.7deg); }
 .thing-plate svg { width: 46%; height: auto; color: var(--pen); opacity: 0.5; }
 .thing-static .thing-t { color: var(--ink-2); }
+.thing-soon {
+	display: inline-block; margin-top: 6px;
+	font-family: var(--hand); font-size: var(--t-small);
+	color: var(--ink-3);
+}
 
 /* --- THE NOTEBOOK -------------------------------------------------------- */
 .shelf { margin-top: var(--s-5); border-top: 1px solid var(--hair); }
