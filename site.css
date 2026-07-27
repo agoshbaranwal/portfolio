@@ -662,6 +662,24 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .post-body p { margin-top: var(--s-2); }
 .post-body .h2 { margin-top: var(--s-4); }
 
+/* An old post keeps the date it was first written, and says plainly, in the
+   hand, that it was taken apart and rebuilt later. The date is the record;
+   the note is the honesty. */
+.post-redux {
+	display: block; margin-top: 5px;
+	font-family: var(--hand); font-size: var(--t-small); color: var(--pen);
+	transform: rotate(-0.8deg);
+}
+.post-redux a { color: inherit; }
+
+/* Every claim shows its source: the same standard the climate work holds to,
+   applied to the writing. */
+.sources { max-width: 58ch; margin-top: var(--s-5); padding-top: var(--s-3); border-top: 1px solid var(--hair); }
+.sources-h { font-family: var(--hand); font-size: var(--t-body); color: var(--pen); }
+.source-list { margin-top: var(--s-2); padding-left: 1.2em; }
+.source-list li { font-size: var(--t-small); line-height: 1.6; color: var(--ink-2); margin-top: 8px; }
+.source-list a { color: var(--pen); }
+
 /* --- THE CV PAGE: his résumé, kept in his format, on the site's paper -------
    Deliberately restrained: a clean, professional record, not a reinvented
    layout. The one styling the site lends it is its paper, ink and one pen. */
