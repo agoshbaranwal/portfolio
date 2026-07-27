@@ -73,9 +73,9 @@ for f in sorted(glob.glob("*.html") + glob.glob("writing/*.html")):
 sys.exit(1 if bad else 0)
 PY
 
-# 6. The locked project order on the homepage: admenow, Utsav, tvbadger.
-order=$(sed -n '/>Things I am building</,$p' index.html | grep -oE 'href="https://(admenow|utsav-pi|tvbadger)\.vercel' | sed 's/href="https:\/\///' | head -3 | tr '\n' ' ')
-[ "$order" = "admenow.vercel utsav-pi.vercel tvbadger.vercel " ] || { echo "FAIL: project order changed: $order"; fail=1; }
+# 6. The locked project order on the homepage: admenow, Utsav, tvbadger, On Record.
+order=$(sed -n '/>Things I am building</,$p' index.html | grep -oE 'href="https://(admenow\.vercel|utsav-pi\.vercel|tvbadger\.vercel|agoshbaranwal\.github)' | sed 's/href="https:\/\///' | head -4 | tr '\n' ' ')
+[ "$order" = "admenow.vercel utsav-pi.vercel tvbadger.vercel agoshbaranwal.github " ] || { echo "FAIL: project order changed: $order"; fail=1; }
 
 # 7. The locked section heading.
 grep -q ">Things I am building<" index.html || { echo "FAIL: locked heading 'Things I am building' missing"; fail=1; }
