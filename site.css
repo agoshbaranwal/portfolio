@@ -674,6 +674,27 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .chart { margin: var(--s-4) 0; max-width: 58ch; }
 .chart svg { display: block; width: 100%; height: auto; overflow: visible; }
 .chart figcaption { font-size: var(--t-small); line-height: 1.55; color: var(--ink-3); margin-top: 11px; }
+
+/* Contents for a long read. Plain anchors down the margin, sticky so they stay
+   with you, and pen.js marks the one you are inside. Works with the script off,
+   which is the only reason it is allowed to exist. */
+.toc { position: sticky; top: 96px; margin-top: var(--s-4); }
+.toc-h { font-family: var(--hand); font-size: var(--t-body); color: var(--pen); }
+.toc ol { list-style: none; margin-top: 10px; padding: 0; border-left: 1.5px solid var(--hair); }
+.toc a {
+	display: block; padding: 6px 0 6px 13px;
+	margin-left: -1.5px; border-left: 1.5px solid transparent;
+	font-size: var(--t-small); line-height: 1.35; color: var(--ink-3);
+	text-decoration: none;
+	transition: color 0.2s ease, border-color 0.2s ease;
+}
+.toc a:hover { color: var(--pen); border-left-color: var(--pen-mat); }
+.toc a:focus-visible { outline: 2px dashed var(--pen); outline-offset: 2px; }
+.toc a.is-here { color: var(--pen); border-left-color: var(--pen); }
+.post-body .h2 { scroll-margin-top: 96px; }
+/* the margin column falls below the article on small screens, where a contents
+   list at the very bottom would be a joke. The summary box up top does that job. */
+@media (max-width: 860px) { .toc { display: none; } }
 .c-bar { fill: var(--pen); }
 .c-bar.faint { opacity: 0.42; }
 .c-base { stroke: var(--hair); stroke-width: 1.5; }

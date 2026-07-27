@@ -4,7 +4,8 @@
    2. the guitar pick actually plays,
    3. the wax seal re-stamps a different life each time you press it,
    4. the nib faces the way you scroll,
-   5. the cursor leaves ink ONLY where you are meant to write (Write to me).
+   5. the cursor leaves ink ONLY where you are meant to write (Write to me),
+   6. a long read gets a contents list in the margin that marks where you are.
    Every effect respects prefers-reduced-motion. No frameworks, no tracking. */
 (() => {
 	"use strict";
@@ -96,6 +97,28 @@
 				setTimeout(() => sealWrap.classList.remove("restamp"), 480);
 			}
 		});
+	}
+
+	/* ---- a long piece gets a contents list, and the list marks where you are.
+	   The anchors already work without this; all it adds is knowing your place. */
+	const toc = doc.querySelector(".toc");
+	if (toc) {
+		const links = [...toc.querySelectorAll("a")];
+		const heads = links.map(a => doc.getElementById(decodeURIComponent(a.hash.slice(1))));
+		if (heads.every(Boolean) && heads.length) {
+			let queued = false;
+			const mark = () => {
+				let at = 0;
+				heads.forEach((h, i) => { if (h.getBoundingClientRect().top <= 140) at = i; });
+				links.forEach((a, i) => a.classList.toggle("is-here", i === at));
+			};
+			addEventListener("scroll", () => {
+				if (queued) return;
+				queued = true;
+				requestAnimationFrame(() => { mark(); queued = false; });
+			}, { passive: true });
+			mark();
+		}
 	}
 
 	/* ---- the ink trail means one thing: here you can write. So it appears in
