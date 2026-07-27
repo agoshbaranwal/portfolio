@@ -8,11 +8,11 @@
 		<lastBuildDate>Mon, 27 Jul 2026 12:00:00 +0200</lastBuildDate>
 		<atom:link href="https://agoshportfolio.vercel.app/feed.xml" rel="self" type="application/rss+xml" />
 		<item>
-			<title>Love is a lagging indicator</title>
+			<title>Customer love is a lagging indicator</title>
 			<link>https://agoshportfolio.vercel.app/writing/doubt-is-louder-than-belief</link>
 			<guid isPermaLink="true">https://agoshportfolio.vercel.app/writing/doubt-is-louder-than-belief</guid>
 			<pubDate>Mon, 27 Jul 2026 12:00:00 +0200</pubDate>
-			<description>Expectation is part of your product, not a trick played on the buyer. But preference sits downstream of purchase, which changes where the money should go.</description>
+			<description>How people actually come to like a product, and why almost none of it happens before they buy.</description>
 		</item>
 	</channel>
 </rss>

@@ -664,6 +664,10 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .post-body p { margin-top: var(--s-2); }
 .post-body .h2 { margin-top: var(--s-4); }
 
+/* The line under the title that tells someone who arrived from nowhere what
+   this piece is about. A general blog cannot assume the reader knows. */
+.deck { max-width: 54ch; margin-top: var(--s-2); font-size: var(--t-lead); line-height: 1.5; color: var(--ink-2); }
+
 /* Reading tools for long pieces. A wall of paragraphs is not a virtue, so the
    post body gets: a highlighter pass, real lists, a pulled line for the one
    idea the piece exists to deliver, and a short version up top for the reader
