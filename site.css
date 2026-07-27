@@ -668,6 +668,22 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
    this piece is about. A general blog cannot assume the reader knows. */
 .deck { max-width: 54ch; margin-top: var(--s-2); font-size: var(--t-lead); line-height: 1.5; color: var(--ink-2); }
 
+/* Charts, drawn here from the published numbers rather than lifted from the
+   papers. Inline SVG so they need no script, take the ink tokens, and invert
+   correctly in the late show. */
+.chart { margin: var(--s-4) 0; max-width: 58ch; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.chart figcaption { font-size: var(--t-small); line-height: 1.55; color: var(--ink-3); margin-top: 11px; }
+.c-bar { fill: var(--pen); }
+.c-bar.faint { opacity: 0.42; }
+.c-base { stroke: var(--hair); stroke-width: 1.5; }
+.c-glass { fill: none; stroke: var(--pen); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; opacity: 0.3; }
+.c-glass.on { opacity: 1; fill: var(--pen); fill-opacity: 0.18; }
+.c-num { fill: var(--ink); font-family: var(--print); font-size: 16px; font-weight: 600; }
+.c-lab { fill: var(--ink-2); font-family: var(--print); font-size: 13px; }
+.c-ttl { fill: var(--ink-3); font-family: var(--print); font-size: 12.5px; }
+.c-note { fill: var(--pen); font-family: var(--hand); font-size: 16px; }
+
 /* Reading tools for long pieces. A wall of paragraphs is not a virtue, so the
    post body gets: a highlighter pass, real lists, a pulled line for the one
    idea the piece exists to deliver, and a short version up top for the reader
