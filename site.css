@@ -697,6 +697,19 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .keybox li { font-size: var(--t-small); line-height: 1.55; color: var(--ink-2); margin-top: 6px; }
 .keybox li::marker { color: var(--pen); }
 
+/* Two words under a title so a reader knows what they are about to read
+   before they commit to it. Spans, not links: there is no tag archive to
+   send anyone to, and a dead link is worse than no link. */
+.tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 11px; }
+.tag {
+	display: inline-block;
+	padding: 3px 11px 4px;
+	border: 1.4px solid var(--pen-mat);
+	border-radius: 100px;
+	font-size: var(--t-small); line-height: 1.45;
+	color: var(--pen); white-space: nowrap;
+}
+
 /* An old post keeps the date it was first written, and says plainly, in the
    hand, that it was taken apart and rebuilt later. The date is the record;
    the note is the honesty. */
