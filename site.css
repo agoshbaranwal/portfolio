@@ -1415,6 +1415,11 @@ html:has(#night:checked) .inktrail, html.night .inktrail { mix-blend-mode: scree
 	padding: 14px 0 0 16px;
 }
 .latest .thing-plate svg { width: 15%; opacity: 0.62; }
+/* a post whose point is a shape gets that shape as its thumbnail */
+.latest .thing-plate.wide svg { width: 78%; opacity: 1; }
+.tn-a { fill: var(--pen); }
+.tn-b { fill: var(--pen); opacity: 0.4; }
+.tn-base { stroke: var(--hair); stroke-width: 2; }
 .latest a:nth-child(2) .thing-plate { transform: rotate(1.1deg); }
 .latest .thing-plate { transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease; }
 .latest a:hover .thing-plate, .latest a:focus-visible .thing-plate {
