@@ -37,6 +37,7 @@
 
 	/* Sealing wax: the pen's own blue-black, poured. Three stops make the dome,
 	   a fourth is the recessed face of the pressed initial. (Night swaps below.) */
+	--hi: rgba(29, 58, 99, 0.17);   /* the highlighter pass over a line that matters */
 	--wax-1: #5b80ba;   /* lit crest, where the light catches the raised wax */
 	--wax-2: #23406e;   /* the body: the pen's own dark-blue wax */
 	--wax-3: #0b1c38;   /* shaded rim / the shadow in the pressed well */
@@ -85,6 +86,7 @@ html:has(#night:checked), html.night {
 	--pen-2: #6f95c8;
 	--pen-mat: rgba(143, 179, 224, 0.32);
 	--hair:  rgba(236, 237, 240, 0.15);
+	--hi: rgba(143, 179, 224, 0.24);
 	--wax-1: #cfe0f6;   /* wax by lamplight: a touch brighter so it reads on the dark sheet */
 	--wax-2: #7ea6db;
 	--wax-3: #35527c;
@@ -661,6 +663,39 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .post-body { max-width: 58ch; margin-top: var(--s-4); }
 .post-body p { margin-top: var(--s-2); }
 .post-body .h2 { margin-top: var(--s-4); }
+
+/* Reading tools for long pieces. A wall of paragraphs is not a virtue, so the
+   post body gets: a highlighter pass, real lists, a pulled line for the one
+   idea the piece exists to deliver, and a short version up top for the reader
+   who is standing on a train. */
+.hi {
+	background: linear-gradient(to bottom, transparent 56%, var(--hi) 56%, var(--hi) 95%, transparent 95%);
+	padding: 0 2px;
+}
+.post-body ul { margin-top: var(--s-2); padding-left: 1.15em; }
+.post-body ul li { margin-top: 7px; line-height: 1.6; }
+.post-body ul li::marker { color: var(--pen); }
+.pull {
+	margin: var(--s-4) 0 var(--s-3);
+	padding: 2px 0 2px var(--s-3);
+	border-left: 3px solid var(--pen);
+	font-size: var(--t-lead); line-height: 1.42;
+	font-weight: 600; color: var(--ink);
+	max-width: 52ch;
+}
+.keybox {
+	margin-top: var(--s-3);
+	padding: var(--s-3);
+	background: var(--mat);
+	border: 1.5px solid var(--hair);
+	border-left: 3px solid var(--pen);
+	border-radius: 3px;
+	max-width: 58ch;
+}
+.keybox-h { font-family: var(--hand); font-size: var(--t-body); color: var(--pen); }
+.keybox ul { margin-top: 9px; padding-left: 1.1em; }
+.keybox li { font-size: var(--t-small); line-height: 1.55; color: var(--ink-2); margin-top: 6px; }
+.keybox li::marker { color: var(--pen); }
 
 /* An old post keeps the date it was first written, and says plainly, in the
    hand, that it was taken apart and rebuilt later. The date is the record;
