@@ -34,7 +34,13 @@
 	const meta = doc.querySelector('meta[name="theme-color"]');
 	const paint = () => { if (meta) meta.content = root.classList.contains("night") ? "#15161a" : "#fbfbf8"; };
 	if (night) {
-		night.checked = root.classList.contains("night");
+		if (night.checked && !root.classList.contains("night")) {
+			/* the reader flipped the switch before this script arrived: honour it */
+			root.classList.add("night");
+			try { localStorage.setItem("late", "1"); } catch (e) {}
+		} else {
+			night.checked = root.classList.contains("night");
+		}
 		paint();
 		night.addEventListener("change", () => {
 			root.classList.toggle("night", night.checked);
@@ -89,7 +95,11 @@
 			emblems[i].classList.remove("is-active");
 			i = (i + 1) % emblems.length;
 			emblems[i].classList.add("is-active");
-			if (labels[i]) seal.setAttribute("aria-label", labels[i]);
+			if (labels[i]) {
+				seal.setAttribute("aria-label", labels[i]);
+				const live = doc.querySelector(".seal-live");
+				if (live) live.textContent = labels[i].replace("A wax seal pressed with ", "The seal now shows ").replace(" Press to re-stamp it.", "");
+			}
 			if (!reduce) {
 				sealWrap.classList.remove("restamp");
 				void sealWrap.offsetWidth;
@@ -110,7 +120,10 @@
 			const mark = () => {
 				let at = 0;
 				heads.forEach((h, i) => { if (h.getBoundingClientRect().top <= 140) at = i; });
-				links.forEach((a, i) => a.classList.toggle("is-here", i === at));
+				links.forEach((a, i) => {
+					a.classList.toggle("is-here", i === at);
+					if (i === at) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
+				});
 			};
 			addEventListener("scroll", () => {
 				if (queued) return;
@@ -121,6 +134,23 @@
 		}
 	}
 
+	/* ---- pass it on: the reader sends the page along. Share sheet on devices
+	   that have one, the clipboard elsewhere. The button only exists with JS. */
+	const pass = doc.querySelector(".pass-btn");
+	if (pass) pass.addEventListener("click", async () => {
+		const url = location.origin + location.pathname;
+		if (navigator.share) {
+			try { await navigator.share({ title: doc.title, url }); } catch (e) {}
+			return;
+		}
+		try { await navigator.clipboard.writeText(url); } catch (e) { return; }
+		const done = doc.querySelector(".pass-done");
+		if (done) {
+			done.classList.add("shown");
+			setTimeout(() => done.classList.remove("shown"), 1800);
+		}
+	});
+
 	/* ---- the ink trail means one thing: here you can write. So it appears in
 	   exactly ONE place, the Write to me section, and nowhere else on any page.
 	   The pen only leaves ink where the reader is invited to put words down. */
@@ -130,8 +160,8 @@
 		c.className = "inktrail";
 		doc.body.appendChild(c);
 		const g = c.getContext("2d");
-		const dpr = Math.min(window.devicePixelRatio || 1, 2);
-		const size = () => { c.width = innerWidth * dpr; c.height = innerHeight * dpr; };
+		let dpr = Math.min(window.devicePixelRatio || 1, 2);
+		const size = () => { dpr = Math.min(window.devicePixelRatio || 1, 2); c.width = innerWidth * dpr; c.height = innerHeight * dpr; };
 		size();
 		addEventListener("resize", size);
 		const penColor = () => (getComputedStyle(root).getPropertyValue("--pen").trim() || "#1d3a63");

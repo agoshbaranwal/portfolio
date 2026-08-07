@@ -11,19 +11,20 @@
 		<meta property="og:title" content="The notebook · Agosh Baranwal" />
 		<meta property="og:description" content="Food, football, politics, philosophy. Notes land here when they are ready." />
 		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="Agosh Baranwal" />
 		<meta property="og:image" content="https://agoshportfolio.vercel.app/og.png" />
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="630" />
-		<meta property="og:image:alt" content="A bright paper card: Agosh Baranwal. I run growth for a living; after hours, products of my own. A photo of Agosh by the sea, and a handwritten note saying hi, so glad you wandered in." />
-		<meta name="twitter:image:alt" content="A bright paper card: Agosh Baranwal. I run growth for a living; after hours, products of my own. A photo of Agosh by the sea, and a handwritten note saying hi, so glad you wandered in." />
+		<meta property="og:image:alt" content="A paper card in ink: Agosh Baranwal, underlined by a pen stroke. I run growth for a living. The rest of the time I build my own things, and finish most of them. A dark blue wax seal pressed with a pen nib sits at the corner." />
+		<meta name="twitter:image:alt" content="A paper card in ink: Agosh Baranwal, underlined by a pen stroke. I run growth for a living. The rest of the time I build my own things, and finish most of them. A dark blue wax seal pressed with a pen nib sits at the corner." />
 		<meta property="og:url" content="https://agoshportfolio.vercel.app/writing" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<link rel="alternate" type="application/rss+xml" title="Agosh Baranwal · the notebook" href="/feed.xml" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-		<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23fbfbf8'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-style='italic' font-weight='700' fill='%231d3a63' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E" />
+		<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cstyle%3E@media(prefers-color-scheme:dark)%7Brect%7Bfill:%2315161a%7Dtext%7Bfill:%238fb3e0%7D%7D%3C/style%3E%3Crect width='32' height='32' rx='7' fill='%23fbfbf8'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-style='italic' font-weight='700' fill='%231d3a63' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Vollkorn:ital,wght@0,400..900;1,400..700&family=Kalam:wght@400;700&display=swap" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css2?family=Vollkorn:ital,wght@0,400..700;1,400..700&family=Kalam:wght@400;700&display=swap" rel="stylesheet" />
 		<link rel="stylesheet" href="/site.css" />
 		<script src="/pen.js" defer></script>
 	</head>
@@ -56,7 +57,7 @@
 			</div>
 		</header>
 
-		<main class="page" id="main">
+		<main class="page" id="main" tabindex="-1">
 			<section class="band opening">
 				<div class="inner">
 					<div class="col">
@@ -64,7 +65,7 @@
 						<svg class="name-rule" viewBox="0 0 400 11" fill="none" aria-hidden="true">
 							<path d="M2 7.4 C 62 3.1, 128 9.8, 196 5.6 S 322 2.4, 398 7.1" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" pathLength="1" vector-effect="non-scaling-stroke" />
 						</svg>
-						<p class="say say-top">Food, football, politics, philosophy. Notes land here when they are ready.</p>
+						<p class="say say-top">Food, football, politics, philosophy. Marketing got here first. Notes land here when they are ready.</p>
 
 						<div class="latest">
 							<a href="/writing/customer-love-is-a-lagging-indicator">
@@ -78,7 +79,12 @@
 							</a>
 						</div>
 
-						<a class="shelf-link" href="/">back to the front page</a>
+						<div class="shelf shelf-room" aria-hidden="true">
+							<div class="shelf-row empty"></div>
+							<div class="shelf-row empty"></div>
+							<svg class="trail-off" viewBox="0 0 150 14" fill="none"><path d="M2 8 C 26 4, 52 11, 78 7 S 124 5, 148 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="0.02 0.035" pathLength="1"/></svg>
+						</div>
+						<a class="shelf-link" href="/">back to the front page</a>&nbsp;&nbsp;&nbsp;<a class="shelf-link" href="/feed.xml">follow along by RSS</a>
 					</div>
 
 					<div class="col">
@@ -97,7 +103,14 @@
 					<text x="0" y="21" font-family="Kalam, cursive" font-size="21" font-weight="700" fill="currentColor">Agosh</text>
 					<path d="M1 28.5 C 22 25.6, 44 31.2, 66 27.8 S 104 25.4, 126 29.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" pathLength="1" />
 				</svg>
-				<span>&copy; Agosh Baranwal</span>
+				<nav class="foot-nav" aria-label="Footer">
+					<a href="/#building">Projects</a>
+					<a href="/writing">Blogs</a>
+					<a href="/cv">CV</a>
+					<a href="/#write">Write to me</a>
+					<a href="/feed.xml">RSS</a>
+				</nav>
+				<span class="foot-note">written with one pen &middot; &copy; Agosh Baranwal</span>
 			</div>
 		</footer>
 	</body>

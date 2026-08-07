@@ -2,3 +2,7 @@ CLAUDE.md
 post-template.html
 check.sh
 IMG-*.jpg
+.notes
+.env*
+IMG-*.jpg
+.gitignore

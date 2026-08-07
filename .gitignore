@@ -7,3 +7,6 @@ CLAUDE.md
 # CV PDF carries the real phone number: deploy it, but keep it out of the public repo
 agosh-baranwal-cv.pdf
 .notes/
+
+# personal photos: never in the public repo
+IMG-*.jpg
