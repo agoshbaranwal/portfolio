@@ -101,9 +101,17 @@ sys.exit(1 if bad else 0)
 PY
 
 # 5e. The bookmark ribbon must point at the newest post in the feed.
+# (the ribbon only exists once the shelf holds a stack; skip when absent)
 rib=$(grep -o 'class="ribbon" href="[^"]*"' index.html | sed 's/.*href="//;s/"//')
-new=$(grep -o '<link>https://agoshportfolio.vercel.app/writing/[^<]*</link>' feed.xml | head -1 | sed 's/<link>https:\/\/agoshportfolio.vercel.app//;s/<\/link>//')
-[ -n "$rib" ] && [ "$rib" = "$new" ] || { echo "FAIL: ribbon points at '$rib' but the newest feed item is '$new'"; fail=1; }
+newest=$(grep -o '<link>https://agoshportfolio.vercel.app/writing/[^<]*</link>' feed.xml | head -1 | sed 's/<link>https:\/\/agoshportfolio.vercel.app//;s/<\/link>//')
+feat=$(grep -o 'class="latest"' index.html | head -1)
+if [ -n "$rib" ]; then
+	[ "$rib" = "$newest" ] || { echo "FAIL: ribbon points at '$rib' but the newest feed item is '$newest'"; fail=1; }
+elif [ -n "$feat" ]; then
+	grep -q "$newest" index.html || { echo "FAIL: the homepage card does not link the newest post '$newest'"; fail=1; }
+else
+	echo "FAIL: the homepage links no latest post"; fail=1
+fi
 
 # 5f. Max two tags per post page.
 for f in writing/*.html; do

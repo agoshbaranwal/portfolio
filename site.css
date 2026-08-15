@@ -67,8 +67,8 @@
 	--s-1: 8px;  --s-2: 16px; --s-3: 24px; --s-4: 32px;
 	--s-5: 48px; --s-6: 64px; --s-7: 88px; --s-8: 112px;
 
-	--margin-col: 190px;   /* where the hand lives */
-	--gutter: 46px;
+	--margin-col: 186px;   /* where the hand lives */
+	--gutter: 40px;
 }
 
 /* Night: the same sheet under a lamp. Tokens only; no component knows.
@@ -128,7 +128,7 @@ html { scrollbar-color: var(--pen-2) transparent; }
 .spine {
 	position: absolute;
 	top: 30px; bottom: 30px;
-	right: calc(clamp(20px, 5vw, 40px) + var(--margin-col) + var(--gutter) / 2);
+	right: clamp(20px, 5vw, 40px);
 	width: 1.5px;
 	background: var(--pen-mat);
 	transform-origin: top;
@@ -150,10 +150,13 @@ html { scrollbar-color: var(--pen-2) transparent; }
 .band > .inner {
 	display: grid;
 	grid-template-columns: minmax(0, 1fr) var(--margin-col);
+	padding-right: 26px;
 	gap: var(--gutter);
 	align-items: start;
 }
 .col { min-width: 0; }
+/* a band with no margin note has no reason to reserve the margin */
+.band > .inner:has(> .col:only-child) { grid-template-columns: minmax(0, 1fr); padding-right: 26px; }
 
 /* skip past the masthead, drawn only for the keyboard */
 .skip {
@@ -334,7 +337,7 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 /* anchors land clear of the sticky masthead, never tucked under it. The
    section rhythm is deliberately tighter than a full --s-8: the page reads as
    one continuous letter, so the movements sit closer than separate pages would */
-.section { padding-top: clamp(52px, 6vw, 78px); scroll-margin-top: 96px; }
+.section { padding-top: clamp(40px, 4.4vw, 58px); scroll-margin-top: 96px; }
 @media (max-width: 620px) { .section { scroll-margin-top: 64px; } }
 .divider { display: block; width: 100%; height: 10px; color: var(--pen-2); overflow: visible; opacity: 0.75; }
 .h2 {
@@ -351,7 +354,7 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
    The pen still rings the best one; that ring does the emphasis so the
    type does not have to. */
 .figures {
-	margin-top: var(--s-4);
+	margin-top: var(--s-3);
 	display: flex;
 	flex-wrap: wrap;
 	gap: var(--s-3) var(--s-6);
@@ -525,11 +528,17 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 	position: relative;
 	width: 100%; aspect-ratio: 16 / 10;
 	display: flex; align-items: center; justify-content: center;
-	background: var(--mat);
+	background-color: var(--mat);
+	background-image: repeating-linear-gradient(to bottom, transparent 0 21px, var(--hair) 21px 22px);
 	border: 4px solid var(--mat);
-	box-shadow: 0 6px 16px -10px rgba(20, 22, 28, 0.5), 0 0 0 1px var(--hair);
+	box-shadow: 0 6px 16px -10px rgba(20, 22, 28, 0.5), 0 0 0 1px var(--pen-mat);
 	transform: rotate(-1.2deg);
 	overflow: hidden;
+}
+/* an unbuilt thing is a sketch on a ruled page, never a missing photograph */
+.thing-plate::after {
+	content: ""; position: absolute; inset: 5px;
+	border: 1.5px dashed var(--pen-mat); border-radius: 2px; pointer-events: none;
 }
 .thing:nth-child(2) .thing-plate { transform: rotate(1deg); }
 .thing:nth-child(3) .thing-plate { transform: rotate(-0.6deg); }
@@ -538,6 +547,8 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .thing:nth-child(6) .thing-plate { transform: rotate(0.7deg); }
 .thing-plate svg { width: 46%; height: auto; color: var(--pen); opacity: 0.5; }
 .thing-static .thing-t { color: var(--ink-2); }
+.thing-static .thing-more { max-height: none; opacity: 1; overflow: visible; }
+.thing-static .thing-d { display: none; }
 .thing-soon {
 	display: inline-block; margin-top: 6px;
 	font-family: var(--hand); font-size: var(--t-small);
@@ -556,7 +567,7 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 /* --- WRITE TO ME --------------------------------------------------------- */
 /* deep bottom room so the sealed envelope hangs below the postcard, clear of it
    at every desktop width (the seal sits a fixed ~222px above the section floor) */
-.closing { padding-bottom: 240px; }
+.closing { padding-bottom: 210px; }
 @media (max-width: 860px) { .closing { padding-bottom: var(--s-8); } }
 .address {
 	position: relative;
@@ -657,7 +668,7 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
    ========================================================================== */
 @media (max-width: 860px) {
 	:root { --margin-col: 0px; --gutter: 0px; }
-	.band > .inner { grid-template-columns: minmax(0, 1fr); }
+	.band > .inner, .band > .inner:has(> .col:only-child) { grid-template-columns: minmax(0, 1fr); padding-right: 0; }
 	.note { margin-top: var(--s-3); max-width: 34ch; }
 	.pin { max-width: 150px; margin-top: var(--s-4); }
 	.pin figcaption { text-align: left; }
@@ -1069,7 +1080,7 @@ html { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'
 .nib-track {
 	position: absolute;
 	top: 30px; bottom: 30px;
-	right: calc(clamp(20px, 5vw, 40px) + var(--margin-col) + var(--gutter) / 2 - 8px);
+	right: calc(clamp(20px, 5vw, 40px) - 8px);
 	width: 17px;
 	pointer-events: none;
 	z-index: 2;
@@ -1188,8 +1199,8 @@ html:has(#night:checked) .thing:focus-visible .thing-shot img, html.night .thing
 
 /* --- the pen keeps score: reading progress under the masthead -------------- */
 .masthead::after {
-	content: ""; position: absolute; left: 0; bottom: -1px;
-	width: 100%; height: 2px;
+	content: ""; position: absolute; left: 50%; bottom: -1px;
+	width: min(1000px, 100%); margin-left: min(-500px, -50%); height: 2px;
 	background: var(--pen);
 	transform: scaleX(0); transform-origin: left;
 	opacity: 0.8;
@@ -1443,7 +1454,7 @@ html:has(#night:checked) .inktrail, html.night .inktrail { mix-blend-mode: scree
 	margin-top: var(--s-4);
 }
 .notebook.digest::after { top: 26px; }
-.digest .ribbon { top: -12px; right: 14px; }
+.digest .ribbon { top: -14px; right: -8px; }
 /* Mobile tuning MUST come after the base .notebook.digest/.digest .ribbon rules
    above: media queries add no specificity, so an earlier @media block would be
    overridden by these later equal-specificity rules (that trap shipped once). */
@@ -1471,6 +1482,14 @@ html:has(#night:checked) .inktrail, html.night .inktrail { mix-blend-mode: scree
 /* the latest entries get their picture pinned above the fold, so the page
    opens with something to look at rather than a wall of titles */
 .latest { margin-top: var(--s-4); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-4) var(--s-3); }
+/* a lone note lies down and fills the width rather than leaving half a hole */
+.latest:has(> a:only-child) { grid-template-columns: minmax(0, 1fr); }
+.latest:has(> a:only-child) > a {
+	display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+	gap: 4px var(--s-4); align-items: start;
+}
+.latest:has(> a:only-child) .thing-shot { grid-row: 1 / 6; margin-bottom: 0; }
+.latest:has(> a:only-child) .late-t { margin-top: 2px; }
 .latest .thing-shot { margin-bottom: 10px; }
 .latest .thing-shot img, .latest .thing-plate { aspect-ratio: 16 / 10; }
 .late-t { font-size: var(--t-h3); font-weight: 600; color: var(--ink); letter-spacing: -0.01em; transition: color 0.2s ease; }
