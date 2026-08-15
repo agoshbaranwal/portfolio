@@ -154,5 +154,20 @@ if grep -rniE "late show|the notebook|still drying|still on the bench|pass it on
 	echo "FAIL: a non-standard interface label is back (see the 2026-08-15 copy rule)"; fail=1
 fi
 
+# 7c. Every shipped page must have balanced <div>s. Two stray closers once put
+#     a link outside its own grid column and silently unbalanced the document.
+python3 - <<'PYEOF' || fail=1
+import sys, glob
+bad = 0
+for f in ["index.html", "404.html", "cv.html"] + sorted(glob.glob("writing/*.html")):
+    depth = 0; low = 0; lowline = 0
+    for i, l in enumerate(open(f).read().split("\n"), 1):
+        depth += l.count("<div") - l.count("</div>")
+        if depth < low: low, lowline = depth, i
+    if depth or low:
+        print(f"FAIL: {f} div balance {depth}, lowest {low} at line {lowline}"); bad += 1
+sys.exit(1 if bad else 0)
+PYEOF
+
 [ $fail -eq 0 ] && echo "OK: all invariants hold"
 exit $fail

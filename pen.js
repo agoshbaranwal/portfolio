@@ -3,10 +3,8 @@
    1. dark mode follows you across pages (and never flashes white),
    2. the desk lamp follows the reader across the page,
    3. the figures plate stamps down and counts up when you reach it,
-   4. the guitar pick actually plays,
-   5. the wax seal re-stamps a different life each time you press it,
-   6. the cursor leaves ink ONLY where you are meant to write (Write to me),
-   7. a long read gets a contents list in the margin that marks where you are.
+   4. the wax seal re-stamps a different life each time you press it,
+   5. a long read gets a contents list in the margin that marks where you are.
    Every effect respects prefers-reduced-motion. No frameworks, no tracking. */
 (() => {
 	"use strict";
@@ -114,32 +112,6 @@
 		});
 	}
 
-	/* ---- the pick really plays: a soft plucked D chord, Karplus-Strong style.
-	   Only ever on a direct press, never ambient, slightly different each time. */
-	let ctx;
-	const pluck = (freq, when, gain) => {
-		const sr = ctx.sampleRate, n = Math.max(2, Math.round(sr / freq));
-		const len = Math.round(sr * 1.3);
-		const buf = ctx.createBuffer(1, len, sr), d = buf.getChannelData(0);
-		for (let i = 0; i < n; i++) d[i] = Math.random() * 2 - 1;
-		for (let i = n; i < len; i++) d[i] = (d[i - n] + d[i - n + 1 < len ? i - n + 1 : i - n]) * 0.4965;
-		const src = ctx.createBufferSource(); src.buffer = buf;
-		const vol = ctx.createGain();
-		vol.gain.setValueAtTime(gain, when);
-		vol.gain.exponentialRampToValueAtTime(0.001, when + 1.2);
-		src.connect(vol); vol.connect(ctx.destination);
-		src.start(when); src.stop(when + 1.25);
-	};
-	const pick = doc.querySelector(".keep-pick");
-	if (pick) pick.addEventListener("click", () => {
-		try { ctx = ctx || new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return; }
-		if (ctx.state === "suspended") ctx.resume();
-		const t = ctx.currentTime + 0.02;
-		[146.83, 220.0, 293.66, 369.99].forEach((f, i) => {
-			pluck(f * (1 + (Math.random() - 0.5) * 0.004), t + i * (0.05 + (Math.random() - 0.5) * 0.014), 0.08);
-		});
-	});
-
 	/* ---- press the wax seal, it re-stamps with a different life: the nib
 	   (writing), a chef's toque (cooking), a pick (music), a TV, a paper plane
 	   (travel). Cycles on every click/Enter; with JS off it rests on the nib. */
@@ -210,50 +182,4 @@
 		}
 	});
 
-	/* ---- the ink trail means one thing: here you can write. So it appears in
-	   exactly ONE place, the Write to me section, and nowhere else on any page.
-	   The pen only leaves ink where the reader is invited to put words down. */
-	const writezone = doc.querySelector("#write");
-	if (writezone && !reduce && matchMedia("(pointer: fine)").matches) {
-		const c = doc.createElement("canvas");
-		c.className = "inktrail";
-		doc.body.appendChild(c);
-		const g = c.getContext("2d");
-		let dpr = Math.min(window.devicePixelRatio || 1, 2);
-		const size = () => { dpr = Math.min(window.devicePixelRatio || 1, 2); c.width = innerWidth * dpr; c.height = innerHeight * dpr; };
-		size();
-		addEventListener("resize", size);
-		const penColor = () => (getComputedStyle(root).getPropertyValue("--pen").trim() || "#1d3a63");
-		let col = penColor();
-		if (night) night.addEventListener("change", () => setTimeout(() => { col = penColor(); }, 450));
-		const LIFE = 620;
-		let pts = [], raf = 0;
-		const tick = () => {
-			const now = performance.now();
-			pts = pts.filter(p => now - p.t < LIFE);
-			g.clearRect(0, 0, c.width, c.height);
-			g.lineCap = g.lineJoin = "round";
-			g.strokeStyle = col;
-			for (let i = 1; i < pts.length; i++) {
-				const a = pts[i - 1], b = pts[i];
-				if (b.t - a.t > 90) continue;
-				const age = (now - b.t) / LIFE;
-				g.globalAlpha = 0.36 * (1 - age);
-				g.lineWidth = Math.max(0.5, (1.7 - age) * dpr);
-				g.beginPath();
-				g.moveTo(a.x * dpr, a.y * dpr);
-				g.lineTo(b.x * dpr, b.y * dpr);
-				g.stroke();
-			}
-			raf = pts.length > 1 ? requestAnimationFrame(tick) : 0;
-			if (!raf) g.clearRect(0, 0, c.width, c.height);
-		};
-		addEventListener("pointermove", (e) => {
-			if (e.pointerType !== "mouse" && e.pointerType !== "pen") return;
-			const r = writezone.getBoundingClientRect();
-			if (e.clientY < r.top || e.clientY > r.bottom || e.clientX < r.left || e.clientX > r.right) return;
-			pts.push({ x: e.clientX, y: e.clientY, t: performance.now() });
-			if (!raf) raf = requestAnimationFrame(tick);
-		}, { passive: true });
-	}
 })();
