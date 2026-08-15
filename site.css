@@ -54,15 +54,23 @@
 
 	/* Scale: a major third (1.25) at the small end, with one display jump.
 	   Every size on the page is one of these. There are no other sizes. */
-	--t-micro: 0.75rem;     /* 12px  colophon */
-	--t-small: 0.875rem;    /* 14px  captions, the record */
+	--t-micro: 0.8125rem;     /* 12px  colophon */
+	--t-small: 0.9375rem;    /* 14px  captions, the record */
 	--t-body:  1.0625rem;   /* 17px  reading */
 	--t-lead:  1.1875rem;   /* 19px  the opening */
 	--t-hand:  1.3125rem;   /* 21px  the pen reads small; it needs the size */
 	--t-h3:    1.3125rem;   /* 21px  project titles */
-	--t-figs:  clamp(2.1rem, 4.4vw, 2.9rem);  /* the proof: loud, never poster-size */
+	--t-figs:  clamp(2.1rem, 4.7vw, 3.05rem); /* the proof: loud, never poster-size */
 	--t-kicker: 0.8125rem;  /* 13px  the small caps that name a band */
-	--t-h2:    clamp(1.85rem, 3.9vw, 2.5rem);
+
+	/* Leading is half of hierarchy. One value for everything is why 40px
+	   headings and 14px captions read as the same voice. */
+	--lh-display: 1.0; --lh-proof: 1.02; --lh-head: 1.14;
+	--lh-title: 1.25; --lh-read: 1.62; --lh-quiet: 1.45;
+	/* Vollkorn ships 400..700 and 500 was paid for and never used.
+	   700 is reserved for the three figures, the way one ink is his hand. */
+	--w-read: 400; --w-deck: 500; --w-head: 600; --w-proof: 700;
+	--t-h2:    clamp(1.7rem, 3.3vw, 2.05rem);
 	--t-name:  clamp(2.9rem, 8.6vw, 5.6rem);
 
 	/* Space: an 8px grid. Sections breathe at 112; nothing invents its own gap. */
@@ -76,6 +84,13 @@
 /* Night: the same sheet under a lamp. Tokens only; no component knows.
    html.night is the same state set before first paint by the tiny head script,
    so the late show survives page turns with no white flash. */
+/* every shadow in this file is a hand-typed dark rgba, which is invisible on a
+   dark sheet: at night the card lifts with a lit edge instead */
+html:has(#night:checked) .thing, html.night .thing { box-shadow: 0 1px 0 rgba(0, 0, 0, 0.3); }
+html:has(#night:checked) .thing:hover, html.night .thing:hover,
+html:has(#night:checked) .thing:focus-visible, html.night .thing:focus-visible {
+	box-shadow: 0 14px 30px -18px rgba(0, 0, 0, 0.75), 0 0 0 1px var(--pen-mat);
+}
 html:has(#night:checked), html.night {
 	color-scheme: dark;
 	--paper: #15161a;
@@ -346,11 +361,26 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 	display: block;
 	font-family: var(--hand); font-size: var(--t-kicker);
 	letter-spacing: 0.02em; color: var(--pen); opacity: 0.9;
-	margin-bottom: 2px;
+	margin-top: var(--s-4); margin-bottom: 1px;
+}
+.kicker + .h2 { margin-top: 0; }
+/* A band names itself on one line instead of stacking 200px of preamble:
+   the heading holds the left, its single line of explanation the right. */
+.sec-head {
+	display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 330px);
+	gap: 4px var(--s-5); align-items: baseline;
+}
+.sec-head .kicker { grid-column: 1; margin-top: var(--s-4); }
+.sec-head .h2 { grid-column: 1; margin-top: 0; }
+.sec-head .say { grid-column: 2; grid-row: 2; margin-top: 0; max-width: none; }
+@media (max-width: 760px) {
+	.sec-head { grid-template-columns: minmax(0, 1fr); }
+	.sec-head .say { grid-column: 1; grid-row: auto; margin-top: 6px; }
 }
 .h2 {
 	font-size: var(--t-h2);
-	font-weight: 600;
+	line-height: var(--lh-head);
+	font-weight: var(--w-head);
 	letter-spacing: -0.014em;
 	color: var(--ink);
 	margin-top: var(--s-5);
@@ -375,18 +405,18 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .fig-n {
 	display: block;
 	font-size: var(--t-figs);
-	font-weight: 700;
-	line-height: 1.05;
+	font-weight: var(--w-proof);
+	line-height: var(--lh-proof);
 	letter-spacing: -0.015em;
 	color: var(--ink);
 	font-variant-numeric: lining-nums;
 }
-.fig-d { display: block; font-size: var(--t-small); line-height: 1.45; color: var(--ink-2); margin-top: 7px; max-width: 26ch; }
+.fig-d { display: block; font-size: var(--t-body); line-height: var(--lh-quiet); color: var(--ink-2); margin-top: 8px; max-width: 26ch; }
 
 /* One number is circled, the way a person rings the figure that matters on a
    printout. It is the page's loudest moment and the only one of its kind:
    hierarchy drawn by hand rather than announced. */
-.ringed { position: relative; display: inline-block; padding: 7px 16px; margin: -7px 0 -7px -16px; }
+.ringed { position: relative; display: inline-block; padding: 0.2em 0.46em; margin: -0.2em 0 -0.2em -0.46em; }
 .ring {
 	position: absolute; inset: 0; width: 100%; height: 100%;
 	color: var(--pen); overflow: visible; pointer-events: none;
@@ -396,10 +426,10 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 /* the record: small, on purpose. It is the footnote to the work, not the work.
    Its pen rule is a pseudo so the stroke can draw itself top-down on arrival. */
 .record {
-	font-size: var(--t-body);
-	line-height: 1.62;
+	font-size: var(--t-small);
+	line-height: var(--lh-read);
 	color: var(--ink-2);
-	max-width: 66ch;
+	max-width: 64ch;
 	margin-top: var(--s-4);
 	padding-left: var(--s-3);
 	position: relative;
@@ -432,7 +462,12 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
    One tidy line at rest. It opens on hover (desktop) and toggles on click or
    tap (everywhere, keyboard included) via a hidden checkbox: zero JS, and it
    never sprawls. A brief read of what he knows and what he can do. */
-.toolkit { margin-top: var(--s-4); max-width: 72ch; position: relative; }
+.toolkit { margin-top: 0; position: relative; }
+/* the biography and the toolkit are peers, so they sit side by side and the
+   empty right quarter of the sheet finally carries something */
+.by-day { display: grid; grid-template-columns: 1.12fr 1fr; gap: var(--s-5); align-items: start; margin-top: var(--s-4); }
+.by-day .record { margin-top: 0; }
+@media (max-width: 860px) { .by-day { grid-template-columns: minmax(0, 1fr); gap: var(--s-4); } }
 .kit-summary {
 	cursor: default;
 	display: inline-flex; align-items: baseline; gap: 12px;
@@ -489,7 +524,7 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .thing-v { margin-top: auto; padding-top: 8px; }
 .thing-shot { position: relative; margin: 0 0 13px; }
 .thing-shot::before, .thing-shot::after {
-	content: ""; position: absolute; z-index: 2; top: -7px;
+	content: ""; position: absolute; z-index: 2; top: -20px;
 	width: 44px; height: 15px;
 	background: var(--pen-mat); opacity: 0.5; border-radius: 1px;
 }
@@ -559,7 +594,7 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .thing-plate svg { width: 46%; height: auto; color: var(--pen); opacity: 0.5; }
 .thing-static .thing-t { color: var(--ink-2); }
 .thing-static .thing-more { max-height: none; opacity: 1; overflow: visible; }
-.thing-static .thing-d { display: none; }
+
 .thing-soon {
 	display: inline-block; margin-top: 6px;
 	font-family: var(--hand); font-size: var(--t-small);
