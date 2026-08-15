@@ -3,7 +3,7 @@
 	To publish a post "<slug>" (lowercase-kebab, no dates in slug, permanent forever):
 	1. Copy this file to writing/<slug>.html. Fill every [BRACKET]. Zero <style> tags,
 	   zero inline style attributes: new elements become a generic class in site.css.
-	   Count the body words, divide by 210, spell the reading time out in words.
+	   Count the body words, divide by 210, write it as "N min read".
 	2. writing/index.html currently features posts as .latest cards (no ruled shelf
 	   until there are three or more posts). Promote this post into .latest with its
 	   own thumbnail drawn in the pen (the newest carries <span class="fresh">still
@@ -56,7 +56,7 @@
 		<meta name="twitter:image:alt" content="[SAME AS OG:IMAGE:ALT]" />
 		<meta property="og:url" content="https://agoshportfolio.vercel.app/writing/[SLUG]" />
 		<meta name="twitter:card" content="summary_large_image" />
-		<link rel="alternate" type="application/rss+xml" title="Agosh Baranwal · the notebook" href="/feed.xml" />
+		<link rel="alternate" type="application/rss+xml" title="Agosh Baranwal · Blogs" href="/feed.xml" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cstyle%3E@media(prefers-color-scheme:dark)%7Brect%7Bfill:%2315161a%7Dtext%7Bfill:%238fb3e0%7D%7D%3C/style%3E%3Crect width='32' height='32' rx='7' fill='%23fbfbf8'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-style='italic' font-weight='700' fill='%231d3a63' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -69,7 +69,7 @@
 		<script src="/pen.js" defer></script>
 	</head>
 	<body>
-		<a class="skip" href="#main">Skip to the page</a>
+		<a class="skip" href="#main">Skip to content</a>
 		<header class="masthead">
 			<div class="masthead-in">
 				<a class="wordmark" href="/" aria-label="Agosh Baranwal, home">
@@ -80,10 +80,10 @@
 				</a>
 				<nav class="nav" aria-label="Site">
 					<a href="/#building">Projects</a>
-					<a href="/#notebook">Blogs</a>
+					<a href="/writing">Blogs</a>
 					<a href="/#write">Write to me</a>
-					<label class="night-toggle" for="night" title="Lights down. The late show is the night mode.">
-						<input type="checkbox" id="night" role="switch" aria-label="Late show: night mode" />
+					<label class="night-toggle" for="night" >
+						<input type="checkbox" id="night" role="switch" aria-label="Dark mode" />
 						<svg class="night-marquee" viewBox="0 0 26 22" fill="none" aria-hidden="true">
 							<rect x="2" y="6" width="22" height="13" rx="2" stroke="currentColor" stroke-width="1.6"/>
 							<path d="M2 10 L24 10" stroke="currentColor" stroke-width="1.3"/>
@@ -91,7 +91,7 @@
 							<circle cx="7" cy="14.5" r="1.1" fill="currentColor"/><circle cx="13" cy="14.5" r="1.1" fill="currentColor"/><circle cx="19" cy="14.5" r="1.1" fill="currentColor"/>
 						</svg>
 						<span class="night-track" aria-hidden="true"></span>
-						<span class="night-label">Late show</span>
+						<span class="night-label">Dark mode</span>
 					</label>
 				</nav>
 			</div>
@@ -106,7 +106,7 @@
 							<path d="M2 7.4 C 62 3.1, 128 9.8, 196 5.6 S 322 2.4, 398 7.1" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" pathLength="1" vector-effect="non-scaling-stroke" />
 						</svg>
 						<p class="deck">[THE DECK: two to four plain sentences that decode the title for someone who arrived knowing nothing, and state the piece's position. Not a topic announcement.]</p>
-						<p class="say say-top"><time datetime="[YYYY-MM-DD]">[17 July 2026]</time> &middot; [a NN-minute read, spelled as words]</p>
+						<p class="say say-top"><time datetime="[YYYY-MM-DD]">[17 July 2026]</time> &middot; [NN min read]</p>
 						<div class="tags">
 							<span class="tag">[TAG ONE]</span>
 							<span class="tag">[TAG TWO, max two, delete if one is enough]</span>
@@ -127,7 +127,7 @@
 
 							<!-- The short version: for the reader standing on a train. Keep to 4-5 bullets. -->
 							<div class="keybox">
-								<h2 class="keybox-h">the short version</h2>
+								<h2 class="keybox-h">Summary</h2>
 								<ul>
 									<li>[claim one]</li>
 									<li>[claim two]</li>
@@ -136,7 +136,7 @@
 
 							<!-- Phone readers get the contents folded here; desktop gets the margin toc. Keep both in sync. -->
 							<details class="toc-fold">
-								<summary>what is in here</summary>
+								<summary>Contents</summary>
 								<ol>
 									<li><a href="#[SECTION-ID]">[Short label]</a></li>
 								</ol>
@@ -153,18 +153,18 @@
 
 						<!-- when the piece makes factual claims, the sources are shown. Same charter as the climate site. -->
 						<div class="sources">
-							<h2 class="sources-h">where this comes from</h2>
+							<h2 class="sources-h">Sources</h2>
 							<ol class="source-list">
 								<li>[Author, "Title," Journal/Publisher, year.]</li>
 							</ol>
 						</div>
 						</div>
 
-						<a class="shelf-link" href="/writing">back to the notebook</a>&nbsp;&nbsp;&nbsp;<a class="shelf-link" href="/#write">write to me</a>&nbsp;&nbsp;&nbsp;<button class="shelf-link pass-btn" type="button" title="Share this piece"><svg viewBox="0 0 20 16" fill="none" aria-hidden="true"><path d="M18.5 1.5 L1.5 8.5 L9 11 L10.5 14.5 L13 10.5 Z M18.5 1.5 L9 11" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> pass it on</button><span class="pass-done" role="status">link copied</span>
+						<a class="shelf-link" href="/writing">Blogs</a>&nbsp;&nbsp;&nbsp;<a class="shelf-link" href="/#write">Write to me</a>&nbsp;&nbsp;&nbsp;<button class="shelf-link pass-btn" type="button" title="Share"><svg viewBox="0 0 20 16" fill="none" aria-hidden="true"><path d="M18.5 1.5 L1.5 8.5 L9 11 L10.5 14.5 L13 10.5 Z M18.5 1.5 L9 11" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> Share</button><span class="pass-done" role="status">Link copied</span>
 					</div>
 					<div class="col">
 						<nav class="toc" aria-label="Contents">
-							<p class="toc-h">what is in here</p>
+							<p class="toc-h">Contents</p>
 							<ol>
 								<li><a href="#[SECTION-ID]">[Short label]</a></li>
 							</ol>
@@ -187,7 +187,7 @@
 					<a href="/#write">Write to me</a>
 					<a href="/feed.xml">RSS</a>
 				</nav>
-				<span class="foot-note">written with one pen &middot; &copy; Agosh Baranwal</span>
+				<span class="foot-note">&copy; Agosh Baranwal</span>
 			</div>
 		</footer>
 	</body>

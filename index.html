@@ -19,7 +19,7 @@
 		<meta property="og:url" content="https://agoshportfolio.vercel.app/" />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:image:alt" content="A paper card in ink: Agosh Baranwal, underlined by a pen stroke. I run growth for a living. The rest of the time I build my own things, and finish most of them. A dark blue wax seal pressed with a pen nib sits at the corner." />
-		<link rel="alternate" type="application/rss+xml" title="Agosh Baranwal · the notebook" href="/feed.xml" />
+		<link rel="alternate" type="application/rss+xml" title="Agosh Baranwal · Blogs" href="/feed.xml" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cstyle%3E@media(prefers-color-scheme:dark)%7Brect%7Bfill:%2315161a%7Dtext%7Bfill:%238fb3e0%7D%7D%3C/style%3E%3Crect width='32' height='32' rx='7' fill='%23fbfbf8'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-style='italic' font-weight='700' fill='%231d3a63' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -33,7 +33,7 @@
 		<script src="/pen.js" defer></script>
 	</head>
 	<body>
-		<a class="skip" href="#main">Skip to the page</a>
+		<a class="skip" href="#main">Skip to content</a>
 		<!-- ===================================================================
 		     THE MASTHEAD. The nav is a table of contents for a single-page read,
 		     each item a section on THIS page, each behaving the same way: a quiet
@@ -49,10 +49,10 @@
 				</a>
 				<nav class="nav" aria-label="Site">
 					<a href="#building">Projects</a>
-					<a href="#notebook">Blogs</a>
+					<a href="/writing">Blogs</a>
 					<a href="#write">Write to me</a>
-					<label class="night-toggle" for="night" title="Lights down. The late show is the night mode.">
-						<input type="checkbox" id="night" role="switch" aria-label="Late show: night mode" />
+					<label class="night-toggle" for="night" >
+						<input type="checkbox" id="night" role="switch" aria-label="Dark mode" />
 						<svg class="night-marquee" viewBox="0 0 26 22" fill="none" aria-hidden="true">
 							<rect x="2" y="6" width="22" height="13" rx="2" stroke="currentColor" stroke-width="1.6"/>
 							<path d="M2 10 L24 10" stroke="currentColor" stroke-width="1.3"/>
@@ -60,7 +60,7 @@
 							<circle cx="7" cy="14.5" r="1.1" fill="currentColor"/><circle cx="13" cy="14.5" r="1.1" fill="currentColor"/><circle cx="19" cy="14.5" r="1.1" fill="currentColor"/>
 						</svg>
 						<span class="night-track" aria-hidden="true"></span>
-						<span class="night-label">Late show</span>
+						<span class="night-label">Dark mode</span>
 					</label>
 				</nav>
 			</div>
@@ -91,7 +91,7 @@
 							</svg>
 						</div>
 						<p class="lede">
-							I run growth for a living: paid, retention, and the plumbing beneath both, for teams in Sweden, Spain and India. The rest of the time I build my own things and finish most of them. Four are live below. The drawings under my photo are everything a CV leaves out.
+							I run growth for a living: paid, retention, and the plumbing beneath both, for teams in Sweden, Spain and India. The rest of the time I build my own things and finish most of them. Four are live below.
 						</p>
 
 						<a class="door" href="mailto:agosh.baranwal@alumni.esade.edu?subject=Hi%20Agosh">
@@ -119,18 +119,14 @@
 					</div>
 
 					<div class="col">
-						<span class="note">
-							<svg class="tick" viewBox="0 0 30 15" fill="none" aria-hidden="true"><path d="M28 3.5 C 18 1, 7 4.5, 2 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M2 12.5 L9 11 M2 12.5 L5.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-							hi, so glad you wandered in
-						</span>
 						<figure class="pin">
 							<span class="tape tape-l" aria-hidden="true"></span>
 							<span class="tape tape-r" aria-hidden="true"></span>
 							<img src="avatar.jpg" alt="Agosh Baranwal by the sea" width="190" height="190" decoding="async" />
 							<figcaption>off the clock</figcaption>
 						</figure>
-						<div class="keeps" role="group" aria-label="The rest of me, drawn small">
-							<button class="keepsake keep-pick" type="button" title="Yes, I play." aria-label="A guitar pick. Yes, I play.">
+						<div class="keeps" role="group" aria-label="More of my work">
+							<button class="keepsake keep-pick" type="button" title="Play a chord" aria-label="Play a guitar chord">
 								<svg viewBox="0 0 64 74" fill="none" aria-hidden="true">
 									<path d="M32 4 C 47 4, 58 13, 57 27 C 56 44, 44 62, 32 69 C 20 62, 8 44, 7 27 C 6 13, 17 4, 32 4 Z" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
 									<path class="strum s1" d="M22 26 C 27 24, 37 24, 42 27" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.55"/>
@@ -138,14 +134,14 @@
 									<path class="strum s3" d="M23 42 C 28 40, 36 40, 41 43" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.28"/>
 								</svg>
 							</button>
-							<a class="keepsake keep-pan" href="https://utsav-pi.vercel.app/" target="_blank" rel="noopener" title="Utsav, my cook's notebook" aria-label="A frying pan. Utsav, my cook's notebook.">
+							<a class="keepsake keep-pan" href="https://utsav-pi.vercel.app/" target="_blank" rel="noopener" title="Utsav, my food blog" aria-label="Utsav, my food blog">
 								<svg viewBox="0 0 84 46" fill="none" aria-hidden="true">
 									<path d="M6 22 L46 22 C 47 32, 40 38, 26 38 C 12 38, 5 32, 6 22 Z" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
 									<path d="M46 24 L78 20" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
 									<path class="steam" d="M14 14 C 14 10, 18 10, 18 6 M25 13 C 25 9, 29 9, 29 5 M36 14 C 36 10, 40 10, 40 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" opacity="0.55"/>
 								</svg>
 							</a>
-							<a class="keepsake keep-clap" href="https://tvbadger.vercel.app/" target="_blank" rel="noopener" title="tvbadger, my film verdicts" aria-label="A clapperboard. tvbadger, my film verdicts.">
+							<a class="keepsake keep-clap" href="https://tvbadger.vercel.app/" target="_blank" rel="noopener" title="tvbadger, my film and TV reviews" aria-label="tvbadger, my film and TV reviews">
 								<svg viewBox="0 0 66 58" fill="none" aria-hidden="true">
 									<rect x="4" y="22" width="58" height="31" rx="3" stroke="currentColor" stroke-width="2.4"/>
 									<g class="clap-top"><path d="M4 22 L10 8 L64 14 L62 22" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
@@ -153,7 +149,7 @@
 									<path d="M12 34 L30 34" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity="0.5"/>
 								</svg>
 							</a>
-							<a class="keepsake keep-leaf" href="https://agoshbaranwal.github.io/on-record/" target="_blank" rel="noopener" title="On Record, my climate site" aria-label="A leaf. On Record, my climate site.">
+							<a class="keepsake keep-leaf" href="https://agoshbaranwal.github.io/on-record/" target="_blank" rel="noopener" title="On Record, my climate project" aria-label="On Record, my climate project">
 								<svg viewBox="0 0 58 66" fill="none" aria-hidden="true">
 									<path d="M29 6 C 46 16, 50 36, 42 50 C 36 58, 22 58, 17 50 C 8 36, 13 16, 29 6 Z" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
 									<path d="M29 14 L29 60" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity="0.55"/>
@@ -172,7 +168,7 @@
 			     that speaks in credentials, and it is deliberately the shortest
 			     serious thing on the page.
 			     =============================================================== -->
-			<section class="band section" aria-label="What the work has produced">
+			<section class="band section" aria-label="Results">
 				<div class="inner">
 					<div class="col">
 						<svg class="divider" viewBox="0 0 720 10" fill="none" preserveAspectRatio="none" aria-hidden="true">
@@ -205,7 +201,7 @@
 						<div class="toolkit">
 							<input type="checkbox" id="kit" class="kit-check" />
 							<label class="kit-summary" for="kit">
-								<span class="kit-label">The toolkit</span>
+								<span class="kit-label">Skills</span>
 								<span class="kit-teaser">paid, SEO, product, CRM, analytics</span>
 								<svg class="kit-cue" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6 L8 10 L12 6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
 							</label>
@@ -217,7 +213,7 @@
 
 						<a class="cv-link" href="/cv">
 							<svg viewBox="0 0 22 26" fill="none" aria-hidden="true"><path d="M3 2 L14 2 L19 7 L19 24 L3 24 Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 2 L14 7 L19 7" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M6.5 12 H15.5 M6.5 16 H15.5 M6.5 20 H12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity="0.7"/></svg>
-							<span>the full r&eacute;sum&eacute;</span>
+							<span>View CV</span>
 						</a>
 					</div>
 
@@ -234,8 +230,8 @@
 						<svg class="divider" viewBox="0 0 720 10" fill="none" preserveAspectRatio="none" aria-hidden="true">
 							<path d="M1 4.8 C 88 7.2, 176 2.9, 268 5.8 S 448 8.1, 542 4.6 S 648 3.2, 719 6.1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" pathLength="1" vector-effect="non-scaling-stroke" />
 						</svg>
-						<h2 class="h2" id="building-h">Things I am building</h2>
-						<p class="say">Nobody asked for any of them.</p>
+						<h2 class="h2" id="building-h">Projects</h2>
+						<p class="say">Side projects. Four are live, two in progress.</p>
 
 						<div class="things">
 							<a class="thing" href="https://admenow.vercel.app/" target="_blank" rel="noopener">
@@ -275,7 +271,7 @@
 								<figure class="thing-shot"><img src="previews/onrecord.jpg" alt="" loading="lazy" decoding="async" width="640" height="400" /></figure>
 								<h3 class="thing-t">On Record</h3>
 								<div class="thing-more">
-									<p class="thing-d">The climate crisis, made honestly felt.</p>
+									<p class="thing-d">Live climate data, with every source shown.</p>
 									<span class="thing-v">github.io/on-record
 										<svg viewBox="0 0 160 6" fill="none" aria-hidden="true" preserveAspectRatio="none"><path d="M1 4.1 C 38 1.6, 78 4.6, 118 2.4 S 146 4.2, 159 3.2" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" pathLength="1" vector-effect="non-scaling-stroke"/></svg>
 									</span>
@@ -294,8 +290,8 @@
 								</div>
 								<h3 class="thing-t">Witness</h3>
 								<div class="thing-more">
-									<p class="thing-d">Honest company with your own days.</p>
-									<span class="thing-soon">still on the bench</span>
+									<p class="thing-d">A private check-in tool for your own days.</p>
+									<span class="thing-soon">In progress</span>
 								</div>
 							</div>
 
@@ -313,38 +309,16 @@
 								<h3 class="thing-t">An air-quality monitor</h3>
 								<div class="thing-more">
 									<p class="thing-d">First hardware. From parts, no kit.</p>
-									<span class="thing-soon">still on the bench</span>
+									<span class="thing-soon">In progress</span>
 								</div>
 							</div>
 						</div>
 					</div>
-
-					<div class="col col-ticket">
-						<label class="stub-wrap" for="tear" title="Tear the stub">
-							<input type="checkbox" id="tear" aria-label="Tear the ticket stub" />
-							<svg class="keepsake-stub" viewBox="0 0 132 66" fill="none" aria-hidden="true">
-								<g class="stub-main">
-									<path class="stub-fill" d="M13 6 Q5 6 5 14 L5 52 Q5 60 13 60 L90 60 L90 6 Z"/>
-									<text x="46" y="30" text-anchor="middle" font-family="Kalam, cursive" font-size="13" letter-spacing="3" fill="currentColor">ADMIT</text>
-									<text x="46" y="48" text-anchor="middle" font-family="Kalam, cursive" font-size="13" letter-spacing="3" fill="currentColor">ONE</text>
-								</g>
-								<path class="stub-perf" d="M90 11 L90 55" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2.5 4" opacity="0.7"/>
-								<g class="stub-tab">
-									<path class="stub-fill" d="M90 6 L119 6 Q127 6 127 14 L127 52 Q127 60 119 60 L90 60 Z"/>
-									<text x="108" y="27" text-anchor="middle" font-family="Kalam, cursive" font-size="10" letter-spacing="1.5" fill="currentColor" opacity="0.75">No</text>
-									<text x="108" y="45" text-anchor="middle" font-family="Kalam, cursive" font-size="14" fill="currentColor" opacity="0.75">7</text>
-								</g>
-							</svg>
-							<span class="stub-say" aria-hidden="true">enjoy the show</span>
-						</label>
-					</div>
-
-					
 				</div>
 			</section>
 
 			<!-- ===============================================================
-			     THE NOTEBOOK. Deliberately silent in the margin: the hand does
+			     BLOGS. Deliberately silent in the margin: the hand does
 			     not comment on every section, or it stops sounding like a person.
 			     The empty ruled lines are honest and on-concept: a page with room.
 			     =============================================================== -->
@@ -354,17 +328,17 @@
 						<svg class="divider" viewBox="0 0 720 10" fill="none" preserveAspectRatio="none" aria-hidden="true">
 							<path d="M1 4.4 C 96 6.8, 184 2.7, 278 5.4 S 442 7.8, 548 4.4 S 660 3.6, 719 6.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" pathLength="1" vector-effect="non-scaling-stroke" />
 						</svg>
-						<h2 class="h2" id="notebook-h">The notebook</h2>
-						<p class="say">Food, football, politics, philosophy. Marketing got here first.</p>
+						<h2 class="h2" id="notebook-h">Latest posts</h2>
+						<p class="say">Marketing, food, football, politics.</p>
 
 						<div class="notebook digest">
-							<a class="ribbon" href="/writing/customer-love-is-a-lagging-indicator" aria-label="Newest note: Customer love is a lagging indicator">
+							<a class="ribbon" href="/writing/customer-love-is-a-lagging-indicator" aria-label="Latest post: Customer love is a lagging indicator">
 								<svg class="ribbon-svg" viewBox="0 0 40 132" fill="none" aria-hidden="true">
 									<path class="ribbon-body" d="M6 0 L34 0 L34 112 L20 96 L6 112 Z"/>
 									<path class="ribbon-edge" d="M6 0 L6 112 L20 96 L34 112 L34 0" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round"/>
 									<path class="ribbon-sheen" d="M13 9 L13 92" stroke="currentColor" stroke-width="2.3" opacity="0.1" stroke-linecap="round"/>
 								</svg>
-								<span class="ribbon-hint">newest</span>
+								<span class="ribbon-hint">Latest</span>
 							</a>
 							<div class="shelf">
 								<div class="shelf-row">
@@ -375,7 +349,7 @@
 								</div>
 							</div>
 						</div>
-						<a class="shelf-link" href="/writing">the rest of the notebook</a>
+						<a class="shelf-link" href="/writing">See all posts</a>
 					</div>
 				</div>
 			</section>
@@ -392,11 +366,11 @@
 							<path d="M1 5.1 C 86 2.8, 178 7.4, 272 4.8 S 452 2.9, 546 6.2 S 656 6.8, 719 3.9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" pathLength="1" vector-effect="non-scaling-stroke" />
 						</svg>
 						<h2 class="h2" id="writeto">Write to me</h2>
-						<p class="say">Hiring, building, or disagreeing with something here? Good. I read everything.</p>
+						<p class="say">Hiring, building, or disagreeing with something here? Good.</p>
 
 						<div class="postcard">
 							<div class="pc-left">
-								<p class="pc-line">A short mail is plenty. Tell me what you are making, <br/>or what I got wrong.</p>
+								<p class="pc-line">Tell me what you are building, or what I got wrong.</p>
 								<a class="address" href="mailto:agosh.baranwal@alumni.esade.edu?subject=Hi%20Agosh">agosh.baranwal@alumni.esade.edu<svg viewBox="0 0 160 6" fill="none" aria-hidden="true" preserveAspectRatio="none"><path d="M1 3.2 C 42 1.2, 80 5.4, 118 3 S 148 2.4, 159 4.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" pathLength="1" vector-effect="non-scaling-stroke"/></svg></a>
 								<div class="elsewhere">
 									<a class="brand" href="https://www.linkedin.com/in/agoshbaranwal" target="_blank" rel="noopener" aria-label="LinkedIn"><svg class="brand-ic" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.4 3H3.6a.6.6 0 0 0-.6.6v16.8c0 .33.27.6.6.6h16.8a.6.6 0 0 0 .6-.6V3.6a.6.6 0 0 0-.6-.6zM8.3 18.3H5.4V9.75h2.9v8.55zM6.85 8.56a1.68 1.68 0 1 1 0-3.36 1.68 1.68 0 0 1 0 3.36zm11.45 9.74h-2.9v-4.16c0-.99-.02-2.27-1.38-2.27-1.39 0-1.6 1.08-1.6 2.2v4.23H9.53V9.75h2.78v1.17h.04c.39-.73 1.33-1.5 2.74-1.5 2.93 0 3.47 1.93 3.47 4.44v4.44z"/></svg></a>
@@ -405,8 +379,7 @@
 							</div>
 							<div class="pc-right">
 								<span class="stamp"><img src="avatar.jpg" alt="" width="64" height="64" loading="lazy" decoding="async" /></span>
-								<p class="pc-to"><span>To:</span> whoever found this page</p>
-								<p class="pc-from"><span>From:</span> Agosh</p>
+								<p class="pc-reply">I read every message and reply within a day.</p>
 							</div>
 						</div>
 					</div>
@@ -522,15 +495,15 @@
 					</g>
 				</svg>
 				
-					<button class="seal-btn" type="button" title="Press to re-stamp the seal"
-						aria-label="A wax seal pressed with a pen nib, for writing. Press to re-stamp it."
+					<button class="seal-btn" type="button" title="Change the seal"
+						aria-label="Change the seal design"
 						data-labels="A wax seal pressed with a pen nib, for writing. Press to re-stamp it.|A wax seal pressed with a chef's hat, for cooking. Press to re-stamp it.|A wax seal pressed with a guitar pick, for music. Press to re-stamp it.|A wax seal pressed with a television. Press to re-stamp it.|A wax seal pressed with a paper plane, for travel. Press to re-stamp it."></button>
 					<span class="sr-only seal-live" aria-live="polite"></span>
 				</div>
 			</section>
 		</main>
 
-		<a class="dogear" href="#" aria-label="Back to the top of the page" title="Back to the top">
+		<a class="dogear" href="#" aria-label="Back to top" title="Back to top">
 			<svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
 				<path d="M4.5 14 L10 4.5 L15.5 14 M10 5.5 L10 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
 			</svg>
@@ -549,7 +522,7 @@
 					<a href="/#write">Write to me</a>
 					<a href="/feed.xml">RSS</a>
 				</nav>
-				<span class="foot-note">written with one pen &middot; &copy; Agosh Baranwal</span>
+				<span class="foot-note">&copy; Agosh Baranwal</span>
 			</div>
 		</footer>
 	</body>

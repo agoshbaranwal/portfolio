@@ -132,11 +132,19 @@ PY
 fi
 
 # 6. The locked project order on the homepage: admenow, Utsav, tvbadger, On Record.
-order=$(sed -n '/>Things I am building</,$p' index.html | grep -oE 'href="https://(admenow\.vercel|utsav-pi\.vercel|tvbadger\.vercel|agoshbaranwal\.github)' | sed 's/href="https:\/\///' | head -4 | tr '\n' ' ')
+order=$(sed -n '/id="building-h">Projects</,$p' index.html | grep -oE 'href="https://(admenow\.vercel|utsav-pi\.vercel|tvbadger\.vercel|agoshbaranwal\.github)' | sed 's/href="https:\/\///' | head -4 | tr '\n' ' ')
 [ "$order" = "admenow.vercel utsav-pi.vercel tvbadger.vercel agoshbaranwal.github " ] || { echo "FAIL: project order changed: $order"; fail=1; }
 
-# 7. The locked section heading.
-grep -q ">Things I am building<" index.html || { echo "FAIL: locked heading 'Things I am building' missing"; fail=1; }
+# 7. The locked section headings must match their nav labels (owner rule
+#    2026-08-15: every label says plainly what is behind it).
+grep -q 'id="building-h">Projects<' index.html || { echo "FAIL: the projects heading must read 'Projects' (matches the nav)"; fail=1; }
+grep -q 'id="notebook-h">Latest posts<' index.html || { echo "FAIL: the homepage blog teaser must read 'Latest posts'"; fail=1; }
+grep -q '<a href="/writing">Blogs</a>' index.html || { echo "FAIL: nav 'Blogs' must point at /writing, not a homepage anchor"; fail=1; }
+
+# 7b. Banned interface words: the aphoristic voice may not return to the UI.
+if grep -rniE "late show|the notebook|still drying|still on the bench|pass it on|what is in here|the short version|where this comes from|the full r|written with one pen|the front page|the rest of the notebook" index.html 404.html cv.html writing/*.html 2>/dev/null; then
+	echo "FAIL: a non-standard interface label is back (see the 2026-08-15 copy rule)"; fail=1
+fi
 
 [ $fail -eq 0 ] && echo "OK: all invariants hold"
 exit $fail

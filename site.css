@@ -325,8 +325,6 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .note em { font-style: normal; }
 .tick { display: block; width: 30px; height: 15px; margin-bottom: 3px; color: var(--pen); opacity: 0.9; }
 /* the after-hours note is placed structurally beside the live cards */
-.col-ticket { align-self: center; }
-@media (max-width: 860px) { .col-ticket { align-self: start; } }
 /* the bench sits in the grid's second row; kill that row's gap so the ONLY
    space between the live things and the bench is one deliberate margin, not a
    doubled one (was a 110px gap: 46px grid row-gap + 64px margin) */
@@ -946,11 +944,9 @@ html:has(#night:checked) .c-bar.faint, html.night .c-bar.faint { opacity: 0.62; 
 	transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .keepsake svg { width: 100%; height: auto; display: block; }
-.keepsake-stub { width: 118px; margin: 8px 0 0 6px; transform: rotate(-5deg); display: block; color: var(--pen); }
 @media (prefers-reduced-motion: no-preference) {
 	@supports (animation-timeline: view()) {
-		.keepsake, .keepsake-stub { animation: note-in linear both; animation-timeline: view(); animation-range: entry 16% entry 64%; }
-	}
+		.keepsake, 	}
 }
 .keepsake svg { display: block; }
 .keep-pick { width: 46px; transform: rotate(12deg); }
@@ -995,14 +991,7 @@ html:has(#night:checked) .c-bar.faint, html.night .c-bar.faint { opacity: 0.62; 
 	transform: rotate(3deg);
 }
 .stamp img { display: block; width: 56px; height: 56px; object-fit: cover; filter: saturate(0.7); }
-.pc-to, .pc-from {
-	font-family: var(--hand);
-	font-size: var(--t-lead); line-height: 1.3;
-	color: var(--pen);
-	border-bottom: 1px solid var(--hair);
-	padding-bottom: 4px;
-}
-.pc-to span, .pc-from span { color: var(--ink-3); font-size: var(--t-small); margin-right: 6px; }
+.pc-reply { font-size: var(--t-small); line-height: 1.5; color: var(--ink-2); max-width: 22ch; }
 
 /* --- the sealed envelope ----------------------------------------------------
    As the page scrolls, the pen draws an ink line down the right margin to the
@@ -1299,37 +1288,6 @@ html:has(#night:checked) .night-marquee, html.night .night-marquee { filter: dro
 }
 @keyframes develop { from { opacity: 0.1; filter: grayscale(1) contrast(0.72); } }
 
-/* --- the admission ticket tears (in the margin of Things I am building) ------
-   A clean two-part ticket: the stub tears away along the perforation as one
-   whole piece, and the pen writes "enjoy the show" underneath. This is the
-   invitation to the work: these are the productions, come and see them. */
-.stub-wrap { display: inline-block; position: relative; cursor: pointer; }
-#tear { position: absolute; opacity: 0; width: 0; height: 0; }
-.keepsake-stub { width: 128px; }
-.stub-fill { fill: var(--mat); stroke: currentColor; stroke-width: 1.9; stroke-linejoin: round; }
-.stub-main, .stub-tab { transform-box: fill-box; transition: transform 0.55s cubic-bezier(0.34, 1.3, 0.5, 1), opacity 0.55s ease; }
-.stub-tab { transform-origin: 0% 50%; }   /* hinge at the perforation */
-.stub-main { transform-origin: 50% 50%; }
-.stub-perf { transition: opacity 0.3s ease; }
-#tear:checked ~ .keepsake-stub .stub-tab { transform: translate(15px, 11px) rotate(11deg); opacity: 0.28; }
-#tear:checked ~ .keepsake-stub .stub-main { transform: rotate(-1.5deg); }
-#tear:checked ~ .keepsake-stub .stub-perf { opacity: 0; }
-.stub-say {
-	display: block;
-	font-family: var(--hand); font-size: var(--t-body); color: var(--pen);
-	margin: 6px 0 0 10px;
-	transform: rotate(-3deg) translateY(-5px); opacity: 0;
-	transition: opacity 0.45s ease 0.2s, transform 0.45s ease 0.2s;
-}
-#tear:checked ~ .stub-say { opacity: 1; transform: rotate(-3deg) translateY(0); }
-/* keyboard focus hugs the ticket, quietly (no page-wide dashed box) */
-.stub-wrap:has(#tear:focus-visible) .keepsake-stub { outline: 2px solid var(--pen); outline-offset: 4px; border-radius: 6px; }
-/* linger a moment and the stub offers itself */
-@media (prefers-reduced-motion: no-preference) {
-	.stub-wrap:hover #tear:not(:checked) ~ .keepsake-stub .stub-tab { animation: perf-hint 0.9s ease 0.8s; }
-}
-@keyframes perf-hint { 30% { transform: translateX(2px) rotate(1deg); } 65% { transform: translateX(-1.4px); } }
-
 /* --- the bookmark ribbon: it comes out of the notebook itself ---------------
    Threaded over the top-right corner of the notebook page and hanging down
    into the gutter beside it, a real satin marker, with "newest" always shown
@@ -1422,9 +1380,7 @@ html:has(#night:checked) .inktrail, html.night .inktrail { mix-blend-mode: scree
 /* --- late additions to the reduced-motion contract ------------------------------ */
 @media (prefers-reduced-motion: reduce) {
 	body::after, .opening::after, body.flick,
-	.stub-wrap:hover #tear:not(:checked) ~ .keepsake-stub .stub-tab,
 	.dogear, .pin img, .lost-map .lm-draw, .lost-map .lm-x { animation: none; }
-	.stub-main, .stub-tab, .stub-say { transition-duration: 0.01s; }
 }
 
 /* ==========================================================================
