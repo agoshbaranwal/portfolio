@@ -60,7 +60,9 @@
 	--t-lead:  1.1875rem;   /* 19px  the opening */
 	--t-hand:  1.3125rem;   /* 21px  the pen reads small; it needs the size */
 	--t-h3:    1.3125rem;   /* 21px  project titles */
-	--t-h2:    clamp(1.6rem, 3.4vw, 2.15rem);
+	--t-figs:  clamp(2.1rem, 4.4vw, 2.9rem);  /* the proof: loud, never poster-size */
+	--t-kicker: 0.8125rem;  /* 13px  the small caps that name a band */
+	--t-h2:    clamp(1.85rem, 3.9vw, 2.5rem);
 	--t-name:  clamp(2.9rem, 8.6vw, 5.6rem);
 
 	/* Space: an 8px grid. Sections breathe at 112; nothing invents its own gap. */
@@ -340,6 +342,12 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .section { padding-top: clamp(40px, 4.4vw, 58px); scroll-margin-top: 96px; }
 @media (max-width: 620px) { .section { scroll-margin-top: 64px; } }
 .divider { display: block; width: 100%; height: 10px; color: var(--pen-2); overflow: visible; opacity: 0.75; }
+.kicker {
+	display: block;
+	font-family: var(--hand); font-size: var(--t-kicker);
+	letter-spacing: 0.02em; color: var(--pen); opacity: 0.9;
+	margin-bottom: 2px;
+}
 .h2 {
 	font-size: var(--t-h2);
 	font-weight: 600;
@@ -355,24 +363,25 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
    type does not have to. */
 .figures {
 	margin-top: var(--s-3);
-	display: flex;
-	flex-wrap: wrap;
-	gap: var(--s-3) var(--s-6);
-	padding: var(--s-3) 0;
-	border-top: 1px solid var(--hair);
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: var(--s-4);
+	padding: var(--s-4) 0 var(--s-5);
+	border-top: 2px solid var(--pen-mat);
 	border-bottom: 1px solid var(--hair);
 }
+@media (max-width: 620px) { .figures { grid-template-columns: minmax(0, 1fr); } }
 .figure { flex: 0 1 auto; }
 .fig-n {
 	display: block;
-	font-size: clamp(1.35rem, 2.6vw, 1.7rem);
+	font-size: var(--t-figs);
 	font-weight: 700;
 	line-height: 1.05;
 	letter-spacing: -0.015em;
 	color: var(--ink);
 	font-variant-numeric: lining-nums;
 }
-.fig-d { display: block; font-size: var(--t-micro); color: var(--ink-3); margin-top: 4px; }
+.fig-d { display: block; font-size: var(--t-small); line-height: 1.45; color: var(--ink-2); margin-top: 7px; max-width: 26ch; }
 
 /* One number is circled, the way a person rings the figure that matters on a
    printout. It is the page's loudest moment and the only one of its kind:
@@ -387,10 +396,10 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 /* the record: small, on purpose. It is the footnote to the work, not the work.
    Its pen rule is a pseudo so the stroke can draw itself top-down on arrival. */
 .record {
-	font-size: var(--t-small);
-	line-height: 1.68;
+	font-size: var(--t-body);
+	line-height: 1.62;
 	color: var(--ink-2);
-	max-width: 72ch;
+	max-width: 66ch;
 	margin-top: var(--s-4);
 	padding-left: var(--s-3);
 	position: relative;
@@ -424,33 +433,23 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
    tap (everywhere, keyboard included) via a hidden checkbox: zero JS, and it
    never sprawls. A brief read of what he knows and what he can do. */
 .toolkit { margin-top: var(--s-4); max-width: 72ch; position: relative; }
-.kit-check { position: absolute; opacity: 0; width: 0; height: 0; }
 .kit-summary {
+	cursor: default;
 	display: inline-flex; align-items: baseline; gap: 12px;
 	cursor: pointer; user-select: none; padding: 4px 0;
 }
 .kit-label { font-family: var(--hand); font-size: var(--t-hand); color: var(--pen); line-height: 1; }
 .kit-teaser { font-size: var(--t-small); color: var(--ink-3); }
-.kit-cue { width: 14px; height: 14px; color: var(--pen); align-self: center; transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); flex-shrink: 0; }
-.toolkit:hover .kit-cue, .kit-check:checked ~ .kit-summary .kit-cue { transform: rotate(-180deg); }
-.kit-check:focus-visible ~ .kit-summary { outline: 2px dashed var(--pen); outline-offset: 4px; border-radius: 3px; }
-.kit-body {
-	max-height: 0; opacity: 0; overflow: hidden;
-	transition: max-height 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
-}
-.toolkit:hover .kit-body { transition-delay: 0.18s; }
-.toolkit:hover .kit-body, .kit-check:checked ~ .kit-body { max-height: 340px; opacity: 1; }
-.kit-check:checked ~ .kit-body { transition-delay: 0s; }
+
+.kit-body { max-height: none; opacity: 1; overflow: visible; }
+
 .kit-row { margin-top: var(--s-3); padding-left: var(--s-3); border-left: 2px solid var(--pen-mat); }
 .kit-cat { display: block; font-family: var(--hand); font-size: var(--t-body); color: var(--pen); }
 .kit-items { display: block; font-size: var(--t-small); line-height: 1.55; color: var(--ink-2); margin-top: 1px; }
 @media (hover: none) {
 	.toolkit:hover .kit-body { max-height: 0; opacity: 0; transition-delay: 0s; }
-	.kit-check:checked ~ .kit-body { max-height: 560px; opacity: 1; }
-	.toolkit:hover .kit-cue { transform: none; }
-	.thing-v svg path { stroke-dashoffset: 0; }
+	.toolkit:hover 	.thing-v svg path { stroke-dashoffset: 0; }
 }
-@media (prefers-reduced-motion: reduce) { .kit-body, .kit-cue { transition-duration: 0.01s; } }
 
 /* the résumé, one drawn document mark and a quiet link */
 .cv-link { display: inline-flex; align-items: center; gap: 9px; margin-top: var(--s-4); font-size: var(--t-body); color: var(--pen); text-decoration: none; }
@@ -469,11 +468,26 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 	margin-top: var(--s-4);
 	display: grid;
 	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: var(--s-4) var(--s-3);
-	align-items: start;
+	gap: var(--s-3);
+	align-items: stretch;
 }
-.thing { display: block; min-width: 0; text-decoration: none; color: inherit; }
-.thing-shot { position: relative; margin: 0 0 12px; }
+.thing {
+	display: flex; flex-direction: column; min-width: 0;
+	text-decoration: none; color: inherit;
+	padding: 14px 16px 16px;
+	background: var(--mat);
+	border: 1px solid var(--hair);
+	border-radius: 4px;
+	box-shadow: 0 1px 0 rgba(20, 22, 28, 0.03);
+	transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+.thing:hover, .thing:focus-visible {
+	transform: translateY(-3px);
+	border-color: var(--pen-mat);
+	box-shadow: 0 14px 30px -18px rgba(20, 22, 28, 0.45);
+}
+.thing-v { margin-top: auto; padding-top: 8px; }
+.thing-shot { position: relative; margin: 0 0 13px; }
 .thing-shot::before, .thing-shot::after {
 	content: ""; position: absolute; z-index: 2; top: -7px;
 	width: 44px; height: 15px;
@@ -499,16 +513,13 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 	transform: rotate(0deg) translateY(-3px);
 	box-shadow: 0 14px 28px -14px var(--pen-mat), 0 0 0 1px var(--hair);
 }
-.thing-t { font-size: var(--t-body); font-weight: 600; letter-spacing: -0.01em; color: var(--ink); transition: color 0.2s ease; }
+.thing-t { font-size: var(--t-h3); font-weight: 600; line-height: 1.25; letter-spacing: -0.012em; color: var(--ink); transition: color 0.2s ease; }
 .thing:hover .thing-t, .thing:focus-visible .thing-t { color: var(--pen); }
 .thing-t .deva { font-family: var(--deva); font-weight: 500; }
-.thing-more {
-	max-height: 0; opacity: 0; overflow: hidden;
-	transition: max-height 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease 0.05s;
-}
+.thing-more { max-height: none; opacity: 1; overflow: visible; }
 .thing:hover .thing-more, .thing:focus-visible .thing-more { max-height: 150px; opacity: 1; }
 @media (hover: none) { .thing-more { max-height: none; opacity: 1; } }
-.thing-d { font-size: var(--t-small); color: var(--ink-2); margin-top: 4px; }
+.thing-d { font-size: var(--t-body); line-height: 1.5; color: var(--ink-2); margin-top: 6px; }
 .thing-v {
 	display: inline-block; margin-top: 6px;
 	font-size: var(--t-small); color: var(--pen);
@@ -677,7 +688,7 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 
 @media (max-width: 620px) {
 	:root { --s-8: 64px; --s-7: 52px; --s-6: 40px; --s-5: 32px; }
-	.figures { padding: var(--s-2) 0; gap: var(--s-1) var(--s-6); }
+	.figures { padding: var(--s-2) 0; gap: var(--s-3) var(--s-6); }
 	.figure { padding: 4px 0; }
 	/* the primary CTA may never clip: smaller envelope, unbreakable address */
 	.letter-mark { width: 92px; height: auto; }
@@ -1579,7 +1590,6 @@ html:has(#night:checked) .inktrail, html.night .inktrail { mix-blend-mode: scree
 @media print {
 	/* the hover-collapsed content opens on paper: the record prints whole */
 	.thing-more, .kit-body { max-height: none !important; opacity: 1 !important; overflow: visible !important; }
-	.kit-cue, .cv-download, .shelf-link, .toc, .dogear, .seal-btn { display: none !important; }
 	body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
 	html, html.night, html:has(#night:checked) {
 		--paper: #ffffff; --mat: #ffffff;
