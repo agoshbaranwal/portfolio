@@ -38,6 +38,16 @@
 	/* Sealing wax: the pen's own blue-black, poured. Three stops make the dome,
 	   a fourth is the recessed face of the pressed initial. (Night swaps below.) */
 	--hi: rgba(29, 58, 99, 0.17);   /* the highlighter pass over a line that matters */
+	/* the desk the sheet lies on, and the depth that sells it */
+	--desk: #bdb5a4;
+	--sheet: #fdfcf7;
+	--lamp-c: rgba(255, 247, 226, 0.15);
+	--lamp-r: 480px;
+	--sh-contact: 0 2px 4px rgba(30, 24, 14, 0.10);
+	--sh-lift:    0 18px 34px -20px rgba(30, 24, 14, 0.5);
+	--sh-sheet:   0 54px 96px -50px rgba(30, 24, 14, 0.72);
+	--on-desk: #3f3826;      /* ink that reads on the desk itself, not on paper */
+	--on-desk-2: #574f3b;
 	--wax-1: #5b80ba;   /* lit crest, where the light catches the raised wax */
 	--wax-2: #23406e;   /* the body: the pen's own dark-blue wax */
 	--wax-3: #0b1c38;   /* shaded rim / the shadow in the pressed well */
@@ -103,6 +113,15 @@ html:has(#night:checked), html.night {
 	--pen-mat: rgba(143, 179, 224, 0.32);
 	--hair:  rgba(236, 237, 240, 0.15);
 	--hi: rgba(143, 179, 224, 0.24);
+	--desk: #0e0f14;
+	--sheet: #1c1e26;
+	--lamp-c: rgba(255, 231, 168, 0.30);
+	--lamp-r: 560px;
+	--sh-contact: 0 2px 4px rgba(0, 0, 0, 0.4);
+	--sh-lift:    0 18px 34px -20px rgba(0, 0, 0, 0.75);
+	--sh-sheet:   0 54px 96px -50px rgba(0, 0, 0, 0.9);
+	--on-desk: #b9c2d1;
+	--on-desk-2: #8b93a2;
 	--wax-1: #cfe0f6;   /* wax by lamplight: a touch brighter so it reads on the dark sheet */
 	--wax-2: #7ea6db;
 	--wax-3: #35527c;
@@ -115,15 +134,19 @@ html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 body {
-	background: var(--paper);
+	background-color: var(--desk);
+	background-image:
+		radial-gradient(140% 90% at 50% -20%, rgba(255, 252, 240, 0.4), transparent 62%),
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='150' height='150' filter='url(%23n)' opacity='.28'/%3E%3C/svg%3E");
 	color: var(--ink);
 	font-family: var(--print);
 	font-size: var(--t-body);
 	line-height: 1.62;
 	-webkit-font-smoothing: antialiased;
 	overflow-x: clip;
-	transition: background-color 0.4s ease, color 0.4s ease;
+	transition: background-color 0.7s ease, color 0.7s ease;
 }
+html:has(#night:checked) body, html.night body { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='150' height='150' filter='url(%23n)' opacity='.2'/%3E%3C/svg%3E"); }
 img { display: block; max-width: 100%; }
 a { color: inherit; }
 ::selection { background: var(--pen-mat); }
@@ -137,31 +160,40 @@ html { scrollbar-color: var(--pen-2) transparent; }
 /* One column of print, one margin for the hand. Everything printed lives in
    the left column. Everything handwritten lives in the right. No exceptions:
    that rule is what stops the page fragmenting. */
-.page { max-width: 1000px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 40px); position: relative; }
+.page {
+	max-width: 1040px; margin: 14px auto 72px; padding: 0 clamp(20px, 5vw, 44px);
+	position: relative; z-index: 5;
+	background-color: var(--sheet);
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.68' numOctaves='4'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='170' height='170' filter='url(%23p)' opacity='.045'/%3E%3C/svg%3E");
+	box-shadow: var(--sh-contact), var(--sh-sheet), 0 0 0 1px var(--hair);
+	transition: background-color 0.7s ease;
+}
+/* the pool of light the desk lamp throws, following the reader */
+.lamp {
+	position: fixed; inset: 0; pointer-events: none; z-index: 60;
+	mix-blend-mode: soft-light;
+	background: radial-gradient(var(--lamp-r) var(--lamp-r) at var(--mx, 50%) var(--my, 26%), var(--lamp-c), transparent 70%);
+}
+html:has(#night:checked) .lamp, html.night .lamp { mix-blend-mode: screen; }
+html:not(.js) .lamp { display: none; }
+/* two things left on the desk beside the sheet */
+.deskitem { position: absolute; z-index: 1; pointer-events: none; }
+.desk-pen { right: -104px; top: 560px; width: 196px; color: #22314b;
+	filter: drop-shadow(0 10px 12px rgba(30, 24, 14, 0.45)); transform: rotate(9deg); }
+.desk-clip { left: -16px; top: 1040px; width: 52px; color: #9aa2ad;
+	filter: drop-shadow(0 4px 5px rgba(30, 24, 14, 0.4)); }
+html:has(#night:checked) .desk-pen, html.night .desk-pen { color: #3d4d6b; }
+@media (max-width: 1280px) { .deskitem { display: none; } }
 
 /* THE SPINE: one continuous pen line between the print and the hand, running
    the full length of the page and growing as you read. Every section hangs off
    the same line, which is what makes them one page instead of five. */
-.spine {
-	position: absolute;
-	top: 30px; bottom: 30px;
-	right: clamp(20px, 5vw, 40px);
-	width: 1.5px;
-	background: var(--pen-mat);
-	transform-origin: top;
-}
-@media (max-width: 860px) { .spine { display: none; } }
 @media (prefers-reduced-motion: no-preference) {
 	@supports (animation-timeline: scroll()) {
-		.spine {
-			animation: spine-grow linear both;
-			animation-timeline: scroll(root);
-		}
-	}
+			}
 }
 /* the line does not exist until the nib has drawn it: at the very top there is
    no line below the nib, and it grows downward exactly as the nib descends */
-@keyframes spine-grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 
 .band { position: relative; }
 .band > .inner {
@@ -187,8 +219,8 @@ html { scrollbar-color: var(--pen-2) transparent; }
 /* --- THE MASTHEAD -------------------------------------------------------- */
 .masthead {
 	position: sticky; top: 0; z-index: 20;
-	background: color-mix(in srgb, var(--paper) 88%, transparent);
-	backdrop-filter: blur(8px);
+	background: color-mix(in srgb, var(--desk) 84%, transparent);
+	backdrop-filter: blur(10px) saturate(1.1);
 	border-bottom: 1px solid transparent;
 }
 @media (prefers-reduced-motion: no-preference) {
@@ -215,7 +247,7 @@ html { scrollbar-color: var(--pen-2) transparent; }
 .nav { display: flex; align-items: center; gap: clamp(14px, 2.4vw, 26px); }
 .nav a {
 	font-size: 1rem;
-	text-decoration: none; color: var(--ink-2);
+	text-decoration: none; color: var(--on-desk);
 	padding: 8px 2px;
 	white-space: nowrap;
 	border-bottom: 1.5px solid transparent;
@@ -244,7 +276,7 @@ html { scrollbar-color: var(--pen-2) transparent; }
 }
 html:has(#night:checked) .night-track::after, html.night .night-track::after { transform: translateX(16px); }
 #night:focus-visible ~ .night-track { outline: 2px dashed var(--pen); outline-offset: 3px; }
-.night-label { font-size: var(--t-micro); letter-spacing: 0.13em; text-transform: uppercase; color: var(--ink-2); }
+.night-label { font-size: var(--t-micro); letter-spacing: 0.13em; text-transform: uppercase; color: var(--on-desk); }
 .night-marquee { width: 22px; height: 19px; color: var(--pen); opacity: 0.9; }
 
 /* --- THE OPENING --------------------------------------------------------- */
@@ -356,7 +388,6 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
    one continuous letter, so the movements sit closer than separate pages would */
 .section { padding-top: clamp(40px, 4.4vw, 58px); scroll-margin-top: 96px; }
 @media (max-width: 620px) { .section { scroll-margin-top: 64px; } }
-.divider { display: block; width: 100%; height: 10px; color: var(--pen-2); overflow: visible; opacity: 0.75; }
 .kicker {
 	display: block;
 	font-family: var(--hand); font-size: var(--t-kicker);
@@ -392,26 +423,43 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
    The pen still rings the best one; that ring does the emphasis so the
    type does not have to. */
 .figures {
-	margin-top: var(--s-3);
+	margin-top: var(--s-4);
 	display: grid;
 	grid-template-columns: repeat(3, minmax(0, 1fr));
 	gap: var(--s-4);
-	padding: var(--s-4) 0 var(--s-5);
-	border-top: 2px solid var(--pen-mat);
-	border-bottom: 1px solid var(--hair);
+	padding: var(--s-4) var(--s-4) var(--s-4);
+	background-color: #16203a;
+	color: #f4f1e8;
+	box-shadow: var(--sh-lift);
+	transform: rotate(-0.55deg);
+	transition: background-color 0.7s ease, color 0.7s ease;
 }
+html:has(#night:checked) .figures, html.night .figures {
+	background-color: #0d1725; color: #eaf0fa;
+	box-shadow: var(--sh-lift), 0 0 0 1px rgba(143, 179, 224, 0.18);
+}
+/* it stamps down onto the paper as you reach it */
+html.js .figures { transform: rotate(-0.55deg) scale(1.4); opacity: 0; }
+html.js .figures.in {
+	transform: rotate(-0.55deg) scale(1); opacity: 1;
+	transition: transform 0.5s cubic-bezier(.2, 1.45, .42, 1), opacity 0.26s ease, background-color 0.7s ease;
+}
+@media (prefers-reduced-motion: reduce) { html.js .figures { transform: rotate(-0.55deg); opacity: 1; } }
 @media (max-width: 620px) { .figures { grid-template-columns: minmax(0, 1fr); } }
 .figure { flex: 0 1 auto; }
 .fig-n {
 	display: block;
+	color: inherit;
 	font-size: var(--t-figs);
 	font-weight: var(--w-proof);
 	line-height: var(--lh-proof);
 	letter-spacing: -0.015em;
-	color: var(--ink);
 	font-variant-numeric: lining-nums;
 }
-.fig-d { display: block; font-size: var(--t-body); line-height: var(--lh-quiet); color: var(--ink-2); margin-top: 8px; max-width: 26ch; }
+.fig-d { display: block; font-size: var(--t-small); line-height: var(--lh-quiet); color: #b0bcd0; margin-top: 10px; max-width: 24ch; }
+html:has(#night:checked) .fig-d, html.night .fig-d { color: #8fa0bb; }
+/* the marks the hand made on the plate are chalk, not ink */
+.figures .ring, .figures .flick { color: #d8b45a; }
 
 /* One number is circled, the way a person rings the figure that matters on a
    printout. It is the page's loudest moment and the only one of its kind:
@@ -509,17 +557,26 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .thing {
 	display: flex; flex-direction: column; min-width: 0;
 	text-decoration: none; color: inherit;
-	padding: 14px 16px 16px;
-	background: var(--mat);
-	border: 1px solid var(--hair);
-	border-radius: 4px;
-	box-shadow: 0 1px 0 rgba(20, 22, 28, 0.03);
-	transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+	padding: 13px 13px 17px;
+	background-color: var(--mat);
+	box-shadow: var(--sh-contact), var(--sh-lift);
+	transform: rotate(var(--r, -0.7deg));
+	transition: transform 0.45s cubic-bezier(0.19, 1, 0.22, 1), box-shadow 0.45s ease, opacity 0.35s ease, background-color 0.7s ease;
+	position: relative;
 }
+.thing:nth-child(2) { --r: 0.85deg; }
+.thing:nth-child(3) { --r: 0.55deg; }
+.thing:nth-child(4) { --r: -1deg; }
+.thing:nth-child(5) { --r: 0.7deg; }
+.thing:nth-child(6) { --r: -0.5deg; }
+/* reach for one and it straightens and lifts off the paper */
 .thing:hover, .thing:focus-visible {
-	transform: translateY(-3px);
-	border-color: var(--pen-mat);
-	box-shadow: 0 14px 30px -18px rgba(20, 22, 28, 0.45);
+	transform: rotate(0deg) translateY(-10px) scale(1.012);
+	box-shadow: var(--sh-contact), 0 36px 60px -28px rgba(30, 24, 14, 0.62);
+	z-index: 8;
+}
+html:has(#night:checked) .thing:hover, html.night .thing:hover {
+	box-shadow: 0 36px 60px -28px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(143, 179, 224, 0.2);
 }
 .thing-v { margin-top: auto; padding-top: 8px; }
 .thing-shot { position: relative; margin: 0 0 13px; }
@@ -607,7 +664,7 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .shelf-t { font-size: var(--t-h3); font-weight: 600; color: var(--ink); }
 .shelf-row.empty .shelf-t { color: var(--ink-3); font-weight: 400; font-style: italic; }
 .shelf-m { font-size: var(--t-small); color: var(--ink-3); }
-.shelf-link { display: inline-block; margin-top: var(--s-3); font-size: var(--t-small); color: var(--pen); text-decoration: none; border-bottom: 1px solid var(--pen-mat); padding-bottom: 2px; }
+.shelf-link { display: inline-block; margin-top: var(--s-5); font-size: var(--t-small); color: var(--pen); text-decoration: none; border-bottom: 1px solid var(--pen-mat); padding-bottom: 2px; }
 .shelf-link:hover { border-bottom-color: var(--pen); }
 
 /* --- WRITE TO ME --------------------------------------------------------- */
@@ -636,22 +693,22 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .elsewhere a:hover { color: var(--pen); border-bottom-color: var(--pen); }
 
 /* --- FOOT ---------------------------------------------------------------- */
-.foot { border-top: 1px solid var(--hair); margin-top: var(--s-8); }
+.foot { margin-top: 0; }
 .foot-in {
 	max-width: 1000px; margin: 0 auto;
 	padding: var(--s-5) clamp(20px, 5vw, 40px) var(--s-6);
 	display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-3) var(--s-4);
-	font-size: var(--t-micro); color: var(--ink-3);
+	font-size: var(--t-micro); color: var(--on-desk-2);
 }
 .foot-nav { display: flex; flex-wrap: wrap; gap: 4px clamp(12px, 2vw, 22px); }
 .foot-nav a {
-	color: var(--ink-3); text-decoration: none; font-size: var(--t-small);
+	color: var(--on-desk-2); text-decoration: none; font-size: var(--t-small);
 	padding: 8px 0; border-bottom: 1px solid transparent;
 	transition: color 0.2s ease, border-color 0.2s ease;
 }
 .foot-nav a:hover, .foot-nav a:focus-visible { color: var(--pen); border-bottom-color: var(--pen-mat); }
 .foot-note { white-space: nowrap; }
-.foot svg { height: 20px; width: auto; color: var(--pen-2); opacity: 0.8; }
+.foot svg { height: 20px; width: auto; color: var(--on-desk); opacity: 0.85; }
 
 /* ==========================================================================
    MOTION: every animation on this page is the same hand, moving.
@@ -660,7 +717,6 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
    the pen. Progressive enhancement: without scroll-driven support the page is
    simply complete and still.
    ========================================================================== */
-.name-rule path, .divider path { stroke-dasharray: 1; stroke-dashoffset: 0; }
 
 @media (prefers-reduced-motion: no-preference) {
 	/* the title's underline draws itself in on arrival, as on every page */
@@ -673,11 +729,6 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 			animation: draw linear both;
 			animation-timeline: view();
 			animation-range: entry 18% entry 74%;
-		}
-		.divider path {
-			animation: draw linear both;
-			animation-timeline: view();
-			animation-range: entry 8% entry 78%;
 		}
 		/* notes WRITE themselves: a left-to-right ink wipe, not a fade. The mask
 		   lives only in this block, so without view() support notes are simply
@@ -706,7 +757,7 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 @keyframes draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 @keyframes note-in { from { opacity: 0; transform: translateY(7px) rotate(-1.6deg); } to { opacity: 1; } }
 @keyframes note-wipe { from { mask-position: 100% 0; } to { mask-position: 0% 0; } }
-@keyframes settle { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes settle { from { opacity: 0; translate: 0 10px; } to { opacity: 1; translate: none; } }
 /* photos DEVELOP as they arrive, like a print in the tray: grey first, then true */
 
 /* ==========================================================================
@@ -718,16 +769,16 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 	.note { margin-top: var(--s-3); max-width: 34ch; }
 	.pin { max-width: 150px; margin-top: var(--s-4); }
 	.pin figcaption { text-align: left; }
-	.figure { padding: var(--s-2) 0; }
+	.figure { padding: var(--s-2) 0 0; }
 }
 
 @media (max-width: 620px) {
 	:root { --s-8: 64px; --s-7: 52px; --s-6: 40px; --s-5: 32px; }
-	.figures { padding: var(--s-2) 0; gap: var(--s-3) var(--s-6); }
+	.figures { padding: var(--s-3); gap: var(--s-3) var(--s-6); }
 	.figure { padding: 4px 0; }
 	/* the primary CTA may never clip: smaller envelope, unbreakable address */
 	.letter-mark { width: 92px; height: auto; }
-	.door-a { overflow-wrap: anywhere; }
+	.door-a { overflow-wrap: anywhere; font-size: var(--t-small); }
 	/* the postcard drops the airy desktop padding and the stamp yields the row */
 	.pc-left, .pc-right { padding: var(--s-3); }
 	.pc-right { padding-top: 78px; }
@@ -811,9 +862,6 @@ html:has(#night:checked) .night-track::after, html.night .night-track::after { t
 .toc a:focus-visible { outline: 2px dashed var(--pen); outline-offset: 2px; }
 .toc a.is-here { color: var(--pen); border-left-color: var(--pen); }
 /* the shelf keeps visible room: two ruled lines and the pen trailing off */
-.shelf-room { margin-top: var(--s-4); }
-.shelf-room .shelf-row.empty { min-height: 34px; border-bottom: 1px solid var(--hair); }
-.shelf-room .trail-off { margin-top: 14px; }
 
 /* the folded contents a phone reader gets in place of the margin list */
 .toc-fold { display: none; }
@@ -1025,9 +1073,7 @@ html:has(#night:checked) .c-bar.faint, html.night .c-bar.faint { opacity: 0.62; 
 	display: grid;
 	grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
 	background: var(--mat);
-	border: 1.5px solid var(--hair);
-	border-radius: 4px;
-	box-shadow: 0 12px 30px -18px rgba(20, 22, 28, 0.4);
+	box-shadow: var(--sh-contact), var(--sh-lift);
 	transform: rotate(-0.5deg);
 }
 .pc-left { padding: var(--s-4); }
@@ -1120,31 +1166,7 @@ html { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'
 }
 @keyframes fadein { from { opacity: 0; } }
 
-/* --- the nib rides the spine ---------------------------------------------- */
-/* the nib rides the leading edge of the line it draws. Its track matches the
-   spine exactly (top 30 / bottom 30) so the nib sits where the ink ends. */
-.nib-track {
-	position: absolute;
-	top: 30px; bottom: 30px;
-	right: calc(clamp(20px, 5vw, 40px) - 8px);
-	width: 17px;
-	pointer-events: none;
-	z-index: 2;
-}
-.nib { position: absolute; top: 0; width: 17px; height: 17px; color: var(--pen); transition: transform 0.25s ease; }
-/* the nib faces the way it travels: point-down as you scroll down, and pen.js
-   flips it point-up (.nib-up) when you scroll back up */
-.nib-up { transform: scaleY(-1); }
-@media (max-width: 860px) { .nib-track { display: none; } }
-@media (prefers-reduced-motion: no-preference) {
-	@supports (animation-timeline: scroll()) {
-		.nib { animation: nib-ride linear both; animation-timeline: scroll(root); }
-	}
-}
-@media (prefers-reduced-motion: reduce) { .nib-track { display: none; } }
-@keyframes nib-ride { from { top: 0; } to { top: calc(100% - 17px); } }
-
-/* --- the late show is a scene change -------------------------------------- */
+/* --- dark mode is a scene change ------------------------------------------ */
 /* Without JS the flicker keys off the checkbox directly. With JS (html.js),
    pen.js fires it via body.flick instead, so restoring a saved night mode at
    load never sputters the projector. */
@@ -1196,34 +1218,17 @@ html:has(#night:checked) .night-marquee circle:nth-of-type(3) { animation-delay:
    and the pages turn. Everything below degrades to a complete, still page.
    ========================================================================== */
 
-/* --- the desk -------------------------------------------------------------- */
-/* On wide screens the paper stops being the screen and becomes a SHEET lying
-   on a desk. At night the desk is the dark of the room and the sheet is the
-   thing the projector lights. */
-@media (min-width: 1100px) {
-	html { --desk: #edecE4; background: var(--desk); }
-	html:has(#night:checked), html.night { --desk: #0b0c10; }
-	body { background: var(--desk); }
-	.page {
-		background: var(--paper);
-		border-radius: 4px;
-		margin-top: 22px; margin-bottom: 34px;
-		box-shadow:
-			0 1px 2px rgba(20, 22, 28, 0.07),
-			0 22px 55px -28px rgba(20, 22, 28, 0.3),
-			0 0 0 1px rgba(20, 22, 28, 0.045);
-		transition: background-color 0.4s ease, box-shadow 0.5s ease;
-	}
-	html:has(#night:checked) .page, html.night .page {
-		box-shadow:
-			0 0 0 1px rgba(236, 237, 240, 0.05),
-			0 0 120px rgba(143, 179, 224, 0.06),
-			0 26px 60px -30px rgba(0, 0, 0, 0.85);
-	}
-	.masthead { background: color-mix(in srgb, var(--desk) 78%, transparent); }
-	.foot { border-top: 0; }
+/* --- the sheet at night ----------------------------------------------------- */
+/* The desk itself is defined once, at the top of this file. All that is left
+   here is what the dark does to the sheet: the lamp rims it instead of
+   dropping it, so the paper reads as lit rather than simply grey. */
+html:has(#night:checked) .page, html.night .page {
+	box-shadow:
+		0 0 0 1px rgba(236, 237, 240, 0.085),
+		0 0 130px rgba(143, 179, 224, 0.08),
+		var(--sh-sheet);
 }
-html { transition: background-color 0.4s ease; }
+html { transition: background-color 0.7s ease; }
 
 /* --- pages turn: cross-document view transitions --------------------------- */
 /* by lamplight the photographs dim to the room, and wake when attended */
@@ -1243,20 +1248,6 @@ html:has(#night:checked) .thing:focus-visible .thing-shot img, html.night .thing
 @keyframes vt-out { to { opacity: 0; transform: translateY(-8px); } }
 @keyframes vt-in { from { opacity: 0; transform: translateY(10px); } }
 
-/* --- the pen keeps score: reading progress under the masthead -------------- */
-.masthead::after {
-	content: ""; position: absolute; left: 50%; bottom: -1px;
-	width: min(1000px, 100%); margin-left: min(-500px, -50%); height: 2px;
-	background: var(--pen);
-	transform: scaleX(0); transform-origin: left;
-	opacity: 0.8;
-}
-@media (prefers-reduced-motion: no-preference) {
-	@supports (animation-timeline: scroll()) {
-		.masthead::after { animation: progress linear both; animation-timeline: scroll(root); }
-	}
-}
-@keyframes progress { to { transform: scaleX(1); } }
 @media (max-width: 380px) {
 	.nav { gap: 10px; }
 	.nav a { font-size: var(--t-small); }
@@ -1318,11 +1309,10 @@ html:has(#night:checked) .opening::after, html.night .opening::after { opacity: 
 html:has(#night:checked) .night-marquee, html.night .night-marquee { filter: drop-shadow(0 0 5px currentColor); }
 
 /* --- lamplight: attend to one thing and the others wait -------------------- */
-.thing { transition: opacity 0.35s ease; }
 @media (hover: hover) {
-	.things:has(.thing:hover) .thing:not(:hover) { opacity: 0.45; }
+	.things:has(.thing:hover) .thing:not(:hover) { opacity: 0.5; }
 }
-.things:has(.thing:focus-visible) .thing:not(:focus-visible) { opacity: 0.45; }
+.things:has(.thing:focus-visible) .thing:not(:focus-visible) { opacity: 0.5; }
 
 /* --- the hand underlines its other two figures on arrival ------------------- */
 .flicked { position: relative; display: inline-block; }
@@ -1389,7 +1379,7 @@ a.brand:hover, a.brand:focus-visible { color: var(--pen); transform: translateY(
 /* --- the postcard straightens when you reach for it -------------------------- */
 .postcard { transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s ease; }
 @media (hover: hover) {
-	.postcard:hover { transform: rotate(0deg); box-shadow: 0 16px 40px -20px rgba(20, 22, 28, 0.5); }
+	.postcard:hover { transform: rotate(0deg) translateY(-6px); box-shadow: var(--sh-contact), 0 34px 58px -28px rgba(30, 24, 14, 0.6); }
 }
 
 /* --- the dog-eared corner takes you back to the top --------------------------- */
@@ -1634,12 +1624,10 @@ html:has(#night:checked) .inktrail, html.night .inktrail { mix-blend-mode: scree
 	}
 	* { animation: none !important; transition: none !important; }
 	html, body, .page { background: #fff !important; box-shadow: none !important; }
-	.masthead, .nib-track, .spine, .dogear, .skip, .inktrail, .night-toggle, .seam { display: none !important; }
 	/* the seal is hidden here, so drop the room reserved for it (portrait paper
 	   already gets this via the <=860px query; this also covers wide/landscape) */
 	.closing { padding-bottom: var(--s-8) !important; }
 	body::after, .opening::before, .opening::after { display: none !important; }
-	.name-rule path, .divider path, .ring path,
 	.thing-v svg path, .flick path, .trail-off path { stroke-dashoffset: 0 !important; }
 	.note, .section .note { mask-image: none !important; opacity: 1 !important; }
 	.thing, .figure, .postcard, .shelf-row, .latest a { break-inside: avoid; }

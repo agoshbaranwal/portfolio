@@ -66,15 +66,21 @@
 			</div>
 		</header>
 
+		<div class="lamp" aria-hidden="true"></div>
+
 		<main class="page" id="main" tabindex="-1">
-			<div class="spine" aria-hidden="true"></div>
-			<div class="nib-track" aria-hidden="true">
-				<svg class="nib" viewBox="0 0 17 17" fill="none">
-					<path d="M8.5 1 C 11 4, 13.5 8, 13 12 L 8.5 16 L 4 12 C 3.5 8, 6 4, 8.5 1 Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-					<path d="M8.5 8 L 8.5 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-					<circle cx="8.5" cy="7" r="1.2" stroke="currentColor" stroke-width="1"/>
-				</svg>
-			</div>
+			<!-- Two things left on the desk beside the sheet: the pen it was all
+			     written with, and the clip holding the stack together. -->
+			<svg class="deskitem desk-pen" viewBox="0 0 300 40" fill="none" aria-hidden="true">
+				<rect x="52" y="13" width="196" height="15" rx="7.5" fill="currentColor"/>
+				<rect x="196" y="13" width="34" height="15" fill="#c9a227" opacity=".85"/>
+				<rect x="248" y="14.5" width="14" height="12" rx="5" fill="currentColor" opacity=".9"/>
+				<path d="M52 13 C 30 15, 14 18, 4 20.5 C 14 23, 30 26, 52 28 Z" fill="#cbb26b"/>
+				<path d="M28 20.5 L 8 20.5" stroke="#8f7c46" stroke-width="1.2"/>
+			</svg>
+			<svg class="deskitem desk-clip" viewBox="0 0 40 90" fill="none" aria-hidden="true">
+				<path d="M12 76 L12 22 C12 10 28 10 28 22 L28 66 C28 74 16 74 16 66 L16 28" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+			</svg>
 			<!-- ===============================================================
 			     THE OPENING. Name, what he is, and four sentences that quietly
 			     announce the shape of the whole page: by day, after hours, most
@@ -139,10 +145,6 @@
 			<section class="band section" aria-label="Results">
 				<div class="inner">
 					<div class="col">
-						<svg class="divider" viewBox="0 0 720 10" fill="none" preserveAspectRatio="none" aria-hidden="true">
-							<path d="M1 5.6 C 92 3.1, 168 7.6, 264 5.2 S 432 2.8, 528 5.9 S 654 7.4, 719 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" pathLength="1" vector-effect="non-scaling-stroke" />
-						</svg>
-
 						<div class="figures">
 							<div class="figure">
 								<span class="fig-n ringed">10x ROAS
@@ -191,9 +193,6 @@
 			<section class="band section" id="building" aria-labelledby="building-h">
 				<div class="inner">
 					<div class="col">
-						<svg class="divider" viewBox="0 0 720 10" fill="none" preserveAspectRatio="none" aria-hidden="true">
-							<path d="M1 4.8 C 88 7.2, 176 2.9, 268 5.8 S 448 8.1, 542 4.6 S 648 3.2, 719 6.1" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" pathLength="1" vector-effect="non-scaling-stroke" />
-						</svg>
 						<div class="sec-head">
 							<span class="kicker">what I build</span>
 							<h2 class="h2" id="building-h">Projects</h2>
@@ -292,9 +291,6 @@
 			<section class="band section" id="notebook" aria-labelledby="notebook-h">
 				<div class="inner">
 					<div class="col">
-						<svg class="divider" viewBox="0 0 720 10" fill="none" preserveAspectRatio="none" aria-hidden="true">
-							<path d="M1 4.4 C 96 6.8, 184 2.7, 278 5.4 S 442 7.8, 548 4.4 S 660 3.6, 719 6.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" pathLength="1" vector-effect="non-scaling-stroke" />
-						</svg>
 						<div class="sec-head">
 							<span class="kicker">what I write</span>
 							<h2 class="h2" id="notebook-h">Latest posts</h2>
@@ -327,9 +323,6 @@
 			<section class="band section closing" id="write" aria-labelledby="writeto">
 				<div class="inner">
 					<div class="col">
-						<svg class="divider" viewBox="0 0 720 10" fill="none" preserveAspectRatio="none" aria-hidden="true">
-							<path d="M1 5.1 C 86 2.8, 178 7.4, 272 4.8 S 452 2.9, 546 6.2 S 656 6.8, 719 3.9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" pathLength="1" vector-effect="non-scaling-stroke" />
-						</svg>
 						<div class="sec-head">
 							<span class="kicker">get in touch</span>
 							<h2 class="h2" id="writeto">Write to me</h2>
