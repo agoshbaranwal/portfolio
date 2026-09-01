@@ -141,6 +141,7 @@ html.js .rv.in{opacity:1;transform:none}
 
 /* ---------- photo prints: how a person's photos should read ---------- */
 .print{background:linear-gradient(160deg,var(--slot),var(--slot-2));border:6px solid var(--card);border-radius:14px;box-shadow:var(--shadow)}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){.print{transition:transform .42s var(--ease),box-shadow .42s var(--ease)}}
 
 /* ---------- HOME: hero ---------- */
 .hero{padding:clamp(18px,2.2vw,32px) 0 clamp(24px,2.6vw,38px);text-align:center;position:relative}
@@ -151,6 +152,12 @@ html.js .rv.in{opacity:1;transform:none}
 .hero-photos .ph.a{width:clamp(88px,15vw,172px);transform:rotate(-5deg) translateY(26px);margin-right:-22px;z-index:1}
 .hero-photos .ph.b{width:clamp(128px,20vw,232px);aspect-ratio:4/5;z-index:2;box-shadow:var(--shadow-lift)}
 .hero-photos .ph.c{width:clamp(88px,15vw,172px);transform:rotate(4deg) translateY(34px);margin-left:-22px;z-index:1}
+@media (hover:hover){
+	.hero-photos .ph:hover{box-shadow:var(--shadow-lift);z-index:3}
+	.hero-photos .ph.a:hover{transform:rotate(-2.2deg) translateY(14px) scale(1.04)}
+	.hero-photos .ph.b:hover{transform:translateY(-9px) scale(1.035)}
+	.hero-photos .ph.c:hover{transform:rotate(1.8deg) translateY(22px) scale(1.04)}
+}
 .hero .pos{font-size:clamp(19px,2.4vw,24px);line-height:1.5;font-weight:700;margin:0 auto 12px;max-width:36ch;letter-spacing:-.01em}
 .hero .sub{font-size:14.5px;font-weight:500;color:var(--ink-mid);max-width:52ch;margin:0 auto 26px}
 .hero-act{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:center}
@@ -270,7 +277,6 @@ html.js .rv.in{opacity:1;transform:none}
 .feature .f-title .hl2{background-image:var(--hi);background-size:100% .55em;background-position:0 82%;background-repeat:no-repeat;padding:0 .06em;white-space:nowrap;border-radius:2px}
 .feature .f-deck{display:block;margin:0 0 12px;font-size:14.5px;font-weight:500;color:var(--ink-mid);max-width:56ch}
 .feature .meta{font-size:11px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-soft);display:flex;gap:18px;flex-wrap:wrap}
-.blog-note{font-size:13.5px;font-weight:500;color:var(--ink-soft);margin:clamp(26px,3.4vw,40px) 0 clamp(56px,7vw,96px)}
 
 /* ---------- ABOUT ME page ---------- */
 .gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(26px,3.6vw,46px);margin-top:clamp(30px,4vw,48px)}
@@ -280,27 +286,40 @@ html.js .rv.in{opacity:1;transform:none}
 .gal .print{aspect-ratio:4/5}
 .gal:nth-child(odd) .print{transform:rotate(-1.1deg)}
 .gal:nth-child(even) .print{transform:rotate(1deg)}
+/* AFTER the tilts on purpose: same specificity, so source order is what lets
+   the hover straighten a print that a :nth-child rule has already turned */
+@media (hover:hover){
+	.gal:hover .print{transform:rotate(0deg) translateY(-7px) scale(1.015);box-shadow:var(--shadow-lift)}
+}
+/* the captions arrive with the photographs, one place and year each */
 .gal .cap{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);text-align:center}
 @media (max-width:640px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.about-contact{margin-top:clamp(56px,7vw,96px);border-top:1px solid var(--line);padding-block:clamp(48px,6vw,80px) clamp(56px,7vw,96px);text-align:center}
+.about-contact{margin-top:clamp(28px,3.4vw,44px);border-top:1px solid var(--line);padding-block:clamp(32px,3.8vw,50px) clamp(34px,4.2vw,56px);text-align:center}
 .about-contact h2{font-size:clamp(21px,2.6vw,28px);font-weight:800;letter-spacing:-.02em;margin:0 0 12px}
 .about-contact p.say{font-size:15px;font-weight:500;margin:0 auto 24px;color:var(--ink-mid);max-width:46ch}
 .about-contact .mail{font-size:clamp(16px,2vw,19px);font-weight:700;margin:0 0 6px}
 .about-contact .reply{font-size:12.5px;font-weight:500;color:var(--ink-soft);margin:0 0 28px}
 .links-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 @media (max-width:600px){.links-row{grid-template-columns:minmax(0,1fr)}}
-.link-card{display:grid;grid-template-columns:46px minmax(0,1fr) auto;gap:13px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:12px 18px 12px 12px;text-decoration:none;color:inherit;min-width:min(320px,100%);text-align:left;transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.link-card{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:12px 18px 12px 12px;text-decoration:none;color:inherit;min-width:min(320px,100%);text-align:left;transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
 @media (hover:hover){.link-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lift);color:inherit}}
-.link-card .badge{width:46px;height:46px;border-radius:11px;display:grid;place-items:center;font-size:15px;font-weight:800;color:#fff;letter-spacing:.01em}
+/* The round slot is where his own photograph goes. Until he sends one it is a
+   quiet panel with the platform mark on its corner, exactly as the empty photo
+   slots elsewhere are quiet: nothing is written in it saying it is empty. */
+.link-card .pfp{width:52px;height:52px;border-radius:50%;background:linear-gradient(160deg,var(--slot),var(--slot-2));position:relative;display:block}
+.link-card .pfp img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block}
+.link-card .badge{position:absolute;right:-3px;bottom:-3px;width:23px;height:23px;border-radius:50%;display:grid;place-items:center;font-size:9.5px;font-weight:800;color:#fff;letter-spacing:.01em;border:2px solid var(--card)}
 .link-card .badge.li{background:#0A66C2}
 .link-card .badge.gh{background:#24292F}
+.link-card .lc-t{min-width:0}
 .link-card .who{display:block;font-size:13.5px;font-weight:700;line-height:1.35}
-.link-card .what{display:block;font-size:11.5px;color:var(--ink-soft);font-weight:500}
+.link-card .what{display:block;font-size:11.5px;color:var(--ink-mid);font-weight:500;line-height:1.4;margin-top:1px}
+.link-card .url{display:block;font-size:11px;color:var(--ink-soft);font-weight:600;margin-top:4px}
 .link-card .arrow{color:var(--sky);font-weight:700}
 
 /* ---------- home closing band ---------- */
 .contact{background:linear-gradient(180deg,var(--paper-2),var(--paper));border-top:1px solid var(--line);margin-top:clamp(20px,2.4vw,34px)}
-.contact .inner{padding-block:clamp(38px,4.2vw,56px);max-width:660px;margin-inline:auto;text-align:center}
+.contact .inner{padding-block:clamp(38px,4.2vw,56px);max-width:760px;margin-inline:auto;text-align:center}
 .contact h2{font-size:clamp(23px,2.8vw,31px);font-weight:800;margin:0 0 12px;letter-spacing:-.02em}
 .contact p.say{font-size:15px;font-weight:500;margin:0 auto 26px;color:var(--ink-mid);max-width:46ch}
 .contact .mail{font-size:clamp(16px,2vw,19px);font-weight:700;margin:0 0 6px}
@@ -324,9 +343,6 @@ html.js .rv.in{opacity:1;transform:none}
 .prose blockquote{margin:26px 0;padding:2px 0 2px 20px;border-left:3px solid;border-image:linear-gradient(180deg,var(--sky),var(--navy)) 1;font-size:18px;font-weight:600;color:var(--ink);line-height:1.5}
 .prose figure{margin:30px 0}
 .prose figcaption{font-size:12.5px;font-weight:500;color:var(--ink-soft);margin-top:10px}
-.prose .sources{margin-top:44px;padding-top:24px;border-top:1px solid var(--line)}
-.prose .sources h3{margin-top:0}
-.prose .sources li{font-size:14px;line-height:1.6}
 .post-head{padding-block:clamp(44px,5.5vw,76px) 0}
 .post-head h1{font-size:clamp(30px,4.2vw,46px);font-weight:800;letter-spacing:-.028em;line-height:1.12;margin:0 0 16px;max-width:20ch}
 .post-head .deck{font-size:clamp(16px,1.9vw,19px);font-weight:500;color:var(--ink-mid);max-width:60ch;margin:0 0 18px}
@@ -342,12 +358,10 @@ html.js .rv.in{opacity:1;transform:none}
 .cv-row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
 .cv-org{font-size:17px;font-weight:700;letter-spacing:-.01em;margin:0}
 .cv-date{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap}
-.cv-role{font-size:13.5px;font-weight:500;color:var(--ink-mid);margin:2px 0 8px}
 .cv-points{margin:0;padding-left:20px}
 .cv-points li{font-size:14.5px;line-height:1.65;color:var(--ink-mid);margin-bottom:6px}
 .cv-contact{display:flex;flex-wrap:wrap;gap:8px 22px;align-items:center;margin-top:14px}
 .cv-contact a{font-size:13.5px;font-weight:500}
-.cv-skills{display:grid;gap:16px}
 .cv-skill-row{display:grid;grid-template-columns:150px minmax(0,1fr);gap:6px 20px}
 .cv-skill-cat{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--sky)}
 .cv-skill-items{font-size:14.5px;font-weight:500;color:var(--ink-mid)}
