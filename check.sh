@@ -219,6 +219,10 @@ sys.exit(bad)
 PY
 
 # ------------------------------------- 10b. no scaffolding text ever ships
+# The ONE deliberate exception is the .notice at the top of the homepage, which
+# Agosh asked for on 2026-09-01: it names what is missing in plain words instead
+# of writing "coming soon" into each empty slot. Delete it when the last of the
+# photographs, press links and event dates lands.
 # Placeholder words shipped once ("Outlet", "year", "event name" printed on the
 # live page). An empty slot is a quiet panel with nothing written on it, never a
 # label saying something is missing.

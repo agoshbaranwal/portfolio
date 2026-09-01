@@ -177,6 +177,17 @@ html.js .rv.in{opacity:1;transform:none}
   .tl-item .place{min-width:5.4em}
 }
 
+/* The unfinished notice. It says out loud that photographs, press links and a
+   few dates are missing, so the empty slots read as pending rather than broken.
+   DELETE IT, and this rule, on the day the last of those lands. */
+.notice{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin:clamp(16px,2vw,24px) 0 0;
+  padding:13px 18px;border:1px solid var(--line);border-radius:12px;background:var(--paper-2);
+  border-left:3px solid;border-image:linear-gradient(180deg,var(--sky),var(--navy)) 1;border-radius:0 12px 12px 0}
+.notice .dot{width:7px;height:7px;border-radius:50%;background:var(--sky);flex:none;align-self:center}
+.notice b{font-size:13.5px;font-weight:700;color:var(--ink)}
+.notice span:last-child{font-size:13.5px;font-weight:500;color:var(--ink-mid)}
+@media (max-width:560px){.notice{padding:12px 15px}}
+
 /* ---------- HOME: results, lanes, projects, events, press ---------- */
 .figs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(32px,4.5vw,64px)}
 .fig{border-top:2px solid var(--line-strong);padding-top:24px;display:flex;flex-direction:column}
