@@ -38,7 +38,7 @@
   --sky-wash:rgba(62,134,196,.08);
   --hi:linear-gradient(100deg, rgba(255,224,74,0) 0%, rgba(255,224,74,.75) 6%, rgba(250,214,60,.6) 50%, rgba(255,224,74,.75) 94%, rgba(255,224,74,0) 100%);
   --chart-lead:#16365F; --chart-lag:#5AA0DC; --chart-gap:rgba(250,214,60,.5);
-  --rule:33px; --rule-ink:#DDE5F0; --margin-ink:#E7B8B2;
+  --rule:37px; --rule-ink:#DDE5F0; --margin-ink:#E7B8B2; --snap-w:424px;
   --slot:#E7EDF5;
   --slot-2:#D9E2EF;
   --shadow:0 1px 2px rgba(22,35,58,.04), 0 8px 26px rgba(22,35,58,.06);
@@ -311,48 +311,51 @@ html.js .rv.in{opacity:1;transform:none}
 @media (max-width:640px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
 /* ---------- ABOUT: the register ----------
    His instruction, 2026-09-01: a page out of a notebook, written by hand, with
-   the photographs beside the writing rather than in a grid underneath it. The
-   ruled lines are drawn on the TEXT BLOCK and not on the card, so a photograph
-   of any height beside it can never push the writing off its own lines. */
+   the photographs beside the writing. The ruled lines run ACROSS THE WHOLE PAGE
+   and do not stop for a photograph.
+
+   How that is done without the words sliding off the lines: every entry carries
+   its own ruled band, full width, and its padding-bottom carries the gap to the
+   next entry, so the bands abut and the page reads as one continuously ruled
+   sheet. The writing is positioned from the top of its own band, so it can never
+   drift, and a photograph of any height simply sits on top of the rules the way
+   a print taped to a page does. --rule and .hand's line-height are the same
+   number by design: move one without the other and the words leave the lines. */
 .register{position:relative;background:var(--card);border:1px solid var(--line);border-radius:16px;
-  box-shadow:var(--shadow-lift);margin-top:clamp(22px,2.8vw,36px);overflow:hidden;
-  padding:clamp(28px,3.4vw,44px) clamp(20px,3.2vw,44px) clamp(32px,3.8vw,50px) clamp(42px,5.6vw,86px)}
+  box-shadow:var(--shadow-lift);margin-top:clamp(20px,2.6vw,32px);overflow:hidden;
+  padding:clamp(24px,3vw,38px) clamp(20px,3vw,40px) clamp(18px,2.4vw,30px) clamp(42px,5.6vw,86px)}
 .register::before{content:"";position:absolute;top:0;bottom:0;left:clamp(26px,3.6vw,56px);width:1.5px;background:var(--margin-ink);opacity:.75}
-/* punched holes down the gutter, at a fixed pitch so they are circles rather
-   than a percentage-stretched smudge, which is what the first attempt drew */
 .register::after{content:"";position:absolute;left:clamp(10px,1.4vw,20px);top:0;bottom:0;width:13px;
   background-image:radial-gradient(circle 6.5px at 6.5px 6.5px,var(--paper-2) 0 72%,var(--line-strong) 74% 100%,transparent 100%);
-  background-size:13px 116px;background-repeat:repeat-y;background-position:0 54px;pointer-events:none}
+  background-size:13px 116px;background-repeat:repeat-y;background-position:0 40px;pointer-events:none;z-index:2}
 @media (max-width:640px){.register::after{display:none}}
-.entry{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,296px);gap:clamp(22px,3.2vw,48px);align-items:start}
-.entry + .entry{margin-top:clamp(32px,4.2vw,58px)}
-.entry.flip{grid-template-columns:minmax(0,296px) minmax(0,1fr)}
+
+.entry{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,var(--snap-w));gap:clamp(20px,3vw,44px);align-items:start;
+  padding-bottom:calc(var(--rule) * 2);
+  background-image:repeating-linear-gradient(to bottom,transparent 0 calc(var(--rule) - 1px),var(--rule-ink) calc(var(--rule) - 1px),var(--rule-ink) var(--rule));
+  background-position:0 9px}
+.entry:last-child{padding-bottom:var(--rule)}
+.entry.flip{grid-template-columns:minmax(0,var(--snap-w)) minmax(0,1fr)}
 .entry.flip .hand{order:2}
 .entry.flip .snaps{order:1}
-@media (max-width:860px){
-  .entry,.entry.flip{grid-template-columns:minmax(0,1fr);gap:clamp(18px,3.4vw,26px)}
+@media (max-width:880px){
+  .entry,.entry.flip{grid-template-columns:minmax(0,1fr);gap:clamp(16px,3vw,24px)}
   .entry.flip .hand{order:1}
   .entry.flip .snaps{order:2}
 }
-/* line-height and rule pitch are deliberately the same number: change one and
-   the other has to move or the words come off the lines */
-.hand{font-family:var(--hand);font-size:clamp(19.5px,2vw,22px);line-height:var(--rule);color:var(--ink);
-  background-image:repeating-linear-gradient(to bottom,transparent 0 calc(var(--rule) - 1px),var(--rule-ink) calc(var(--rule) - 1px),var(--rule-ink) var(--rule));
-  background-position:0 8px}
-.hand p{margin:0 0 var(--rule)}
-.hand p:last-child{margin-bottom:0}
+
+.hand{font-family:var(--hand);font-size:clamp(21px,2.3vw,25px);line-height:var(--rule);color:var(--ink)}
+.hand p{margin:0}
 .hand a{font-weight:700;color:var(--navy);text-decoration-color:var(--sky);text-underline-offset:3px}
-.snaps{display:grid;gap:clamp(13px,1.8vw,20px)}
-.snaps.two{grid-template-columns:repeat(2,minmax(0,1fr))}
-.snaps figure{margin:0}
+
+/* prints taped onto the page, sitting over the rules */
+.snaps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(12px,1.6vw,18px)}
 .snaps .print{width:100%;aspect-ratio:4/5;display:block}
-.snaps .print.wide{aspect-ratio:4/3}
-.snaps figcaption{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-top:9px;line-height:1.4}
-.snaps figure:nth-child(odd) .print{transform:rotate(-1.5deg)}
-.snaps figure:nth-child(even) .print{transform:rotate(1.3deg)}
-@media (hover:hover){.snaps figure:hover .print{transform:rotate(0deg) translateY(-7px) scale(1.02);box-shadow:var(--shadow-lift)}}
-@media (max-width:860px){.snaps{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:359px){.snaps,.snaps.two{grid-template-columns:minmax(0,1fr)}}
+.snaps .print:nth-child(odd){transform:rotate(-1.5deg)}
+.snaps .print:nth-child(even){transform:rotate(1.3deg)}
+@media (hover:hover){.snaps .print:hover{transform:rotate(0deg) translateY(-7px) scale(1.02);box-shadow:var(--shadow-lift)}}
+@media (max-width:359px){.snaps{grid-template-columns:minmax(0,1fr)}}
+
 
 /* ---------- CONTACT ---------- */
 .contact-page{padding-block:clamp(24px,3vw,38px) clamp(46px,6vw,80px);max-width:780px}
