@@ -10,7 +10,7 @@
 # no longer exists. Every other rule below is still enforced.
 cd "$(dirname "$0")"
 fail=0
-PAGES="index.html about.html cv.html 404.html blog/index.html blog/customer-love-is-a-lagging-indicator.html projects/witness.html"
+PAGES="index.html about.html cv.html contact.html 404.html blog/index.html blog/customer-love-is-a-lagging-indicator.html projects/witness.html"
 
 # ---------------------------------------------------------------- 1. styling
 # One stylesheet. No <style> blocks, no inline style attributes.
@@ -181,28 +181,36 @@ PY
 
 # ------------------------------------------- 8. no full stops in interface copy
 # The owner's rule, 2026-09-01: headings, labels, captions and button text carry no
-# full stops. Long-form prose does, so the essay, the CV summary and the About
-# page's own paragraphs are exempt. The exemption is the .about-prose block ONLY:
-# every heading, caption and button on that page is still checked.
+# full stops. Long-form prose does, so the essay, the CV summary and the writing
+# on the About register are exempt. The exemption is the .hand blocks ONLY: every
+# heading, photo caption and button on that page is still checked.
 python3 - <<'PY' || fail=1
 import re, sys
 bad = 0
-for f in ["index.html", "about.html", "404.html", "blog/index.html", "projects/witness.html"]:
+for f in ["index.html", "about.html", "contact.html", "404.html", "blog/index.html", "projects/witness.html"]:
 	s = open(f, encoding="utf-8").read()
 	s = re.sub(r"(?s)<head.*?</head>|<script.*?</script>|<svg.*?</svg>|<!--.*?-->", "", s)
-	s = re.sub(r'(?s)<div class="about-prose[^"]*">.*?</div>', "", s)
+	s = re.sub(r'(?s)<div class="hand">.*?</div>', "", s)
 	for hit in re.findall(r"[A-Za-z0-9)]\.(?=\s|$)", re.sub(r"<[^>]+>", " ", s), re.M):
 		print(f"FAIL: {f} interface copy contains a full stop near '{hit}'"); bad += 1
 sys.exit(1 if bad else 0)
 PY
 
-# ------------------------------------------------------- 9. one typeface, self-hosted
+# ------------------------------------------------- 9. two typefaces, both self-hosted
+# Montserrat everywhere, and Caveat on the About register only (his instruction,
+# 2026-09-01). Both are files in this repo: no request may leave for a font.
 if grep -l "fonts.googleapis.com\|fonts.gstatic.com" $PAGES site.css 2>/dev/null; then
-	echo "FAIL: a remote font request (Montserrat is self-hosted at /fonts/montserrat.woff2)"; fail=1
+	echo "FAIL: a remote font request (both faces are self-hosted under /fonts)"; fail=1
 fi
-[ -f fonts/montserrat.woff2 ] || { echo "FAIL: fonts/montserrat.woff2 missing"; fail=1; }
-n=$(grep -oE 'font-family:[^;}]*' site.css | grep -vc 'var(--font)\|"Montserrat"')
-[ "$n" = "0" ] || { echo "FAIL: site.css names $n typeface other than Montserrat"; fail=1; }
+for f in fonts/montserrat.woff2 fonts/caveat.woff2; do
+	[ -f "$f" ] || { echo "FAIL: $f missing"; fail=1; }
+done
+n=$(grep -oE 'font-family:[^;}]*' site.css | grep -vc 'var(--font)\|var(--hand)\|"Montserrat"\|"Caveat"')
+[ "$n" = "0" ] || { echo "FAIL: site.css names $n typeface beyond Montserrat and Caveat"; fail=1; }
+# and the hand stays on the About register: nothing else may wear it
+if grep -n 'var(--hand)' site.css | grep -qv '^[0-9]*:\.hand{'; then
+	echo "FAIL: var(--hand) is used outside .hand (the register is its only home)"; fail=1
+fi
 
 # ------------------------------------------------ 10. every outbound link is previewed
 # The owner's trust rule: a link off this site always shows what is behind it, either
@@ -236,7 +244,7 @@ if grep -rniE "to be added|coming soon|placeholder|lorem ipsum|\bTBD\b|\bTODO\b|
 fi
 
 # --------------------------------------------------- 11. every page is shareable
-for f in index.html about.html cv.html blog/index.html blog/customer-love-is-a-lagging-indicator.html projects/witness.html; do
+for f in index.html about.html cv.html contact.html blog/index.html blog/customer-love-is-a-lagging-indicator.html projects/witness.html; do
 	for tag in 'rel="canonical"' 'property="og:image"' 'name="description"'; do
 		grep -q "$tag" "$f" || { echo "FAIL: $f is missing $tag"; fail=1; }
 	done
