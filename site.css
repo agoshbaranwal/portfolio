@@ -27,7 +27,7 @@
   --sky:#3E86C4;
   --sky-wash:rgba(62,134,196,.08);
   --hi:linear-gradient(100deg, rgba(255,224,74,0) 0%, rgba(255,224,74,.75) 6%, rgba(250,214,60,.6) 50%, rgba(255,224,74,.75) 94%, rgba(255,224,74,0) 100%);
-  --hi-flat:rgba(250,214,60,.5);
+  --chart-lead:#16365F; --chart-lag:#5AA0DC; --chart-gap:rgba(250,214,60,.5);
   --slot:#E7EDF5;
   --slot-2:#D9E2EF;
   --shadow:0 1px 2px rgba(22,35,58,.04), 0 8px 26px rgba(22,35,58,.06);
@@ -52,7 +52,7 @@
     --sky:#6FB0E0;
     --sky-wash:rgba(111,176,224,.09);
     --hi:linear-gradient(100deg, rgba(214,178,44,0) 0%, rgba(214,178,44,.34) 6%, rgba(214,178,44,.27) 50%, rgba(214,178,44,.34) 94%, rgba(214,178,44,0) 100%);
-    --hi-flat:rgba(214,178,44,.3);
+    --chart-lead:#F2F6FC; --chart-lag:#5F9FD8; --chart-gap:rgba(255,241,198,.13);
     --slot:#1B2942;
     --slot-2:#20304C;
     --shadow:0 1px 2px rgba(0,0,0,.35), 0 8px 26px rgba(0,0,0,.32);
@@ -75,7 +75,7 @@
   --sky:#6FB0E0;
   --sky-wash:rgba(111,176,224,.09);
   --hi:linear-gradient(100deg, rgba(214,178,44,0) 0%, rgba(214,178,44,.34) 6%, rgba(214,178,44,.27) 50%, rgba(214,178,44,.34) 94%, rgba(214,178,44,0) 100%);
-  --hi-flat:rgba(214,178,44,.3);
+  --chart-lead:#F2F6FC; --chart-lag:#5F9FD8; --chart-gap:rgba(255,241,198,.13);
   --slot:#1B2942;
   --slot-2:#20304C;
   --shadow:0 1px 2px rgba(0,0,0,.35), 0 8px 26px rgba(0,0,0,.32);
