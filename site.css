@@ -1,11 +1,12 @@
 /* The second face, and the only one: the About register is in a hand. Caveat
    was the first attempt and was replaced on 2026-09-01 with Architects
-   Daughter, which is upright and irregular where Caveat was a slanted script,
-   so it reads as writing on a page rather than as a signature. Self-hosted like
-   Montserrat, latin subset, 13KB, used on that page and nowhere else. */
+   Daughter, and again on the same day with Patrick Hand. Caveat was a slanted
+   script and read as a signature; Architects Daughter was wide and architectural.
+   This one is neat upright everyday handwriting and fits the most words to a
+   line. Self-hosted, latin subset, 14KB, used on that page and nowhere else. */
 @font-face{
-  font-family:"Architects Daughter";
-  src:url("/fonts/architects-daughter.woff2") format("woff2");
+  font-family:"Patrick Hand";
+  src:url("/fonts/patrick-hand.woff2") format("woff2");
   font-weight:400;
   font-style:normal;
   font-display:swap;
@@ -40,14 +41,15 @@
   --sky-wash:rgba(62,134,196,.08);
   --hi:linear-gradient(100deg, rgba(255,224,74,0) 0%, rgba(255,224,74,.75) 6%, rgba(250,214,60,.6) 50%, rgba(255,224,74,.75) 94%, rgba(255,224,74,0) 100%);
   --chart-lead:#16365F; --chart-lag:#5AA0DC; --chart-gap:rgba(250,214,60,.5);
-  --rule:37px; --rule-ink:#DDE5F0; --margin-ink:#E7B8B2; --rail:400px;
+  --rule:37px; --rule-ink:#DDE5F0; --margin-ink:#E7B8B2; --rail:330px;
+  --film:#1B1C21; --sprocket:#EAEBEF;
   --slot:#E7EDF5;
   --slot-2:#D9E2EF;
   --shadow:0 1px 2px rgba(22,35,58,.04), 0 8px 26px rgba(22,35,58,.06);
   --shadow-lift:0 2px 4px rgba(22,35,58,.05), 0 22px 52px rgba(62,134,196,.16);
   --shadow-btn:0 6px 20px rgba(22,54,95,.28);
   --grad-btn:linear-gradient(135deg,var(--navy-2),var(--navy));
-  --hand:"Architects Daughter","Segoe Print","Bradley Hand",cursive;
+  --hand:"Patrick Hand","Segoe Print","Bradley Hand",cursive;
   --font:"Montserrat",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   --ease:cubic-bezier(.2,.7,.25,1);
 }
@@ -68,7 +70,11 @@
     --hi:linear-gradient(100deg, rgba(214,178,44,0) 0%, rgba(214,178,44,.34) 6%, rgba(214,178,44,.27) 50%, rgba(214,178,44,.34) 94%, rgba(214,178,44,0) 100%);
     --chart-lead:#F2F6FC; --chart-lag:#5F9FD8; --chart-gap:rgba(255,240,190,.15);
     --rule-ink:#22304A; --margin-ink:#5C3D40;
+  --film:#0A0B0E; --sprocket:#3A3D47;
+    --film:#0A0B0E; --sprocket:#3A3D47;
     --rule-ink:#22304A; --margin-ink:#5C3D40;
+  --film:#0A0B0E; --sprocket:#3A3D47;
+    --film:#0A0B0E; --sprocket:#3A3D47;
   --slot:#1B2942;
     --slot-2:#20304C;
     --shadow:0 1px 2px rgba(0,0,0,.35), 0 8px 26px rgba(0,0,0,.32);
@@ -342,20 +348,51 @@ html.js .rv.in{opacity:1;transform:none}
 .hand p:last-child{margin-bottom:0}
 .hand a{font-weight:400;color:var(--navy);text-decoration-color:var(--sky);text-underline-offset:4px}
 
-/* the gallery: prints of different shapes flowed into two columns, each one at
-   its own small angle, so they read as photographs laid on the page rather than
-   as a grid of tiles */
-.reg-gal{column-count:2;column-gap:clamp(11px,1.4vw,16px)}
-.reg-gal .print{width:100%;display:block;break-inside:avoid;margin:0 0 clamp(11px,1.4vw,16px)}
-.reg-gal .print:nth-child(6n+1){aspect-ratio:4/5;transform:rotate(-1.6deg) translateX(-6px)}
-.reg-gal .print:nth-child(6n+2){aspect-ratio:1/1;transform:rotate(1.3deg) translateX(7px)}
-.reg-gal .print:nth-child(6n+3){aspect-ratio:3/4;transform:rotate(1.1deg) translateX(4px)}
-.reg-gal .print:nth-child(6n+4){aspect-ratio:4/5;transform:rotate(-1.2deg) translateX(-8px)}
-.reg-gal .print:nth-child(6n+5){aspect-ratio:4/3;transform:rotate(-1.8deg) translateX(5px)}
-.reg-gal .print:nth-child(6n+6){aspect-ratio:1/1;transform:rotate(1.7deg) translateX(-5px)}
-@media (hover:hover){.reg-gal .print:hover{transform:rotate(0deg) translateY(-7px) scale(1.03);box-shadow:var(--shadow-lift)}}
-@media (max-width:900px){.reg-gal{column-count:3}}
-@media (max-width:560px){.reg-gal{column-count:2}}
+/* Two 35mm strips laid on the page: film base, sprocket holes punched down both
+   edges, four frames each at 3:2, which is the shape a 36x24mm negative actually
+   is. His instruction, 2026-09-01: the photographs sit on a physical thing
+   rather than float.
+
+   One runs down beside the writing and one lies across the foot of the page.
+   Stacking both vertically was the first attempt and left 600px of blank ruled
+   paper beside them, because eight 3:2 frames in a narrow column are taller than
+   300 words of handwriting. */
+.filmstrip{position:relative;background:var(--film);border-radius:4px;
+  box-shadow:0 3px 8px rgba(16,18,26,.2),0 20px 42px rgba(16,18,26,.22);
+  transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+.filmstrip .frame{display:block;background:linear-gradient(160deg,var(--slot),var(--slot-2));border-radius:1px}
+.filmstrip::before,.filmstrip::after{content:"";position:absolute;background-repeat:repeat;pointer-events:none}
+@media (hover:hover){.filmstrip:hover{box-shadow:0 4px 10px rgba(16,18,26,.22),0 30px 60px rgba(16,18,26,.3)}}
+
+/* down the side: sprockets on the long edges, frames stacked */
+.filmstrip.down{width:min(100%,300px);padding:16px 17px;display:grid;gap:7px;transform:rotate(-1.5deg);margin-inline:auto}
+.filmstrip.down .frame{width:100%;aspect-ratio:3/2}
+.filmstrip.down::before,.filmstrip.down::after{top:0;bottom:0;width:9px;
+  background-image:repeating-linear-gradient(to bottom,var(--sprocket) 0 11px,transparent 11px 26px);background-position:0 9px}
+.filmstrip.down::before{left:4px}
+.filmstrip.down::after{right:4px}
+@media (hover:hover){.filmstrip.down:hover{transform:rotate(0deg) translateY(-6px) scale(1.015)}}
+
+/* across the foot: sprockets on the top and bottom edges, frames in a row */
+.filmstrip.across{margin:clamp(26px,3.2vw,44px) auto 0;padding:17px 16px;display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;transform:rotate(.9deg);max-width:100%}
+.filmstrip.across .frame{width:100%;aspect-ratio:3/2}
+.filmstrip.across::before,.filmstrip.across::after{left:0;right:0;height:9px;
+  background-image:repeating-linear-gradient(to right,var(--sprocket) 0 11px,transparent 11px 26px);background-position:9px 0}
+.filmstrip.across::before{top:4px}
+.filmstrip.across::after{bottom:4px}
+@media (hover:hover){.filmstrip.across:hover{transform:rotate(0deg) translateY(-6px) scale(1.01)}}
+
+@media (max-width:900px){
+  .filmstrip.down{width:100%;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .filmstrip.down::before,.filmstrip.down::after{display:none}
+  .filmstrip.down{padding:16px}
+}
+@media (max-width:560px){
+  .filmstrip.across{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .filmstrip.across::before,.filmstrip.across::after{display:none}
+  .filmstrip.across{padding:16px}
+}
 
 
 /* ---------- CONTACT ---------- */
