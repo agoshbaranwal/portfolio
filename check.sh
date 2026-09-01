@@ -133,7 +133,7 @@ done
 
 # 5g. The deploy fence: private files must be listed in .vercelignore
 #     (Vercel ignores .gitignore entirely once a .vercelignore exists).
-for pat in ".notes" ".env" "lab"; do
+for pat in ".notes" ".env" "lab" "incoming"; do
 	grep -q "$pat" .vercelignore || { echo "FAIL: .vercelignore does not fence $pat"; fail=1; }
 done
 

@@ -10,3 +10,7 @@ agosh-baranwal-cv.pdf
 
 # personal photos: never in the public repo
 IMG-*.jpg
+
+# raw photo drops: never in the public repo
+incoming/
+!incoming/README.txt
