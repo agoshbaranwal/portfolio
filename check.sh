@@ -10,7 +10,7 @@
 # no longer exists. Every other rule below is still enforced.
 cd "$(dirname "$0")"
 fail=0
-PAGES="index.html about.html cv.html 404.html blog/index.html blog/customer-love-is-a-lagging-indicator.html"
+PAGES="index.html about.html cv.html 404.html blog/index.html blog/customer-love-is-a-lagging-indicator.html projects/witness.html"
 
 # ---------------------------------------------------------------- 1. styling
 # One stylesheet. No <style> blocks, no inline style attributes.
@@ -82,7 +82,7 @@ class P(HTMLParser):
 			if '"' in k or k.endswith("href="):
 				self.bad.append((self.getpos()[0], "malformed attribute", attrs))
 bad = 0
-for f in sorted(glob.glob("*.html") + glob.glob("blog/*.html")):
+for f in sorted(glob.glob("*.html") + glob.glob("blog/*.html") + glob.glob("projects/*.html")):
 	if f == "post-template.html": continue
 	p = P(); p.feed(open(f, encoding="utf-8").read())
 	for line, why, attrs in p.bad:
@@ -107,7 +107,7 @@ def target(h):
 	for c in (p, p + ".html", p + "/index.html"):
 		if os.path.exists(c): return c
 	return "MISSING:" + h
-for f in glob.glob("*.html") + glob.glob("blog/*.html"):
+for f in glob.glob("*.html") + glob.glob("blog/*.html") + glob.glob("projects/*.html"):
 	if f == "post-template.html": continue
 	for h in re.findall(r'(?:href|src)="([^"]+)"', open(f, encoding="utf-8").read()):
 		t = target(h)
@@ -152,7 +152,7 @@ python3 - <<'PY' || fail=1
 import sys, glob, re
 bad = 0
 TAGS = ["div", "article", "section", "main", "nav", "header", "figure", "ul", "ol", "p", "li"]
-for f in sorted(glob.glob("*.html") + glob.glob("blog/*.html")):
+for f in sorted(glob.glob("*.html") + glob.glob("blog/*.html") + glob.glob("projects/*.html")):
 	if f == "post-template.html": continue
 	s = open(f, encoding="utf-8").read()
 	s = re.sub(r"(?s)<script.*?</script>|<svg.*?</svg>|<!--.*?-->", "", s)
@@ -169,7 +169,7 @@ PY
 python3 - <<'PY' || fail=1
 import re, sys
 bad = 0
-for f in ["index.html", "about.html", "404.html", "blog/index.html"]:
+for f in ["index.html", "about.html", "404.html", "blog/index.html", "projects/witness.html"]:
 	s = open(f, encoding="utf-8").read()
 	s = re.sub(r"(?s)<head.*?</head>|<script.*?</script>|<svg.*?</svg>|<!--.*?-->", "", s)
 	for hit in re.findall(r"[A-Za-z0-9)]\.(?=\s|$)", re.sub(r"<[^>]+>", " ", s), re.M):
@@ -213,7 +213,7 @@ if grep -rniE "to be added|coming soon|placeholder|lorem ipsum|\bTBD\b|\bTODO\b|
 fi
 
 # --------------------------------------------------- 11. every page is shareable
-for f in index.html about.html cv.html blog/index.html blog/customer-love-is-a-lagging-indicator.html; do
+for f in index.html about.html cv.html blog/index.html blog/customer-love-is-a-lagging-indicator.html projects/witness.html; do
 	for tag in 'rel="canonical"' 'property="og:image"' 'name="description"'; do
 		grep -q "$tag" "$f" || { echo "FAIL: $f is missing $tag"; fail=1; }
 	done
