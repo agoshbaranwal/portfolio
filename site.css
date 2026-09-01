@@ -52,7 +52,7 @@
     --sky:#6FB0E0;
     --sky-wash:rgba(111,176,224,.09);
     --hi:linear-gradient(100deg, rgba(214,178,44,0) 0%, rgba(214,178,44,.34) 6%, rgba(214,178,44,.27) 50%, rgba(214,178,44,.34) 94%, rgba(214,178,44,0) 100%);
-    --chart-lead:#F2F6FC; --chart-lag:#5F9FD8; --chart-gap:rgba(255,241,198,.13);
+    --chart-lead:#F2F6FC; --chart-lag:#5F9FD8; --chart-gap:rgba(255,240,190,.15);
     --slot:#1B2942;
     --slot-2:#20304C;
     --shadow:0 1px 2px rgba(0,0,0,.35), 0 8px 26px rgba(0,0,0,.32);
@@ -75,7 +75,7 @@
   --sky:#6FB0E0;
   --sky-wash:rgba(111,176,224,.09);
   --hi:linear-gradient(100deg, rgba(214,178,44,0) 0%, rgba(214,178,44,.34) 6%, rgba(214,178,44,.27) 50%, rgba(214,178,44,.34) 94%, rgba(214,178,44,0) 100%);
-  --chart-lead:#F2F6FC; --chart-lag:#5F9FD8; --chart-gap:rgba(255,241,198,.13);
+  --chart-lead:#F2F6FC; --chart-lag:#5F9FD8; --chart-gap:rgba(255,240,190,.15);
   --slot:#1B2942;
   --slot-2:#20304C;
   --shadow:0 1px 2px rgba(0,0,0,.35), 0 8px 26px rgba(0,0,0,.32);
@@ -279,7 +279,7 @@ html.js .rv.in{opacity:1;transform:none}
 .feature .meta{font-size:11px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-soft);display:flex;gap:18px;flex-wrap:wrap}
 
 /* ---------- ABOUT ME page ---------- */
-.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(26px,3.6vw,46px);margin-top:clamp(30px,4vw,48px)}
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(26px,3.6vw,46px);margin:clamp(30px,3.6vw,44px) 0 clamp(40px,5vw,66px)}
 .gal{display:grid;gap:8px}
 .gal{margin:0}
 .gal .print{width:100%}
@@ -294,7 +294,7 @@ html.js .rv.in{opacity:1;transform:none}
 /* the captions arrive with the photographs, one place and year each */
 .gal .cap{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);text-align:center}
 @media (max-width:640px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.about-contact{margin-top:clamp(28px,3.4vw,44px);border-top:1px solid var(--line);padding-block:clamp(32px,3.8vw,50px) clamp(34px,4.2vw,56px);text-align:center}
+.about-contact{margin-top:clamp(22px,2.6vw,32px);padding-block:clamp(26px,3vw,38px) clamp(30px,3.6vw,46px);text-align:center;border-bottom:1px solid var(--line)}
 .about-contact h2{font-size:clamp(21px,2.6vw,28px);font-weight:800;letter-spacing:-.02em;margin:0 0 12px}
 .about-contact p.say{font-size:15px;font-weight:500;margin:0 auto 24px;color:var(--ink-mid);max-width:46ch}
 .about-contact .mail{font-size:clamp(16px,2vw,19px);font-weight:700;margin:0 0 6px}
