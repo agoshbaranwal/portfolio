@@ -181,13 +181,16 @@ PY
 
 # ------------------------------------------- 8. no full stops in interface copy
 # The owner's rule, 2026-09-01: headings, labels, captions and button text carry no
-# full stops. Long-form prose does, so the essay and the CV summary are exempt.
+# full stops. Long-form prose does, so the essay, the CV summary and the About
+# page's own paragraphs are exempt. The exemption is the .about-prose block ONLY:
+# every heading, caption and button on that page is still checked.
 python3 - <<'PY' || fail=1
 import re, sys
 bad = 0
 for f in ["index.html", "about.html", "404.html", "blog/index.html", "projects/witness.html"]:
 	s = open(f, encoding="utf-8").read()
 	s = re.sub(r"(?s)<head.*?</head>|<script.*?</script>|<svg.*?</svg>|<!--.*?-->", "", s)
+	s = re.sub(r'(?s)<div class="about-prose[^"]*">.*?</div>', "", s)
 	for hit in re.findall(r"[A-Za-z0-9)]\.(?=\s|$)", re.sub(r"<[^>]+>", " ", s), re.M):
 		print(f"FAIL: {f} interface copy contains a full stop near '{hit}'"); bad += 1
 sys.exit(1 if bad else 0)

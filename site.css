@@ -279,7 +279,7 @@ html.js .rv.in{opacity:1;transform:none}
 .feature .meta{font-size:11px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-soft);display:flex;gap:18px;flex-wrap:wrap}
 
 /* ---------- ABOUT ME page ---------- */
-.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(26px,3.6vw,46px);margin:clamp(30px,3.6vw,44px) 0 clamp(40px,5vw,66px)}
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(26px,3.6vw,46px);margin:0 0 clamp(40px,5vw,66px)}
 .gal{display:grid;gap:8px}
 .gal{margin:0}
 .gal .print{width:100%}
@@ -294,15 +294,22 @@ html.js .rv.in{opacity:1;transform:none}
 /* the captions arrive with the photographs, one place and year each */
 .gal .cap{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);text-align:center}
 @media (max-width:640px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.about-contact{margin-top:clamp(22px,2.6vw,32px);padding-block:clamp(26px,3vw,38px) clamp(30px,3.6vw,46px);text-align:center;border-bottom:1px solid var(--line)}
-.about-contact h2{font-size:clamp(21px,2.6vw,28px);font-weight:800;letter-spacing:-.02em;margin:0 0 12px}
-.about-contact p.say{font-size:15px;font-weight:500;margin:0 auto 24px;color:var(--ink-mid);max-width:46ch}
-.about-contact .mail{font-size:clamp(16px,2vw,19px);font-weight:700;margin:0 0 6px}
-.about-contact .reply{font-size:12.5px;font-weight:500;color:var(--ink-soft);margin:0 0 28px}
+/* About: one column, everything left aligned to the heading. The page used to
+   run left header, centred contact, left grid, which read as three unrelated
+   pieces. */
+.about-prose{margin-top:clamp(22px,2.6vw,32px);max-width:62ch}
+.about-prose p:last-child{margin-bottom:0}
+.about-sec{margin-top:clamp(38px,4.6vw,64px);padding-top:clamp(30px,3.6vw,44px);border-top:1px solid var(--line)}
+.about-sec h2{font-size:clamp(21px,2.6vw,28px);font-weight:800;letter-spacing:-.02em;margin:0 0 10px}
+.about-sec p.say{font-size:15px;font-weight:500;margin:0 0 20px;color:var(--ink-mid);max-width:52ch}
+.about-sec .mail{font-size:clamp(16px,2vw,19px);font-weight:700;margin:0 0 6px}
+.about-sec .reply{font-size:12.5px;font-weight:500;color:var(--ink-soft);margin:0 0 22px}
 .links-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 @media (max-width:600px){.links-row{grid-template-columns:minmax(0,1fr)}}
 .link-card{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:12px 18px 12px 12px;text-decoration:none;color:inherit;min-width:min(320px,100%);text-align:left;transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
 @media (hover:hover){.link-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lift);color:inherit}}
+.about-sec .links-row{max-width:720px}
+.about-sec .notice{margin:0 0 clamp(20px,2.4vw,28px)}
 /* The round slot is where his own photograph goes. Until he sends one it is a
    quiet panel with the platform mark on its corner, exactly as the empty photo
    slots elsewhere are quiet: nothing is written in it saying it is empty. */
