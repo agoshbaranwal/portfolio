@@ -90,10 +90,24 @@ for f in sorted(glob.glob("*.html") + glob.glob("blog/*.html") + glob.glob("proj
 sys.exit(1 if bad else 0)
 PY
 
-# 5c. The location ban: the private city never ships in any public file.
-if grep -rliE "barcelona" $PAGES feed.xml sitemap.xml robots.txt 2>/dev/null; then
-	echo "FAIL: the banned location appears in shipped copy"; fail=1
-fi
+# 5c. The location ban: the city he lives in never ships as HIS location. The one
+#     permitted use, on his instruction 2026-09-01, is the name of the business
+#     school campus: "ESADE Barcelona" is a credential, not an address. Any other
+#     mention still fails.
+python3 - <<'PY' || fail=1
+import re, sys, glob
+bad = 0
+for f in sorted(glob.glob("*.html") + glob.glob("blog/*.html") + glob.glob("projects/*.html")
+                + ["feed.xml", "sitemap.xml", "robots.txt"]):
+	if f == "post-template.html": continue
+	try: s = open(f, encoding="utf-8").read()
+	except OSError: continue
+	for m in re.finditer(r"barcelona", s, re.I):
+		before = s[max(0, m.start() - 6):m.start()]
+		if re.search(r"esade\s*$", before, re.I): continue
+		print(f"FAIL: {f} names the banned location outside 'ESADE Barcelona'"); bad += 1
+sys.exit(1 if bad else 0)
+PY
 
 # 5d. Every internal link and asset must resolve to a real file.
 python3 - <<'PY' || fail=1

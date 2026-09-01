@@ -193,6 +193,7 @@ html.js .rv.in{opacity:1;transform:none}
 .edu-item{display:grid;gap:2px;border-left:3px solid;border-image:linear-gradient(180deg,var(--sky),var(--navy)) 1;padding-left:16px}
 .edu-item .school{font-size:15.5px;font-weight:700;letter-spacing:-.005em}
 .edu-item .deg{font-size:12.5px;font-weight:500;color:var(--ink-soft)}
+.edu-item .cred{font-size:13px;font-weight:500;color:var(--ink-mid);line-height:1.5;margin-top:5px;max-width:44ch}
 @media (max-width:720px){.ws{grid-template-columns:minmax(0,1fr)}}
 .slot{background:linear-gradient(160deg,var(--slot),var(--slot-2));border-radius:12px}
 .slot.ratio-16-10{aspect-ratio:16/10;width:100%}
