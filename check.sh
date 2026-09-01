@@ -42,6 +42,8 @@ for fig in want:
 	n = text.count(fig)
 	if n != 1:
 		print(f"FAIL: figure '{fig}' appears {n} times in visible copy (must be exactly 1)"); bad = 1
+# No percentage stats. The IIT percentile is written "99.96th percentile" with
+# no % sign, on his instruction 2026-09-01, so it passes and should stay.
 for pct in re.findall(r"\d+%", text):
 	print(f"FAIL: percentage stat '{pct}' in homepage copy (owner ruled: no percentages)"); bad = 1
 sys.exit(bad)
