@@ -190,23 +190,23 @@ bad = 0
 for f in ["index.html", "about.html", "contact.html", "404.html", "blog/index.html", "projects/witness.html"]:
 	s = open(f, encoding="utf-8").read()
 	s = re.sub(r"(?s)<head.*?</head>|<script.*?</script>|<svg.*?</svg>|<!--.*?-->", "", s)
-	s = re.sub(r'(?s)<div class="hand">.*?</div>', "", s)
+	s = re.sub(r'(?s)<div class="hand[^"]*">.*?</div>', "", s)
 	for hit in re.findall(r"[A-Za-z0-9)]\.(?=\s|$)", re.sub(r"<[^>]+>", " ", s), re.M):
 		print(f"FAIL: {f} interface copy contains a full stop near '{hit}'"); bad += 1
 sys.exit(1 if bad else 0)
 PY
 
 # ------------------------------------------------- 9. two typefaces, both self-hosted
-# Montserrat everywhere, and Caveat on the About register only (his instruction,
-# 2026-09-01). Both are files in this repo: no request may leave for a font.
+# Montserrat everywhere, and Architects Daughter on the About register only (his
+# instruction, 2026-09-01). Both are files in this repo: no request leaves for a font.
 if grep -l "fonts.googleapis.com\|fonts.gstatic.com" $PAGES site.css 2>/dev/null; then
 	echo "FAIL: a remote font request (both faces are self-hosted under /fonts)"; fail=1
 fi
-for f in fonts/montserrat.woff2 fonts/caveat.woff2; do
+for f in fonts/montserrat.woff2 fonts/architects-daughter.woff2; do
 	[ -f "$f" ] || { echo "FAIL: $f missing"; fail=1; }
 done
-n=$(grep -oE 'font-family:[^;}]*' site.css | grep -vc 'var(--font)\|var(--hand)\|"Montserrat"\|"Caveat"')
-[ "$n" = "0" ] || { echo "FAIL: site.css names $n typeface beyond Montserrat and Caveat"; fail=1; }
+n=$(grep -oE 'font-family:[^;}]*' site.css | grep -vc 'var(--font)\|var(--hand)\|"Montserrat"\|"Architects Daughter"')
+[ "$n" = "0" ] || { echo "FAIL: site.css names $n typeface beyond Montserrat and Architects Daughter"; fail=1; }
 # and the hand stays on the About register: nothing else may wear it
 if grep -n 'var(--hand)' site.css | grep -qv '^[0-9]*:\.hand{'; then
 	echo "FAIL: var(--hand) is used outside .hand (the register is its only home)"; fail=1
