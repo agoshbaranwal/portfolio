@@ -197,16 +197,16 @@ sys.exit(1 if bad else 0)
 PY
 
 # ------------------------------------------------- 9. two typefaces, both self-hosted
-# Montserrat everywhere, and Patrick Hand on the About register only (his
+# Montserrat everywhere, and Gochi Hand on the About register only (his
 # instruction, 2026-09-01). Both are files in this repo: no request leaves for a font.
 if grep -l "fonts.googleapis.com\|fonts.gstatic.com" $PAGES site.css 2>/dev/null; then
 	echo "FAIL: a remote font request (both faces are self-hosted under /fonts)"; fail=1
 fi
-for f in fonts/montserrat.woff2 fonts/patrick-hand.woff2; do
+for f in fonts/montserrat.woff2 fonts/gochi-hand.woff2; do
 	[ -f "$f" ] || { echo "FAIL: $f missing"; fail=1; }
 done
-n=$(grep -oE 'font-family:[^;}]*' site.css | grep -vc 'var(--font)\|var(--hand)\|"Montserrat"\|"Patrick Hand"')
-[ "$n" = "0" ] || { echo "FAIL: site.css names $n typeface beyond Montserrat and Patrick Hand"; fail=1; }
+n=$(grep -oE 'font-family:[^;}]*' site.css | grep -vc 'var(--font)\|var(--hand)\|"Montserrat"\|"Gochi Hand"')
+[ "$n" = "0" ] || { echo "FAIL: site.css names $n typeface beyond Montserrat and Gochi Hand"; fail=1; }
 # and the hand stays on the About register: nothing else may wear it
 if grep -n 'var(--hand)' site.css | grep -qv '^[0-9]*:\.hand{'; then
 	echo "FAIL: var(--hand) is used outside .hand (the register is its only home)"; fail=1
