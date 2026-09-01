@@ -1,194 +1,119 @@
 <!--
-	PUBLISHING CHECKLIST (authoritative copy also in CLAUDE.md).
-	To publish a post "<slug>" (lowercase-kebab, no dates in slug, permanent forever):
-	1. Copy this file to writing/<slug>.html. Fill every [BRACKET]. Zero <style> tags,
-	   zero inline style attributes: new elements become a generic class in site.css.
-	   Count the body words, divide by 210, write it as "N min read".
-	2. writing/index.html currently features posts as .latest cards (no ruled shelf
-	   until there are three or more posts). Promote this post into .latest with its
-	   own thumbnail drawn in the pen (the newest carries <span class="fresh">still
-	   drying</span>; MOVE that span off the older card). When post three ships,
-	   reintroduce the ruled shelf below the two featured cards: title-only rows,
-	   newest first (.shelf-row with a.shelf-a + span.shelf-m under p.shelf-year).
-	   Remove the .shelf-room placeholder once real rows exist.
-	3. Update the home notebook digest: TITLES ONLY, newest first, max 3 rows.
-	   Never write a post count or a cadence promise anywhere.
-	   Point the bookmark ribbon at this new post: on index.html set
-	   <a class="ribbon" href="/writing/<slug>" aria-label="Newest note: <title>">.
-	   (check.sh 5e fails the build if the ribbon and the newest feed item disagree.)
-	4. Prepend an <item> to feed.xml, bump <lastBuildDate>. RFC-822 dates; verify
-	   the weekday letter-for-letter.
-	5. Add the post to sitemap.xml with <lastmod>.
-	6. OG card: render a 1200x630 paper card for the post (headless Chrome shot of
-	   an html template in The Pen style: ruled paper, Vollkorn title, one drawn
-	   object, Kalam kicker), save as /og-<slug>.png, point og:image at it and
-	   write og:image:alt + twitter:image:alt describing it.
-	7. Deploy: cd /Users/agosh/Game/portfolio && npx --yes vercel --prod --yes
-	   Then curl-verify the live post URL, /writing, /feed.xml, and run ./check.sh <slug>.
-	CONTENT RULES: no em dashes; never a year attached to a job or degree; no
-	percentage stats in homepage copy; confident and plain, never poetic-fancy;
-	max TWO tags; every essay needs a core idea, a strong opening, a strong
-	takeaway, plenty of headings, a deck under the title, and a visible sources
-	list when it makes factual claims. Chargeable topics (politics etc.): flag to
-	Agosh before deploying; he decides per post.
-	A shipped slug is fixed with a vercel.json redirect, never a rename.
+	POST TEMPLATE. How a new post gets published (Agosh dictates, Claude typesets):
+
+	1. Pick a slug: lowercase-kebab, no dates, PERMANENT. A shipped typo becomes a
+	   redirect in vercel.json, never a rename.
+	2. Copy this file to blog/<slug>.html and fill in every [BRACKET].
+	3. Draw a cover for it, save it as /og-<slug>.png at 1200x630, and point og:image
+	   at it. The blog index card reuses the same drawing inline as SVG.
+	4. Add the post to blog/index.html as a new .feature card, newest first.
+	5. Prepend an <item> to feed.xml and bump <lastBuildDate>.
+	6. Add the URL to sitemap.xml.
+	7. Deploy: npx --yes vercel deploy --prod --yes   (git push does NOT deploy)
+	8. Verify the title is live, then run ./check.sh <slug>
+
+	House rules this file already obeys: no em dashes, no inline styles, at most two
+	tags, internal links carry no .html, and the page is complete with JS switched off.
 -->
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="theme-color" content="#fbfbf8" />
-		<script>try{if(localStorage.getItem("late")==="1")document.documentElement.classList.add("night")}catch(e){}</script>
-		<title>[TITLE] · Agosh Baranwal</title>
-		<meta name="description" content="[ONE-LINE GIST, REUSED IN INDEX AND FEED]" />
-		<link rel="canonical" href="https://agoshportfolio.vercel.app/writing/[SLUG]" />
+		<meta name="theme-color" content="#ffffff" />
+		<script>try{var t=localStorage.getItem("theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}</script>
+		<title>[TITLE] &middot; Agosh Baranwal</title>
+		<meta name="description" content="[ONE SENTENCE SAYING WHAT THE PIECE ARGUES]" />
+		<link rel="canonical" href="https://agoshportfolio.vercel.app/blog/[SLUG]" />
 		<meta property="og:title" content="[TITLE]" />
-		<meta property="og:description" content="[ONE-LINE GIST]" />
+		<meta property="og:description" content="[ONE SENTENCE SAYING WHAT THE PIECE ARGUES]" />
 		<meta property="og:type" content="article" />
 		<meta property="og:site_name" content="Agosh Baranwal" />
-		<meta property="article:published_time" content="[YYYY-MM-DD]" />
-		<meta property="article:author" content="Agosh Baranwal" />
 		<meta property="og:image" content="https://agoshportfolio.vercel.app/og-[SLUG].png" />
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="630" />
-		<meta property="og:image:alt" content="[DESCRIBE THE CARD: what is drawn, the title, the handwritten line]" />
-		<meta name="twitter:image:alt" content="[SAME AS OG:IMAGE:ALT]" />
-		<meta property="og:url" content="https://agoshportfolio.vercel.app/writing/[SLUG]" />
+		<meta property="og:image:alt" content="[WHAT THE COVER DRAWING SHOWS]" />
+		<meta property="og:url" content="https://agoshportfolio.vercel.app/blog/[SLUG]" />
 		<meta name="twitter:card" content="summary_large_image" />
-		<link rel="alternate" type="application/rss+xml" title="Agosh Baranwal · Blogs" href="/feed.xml" />
+		<meta name="twitter:image:alt" content="[WHAT THE COVER DRAWING SHOWS]" />
+		<meta property="article:published_time" content="[YYYY-MM-DD]" />
+		<link rel="alternate" type="application/rss+xml" title="Agosh Baranwal &middot; Blog" href="/feed.xml" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-		<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cstyle%3E@media(prefers-color-scheme:dark)%7Brect%7Bfill:%2315161a%7Dtext%7Bfill:%238fb3e0%7D%7D%3C/style%3E%3Crect width='32' height='32' rx='7' fill='%23fbfbf8'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' font-style='italic' font-weight='700' fill='%231d3a63' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E" />
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Vollkorn:ital,wght@0,400..700;1,400..700&family=Kalam:wght@400;700&display=swap" rel="stylesheet" />
+		<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cstyle%3E@media(prefers-color-scheme:dark)%7Brect%7Bfill:%230e1624%7Dtext%7Bfill:%238fb6e8%7D%7D%3C/style%3E%3Crect width='32' height='32' rx='7' fill='%23ffffff'/%3E%3Ctext x='16' y='23' font-family='Montserrat,Helvetica,sans-serif' font-size='19' font-weight='800' fill='%2316365f' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E" />
+		<link rel="preload" href="/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
 		<link rel="stylesheet" href="/site.css" />
 		<script type="application/ld+json">
-		{"@context":"https://schema.org","@type":"BlogPosting","headline":"[TITLE]","description":"[ONE-LINE GIST]","datePublished":"[YYYY-MM-DD]","url":"https://agoshportfolio.vercel.app/writing/[SLUG]","image":"https://agoshportfolio.vercel.app/og-[SLUG].png","author":{"@type":"Person","name":"Agosh Baranwal","url":"https://agoshportfolio.vercel.app/"},"mainEntityOfPage":"https://agoshportfolio.vercel.app/writing/[SLUG]"}
+		{"@context":"https://schema.org","@type":"BlogPosting","headline":"[TITLE]","datePublished":"2026-07-27","author":{"@type":"Person","name":"Agosh Baranwal","url":"https://agoshportfolio.vercel.app/"},"publisher":{"@type":"Person","name":"Agosh Baranwal"},"mainEntityOfPage":"https://agoshportfolio.vercel.app/blog/[SLUG]","image":"https://agoshportfolio.vercel.app/og-[SLUG].png"}
 		</script>
 		<script src="/pen.js" defer></script>
 	</head>
 	<body>
 		<a class="skip" href="#main">Skip to content</a>
-		<header class="masthead">
-			<div class="masthead-in">
-				<a class="wordmark" href="/" aria-label="Agosh Baranwal, home">
-					<svg viewBox="0 0 132 34" fill="none" aria-hidden="true">
-						<text x="0" y="21" font-family="Kalam, cursive" font-size="21" font-weight="700" fill="currentColor">Agosh</text>
-						<path d="M1 28.5 C 22 25.6, 44 31.2, 66 27.8 S 104 25.4, 126 29.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" pathLength="1" />
-					</svg>
-				</a>
-				<nav class="nav" aria-label="Site">
-					<a href="/#building">Projects</a>
-					<a href="/writing">Blogs</a>
-					<a href="/#write">Write to me</a>
-					<label class="night-toggle" for="night" >
-						<input type="checkbox" id="night" role="switch" aria-label="Dark mode" />
-						<svg class="night-marquee" viewBox="0 0 26 22" fill="none" aria-hidden="true">
-							<rect x="2" y="6" width="22" height="13" rx="2" stroke="currentColor" stroke-width="1.6"/>
-							<path d="M2 10 L24 10" stroke="currentColor" stroke-width="1.3"/>
-							<path d="M6 6 L9 2.5 M12 6 L15 2.5 M18 6 L21 2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-							<circle cx="7" cy="14.5" r="1.1" fill="currentColor"/><circle cx="13" cy="14.5" r="1.1" fill="currentColor"/><circle cx="19" cy="14.5" r="1.1" fill="currentColor"/>
-						</svg>
-						<span class="night-track" aria-hidden="true"></span>
-						<span class="night-label">Dark mode</span>
-					</label>
+		<header class="mast">
+			<div class="wrap">
+				<a class="mark" href="/">Agosh Baranwal</a>
+				<nav class="tabs" aria-label="Pages">
+					<a href="/blog" aria-current="page">Blog</a>
+					<a href="/about">About me</a>
+					<a href="/cv">CV</a>
 				</nav>
+				<div class="right">
+					<button class="theme-btn" id="themeBtn" type="button" aria-pressed="false">Dark</button>
+					<a class="cv-btn" href="/agosh-baranwal-cv.pdf" download>Download CV</a>
+				</div>
 			</div>
 		</header>
-
-		<main class="page" id="main" tabindex="-1">
-			<article class="band opening">
-				<div class="inner">
-					<div class="col">
-						<h1 class="name page-title">[TITLE]</h1>
-						<svg class="name-rule" viewBox="0 0 400 11" fill="none" aria-hidden="true">
-							<path d="M2 7.4 C 62 3.1, 128 9.8, 196 5.6 S 322 2.4, 398 7.1" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" pathLength="1" vector-effect="non-scaling-stroke" />
-						</svg>
-						<p class="deck">[THE DECK: two to four plain sentences that decode the title for someone who arrived knowing nothing, and state the piece's position. Not a topic announcement.]</p>
-						<p class="say say-top"><time datetime="[YYYY-MM-DD]">[17 July 2026]</time> &middot; [NN min read]</p>
-						<div class="tags">
-							<span class="tag">[TAG ONE]</span>
-							<span class="tag">[TAG TWO, max two, delete if one is enough]</span>
-						</div>
-					</div>
-					<div class="col">
-						<span class="note">
-							<svg class="tick" viewBox="0 0 30 15" fill="none" aria-hidden="true"><path d="M28 3.5 C 18 1, 7 4.5, 2 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M2 12.5 L9 11 M2 12.5 L5.5 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-							[the margin note in his hand: the one line a reader should leave with]
-						</span>
-					</div>
+		<main id="main">
+			<div class="wrap">
+				<div class="post-head">
+					<h1>[TITLE]</h1>
+					<p class="deck">[TWO OR THREE SENTENCES SAYING WHAT THE PIECE ARGUES AND WHY IT MATTERS]</p>
+					<p class="tags"><span class="tag">[TAG]</span><span class="tag">[SECOND TAG, OPTIONAL, TWO IS THE MAXIMUM]</span></p>
+					<p class="meta"><span>[D Mon YYYY]</span><span>[N] min read</span><span>[N] cited sources</span></p>
 				</div>
-				<div class="inner">
-					<div class="col">
-						<div class="notebook lite">
-						<div class="post-body">
-							<p>[THE OPENING: a concrete story or fact, with its source named in the first paragraph if it is not his own.]</p>
+				<div class="post-body post-layout">
+					<article class="prose">
+						<p>[OPENING PARAGRAPH]</p>
 
-							<!-- The short version: for the reader standing on a train. Keep to 4-5 bullets. -->
-							<div class="keybox">
-								<h2 class="keybox-h">Summary</h2>
-								<ul>
-									<li>[claim one]</li>
-									<li>[claim two]</li>
-								</ul>
-							</div>
-
-							<!-- Phone readers get the contents folded here; desktop gets the margin toc. Keep both in sync. -->
-							<details class="toc-fold">
-								<summary>Contents</summary>
-								<ol>
-									<li><a href="#[SECTION-ID]">[Short label]</a></li>
-								</ol>
-							</details>
-
-							<h2 class="h2" id="[SECTION-ID]">[Heading: a plain signpost, not a pun]</h2>
-							<p>[BODY. Paragraphs as p. Highlight at most three load-bearing lines with <span class="hi">...</span>. Pull the core idea once with <p class="pull">...</p>. Use real <ul> lists where prose carries an enumeration.]</p>
-
-							<!-- A chart drawn from published numbers (never lifted from a paper): -->
-							<!-- <figure class="chart"><svg viewBox="0 0 560 245" role="img" aria-label="[describe the data]"> ... .c-bar/.c-num/.c-lab/.c-ttl/.c-note ... </svg><figcaption>[what it shows + source]</figcaption></figure> -->
-
-							<!-- A photo: <figure class="post-fig"><img src="/previews/[FILE].jpg" alt="[ALT]" width="640" height="400" loading="lazy" decoding="async" /><figcaption>[caption in his hand]</figcaption></figure> -->
+						<div class="keybox">
+							<h2 class="keybox-h">Summary</h2>
+							<ul>
+								<li>[THE ARGUMENT IN ONE LINE]</li>
+								<li>[THE EVIDENCE IN ONE LINE]</li>
+								<li>[WHAT TO DO DIFFERENTLY]</li>
+							</ul>
 						</div>
 
-						<!-- when the piece makes factual claims, the sources are shown. Same charter as the climate site. -->
-						<div class="sources">
-							<h2 class="sources-h">Sources</h2>
-							<ol class="source-list">
-								<li>[Author, "Title," Journal/Publisher, year.]</li>
-							</ol>
-						</div>
-						</div>
+						<h2 class="h2" id="[SECTION-ANCHOR]">[SECTION HEADING]</h2>
+						<p>[BODY]</p>
 
-						<a class="shelf-link" href="/writing">Blogs</a>&nbsp;&nbsp;&nbsp;<a class="shelf-link" href="/#write">Write to me</a>&nbsp;&nbsp;&nbsp;<button class="shelf-link pass-btn" type="button" title="Share"><svg viewBox="0 0 20 16" fill="none" aria-hidden="true"><path d="M18.5 1.5 L1.5 8.5 L9 11 L10.5 14.5 L13 10.5 Z M18.5 1.5 L9 11" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> Share</button><span class="pass-done" role="status">Link copied</span>
-					</div>
-					<div class="col">
-						<nav class="toc" aria-label="Contents">
-							<p class="toc-h">Contents</p>
-							<ol>
-								<li><a href="#[SECTION-ID]">[Short label]</a></li>
-							</ol>
-						</nav>
-					</div>
+						<!-- A chart. Bar widths come from the .c-w* classes in site.css, never from
+						     an inline style. Every chart needs a caption saying what is being shown. -->
+						<figure class="chart">
+							<p class="c-ttl">[WHAT THIS MEASURES]</p>
+							<div class="c-row"><span class="c-lab">[LABEL]</span><span class="c-bar c-w70"><span class="c-num">[VALUE]</span></span></div>
+							<div class="c-row"><span class="c-lab">[LABEL]</span><span class="c-bar c-w40"><span class="c-num">[VALUE]</span></span></div>
+							<figcaption>[THE SOURCE, THE SAMPLE SIZE, AND WHAT THE SHAPE MEANS]</figcaption>
+						</figure>
+
+						<p class="pull">[THE ONE SENTENCE WORTH LIFTING OUT, AT MOST TWICE IN A PIECE]</p>
+
+						<h2 class="sources-h">Sources</h2>
+						<ol class="source-list">
+							<li>[AUTHOR, TITLE, PUBLICATION, YEAR, AND THE SAMPLE THE CLAIM RESTS ON]</li>
+						</ol>
+					</article>
+					<nav class="toc" aria-label="Contents">
+						<p class="toc-h">Contents</p>
+						<ol>
+							<li><a href="#[SECTION-ANCHOR]">[SHORT LABEL, ONE PER SECTION HEADING, IN ORDER]</a></li>
+						</ol>
+					</nav>
 				</div>
-			</article>
-		</main>
 
-		<footer class="foot">
-			<div class="foot-in">
-				<svg viewBox="0 0 132 34" fill="none" aria-hidden="true">
-					<text x="0" y="21" font-family="Kalam, cursive" font-size="21" font-weight="700" fill="currentColor">Agosh</text>
-					<path d="M1 28.5 C 22 25.6, 44 31.2, 66 27.8 S 104 25.4, 126 29.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" pathLength="1" />
-				</svg>
-				<nav class="foot-nav" aria-label="Footer">
-					<a href="/#building">Projects</a>
-					<a href="/writing">Blogs</a>
-					<a href="/cv">CV</a>
-					<a href="/#write">Write to me</a>
-					<a href="/feed.xml">RSS</a>
-				</nav>
-				<span class="foot-note">&copy; Agosh Baranwal</span>
+				<p class="back-link"><a href="/blog">&larr; All posts</a></p>
 			</div>
-		</footer>
+		</main>
+		<div class="wrap"><p class="foot">Agosh Baranwal &middot; 2026 &middot; <a href="/feed.xml">RSS</a></p></div>
 	</body>
 </html>

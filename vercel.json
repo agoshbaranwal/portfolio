@@ -42,11 +42,20 @@
 			]
 		},
 		{
-			"source": "/(previews/.*|avatar.jpg|og.png|og-customer-love.png|apple-touch-icon.png|favicon.ico)",
+			"source": "/(previews/.*|og.png|og-customer-love.png|apple-touch-icon.png|favicon.ico)",
 			"headers": [
 				{
 					"key": "Cache-Control",
 					"value": "public, max-age=3600, stale-while-revalidate=86400"
+				}
+			]
+		},
+		{
+			"source": "/fonts/(.*)",
+			"headers": [
+				{
+					"key": "Cache-Control",
+					"value": "public, max-age=31536000, immutable"
 				}
 			]
 		},
@@ -62,8 +71,18 @@
 	],
 	"redirects": [
 		{
+			"source": "/writing",
+			"destination": "/blog",
+			"permanent": true
+		},
+		{
+			"source": "/writing/customer-love-is-a-lagging-indicator",
+			"destination": "/blog/customer-love-is-a-lagging-indicator",
+			"permanent": true
+		},
+		{
 			"source": "/writing/doubt-is-louder-than-belief",
-			"destination": "/writing/customer-love-is-a-lagging-indicator",
+			"destination": "/blog/customer-love-is-a-lagging-indicator",
 			"permanent": true
 		}
 	]

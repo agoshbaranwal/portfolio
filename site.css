@@ -1,1316 +1,371 @@
-/* ============================================================================
-   Agosh Baranwal
-   ----------------------------------------------------------------------------
-   WHAT THIS SITE IS: an introduction to one person. Not a portfolio, not a CV.
-   THE LOGIC: the page is shaped like his day. By day he runs growth (the
-   figures and the record). After hours he builds products of his own. What he
-   thinks lives in the notebook, and the page ends at a postcard already
-   addressed to the reader. Nothing says any of this out loud: the order does.
-   THE SPINE: one hand, in one pen, drawing the whole way down. Every section
-   break is a stroke from that hand, drawn as you reach it. The line separates
-   and joins at the same time. That is the demarcation AND the cohesion.
-   ============================================================================ */
-
-/* --- TOKENS -------------------------------------------------------------- */
-:root {
-	color-scheme: light;
-
-	/* Paper: a fresh sheet, not an aged book. Cool, bright, barely warm.
-	   (Deliberately NOT the cream that read as a template.) */
-	--paper:   #fbfbf8;
-	--mat:     #ffffff;   /* the white border a photo sits in */
-
-	/* Ink: what the printer laid down. */
-	--ink:     #21232a;   /* 14.6:1 on paper */
-	--ink-2:   #494d57;   /* 8.0:1  running text */
-	--ink-3:   #6b6f7a;   /* 4.9:1  captions, meta. AA floor respected. */
-
-	/* Pen: what HE laid down. One ink, fountain-pen blue-black. It is his hand,
-	   his rules, his links, his one button. Nothing else is ever this colour. */
-	--pen:     #1d3a63;   /* 10.0:1 on paper */
-	--pen-2:   #2f5793;   /* the lighter stroke for hairline rules */
-	--pen-mat: rgba(29, 58, 99, 0.28);
-
-	--hair:    rgba(33, 35, 42, 0.13);
-
-	/* Sealing wax: the pen's own blue-black, poured. Three stops make the dome,
-	   a fourth is the recessed face of the pressed initial. (Night swaps below.) */
-	--hi: rgba(29, 58, 99, 0.17);   /* the highlighter pass over a line that matters */
-	/* the desk the sheet lies on, and the depth that sells it */
-	--desk: #bdb5a4;
-	--sheet: #fdfcf7;
-	--lamp-c: rgba(255, 247, 226, 0.15);
-	--lamp-r: 480px;
-	--sh-contact: 0 2px 4px rgba(30, 24, 14, 0.10);
-	--sh-lift:    0 18px 34px -20px rgba(30, 24, 14, 0.5);
-	--sh-sheet:   0 54px 96px -50px rgba(30, 24, 14, 0.72);
-	--on-desk: #3f3826;      /* ink that reads on the desk itself, not on paper */
-	--on-desk-2: #574f3b;
-	--wax-1: #5b80ba;   /* lit crest, where the light catches the raised wax */
-	--wax-2: #23406e;   /* the body: the pen's own dark-blue wax */
-	--wax-3: #0b1c38;   /* shaded rim / the shadow in the pressed well */
-	--wax-face: #1b3560; /* the recessed face the die stamped */
-
-	/* Type: two faces, each chosen for a reason.
-	   Vollkorn: a reading serif with real quirks, built for body text at length,
-	   sturdy enough at 800 to carry the figures. Not a fashionable display face.
-	   Kalam: an Indian foundry's pen. It is his hand and his script in one file,
-	   so उत्सव is native rather than a fallback. */
-	--print: 'Vollkorn', Georgia, 'Times New Roman', serif;
-	--hand:  'Kalam', 'Segoe Print', cursive;
-	--deva:  'Noto Serif Devanagari', 'Kohinoor Devanagari', 'Nirmala UI', serif;
-
-	/* Scale: a major third (1.25) at the small end, with one display jump.
-	   Every size on the page is one of these. There are no other sizes. */
-	--t-micro: 0.8125rem;     /* 12px  colophon */
-	--t-small: 0.9375rem;    /* 14px  captions, the record */
-	--t-body:  1.0625rem;   /* 17px  reading */
-	--t-lead:  1.1875rem;   /* 19px  the opening */
-	--t-hand:  1.3125rem;   /* 21px  the pen reads small; it needs the size */
-	--t-h3:    1.3125rem;   /* 21px  project titles */
-	--t-figs:  clamp(2.1rem, 4.7vw, 3.05rem); /* the proof: loud, never poster-size */
-	--t-kicker: 0.8125rem;  /* 13px  the small caps that name a band */
-
-	/* Leading is half of hierarchy. One value for everything is why 40px
-	   headings and 14px captions read as the same voice. */
-	--lh-display: 1.0; --lh-proof: 1.02; --lh-head: 1.14;
-	--lh-title: 1.25; --lh-read: 1.62; --lh-quiet: 1.45;
-	/* Vollkorn ships 400..700 and 500 was paid for and never used.
-	   700 is reserved for the three figures, the way one ink is his hand. */
-	--w-read: 400; --w-deck: 500; --w-head: 600; --w-proof: 700;
-	--t-h2:    clamp(1.7rem, 3.3vw, 2.05rem);
-	--t-name:  clamp(2.9rem, 8.6vw, 5.6rem);
-
-	/* Space: an 8px grid. Sections breathe at 112; nothing invents its own gap. */
-	--s-1: 8px;  --s-2: 16px; --s-3: 24px; --s-4: 32px;
-	--s-5: 48px; --s-6: 64px; --s-7: 88px; --s-8: 112px;
-
-	--margin-col: 186px;   /* where the hand lives */
-	--gutter: 40px;
-}
-
-/* Night: the same sheet under a lamp. Tokens only; no component knows.
-   html.night is the same state set before first paint by the tiny head script,
-   so the late show survives page turns with no white flash. */
-/* every shadow in this file is a hand-typed dark rgba, which is invisible on a
-   dark sheet: at night the card lifts with a lit edge instead */
-html:has(#night:checked) .thing, html.night .thing { box-shadow: 0 1px 0 rgba(0, 0, 0, 0.3); }
-html:has(#night:checked) .thing:hover, html.night .thing:hover,
-html:has(#night:checked) .thing:focus-visible, html.night .thing:focus-visible {
-	box-shadow: 0 14px 30px -18px rgba(0, 0, 0, 0.75), 0 0 0 1px var(--pen-mat);
-}
-html:has(#night:checked), html.night {
-	color-scheme: dark;
-	--paper: #15161a;
-	--mat:   #24262c;
-	--ink:   #ecedf0;   /* 14.4:1 */
-	--ink-2: #c2c5cd;   /* 9.6:1  */
-	--ink-3: #8e929c;   /* 5.1:1  */
-	--pen:   #8fb3e0;   /* 7.5:1  the same pen, seen by lamplight */
-	--pen-2: #6f95c8;
-	--pen-mat: rgba(143, 179, 224, 0.32);
-	--hair:  rgba(236, 237, 240, 0.15);
-	--hi: rgba(143, 179, 224, 0.24);
-	--desk: #0e0f14;
-	--sheet: #1c1e26;
-	--lamp-c: rgba(255, 231, 168, 0.30);
-	--lamp-r: 560px;
-	--sh-contact: 0 2px 4px rgba(0, 0, 0, 0.4);
-	--sh-lift:    0 18px 34px -20px rgba(0, 0, 0, 0.75);
-	--sh-sheet:   0 54px 96px -50px rgba(0, 0, 0, 0.9);
-	--on-desk: #b9c2d1;
-	--on-desk-2: #8b93a2;
-	--wax-1: #cfe0f6;   /* wax by lamplight: a touch brighter so it reads on the dark sheet */
-	--wax-2: #7ea6db;
-	--wax-3: #35527c;
-	--wax-face: #6f97cc;
-}
-
-/* --- RESET --------------------------------------------------------------- */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-
-body {
-	background-color: var(--desk);
-	background-image:
-		radial-gradient(140% 90% at 50% -20%, rgba(255, 252, 240, 0.4), transparent 62%),
-		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='150' height='150' filter='url(%23n)' opacity='.28'/%3E%3C/svg%3E");
-	color: var(--ink);
-	font-family: var(--print);
-	font-size: var(--t-body);
-	line-height: 1.62;
-	-webkit-font-smoothing: antialiased;
-	overflow-x: clip;
-	transition: background-color 0.7s ease, color 0.7s ease;
-}
-html:has(#night:checked) body, html.night body { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='150' height='150' filter='url(%23n)' opacity='.2'/%3E%3C/svg%3E"); }
-img { display: block; max-width: 100%; }
-a { color: inherit; }
-::selection { background: var(--pen-mat); }
-:focus-visible { outline: 2px dashed var(--pen); outline-offset: 3px; border-radius: 2px; }
-html { scrollbar-color: var(--pen-2) transparent; }
-::selection { background: var(--hi); }
-.name, .h2, .late-t, .deck { text-wrap: balance; }
-.post-body p { text-wrap: pretty; }
-
-/* --- THE PAGE ------------------------------------------------------------ */
-/* One column of print, one margin for the hand. Everything printed lives in
-   the left column. Everything handwritten lives in the right. No exceptions:
-   that rule is what stops the page fragmenting. */
-.page {
-	max-width: 1040px; margin: 14px auto 44px; padding: 0 clamp(20px, 5vw, 44px);
-	position: relative; z-index: 5;
-	background-color: var(--sheet);
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.68' numOctaves='4'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='170' height='170' filter='url(%23p)' opacity='.045'/%3E%3C/svg%3E");
-	box-shadow: var(--sh-contact), var(--sh-sheet), 0 0 0 1px var(--hair);
-	transition: background-color 0.7s ease;
-}
-/* the pool of light the desk lamp throws, following the reader */
-.lamp {
-	position: fixed; inset: 0; pointer-events: none; z-index: 60;
-	mix-blend-mode: soft-light;
-	background: radial-gradient(var(--lamp-r) var(--lamp-r) at var(--mx, 50%) var(--my, 26%), var(--lamp-c), transparent 70%);
-}
-html:has(#night:checked) .lamp, html.night .lamp { mix-blend-mode: screen; }
-html:not(.js) .lamp { display: none; }
-/* two things left on the desk beside the sheet */
-
-.band { position: relative; }
-.band > .inner {
-	display: grid;
-	grid-template-columns: minmax(0, 1fr) var(--margin-col);
-	padding-right: 26px;
-	gap: var(--gutter);
-	align-items: start;
-}
-.col { min-width: 0; }
-/* a band with no margin note has no reason to reserve the margin */
-.band > .inner:has(> .col:only-child) { grid-template-columns: minmax(0, 1fr); padding-right: 26px; }
-
-/* skip past the masthead, drawn only for the keyboard */
-.skip {
-	position: absolute; left: -9999px; top: 10px; z-index: 40;
-	background: var(--pen); color: var(--paper);
-	padding: 10px 18px; border-radius: 2px;
-	font-size: var(--t-small); text-decoration: none;
-}
-.skip:focus-visible { left: 10px; }
-
-/* --- THE MASTHEAD -------------------------------------------------------- */
-.masthead {
-	position: sticky; top: 0; z-index: 20;
-	background: color-mix(in srgb, var(--desk) 84%, transparent);
-	backdrop-filter: blur(10px) saturate(1.1);
-	border-bottom: 1px solid transparent;
-}
-@media (prefers-reduced-motion: no-preference) {
-	@supports (animation-timeline: scroll()) {
-		.masthead { animation: masthead-line linear both; animation-timeline: scroll(root); animation-range: 0 140px; }
-	}
-}
-@keyframes masthead-line { to { border-bottom-color: var(--hair); } }
-@media (prefers-reduced-motion: reduce) {
-	.keep-pick:active .strum, .keep-pick:focus-visible .strum { animation: none; }
-	.night-track::after, .door, .pin img, .thing-shot img { transition-duration: 0.01s; }
-}
-.masthead-in {
-	max-width: 1000px; margin: 0 auto;
-	padding: var(--s-2) clamp(20px, 5vw, 40px);
-	display: flex; align-items: center; justify-content: space-between; gap: var(--s-3);
-}
-.wordmark { display: inline-flex; align-items: center; text-decoration: none; color: var(--ink); }
-.wordmark-w { font-family: var(--hand); font-size: 25px; line-height: 1; color: var(--pen); transition: color 0.2s ease; }
-.wordmark:hover .wordmark-w, .wordmark:focus-visible .wordmark-w { color: var(--ink); }
-.nav { display: flex; align-items: center; gap: clamp(14px, 2.4vw, 26px); }
-.nav a {
-	font-size: 1rem;
-	text-decoration: none; color: var(--on-desk);
-	padding: 8px 2px;
-	white-space: nowrap;
-	border-bottom: 1.5px solid transparent;
-	transition: color 0.2s ease, border-color 0.2s ease;
-}
-.nav a:hover { color: var(--pen); border-bottom-color: var(--pen); }
-
-/* the toggle: a real control, not a decoration */
-.night-toggle { display: inline-flex; align-items: center; gap: 7px; cursor: pointer; user-select: none; min-height: 24px; padding: 6px 0; }
-.night-toggle:hover .night-track { border-color: var(--pen); }
-@media (forced-colors: active) {
-	.night-track { border-color: ButtonText; }
-	.night-track::after { background: ButtonText; }
-}
-#night { position: absolute; opacity: 0; width: 0; height: 0; }
-.night-track {
-	width: 34px; height: 18px; border-radius: 999px;
-	border: 1.5px solid var(--pen-mat);
-	position: relative; transition: border-color 0.3s ease, background-color 0.3s ease;
-}
-.night-track::after {
-	content: ""; position: absolute; top: 1.5px; left: 1.5px;
-	width: 11px; height: 11px; border-radius: 50%;
-	background: var(--pen);
-	transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
-}
-html:has(#night:checked) .night-track::after, html.night .night-track::after { transform: translateX(16px); }
-#night:focus-visible ~ .night-track { outline: 2px dashed var(--pen); outline-offset: 3px; }
-.night-label { font-size: var(--t-micro); letter-spacing: 0.13em; text-transform: uppercase; color: var(--on-desk); }
-.night-marquee { width: 22px; height: 19px; color: var(--pen); opacity: 0.9; }
-
-/* --- THE OPENING --------------------------------------------------------- */
-.opening { padding: clamp(48px, 9vw, 86px) 0 var(--s-2); }
-.name {
-	font-family: var(--print);
-	font-size: var(--t-name);
-	font-weight: 600;
-	line-height: 1.0;
-	letter-spacing: -0.024em;
-	color: var(--ink);
-}
-/* subpage titles wrap, so they carry their own line-height */
-.page-title { line-height: 1.12; }
-.lede {
-	font-size: var(--t-lead);
-	line-height: 1.68;
-	color: var(--ink-2);
-	max-width: 47ch;
-	margin-top: var(--s-3);
-}
-.lede strong { font-weight: 600; color: var(--ink); }
-
-/* THE LETTER. At rest it is exactly that: a written letter tucked into an
-   envelope, its top peeking out of the mouth. One envelope pocket, one sheet,
-   no doubled lines. Reach for it and the letter is drawn up out of the pocket
-   and posted, flying up and away to me. Leave, and a fresh one sits in the
-   envelope again. The pocket is painted AFTER the sheet, so the sheet is
-   genuinely tucked inside (its lower half hidden) and slides out as it rises. */
-.door {
-	display: inline-flex; align-items: center; gap: 20px;
-	position: relative;
-	margin-top: var(--s-5);
-	padding: 6px 4px;
-	text-decoration: none; color: inherit;
-}
-.letter-mark {
-	width: 116px; height: 98px; flex-shrink: 0;
-	color: var(--pen);
-	overflow: visible;
-}
-/* paper fill must outrank the stroke rule (that contest shipped broken once) */
-.letter-mark .lm-paper { fill: var(--mat); }
-.lm-line { stroke: currentColor; fill: none; stroke-width: 2.7; stroke-linejoin: round; stroke-linecap: round; }
-.lm-thin { stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; opacity: 0.5; }
-.lm-shadow { fill: rgba(20, 22, 28, 0.18); opacity: 0.4; transition: opacity 0.5s ease; }
-/* the written sheet, sitting in the envelope, clipped by the pocket in front */
-.lm-letter { transform-box: fill-box; transform-origin: 50% 100%; transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1); filter: drop-shadow(0 3px 4px rgba(20, 22, 28, 0.13)); }
-
-/* reach for it and the letter simply slides up out of the envelope, and stays.
-   No flight, no tumble: a smooth, quiet draw. Leave and it settles back in. */
-.door:hover .lm-letter, .door:focus-visible .lm-letter { transform: translateY(-30px); }
-.door:hover .lm-shadow, .door:focus-visible .lm-shadow { opacity: 0.55; }
-
-.door-t { display: block; font-size: var(--t-small); font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--pen); }
-.door-a {
-	display: inline-block; margin-top: 3px;
-	font-size: var(--t-small); color: var(--ink-2);
-	border-bottom: 1px solid var(--pen-mat); padding-bottom: 2px;
-	transition: border-color 0.25s ease, color 0.25s ease;
-}
-.door:hover .door-a, .door:focus-visible .door-a { color: var(--pen); border-bottom-color: var(--pen); }
-
-/* motion-sensitive readers get a still letter resting in its envelope.
-   !important because the hover selectors are more specific than this block. */
-@media (prefers-reduced-motion: reduce) {
-	.lm-shadow { transition-duration: 0.01s !important; }
-	.lm-letter { transition-duration: 0.01s !important; }
-}
-.door-side { display: block; margin-top: var(--s-2); font-size: var(--t-small); }
-.door-side a { color: var(--ink-2); text-decoration: none; border-bottom: 1px solid var(--pen-mat); }
-.door-side a:hover { color: var(--pen); border-bottom-color: var(--pen); }
-
-/* the photo, pinned to the page like a photo on a desk */
-.pin { margin-top: 6px; }
-.pin img {
-	width: 100%; aspect-ratio: 1; object-fit: cover; object-position: center 22%;
-	border: 7px solid var(--mat);
-	box-shadow: 0 10px 26px -14px rgba(20, 22, 28, 0.55), 0 0 0 1px var(--hair);
-	filter: saturate(0.55) contrast(1.03);
-	transform: rotate(-2.2deg);
-	transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), filter 0.45s ease;
-}
-.pin:hover img { transform: rotate(0deg); filter: saturate(0.9) contrast(1); }
-.pin figcaption { font-family: var(--hand); font-size: var(--t-hand); color: var(--pen); text-align: center; margin-top: 8px; transform: rotate(-1deg); }
-
-/* --- THE HAND ------------------------------------------------------------ */
-/* Notes live in the margin column and nowhere else. */
-.note {
-	display: block;
-	font-family: var(--hand);
-	font-size: var(--t-hand);
-	line-height: 1.3;
-	color: var(--pen);
-}
-.note em { font-style: normal; }
-.tick { display: block; width: 30px; height: 15px; margin-bottom: 3px; color: var(--pen); opacity: 0.9; }
-/* the after-hours note is placed structurally beside the live cards */
-/* the bench sits in the grid's second row; kill that row's gap so the ONLY
-   space between the live things and the bench is one deliberate margin, not a
-   doubled one (was a 110px gap: 46px grid row-gap + 64px margin) */
-
-/* --- SECTIONS ------------------------------------------------------------ */
-/* The demarcation: one stroke from the same hand, drawn as you arrive. */
-/* anchors land clear of the sticky masthead, never tucked under it. The
-   section rhythm is deliberately tighter than a full --s-8: the page reads as
-   one continuous letter, so the movements sit closer than separate pages would */
-.section { padding-top: clamp(40px, 4.4vw, 58px); scroll-margin-top: 96px; }
-@media (max-width: 620px) { .section { scroll-margin-top: 64px; } }
-/* A band names itself on one line instead of stacking 200px of preamble:
-   the heading holds the left, its single line of explanation the right. */
-.sec-head {
-	display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 330px);
-	gap: 4px var(--s-5); align-items: baseline;
-}
-.sec-head .h2 { grid-column: 1; grid-row: 1; margin-top: 0; }
-.sec-head .say { grid-column: 2; grid-row: 1; margin-top: 0; max-width: none; }
-@media (max-width: 760px) {
-	.sec-head { grid-template-columns: minmax(0, 1fr); }
-	.sec-head .say { grid-column: 1; grid-row: auto; margin-top: 6px; }
-}
-.h2 {
-	font-size: var(--t-h2);
-	line-height: var(--lh-head);
-	font-weight: var(--w-head);
-	letter-spacing: -0.014em;
-	color: var(--ink);
-	margin-top: var(--s-5);
-}
-.say { font-size: var(--t-body); color: var(--ink-2); max-width: 44ch; margin-top: var(--s-2); }
-
-/* --- BY DAY: the figures ------------------------------------------------- */
-/* One ledger line, read left to right: quiet, confident, not in your face.
-   The pen still rings the best one; that ring does the emphasis so the
-   type does not have to. */
-.figures {
-	margin-top: var(--s-4);
-	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: var(--s-4);
-	padding: var(--s-4) var(--s-4) var(--s-4);
-	background-color: #16203a;
-	color: #f4f1e8;
-	box-shadow: var(--sh-lift);
-	transform: rotate(-0.55deg);
-	transition: background-color 0.7s ease, color 0.7s ease;
-}
-html:has(#night:checked) .figures, html.night .figures {
-	background-color: #0d1725; color: #eaf0fa;
-	box-shadow: var(--sh-lift), 0 0 0 1px rgba(143, 179, 224, 0.18);
-}
-/* it stamps down onto the paper as you reach it */
-html.js .figures { transform: rotate(-0.55deg) scale(1.4); opacity: 0; }
-html.js .figures.in {
-	transform: rotate(-0.55deg) scale(1); opacity: 1;
-	transition: transform 0.5s cubic-bezier(.2, 1.45, .42, 1), opacity 0.26s ease, background-color 0.7s ease;
-}
-@media (prefers-reduced-motion: reduce) { html.js .figures { transform: rotate(-0.55deg); opacity: 1; } }
-@media (max-width: 620px) { .figures { grid-template-columns: minmax(0, 1fr); } }
-.figure { flex: 0 1 auto; }
-.fig-n {
-	display: block;
-	color: inherit;
-	font-size: var(--t-figs);
-	font-weight: var(--w-proof);
-	line-height: var(--lh-proof);
-	letter-spacing: -0.015em;
-	font-variant-numeric: lining-nums;
-}
-.fig-d { display: block; font-size: var(--t-small); line-height: var(--lh-quiet); color: #b0bcd0; margin-top: 10px; max-width: 24ch; }
-html:has(#night:checked) .fig-d, html.night .fig-d { color: #8fa0bb; }
-/* the marks the hand made on the plate are chalk, not ink */
-.figures .ring, .figures .flick { color: #d8b45a; }
-
-/* One number is circled, the way a person rings the figure that matters on a
-   printout. It is the page's loudest moment and the only one of its kind:
-   hierarchy drawn by hand rather than announced. */
-.ringed { position: relative; display: inline-block; padding: 0.2em 0.46em; margin: -0.2em 0 -0.2em -0.46em; }
-.ring {
-	position: absolute; inset: 0; width: 100%; height: 100%;
-	color: var(--pen); overflow: visible; pointer-events: none;
-}
-.ring path { stroke-dasharray: 1; stroke-dashoffset: 0; }
-
-/* the record: small, on purpose. It is the footnote to the work, not the work.
-   Its pen rule is a pseudo so the stroke can draw itself top-down on arrival. */
-.record {
-	font-size: var(--t-small);
-	line-height: var(--lh-read);
-	color: var(--ink-2);
-	max-width: 64ch;
-	margin-top: var(--s-4);
-}
-@keyframes rule-down { from { transform: scaleY(0); } to { transform: scaleY(1); } }
-
-/* the chart bars rise from their baseline as the reader reaches them, and the
-   pulled line rules itself in: the essay's evidence is written, not pasted */
-@media (prefers-reduced-motion: no-preference) {
-	@supports (animation-timeline: view()) {
-		.chart .c-bar { transform-box: fill-box; transform-origin: 50% 100%; animation: bar-rise linear both; animation-timeline: view(); animation-range: entry 14% entry 58%; }
-		.pull::before { animation: rule-down linear both; animation-timeline: view(); animation-range: entry 10% entry 55%; }
-		.toc ol::before { animation: rule-down linear both; animation-timeline: scroll(root); }
-	}
-}
-@keyframes bar-rise { from { transform: scaleY(0); } }
-.record a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--pen-mat); }
-.record a:hover { color: var(--pen); border-bottom-color: var(--pen); }
-
-/* --- THE TOOLKIT: skills, folded away until reached for ----------------------
-   One tidy line at rest. It opens on hover (desktop) and toggles on click or
-   tap (everywhere, keyboard included) via a hidden checkbox: zero JS, and it
-   never sprawls. A brief read of what he knows and what he can do. */
-.toolkit { margin-top: 0; position: relative; }
-/* the biography and the toolkit are peers, so they sit side by side and the
-   empty right quarter of the sheet finally carries something */
-.by-day { display: grid; grid-template-columns: 1.12fr 1fr; gap: var(--s-5); align-items: start; margin-top: var(--s-4); }
-.by-day .record { margin-top: 0; }
-@media (max-width: 860px) { .by-day { grid-template-columns: minmax(0, 1fr); gap: var(--s-4); } }
-.kit-summary {
-	cursor: default;
-	display: inline-flex; align-items: baseline; gap: 12px;
-	cursor: pointer; user-select: none; padding: 4px 0;
-}
-.kit-label { font-family: var(--hand); font-size: var(--t-hand); color: var(--pen); line-height: 1; }
-.kit-body { max-height: none; opacity: 1; overflow: visible; }
-
-.kit-row { margin-top: var(--s-3); }
-.kit-cat { display: block; font-family: var(--hand); font-size: var(--t-body); color: var(--pen); }
-.kit-items { display: block; font-size: var(--t-small); line-height: 1.55; color: var(--ink-2); margin-top: 1px; }
-
-/* the résumé, one drawn document mark and a quiet link */
-.cv-link { display: inline-flex; align-items: center; gap: 9px; margin-top: var(--s-4); font-size: var(--t-body); color: var(--pen); text-decoration: none; }
-.cv-link svg { width: 20px; height: auto; color: var(--pen); flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
-.cv-link span { border-bottom: 1px solid var(--pen-mat); padding-bottom: 2px; transition: border-color 0.2s ease; }
-.cv-link:hover svg, .cv-link:focus-visible svg { transform: translateY(-2px) rotate(-3deg); }
-.cv-link:hover span, .cv-link:focus-visible span { border-bottom-color: var(--pen); }
-
-/* --- AFTER HOURS: the things ---------------------------------------------- */
-/* Three screenshots taped to the page in one row, like photos in a journal:
-   the same tape and tilt as the hero portrait. At rest each shows only its
-   picture and name. Reach for one (hover or keyboard) and it straightens,
-   lifts, and the pen adds the one-liner and address underneath. On screens
-   without hover the details are simply always written. */
-.things {
-	margin-top: var(--s-4);
-	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: var(--s-3);
-	align-items: stretch;
-}
-.thing {
-	display: flex; flex-direction: column; min-width: 0;
-	text-decoration: none; color: inherit;
-	padding: 13px 13px 17px;
-	background-color: var(--mat);
-	box-shadow: var(--sh-contact), var(--sh-lift);
-	transform: rotate(var(--r, -0.7deg));
-	transition: transform 0.45s cubic-bezier(0.19, 1, 0.22, 1), box-shadow 0.45s ease, opacity 0.35s ease, background-color 0.7s ease;
-	position: relative;
-}
-.thing:nth-child(2) { --r: 0.85deg; }
-.thing:nth-child(3) { --r: 0.55deg; }
-.thing:nth-child(4) { --r: -1deg; }
-.thing:nth-child(5) { --r: 0.7deg; }
-.thing:nth-child(6) { --r: -0.5deg; }
-/* reach for one and it straightens and lifts off the paper */
-.thing:hover, .thing:focus-visible {
-	transform: rotate(0deg) translateY(-10px) scale(1.012);
-	box-shadow: var(--sh-contact), 0 36px 60px -28px rgba(30, 24, 14, 0.62);
-	z-index: 8;
-}
-html:has(#night:checked) .thing:hover, html.night .thing:hover {
-	box-shadow: 0 36px 60px -28px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(143, 179, 224, 0.2);
-}
-.thing-v { margin-top: auto; padding-top: 8px; }
-.thing-shot { position: relative; margin: 0 0 13px; }
-.thing-shot::before, .thing-shot::after {
-	content: ""; position: absolute; z-index: 2; top: -6px;
-	width: 44px; height: 15px;
-	background: var(--pen-mat); opacity: 0.5; border-radius: 1px;
-}
-.thing-shot::before { left: 6px; transform: rotate(-31deg); }
-.thing-shot::after { right: 6px; transform: rotate(29deg); }
-.thing-shot img {
-	width: 100%; aspect-ratio: 16 / 10; height: auto; object-fit: cover; object-position: top center;
-	border: 4px solid var(--mat);
-	box-shadow: 0 6px 16px -10px rgba(20, 22, 28, 0.5), 0 0 0 1px var(--hair);
-	transform: rotate(-1.6deg);
-	transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
-}
-.thing:nth-child(2) .thing-shot img { transform: rotate(1.3deg); }
-.thing:nth-child(3) .thing-shot img { transform: rotate(-0.9deg); }
-.thing:nth-child(4) .thing-shot img { transform: rotate(0.9deg); }
-.thing:nth-child(5) .thing-shot img { transform: rotate(-1.4deg); }
-.thing:nth-child(6) .thing-shot img { transform: rotate(1.1deg); }
-.thing-plate { transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease; }
-.thing:hover .thing-plate, .thing:focus-visible .thing-plate { transform: rotate(0deg) translateY(-3px); }
-.thing:hover .thing-shot img, .thing:focus-visible .thing-shot img {
-	transform: rotate(0deg) translateY(-3px);
-	box-shadow: 0 14px 28px -14px var(--pen-mat), 0 0 0 1px var(--hair);
-}
-.thing-t { font-size: var(--t-h3); font-weight: 600; line-height: 1.25; letter-spacing: -0.012em; color: var(--ink); transition: color 0.2s ease; }
-.thing:hover .thing-t, .thing:focus-visible .thing-t { color: var(--pen); }
-.thing-t .deva { font-family: var(--deva); font-weight: 500; }
-.thing-more { max-height: none; opacity: 1; overflow: visible; }
-.thing:hover .thing-more, .thing:focus-visible .thing-more { max-height: 150px; opacity: 1; }
-@media (hover: none) { .thing-more { max-height: none; opacity: 1; } }
-.thing-d { font-size: var(--t-body); line-height: 1.5; color: var(--ink-2); margin-top: 6px; }
-.thing-v {
-	display: inline-block; margin-top: 6px;
-	font-size: var(--t-small); color: var(--pen);
-	white-space: nowrap;
-	border-bottom: 1px solid var(--pen-mat);
-	padding-bottom: 1px;
-	transition: border-color 0.2s ease;
-}
-.thing:hover .thing-v, .thing:focus-visible .thing-v { border-bottom-color: var(--pen); }
-
-/* the unbuilt ones sit in the SAME grid as the built things, because they are
-   the same kind of object. The only honest difference: their picture has not
-   been taken yet, so the frame holds a drawing instead of a screenshot, and
-   where a live card writes its address, these say they are still on the bench. */
-.thing-static { cursor: default; }
-.thing-plate {
-	position: relative;
-	width: 100%; aspect-ratio: 16 / 10;
-	display: flex; align-items: center; justify-content: center;
-	background-color: var(--mat);
-	background-image: repeating-linear-gradient(to bottom, transparent 0 21px, var(--hair) 21px 22px);
-	border: 4px solid var(--mat);
-	box-shadow: 0 6px 16px -10px rgba(20, 22, 28, 0.5), 0 0 0 1px var(--pen-mat);
-	transform: rotate(-1.2deg);
-	overflow: hidden;
-}
-/* an unbuilt thing is a sketch on a ruled page, never a missing photograph */
-.thing:nth-child(2) .thing-plate { transform: rotate(1deg); }
-.thing:nth-child(3) .thing-plate { transform: rotate(-0.6deg); }
-.thing:nth-child(4) .thing-plate { transform: rotate(0.8deg); }
-.thing:nth-child(5) .thing-plate { transform: rotate(-1deg); }
-.thing:nth-child(6) .thing-plate { transform: rotate(0.7deg); }
-.thing-plate svg { width: 46%; height: auto; color: var(--pen); opacity: 0.5; }
-.thing-static .thing-t { color: var(--ink-2); }
-.thing-static .thing-more { max-height: none; opacity: 1; overflow: visible; }
-
-.thing-soon {
-	display: inline-block; margin-top: 6px;
-	font-family: var(--hand); font-size: var(--t-small);
-	color: var(--ink-3);
-}
-
-/* --- THE NOTEBOOK -------------------------------------------------------- */
-.shelf-link { display: inline-block; margin-top: var(--s-3); font-size: var(--t-small); color: var(--pen); text-decoration: none; border-bottom: 1px solid var(--pen-mat); padding-bottom: 2px; }
-.shelf-link:hover { border-bottom-color: var(--pen); }
-
-/* --- WRITE TO ME --------------------------------------------------------- */
-/* deep bottom room so the sealed envelope hangs below the postcard, clear of it
-   at every desktop width (the seal sits a fixed ~222px above the section floor) */
-.closing { padding-bottom: 216px; }
-@media (max-width: 860px) { .closing { padding-bottom: var(--s-8); } }
-.address {
-	position: relative;
-	display: inline-block; margin-top: var(--s-4);
-	font-size: clamp(1.1rem, 2.9vw, 1.55rem);
-	font-weight: 600; letter-spacing: -0.01em;
-	color: var(--ink); text-decoration: none;
-	border-bottom: 2px solid var(--pen-mat);
-	word-break: break-word;
-	transition: color 0.2s ease, border-color 0.2s ease;
-}
-
-.address:hover { color: var(--pen); border-bottom-color: var(--pen); }
-.elsewhere { margin-top: var(--s-4); display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: var(--t-small); }
-.elsewhere a { color: var(--ink-2); text-decoration: none; border-bottom: 1px solid var(--pen-mat); padding-bottom: 2px; }
-.elsewhere a:hover { color: var(--pen); border-bottom-color: var(--pen); }
-
-/* --- FOOT ---------------------------------------------------------------- */
-.foot { margin-top: 0; }
-.foot-in {
-	max-width: 1000px; margin: 0 auto;
-	padding: var(--s-4) clamp(20px, 5vw, 40px) var(--s-5);
-	display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-3) var(--s-4);
-	font-size: var(--t-micro); color: var(--on-desk-2);
-}
-.foot-nav { display: flex; flex-wrap: wrap; gap: 4px clamp(12px, 2vw, 22px); }
-.foot-nav a {
-	color: var(--on-desk-2); text-decoration: none; font-size: var(--t-small);
-	padding: 8px 0; border-bottom: 1px solid transparent;
-	transition: color 0.2s ease, border-color 0.2s ease;
-}
-.foot-nav a:hover, .foot-nav a:focus-visible { color: var(--pen); border-bottom-color: var(--pen-mat); }
-.foot-note { white-space: nowrap; }
-.foot .wordmark-w { font-size: 19px; color: var(--on-desk); }
-.foot .wordmark:hover .wordmark-w { color: var(--pen); }
-
-/* ==========================================================================
-   MOTION: every animation on this page is the same hand, moving.
-   Rules draw themselves as you reach them. Notes appear a beat later, the way
-   a note is written after the line it comments on. Nothing moves that is not
-   the pen. Progressive enhancement: without scroll-driven support the page is
-   simply complete and still.
-   ========================================================================== */
-
-@media (prefers-reduced-motion: no-preference) {
-	.opening .note { animation: note-in 0.7s ease 1.4s backwards; }
-
-	@supports (animation-timeline: view()) {
-		/* the ring is drawn as you arrive at the number it is about */
-		.ring path {
-			animation: draw linear both;
-			animation-timeline: view();
-			animation-range: entry 18% entry 74%;
-		}
-		/* notes WRITE themselves: a left-to-right ink wipe, not a fade. The mask
-		   lives only in this block, so without view() support notes are simply
-		   visible. Transform is untouched; hand-placed tilts survive. */
-		.section .note {
-			animation: note-wipe linear both;
-			animation-timeline: view();
-			animation-range: entry 14% entry 70%;
-			mask-image: linear-gradient(100deg, #000 44%, transparent 56%);
-			mask-size: 280% 100%;
-			mask-repeat: no-repeat;
-		}
-		/* fill backwards, NOT both: an after-phase fill would own opacity forever
-		   and silently kill the lamplight dim on .thing (animations beat the
-		   normal cascade). backwards hides rows before entry, then hands
-		   opacity back to the stylesheet once the entrance is done. */
-		.thing {
-			animation: settle linear backwards;
-			animation-timeline: view();
-			animation-range: entry 4% entry 42%;
-		}
-		/* the pen's own hover strokes stay instant; only arrival is scroll-driven */
-	}
-}
-
-@keyframes draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
-@keyframes note-in { from { opacity: 0; transform: translateY(7px) rotate(-1.6deg); } to { opacity: 1; } }
-@keyframes note-wipe { from { mask-position: 100% 0; } to { mask-position: 0% 0; } }
-@keyframes settle { from { opacity: 0; translate: 0 10px; } to { opacity: 1; translate: none; } }
-/* photos DEVELOP as they arrive, like a print in the tray: grey first, then true */
-
-/* ==========================================================================
-   MOBILE: dense, and the hand comes down off the margin to sit under its line.
-   ========================================================================== */
-@media (max-width: 860px) {
-	:root { --margin-col: 0px; --gutter: 0px; }
-	.band > .inner, .band > .inner:has(> .col:only-child) { grid-template-columns: minmax(0, 1fr); padding-right: 0; }
-	.note { margin-top: var(--s-3); max-width: 34ch; }
-	.pin { max-width: 150px; margin-top: var(--s-4); }
-	.pin figcaption { text-align: left; }
-	.figure { padding: var(--s-2) 0 0; }
-}
-
-@media (max-width: 620px) {
-	:root { --s-8: 64px; --s-7: 52px; --s-6: 40px; --s-5: 32px; }
-	.figures { padding: var(--s-3); gap: var(--s-3) var(--s-6); }
-	.figure { padding: 4px 0; }
-	/* the primary CTA may never clip: smaller envelope, unbreakable address */
-	.letter-mark { width: 92px; height: auto; }
-	.door-a { overflow-wrap: anywhere; font-size: var(--t-small); }
-	@media (max-width: 440px) {
-		.door { flex-direction: column; align-items: flex-start; gap: 10px; }
-		.door-a { overflow-wrap: normal; }
-	}
-	/* the postcard drops the airy desktop padding and the stamp yields the row */
-	.pc-left, .pc-right { padding: var(--s-3); }
-	.pc-right { padding-top: 78px; }
-	.stamp { padding: 4px; }
-	.stamp img { width: 44px; height: 44px; }
-	/* fat fingers: the toggle, nav links and brands grow invisible padding */
-	.night-toggle { padding: 12px 0 12px 8px; }
-	.nav a { padding: 12px 6px; }
-	.elsewhere .brand { padding: 9px; margin: -9px 0 -9px -2px; }
-	/* essay charts keep their ink legible when the viewBox shrinks */
-	.c-num { font-size: 22px; }
-	.c-lab { font-size: 18px; }
-	.c-ttl { font-size: 17px; }
-	.c-note { font-size: 22px; }
-	body { font-size: 1rem; line-height: 1.56; }
-	.opening { padding-top: var(--s-5); }
-	.name { font-size: 2.3rem; }
-	.lede { font-size: var(--t-body); max-width: none; }
-		.door { margin-top: var(--s-4); width: 100%; }
-	.pin { max-width: 132px; margin-top: var(--s-3); }
-	/* on a phone the three photos become dense thumb rows: picture left,
-	   words right, everything already written (no hover to earn) */
-	.things { grid-template-columns: minmax(0, 1fr); gap: var(--s-3); }
-	.thing { display: grid; grid-template-columns: 118px minmax(0, 1fr); gap: 2px var(--s-2); align-items: start; }
-	.thing-shot { grid-row: 1 / 3; margin-bottom: 0; }
-	.thing-shot::before, .thing-shot::after { width: 30px; height: 11px; top: -5px; }
-	.thing-more { max-height: none; opacity: 1; }
-	.thing-t { font-size: 1rem; }
-	.thing-d { margin-top: 2px; }
-	.thing-v { margin-top: 4px; white-space: normal; overflow-wrap: anywhere; }
-	.record { font-size: var(--t-small); }
-	.note { font-size: var(--t-lead); }
-
-	/* the masthead earns its space back: the button is already on this screen,
-	   so the nav does not need to repeat it, and the switch speaks for itself */
-	.nav a[href="#write"] { display: none; }
-	.night-label { display: none; }
-	.masthead-in { padding: 10px clamp(20px, 5vw, 40px); }
-	.wordmark-w { font-size: 20px; }
-		.lede { margin-top: var(--s-2); }
-	.h2 { margin-top: var(--s-4); }
-}
-
-/* --- inner pages --------------------------------------------------------- */
-.page-title { font-size: clamp(2rem, 5vw, 3.2rem); }
-.say-top { margin-top: var(--s-3); }
-.post-body { max-width: 58ch; margin-top: var(--s-4); }
-.post-body p { margin-top: var(--s-2); }
-.post-body .h2 { margin-top: var(--s-4); }
-
-/* The line under the title that tells someone who arrived from nowhere what
-   this piece is about. A general blog cannot assume the reader knows. */
-.deck { max-width: 54ch; margin-top: var(--s-2); font-size: var(--t-lead); line-height: 1.5; color: var(--ink-2); }
-
-/* Charts, drawn here from the published numbers rather than lifted from the
-   papers. Inline SVG so they need no script, take the ink tokens, and invert
-   correctly in the late show. */
-.chart { margin: var(--s-4) 0; max-width: 58ch; }
-.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
-.chart figcaption { font-size: var(--t-small); line-height: 1.55; color: var(--ink-3); margin-top: 11px; }
-
-/* Contents for a long read. Plain anchors down the margin, sticky so they stay
-   with you, and pen.js marks the one you are inside. Works with the script off,
-   which is the only reason it is allowed to exist. */
-.toc { position: sticky; top: 96px; margin-top: var(--s-4); }
-.toc-h { font-family: var(--hand); font-size: var(--t-body); color: var(--pen); }
-.toc ol { list-style: none; margin-top: 10px; padding: 0; border-left: 1.5px solid var(--hair); position: relative; }
-.toc ol::before {
-	content: ""; position: absolute; left: -1.5px; top: 0; bottom: 0;
-	width: 1.5px; background: var(--pen); transform-origin: top; transform: scaleY(0);
-}
-.toc a {
-	display: block; padding: 6px 0 6px 13px;
-	margin-left: -1.5px; border-left: 1.5px solid transparent;
-	font-size: var(--t-small); line-height: 1.35; color: var(--ink-3);
-	text-decoration: none;
-	transition: color 0.2s ease, border-color 0.2s ease;
-}
-.toc a:hover { color: var(--pen); border-left-color: var(--pen-mat); }
-.toc a:focus-visible { outline: 2px dashed var(--pen); outline-offset: 2px; }
-.toc a.is-here { color: var(--pen); border-left-color: var(--pen); }
-
-/* the folded contents a phone reader gets in place of the margin list */
-.toc-fold { display: none; }
-@media (max-width: 860px) {
-	.toc-fold { display: block; margin-top: var(--s-3); border: 1.5px solid var(--hair); border-radius: 3px; padding: 10px 14px; }
-	.toc-fold summary { font-family: var(--hand); font-size: var(--t-body); color: var(--pen); cursor: pointer; list-style-position: outside; }
-	.toc-fold ol { list-style: none; margin: 8px 0 2px; padding: 0 0 0 4px; }
-	.toc-fold li { margin-top: 2px; }
-	.toc-fold a { display: block; padding: 7px 4px; font-size: var(--t-small); color: var(--ink-2); text-decoration: none; border-bottom: 1px solid var(--hair); }
-	.toc-fold li:last-child a { border-bottom: 0; }
-	.toc-fold a:active { color: var(--pen); }
-}
-
-/* pass it on: a button dressed as a shelf link, absent without the script */
-.pass-btn { background: none; border-top: 0; border-left: 0; border-right: 0; cursor: pointer; font-family: var(--print); padding-top: 0; }
-.pass-btn svg { width: 15px; height: 12px; vertical-align: -1px; margin-right: 2px; }
-html:not(.js) .pass-btn, html:not(.js) .pass-done { display: none; }
-.pass-done { margin-left: 10px; font-family: var(--hand); font-size: var(--t-small); color: var(--pen); opacity: 0; transition: opacity 0.25s ease; }
-.pass-done.shown { opacity: 1; }
-
-/* screen-reader-only announcements */
-.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-.post-body .h2 { scroll-margin-top: 96px; }
-/* the margin column falls below the article on small screens, where a contents
-   list at the very bottom would be a joke. The summary box up top does that job. */
-@media (max-width: 860px) { .toc { display: none; } }
-.c-bar { fill: var(--pen); }
-.c-bar.faint { opacity: 0.55; }
-html:has(#night:checked) .c-bar.faint, html.night .c-bar.faint { opacity: 0.62; }
-.c-base { stroke: var(--hair); stroke-width: 1.5; }
-.c-glass { fill: none; stroke: var(--pen); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; opacity: 0.3; }
-.c-glass.on { opacity: 1; fill: var(--pen); fill-opacity: 0.18; }
-.c-num { fill: var(--ink); font-family: var(--print); font-size: 16px; font-weight: 600; }
-.c-lab { fill: var(--ink-2); font-family: var(--print); font-size: 13px; }
-.c-ttl { fill: var(--ink-3); font-family: var(--print); font-size: 12.5px; }
-.c-note { fill: var(--pen); font-family: var(--hand); font-size: 16px; }
-
-/* Reading tools for long pieces. A wall of paragraphs is not a virtue, so the
-   post body gets: a highlighter pass, real lists, a pulled line for the one
-   idea the piece exists to deliver, and a short version up top for the reader
-   who is standing on a train. */
-.hi {
-	background: linear-gradient(to bottom, transparent 56%, var(--hi) 56%, var(--hi) 95%, transparent 95%);
-	padding: 0 2px;
-}
-.post-body ul { margin-top: var(--s-2); padding-left: 1.15em; }
-.post-body ul li { margin-top: 7px; line-height: 1.6; }
-.post-body ul li::marker { color: var(--pen); }
-.pull {
-	margin: var(--s-4) 0 var(--s-3);
-	padding: 2px 0 2px var(--s-3);
-	position: relative;
-	font-size: var(--t-lead); line-height: 1.42;
-	font-weight: 600; color: var(--ink);
-	max-width: 52ch;
-}
-.pull::before {
-	content: ""; position: absolute; left: 0; top: 2px; bottom: 2px;
-	width: 3px; background: var(--pen); transform-origin: top;
-}
-.keybox {
-	margin-top: var(--s-3);
-	padding: var(--s-3);
-	background: var(--mat);
-	border: 1.5px solid var(--hair);
-	border-left: 3px solid var(--pen);
-	border-radius: 3px;
-	max-width: 58ch;
-}
-.keybox-h { margin: 0; font-family: var(--hand); font-size: var(--t-body); font-weight: 400; color: var(--pen); letter-spacing: 0; }
-.keybox ul { margin-top: 9px; padding-left: 1.1em; }
-.keybox li { font-size: var(--t-small); line-height: 1.55; color: var(--ink-2); margin-top: 6px; }
-.keybox li::marker { color: var(--pen); }
-
-/* Two words under a title so a reader knows what they are about to read
-   before they commit to it. Spans, not links: there is no tag archive to
-   send anyone to, and a dead link is worse than no link. */
-.tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 11px; }
-.tag {
-	display: inline-block;
-	padding: 3px 11px 4px;
-	border: 1.4px solid var(--pen-mat);
-	border-radius: 100px;
-	font-size: var(--t-small); line-height: 1.45;
-	color: var(--pen); white-space: nowrap;
-}
-
-/* An old post keeps the date it was first written, and says plainly, in the
-   hand, that it was taken apart and rebuilt later. The date is the record;
-   the note is the honesty. */
-/* Every claim shows its source: the same standard the climate work holds to,
-   applied to the writing. */
-.sources { max-width: 58ch; margin-top: var(--s-5); padding-top: var(--s-3); border-top: 1px solid var(--hair); }
-.sources-h { margin: 0; font-family: var(--hand); font-size: var(--t-body); font-weight: 400; color: var(--pen); letter-spacing: 0; }
-.source-list { margin-top: var(--s-2); padding-left: 1.2em; }
-.source-list li { font-size: var(--t-small); line-height: 1.6; color: var(--ink-2); margin-top: 8px; }
-.source-list a { color: var(--pen); }
-
-/* --- THE CV PAGE: his résumé, kept in his format, on the site's paper -------
-   Deliberately restrained: a clean, professional record, not a reinvented
-   layout. The one styling the site lends it is its paper, ink and one pen. */
-.cv { padding-top: var(--s-5); padding-bottom: var(--s-8); max-width: 880px; }
-.cv-head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--s-4); flex-wrap: wrap; }
-.cv-head .name { font-size: clamp(2rem, 5vw, 2.8rem); }
-.cv-role { font-size: var(--t-lead); color: var(--ink-2); margin-top: 4px; }
-.cv-contact { display: flex; align-items: center; gap: 16px; margin-top: var(--s-2); }
-.cv-download {
-	display: inline-flex; align-items: center; gap: 10px;
-	padding: 11px 18px; border: 1.6px solid var(--pen); border-radius: 3px;
-	color: var(--pen); text-decoration: none; font-size: var(--t-small); font-weight: 600;
-	white-space: nowrap; transition: background-color 0.2s ease, transform 0.2s ease;
-}
-.cv-download svg { width: 18px; height: auto; }
-.cv-download:hover, .cv-download:focus-visible { background: color-mix(in srgb, var(--pen) 8%, transparent); transform: translateY(-1px); }
-.cv-sec { margin-top: var(--s-6); }
-.cv-head { padding-bottom: var(--s-3); }
-.cv-sec-first { margin-top: var(--s-4); }
-.cv-h { font-family: var(--print); font-size: var(--t-micro); font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--pen); padding-bottom: 6px; border-bottom: 1.5px solid var(--pen-mat); }
-.cv-summary { font-size: var(--t-small); line-height: 1.62; color: var(--ink-2); margin-top: var(--s-3); max-width: 92ch; }
-.cv-summary strong { color: var(--ink); font-weight: 700; }
-.cv-entry { margin-top: var(--s-4); }
-.cv-row { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s-3); }
-.cv-org { font-size: var(--t-h3); font-weight: 700; color: var(--ink); letter-spacing: -0.01em; }
-.cv-org .cv-note { font-weight: 400; font-style: italic; font-size: var(--t-small); color: var(--ink-3); }
-.cv-place { font-size: var(--t-small); color: var(--ink-3); text-align: right; white-space: nowrap; }
-.cv-sub { margin-top: 2px; }
-.cv-sub > span:first-child { font-size: var(--t-small); color: var(--ink-2); }
-.cv-sub em { font-style: italic; }
-.cv-date { font-size: var(--t-small); color: var(--ink-3); white-space: nowrap; font-variant-numeric: lining-nums; }
-.cv-points { margin-top: 8px; padding-left: 20px; list-style: none; }
-.cv-points li { font-size: var(--t-small); line-height: 1.58; color: var(--ink-2); margin-top: 5px; position: relative; }
-.cv-points li::before { content: ""; position: absolute; left: -15px; top: 0.62em; width: 5px; height: 5px; border-radius: 50%; background: var(--pen-mat); }
-.cv-skill-row { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: var(--s-3); margin-top: var(--s-3); align-items: baseline; }
-.cv-skill-cat { font-family: var(--hand); font-size: var(--t-body); color: var(--pen); }
-.cv-skill-items { font-size: var(--t-small); line-height: 1.55; color: var(--ink-2); }
-.cv-foot-links { margin-top: var(--s-7); display: flex; align-items: center; gap: var(--s-5); flex-wrap: wrap; }
-@media (max-width: 620px) {
-	.cv { padding-top: var(--s-4); }
-	.cv-head { gap: var(--s-3); }
-	.cv-download { width: 100%; justify-content: center; }
-	.cv-row { flex-direction: column; gap: 1px; }
-	.cv-place { text-align: left; }
-	.cv-skill-row { grid-template-columns: minmax(0, 1fr); gap: 2px; }
-}
-
-
-/* the quiet promise under the button */
-.door-quiet { display: inline-block; font-size: var(--t-small); color: var(--ink-3); }
-.night-label { white-space: nowrap; }
-
-/* --- taped in ------------------------------------------------------------- */
-/* Two strips of tape hold the photo to the page, like a photo in a journal. */
-.pin { position: relative; }
-.tape {
-	position: absolute; z-index: 2;
-	width: 54px; height: 17px;
-	background: var(--pen-mat);
-	opacity: 0.5;
-	border-radius: 1px;
-}
-.tape-l { top: -7px; left: 8px; transform: rotate(-32deg); }
-.tape-r { top: -7px; right: 8px; transform: rotate(28deg); }
-
-/* Four small drawings under the photo. Three are doors to his other rooms
-   (the kitchen, the cinema, the climate); one is just true. Same pen as
-   everything, tilted like objects put down by hand. */
-
-/* --- the postcard ---------------------------------------------------------- */
-/* Write to me, literally: a postcard already addressed to whoever is reading. */
-.postcard {
-	margin-top: var(--s-4);
-	display: grid;
-	grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
-	background: var(--mat);
-	box-shadow: var(--sh-contact), var(--sh-lift);
-	transform: rotate(-0.5deg);
-}
-.pc-left { padding: var(--s-4); }
-.pc-line { font-size: var(--t-small); color: var(--ink-2); }
-.pc-left .address { margin-top: var(--s-3); font-size: var(--t-body); word-break: normal; overflow-wrap: anywhere; letter-spacing: 0; }
-.pc-left .elsewhere { margin-top: var(--s-3); }
-.pc-right {
-	position: relative;
-	border-left: 1.5px dashed var(--hair);
-	padding: var(--s-4);
-	display: flex; flex-direction: column; justify-content: flex-end; gap: 8px;
-}
-.stamp {
-	position: absolute; top: 14px; right: 14px;
-	padding: 5px;
-	background: var(--mat);
-	border: 1.5px dashed var(--pen-mat);
-	transform: rotate(3deg);
-}
-.stamp img { display: block; width: 56px; height: 56px; object-fit: cover; filter: saturate(0.7); }
-.pc-reply { font-size: var(--t-small); line-height: 1.5; color: var(--ink-2); max-width: 22ch; }
-
-/* --- the sealed envelope ----------------------------------------------------
-   As the page scrolls, the pen draws an ink line down the right margin to the
-   bottom. A big envelope sits astride it: its right half shown, its left half
-   tucked under the fold. The flap closes on the line, pressed with his own
-   dark-blue wax nib seal (the one real object here, like the photo). */
-/* the composition hangs off the spine itself: right:83px puts the envelope's
-   fold exactly on the spine (which sits a constant 213px in from the section's
-   right edge, the page padding cancelling out). It lives below the postcard,
-   in the section's deep bottom padding, so the page ends on a sealed letter. */
-.seam-wrap { position: absolute; right: 83px; bottom: 40px; width: 260px; pointer-events: none; z-index: 1; }
-.seam { display: block; width: 100%; height: auto; overflow: visible; }
-.env-left { display: none; }
-@media (max-width: 860px) {
-	.seam-wrap { position: relative; width: 216px; margin: var(--s-5) auto 0; }
-	.env-left { display: block; }   /* whole envelope where there is no spine */
-	.env-ghost { display: none; }
-}
-
-/* the seal is a button: press it and it re-stamps a different emblem. Only one
-   emblem shows at a time; the nib is the default, so JS-off rests on writing. */
-.emblem { display: none; }
-.emblem.is-active { display: block; }
-.wax-seal-press { transform-box: fill-box; transform-origin: center; transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
-.seal-btn {
-	position: absolute; left: 50%; top: 44.8%; transform: translate(-50%, -50%);
-	width: 42%; aspect-ratio: 1; margin: 0; padding: 0;
-	border: 0; background: none; border-radius: 50%;
-	cursor: pointer; pointer-events: auto; -webkit-tap-highlight-color: transparent;
-}
-/* without JS the seal cannot cycle, so do not present a dead control */
-html:not(.js) .seal-btn { display: none; }
-.seal-btn:focus-visible { outline: 2.5px solid var(--pen); outline-offset: 3px; }
-.seam-wrap:has(.seal-btn:active) .wax-seal-press { transform: scale(0.9); }
-.seam-wrap:has(.seal-btn:hover) .wax-seal-press,
-.seam-wrap:has(.seal-btn:focus-visible) .wax-seal-press { transform: scale(1.05); }
-@media (prefers-reduced-motion: no-preference) {
-	.seam-wrap.restamp .wax-seal-press { animation: restamp 0.46s cubic-bezier(0.3, 0, 0.35, 1); }
-}
-@keyframes restamp {
-	0%   { transform: scale(1); }
-	28%  { transform: scale(0.88) rotate(-2.5deg); }
-	55%  { transform: scale(1.05) rotate(1.5deg); }
-	100% { transform: scale(1); }
-}
-
-@media (max-width: 620px) {
-	.keeps { justify-content: flex-start; gap: 14px; margin-top: var(--s-3); }
-	.postcard { grid-template-columns: 1fr; transform: none; }
-	.pc-line br { display: none; }
-	.pc-left .address { font-size: var(--t-small); }
-	.pc-right { border-left: 0; border-top: 1.5px dashed var(--hair); padding-top: 56px; }
-}
-
-/* ==========================================================================
-   THE PERFORMANCE (v5): the pen writes the page in front of the reader.
-   Every device below degrades to a complete, still page.
-   ========================================================================== */
-
-/* --- the hero title ------------------------------------------------------- */
-.namewrap { position: relative; }
-@media (prefers-reduced-motion: no-preference) {
-	.name { animation: fadein 0.5s ease backwards; }
-}
-@keyframes fadein { from { opacity: 0; } }
-
-/* --- dark mode is a scene change ------------------------------------------ */
-/* Without JS the flicker keys off the checkbox directly. With JS (html.js),
-   pen.js fires it via body.flick instead, so restoring a saved night mode at
-   load never sputters the projector. */
-html:not(.js):has(#night:checked) body, body.flick { animation: flicker 0.5s ease-out 1; }
-@keyframes flicker {
-	0% { filter: brightness(1); }
-	18% { filter: brightness(0.5); }
-	34% { filter: brightness(1.12); }
-	52% { filter: brightness(0.72); }
-	70% { filter: brightness(1.04); }
-	100% { filter: brightness(1); }
-}
-html:has(#night:checked) .night-marquee circle { animation: bulbs 2.6s ease-in-out infinite; }
-html:has(#night:checked) .night-marquee circle:nth-of-type(2) { animation-delay: 0.4s; }
-html:has(#night:checked) .night-marquee circle:nth-of-type(3) { animation-delay: 0.8s; }
-@keyframes bulbs { 50% { opacity: 0.3; } }
-
-
-/* --- the postcard assembles itself ---------------------------------------- */
-@media (prefers-reduced-motion: no-preference) {
-	@supports (animation-timeline: view()) {
-		.postcard { animation: card-in linear both; animation-timeline: view(); animation-range: entry 4% entry 42%; }
-		.stamp { animation: place-stamp linear both; animation-timeline: view(); animation-range: entry 34% entry 58%; }
-	}
-}
-@keyframes card-in { from { opacity: 0; transform: translateY(18px) rotate(0deg); } to { opacity: 1; } }
-@keyframes place-stamp { from { opacity: 0; transform: rotate(11deg) scale(1.3); } to { opacity: 1; } }
-
-/* the hover loops stay still for reduced-motion readers */
-@media (prefers-reduced-motion: reduce) {
-	.keep-clap:hover .clap-top, .keep-pan:hover .steam, .keep-leaf:hover svg,
-	.keep-clap:focus-visible .clap-top, .keep-pan:focus-visible .steam, .keep-leaf:focus-visible svg,
-	html:has(#night:checked) body, html:not(.js):has(#night:checked) body,
-	body.flick, html:has(#night:checked) .night-marquee circle { animation: none; }
-	.thing-more, .wax-seal-press, .postcard, .dogear { transition-duration: 0.01s; }
-}
-
-
-/* ==========================================================================
-   HOUSE LIGHTS (v6): the sheet becomes an object, the night becomes a cinema,
-   and the pages turn. Everything below degrades to a complete, still page.
-   ========================================================================== */
-
-/* --- the sheet at night ----------------------------------------------------- */
-/* The desk itself is defined once, at the top of this file. All that is left
-   here is what the dark does to the sheet: the lamp rims it instead of
-   dropping it, so the paper reads as lit rather than simply grey. */
-html:has(#night:checked) .page, html.night .page {
-	box-shadow:
-		0 0 0 1px rgba(236, 237, 240, 0.085),
-		0 0 130px rgba(143, 179, 224, 0.08),
-		var(--sh-sheet);
-}
-html { transition: background-color 0.7s ease; }
-
-/* --- pages turn: cross-document view transitions --------------------------- */
-/* by lamplight the photographs dim to the room, and wake when attended */
-html:has(#night:checked) .thing-shot img, html.night .thing-shot img { filter: brightness(0.82) contrast(1.02) saturate(0.9); }
-html:has(#night:checked) .thing:hover .thing-shot img, html.night .thing:hover .thing-shot img,
-html:has(#night:checked) .thing:focus-visible .thing-shot img, html.night .thing:focus-visible .thing-shot img { filter: none; }
-
-@view-transition { navigation: auto; }
-.masthead { view-transition-name: masthead; }
-@media (prefers-reduced-motion: no-preference) {
-	::view-transition-old(root) { animation: vt-out 0.24s ease both; }
-	::view-transition-new(root) { animation: vt-in 0.32s ease 0.04s both; }
-}
-@media (prefers-reduced-motion: reduce) {
-	::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation-duration: 0.01s; }
-}
-@keyframes vt-out { to { opacity: 0; transform: translateY(-8px); } }
-@keyframes vt-in { from { opacity: 0; transform: translateY(10px); } }
-
-@media (max-width: 380px) {
-	.nav { gap: 10px; }
-	.nav a { font-size: var(--t-small); }
-	.masthead-in { padding-left: 16px; padding-right: 16px; }
-}
-
-html:has(#night:checked) .night-marquee, html.night .night-marquee { filter: drop-shadow(0 0 5px currentColor); }
-
-/* --- lamplight: attend to one thing and the others wait -------------------- */
-@media (hover: hover) {
-	.things:has(.thing:hover) .thing:not(:hover) { opacity: 0.5; }
-}
-.things:has(.thing:focus-visible) .thing:not(:focus-visible) { opacity: 0.5; }
-
-/* --- the hand underlines its other two figures on arrival ------------------- */
-.flicked { position: relative; display: inline-block; }
-.flick {
-	position: absolute; left: -3px; bottom: -7px;
-	width: calc(100% + 6px); height: 8px;
-	color: var(--pen); overflow: visible; pointer-events: none;
-}
-.flick path { stroke-dasharray: 1; stroke-dashoffset: 0; }
-@media (prefers-reduced-motion: no-preference) {
-	@supports (animation-timeline: view()) {
-		.flick path { animation: draw linear both; animation-timeline: view(); animation-range: entry 24% entry 72%; }
-		.latest a { animation: settle linear backwards; animation-timeline: view(); animation-range: entry 6% entry 46%; }
-	}
-}
-
-/* --- the photo develops on arrival ------------------------------------------ */
-@media (prefers-reduced-motion: no-preference) {
-	.pin img { animation: develop 1.15s ease 0.45s backwards; }
-}
-@keyframes develop { from { opacity: 0.1; filter: grayscale(1) contrast(0.72); } }
-
-/* --- brand marks: the logo instead of the word ------------------------------
-   `a.brand` (0,1,1) so it outranks the container link rules (.record a etc.)
-   that would otherwise draw a text underline under the logo box. */
-a.brand { display: inline-flex; align-items: center; justify-content: center; color: var(--ink-2); vertical-align: -0.28em; border-bottom: 0; padding-bottom: 0; transition: color 0.2s ease, transform 0.2s ease; }
-.brand-ic { width: 1.35em; height: 1.35em; display: block; }
-a.brand:hover, a.brand:focus-visible { color: var(--pen); transform: translateY(-1px); }
-.record .brand { vertical-align: -0.24em; margin-left: 1px; }
-.elsewhere .brand { width: 26px; height: 26px; }
-.elsewhere .brand .brand-ic { width: 22px; height: 22px; }
-.cv-contact { display: flex; flex-wrap: wrap; gap: 6px var(--s-3); align-items: center; }
-.cv-contact a.brand { gap: 7px; color: var(--ink-2); vertical-align: baseline; font-size: var(--t-small); }
-.cv-contact a.brand .brand-ic { width: 17px; height: 17px; }
-
-/* --- the postcard straightens when you reach for it -------------------------- */
-.postcard { transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s ease; }
-@media (hover: hover) {
-	.postcard:hover { transform: rotate(0deg) translateY(-6px); box-shadow: var(--sh-contact), 0 34px 58px -28px rgba(30, 24, 14, 0.6); }
-}
-
-/* --- the dog-eared corner takes you back to the top --------------------------- */
-.dogear {
-	position: fixed; right: 12px; bottom: 12px;
-	width: 48px; height: 48px; z-index: 15;
-	filter: drop-shadow(-4px -4px 9px rgba(20, 22, 28, 0.16));
-	transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.dogear::before {
-	content: ""; position: absolute; inset: 0;
-	background: linear-gradient(315deg, var(--mat) 52%, color-mix(in srgb, var(--mat) 82%, var(--pen)) 53%, transparent 53.5%);
-	clip-path: polygon(100% 0, 100% 100%, 0 100%);
-	border-radius: 0 0 3px 0;
-}
-.dogear svg { position: absolute; right: 5px; bottom: 4px; width: 19px; height: 19px; color: var(--pen); }
-.dogear:hover { transform: translate(-2px, -2px); }
-.dogear:active { transform: translate(0, 0) scale(0.96); }
-@media (max-width: 860px) { .dogear { display: none; } }
-@media (prefers-reduced-motion: no-preference) {
-	@supports (animation-timeline: scroll()) {
-		.dogear { animation: dog-in linear both; animation-timeline: scroll(root); animation-range: 200px 700px; }
-	}
-}
-@keyframes dog-in { from { opacity: 0; visibility: hidden; } to { opacity: 1; visibility: visible; } }
-
-
-/* --- the ink trail canvas (created by pen.js, hero only) ----------------------- */
-
-/* --- the lost map on the 404 ---------------------------------------------------- */
-.lost-map { display: block; width: 172px; margin: 20px 0 0 4px; color: var(--pen); opacity: 0.9; transform: rotate(-2deg); overflow: visible; }
-@media (prefers-reduced-motion: no-preference) {
-	.lost-map .lm-x { animation: draw 0.4s ease 1.2s backwards; }
-}
-.lost-map .lm-x { stroke-dasharray: 1; stroke-dashoffset: 0; }
-
-/* --- late additions to the reduced-motion contract ------------------------------ */
-@media (prefers-reduced-motion: reduce) {
-	body.flick, .dogear, .pin img, .lost-map .lm-x { animation: none; }
-}
-
-
-/* the latest entries get their picture pinned above the fold, so the page
-   opens with something to look at rather than a wall of titles */
-.latest { margin-top: var(--s-4); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-4) var(--s-3); }
-/* a lone note lies down and fills the width rather than leaving half a hole */
-.latest:has(> a:only-child) { grid-template-columns: minmax(0, 1fr); }
-.latest:has(> a:only-child) > a {
-	display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
-	gap: 4px var(--s-4); align-items: start;
-}
-.latest:has(> a:only-child) .thing-shot { grid-row: 1 / 6; margin-bottom: 0; }
-.latest:has(> a:only-child) .late-t { margin-top: 2px; }
-.latest .thing-shot { margin-bottom: 10px; }
-.latest .thing-shot img, .latest .thing-plate { aspect-ratio: 16 / 10; }
-.late-t { font-size: var(--t-h3); font-weight: 600; color: var(--ink); letter-spacing: -0.01em; transition: color 0.2s ease; }
-.latest a:hover .late-t, .latest a:focus-visible .late-t { color: var(--pen); }
-.late-g { font-size: var(--t-small); color: var(--ink-2); margin-top: 3px; }
-.late-m { display: block; font-size: var(--t-micro); color: var(--ink-3); margin-top: 6px; }
-.late-m .fresh { font-family: var(--hand); font-size: var(--t-small); color: var(--pen); margin-left: 8px; }
-.latest a { text-decoration: none; color: inherit; display: block; min-width: 0; }
-/* a post with no photo yet shows what it actually is: a page of the notebook,
-   ruled, with its subject drawn small in the corner of the sheet */
-.latest .thing-plate {
-	background-image: repeating-linear-gradient(to bottom, transparent 0 15px, var(--hair) 15px 16px);
-	background-position: 0 26px;
-	align-items: flex-start; justify-content: flex-start;
-	padding: 14px 0 0 16px;
-}
-.latest .thing-plate svg { width: 15%; opacity: 0.62; }
-/* a post whose point is a shape gets that shape as its thumbnail */
-.latest .thing-plate.wide svg { width: 78%; opacity: 1; }
-.tn-paper { fill: var(--mat); stroke: var(--pen); stroke-width: 2.4; stroke-linejoin: round; }
-.tn-line { stroke: var(--pen); stroke-width: 2; stroke-linecap: round; opacity: 0.4; }
-.tn-rule { stroke: var(--pen); stroke-width: 2.4; stroke-linecap: round; opacity: 0.75; }
-.tn-heart { fill: var(--pen); }
-.latest a:nth-child(2) .thing-plate { transform: rotate(1.1deg); }
-.latest .thing-plate { transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease; }
-.latest a:hover .thing-plate, .latest a:focus-visible .thing-plate {
-	transform: rotate(0deg) translateY(-3px);
-	box-shadow: 0 14px 28px -14px var(--pen-mat), 0 0 0 1px var(--hair);
-}
-/* a post is a page from the same notebook: the holes and the margin rule,
-   but no ruled lines, because prose has to stay readable */
-@media (max-width: 620px) {
-	.latest { grid-template-columns: minmax(0, 1fr); gap: var(--s-3); }
-	.latest a { display: grid; grid-template-columns: 118px minmax(0, 1fr); gap: 2px var(--s-2); align-items: start; }
-	.latest a .late-m { grid-column: 2; }
-	.latest .thing-shot { grid-row: 1 / 4; margin-bottom: 0; }
-	.late-t { font-size: 1rem; }
-}
-
-
-/* inside a post, a photo is taped into the text column; while it waits,
-   the frame is drawn empty */
-/* a photo that has not been taken yet: the frame is taped up and waiting,
-   never a broken-image cross */
-/* ==========================================================================
-   PRINT: the page becomes the letter it always was. A gift for whoever
-   presses ctrl-P, because somebody always does.
-   ========================================================================== */
-@media print {
-	/* the hover-collapsed content opens on paper: the record prints whole */
-	.thing-more, .kit-body { max-height: none !important; opacity: 1 !important; overflow: visible !important; }
-	body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
-	html, html.night, html:has(#night:checked) {
-		--paper: #ffffff; --mat: #ffffff;
-		--ink: #21232a; --ink-2: #494d57; --ink-3: #6b6f7a;
-		--pen: #1d3a63; --pen-2: #2f5793; --pen-mat: rgba(29, 58, 99, 0.28);
-		--hair: rgba(33, 35, 42, 0.13);
-	}
-	* { animation: none !important; transition: none !important; }
-	html, body, .page { background: #fff !important; box-shadow: none !important; }
-	/* the seal is hidden here, so drop the room reserved for it (portrait paper
-	   already gets this via the <=860px query; this also covers wide/landscape) */
-	.closing { padding-bottom: var(--s-8) !important; }
-	.flick path { stroke-dashoffset: 0 !important; }
-	.note, .section .note { mask-image: none !important; opacity: 1 !important; }
-	.thing, .figure, .postcard, .latest a { break-inside: avoid; }
-	.foot::after {
-		content: "P.S. You printed me. Fold twice and keep me in a pocket.";
-		display: block; width: 100%;
-		font-family: var(--hand); font-size: var(--t-body); color: var(--pen);
-	}
-}
+@font-face{
+  font-family:"Montserrat";
+  src:url("/fonts/montserrat.woff2") format("woff2");
+  font-weight:100 900;
+  font-style:normal;
+  font-display:swap;
+}
+
+
+/* FINAL THEME, revision 6: all three pages in one mockup, switched by the tabs
+   - hero photographs restyled as prints: overlapping, tilted a degree or two,
+     with a card border, so they read as photos of a person, not product shots
+   - the tab is About me now, and both Blog and About me are designed pages
+   - the blog cover refined: the two curves meet a "today" line, the gap
+     between them is shaded, and the endpoints are ringed like the site's dots */
+:root{
+  --paper:#FFFFFF;
+  --paper-2:#F5F7FA;
+  --card:#FFFFFF;
+  --ink:#16233A;
+  --ink-mid:#4A5870;
+  --ink-soft:#75839B;
+  --line:#E4E9F0;
+  --line-strong:#CBD4E0;
+  --navy:#16365F;
+  --navy-2:#1B4F8F;
+  --sky:#3E86C4;
+  --sky-wash:rgba(62,134,196,.08);
+  --hi:linear-gradient(100deg, rgba(255,224,74,0) 0%, rgba(255,224,74,.75) 6%, rgba(250,214,60,.6) 50%, rgba(255,224,74,.75) 94%, rgba(255,224,74,0) 100%);
+  --hi-flat:rgba(250,214,60,.5);
+  --slot:#E7EDF5;
+  --slot-2:#D9E2EF;
+  --shadow:0 1px 2px rgba(22,35,58,.04), 0 8px 26px rgba(22,35,58,.06);
+  --shadow-lift:0 2px 4px rgba(22,35,58,.05), 0 22px 52px rgba(62,134,196,.16);
+  --shadow-btn:0 6px 20px rgba(22,54,95,.28);
+  --grad-btn:linear-gradient(135deg,var(--navy-2),var(--navy));
+  --font:"Montserrat",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --ease:cubic-bezier(.2,.7,.25,1);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0E1624;
+    --paper-2:#131D2F;
+    --card:#162236;
+    --ink:#EAF0F8;
+    --ink-mid:#AEBACE;
+    --ink-soft:#8090A8;
+    --line:#25344C;
+    --line-strong:#3B4D6A;
+    --navy:#8FB6E8;
+    --navy-2:#6FA5E4;
+    --sky:#6FB0E0;
+    --sky-wash:rgba(111,176,224,.09);
+    --hi:linear-gradient(100deg, rgba(214,178,44,0) 0%, rgba(214,178,44,.34) 6%, rgba(214,178,44,.27) 50%, rgba(214,178,44,.34) 94%, rgba(214,178,44,0) 100%);
+    --hi-flat:rgba(214,178,44,.3);
+    --slot:#1B2942;
+    --slot-2:#20304C;
+    --shadow:0 1px 2px rgba(0,0,0,.35), 0 8px 26px rgba(0,0,0,.32);
+    --shadow-lift:0 2px 4px rgba(0,0,0,.4), 0 22px 52px rgba(111,176,224,.16);
+    --shadow-btn:0 6px 20px rgba(0,0,0,.5);
+    --grad-btn:linear-gradient(135deg,#A9CBF0,#8FB6E8);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0E1624;
+  --paper-2:#131D2F;
+  --card:#162236;
+  --ink:#EAF0F8;
+  --ink-mid:#AEBACE;
+  --ink-soft:#8090A8;
+  --line:#25344C;
+  --line-strong:#3B4D6A;
+  --navy:#8FB6E8;
+  --navy-2:#6FA5E4;
+  --sky:#6FB0E0;
+  --sky-wash:rgba(111,176,224,.09);
+  --hi:linear-gradient(100deg, rgba(214,178,44,0) 0%, rgba(214,178,44,.34) 6%, rgba(214,178,44,.27) 50%, rgba(214,178,44,.34) 94%, rgba(214,178,44,0) 100%);
+  --hi-flat:rgba(214,178,44,.3);
+  --slot:#1B2942;
+  --slot-2:#20304C;
+  --shadow:0 1px 2px rgba(0,0,0,.35), 0 8px 26px rgba(0,0,0,.32);
+  --shadow-lift:0 2px 4px rgba(0,0,0,.4), 0 22px 52px rgba(111,176,224,.16);
+  --shadow-btn:0 6px 20px rgba(0,0,0,.5);
+  --grad-btn:linear-gradient(135deg,#A9CBF0,#8FB6E8);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.7;font-weight:400;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:clamp(22px,5vw,56px)}
+a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--line-strong);text-underline-offset:4px;text-decoration-thickness:1px;transition:color .15s var(--ease),text-decoration-color .15s var(--ease)}
+@media (hover:hover){a:hover{color:var(--sky);text-decoration-color:var(--sky)}}
+a:focus-visible,button:focus-visible{outline:2px solid var(--sky);outline-offset:3px;border-radius:2px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+[hidden]{display:none!important}
+
+
+/* ---------- masthead ---------- */
+.mast{position:sticky;top:0;z-index:40;background:var(--paper);border-bottom:1px solid var(--line)}
+.mast .wrap{display:flex;align-items:center;gap:clamp(14px,2.4vw,26px);height:62px}
+.mark{font-size:15px;font-weight:800;letter-spacing:.01em;text-decoration:none;color:var(--ink);white-space:nowrap}
+.tabs{display:flex;gap:clamp(12px,2vw,22px);align-items:center}
+.tabs a{font-size:13.5px;font-weight:600;color:var(--ink-mid);text-decoration:none;padding:6px 0;border-bottom:2px solid transparent}
+.tabs a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--sky)}
+@media (hover:hover){.tabs a:hover{color:var(--sky);text-decoration:none}}
+.mast .right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.theme-btn{font-family:var(--font);font-size:12.5px;font-weight:600;color:var(--ink-mid);background:none;border:1px solid var(--line-strong);border-radius:999px;padding:8px 15px;cursor:pointer}
+.cv-btn{font-size:12.5px;font-weight:700;background:var(--grad-btn);color:#fff;border-radius:999px;padding:10px 19px;text-decoration:none;white-space:nowrap;letter-spacing:.02em;box-shadow:var(--shadow-btn);transition:transform .2s var(--ease)}
+/* On a phone the masthead is two rows: the name and the theme switch, then the
+   three tabs beneath them. The CV pill drops out because the CV tab is right
+   there and the download sits at the top of that page. */
+@media (max-width:640px){
+	.mast .wrap{flex-wrap:wrap;height:auto;padding-top:11px;padding-bottom:9px;gap:10px}
+	.mast .right{margin-left:auto}
+	.mast .cv-btn{display:none}
+	.tabs{order:3;flex:1 0 100%;gap:22px;border-top:1px solid var(--line);padding-top:8px;margin-top:1px}
+	.tabs a{font-size:14px;padding:3px 0}
+	.theme-btn{padding:7px 14px}
+}
+:root[data-theme="dark"] .cv-btn{color:#0E1624}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .cv-btn{color:#0E1624}}
+@media (hover:hover){.cv-btn:hover{transform:translateY(-1px);color:#fff;text-decoration:none}
+:root[data-theme="dark"] .cv-btn:hover{color:#0E1624}}
+
+/* ---------- shared bits ---------- */
+.hl{background-image:var(--hi);background-size:100% .64em;background-position:0 76%;background-repeat:no-repeat;padding:0 .08em;margin:0 -.04em;border-radius:2px;white-space:nowrap}
+html.js .hl{background-size:0% .64em;transition:background-size .8s var(--ease) .25s}
+html.js .hl.in{background-size:100% .64em}
+html.js .rv{opacity:0;transform:translateY(12px);transition:opacity .65s var(--ease) var(--d,0s),transform .65s var(--ease) var(--d,0s)}
+html.js .rv.in{opacity:1;transform:none}
+.d1{--d:.08s}.d2{--d:.16s}
+.sec{padding-block:clamp(56px,7.5vw,108px)}
+.hero+.sec{padding-top:clamp(30px,3.6vw,56px)}
+.sec+.sec{border-top:1px solid var(--line)}
+.sec-h{margin:0 0 clamp(30px,4vw,48px)}
+.sec-h h2{font-size:clamp(23px,2.8vw,31px);font-weight:800;letter-spacing:-.02em;margin:0}
+.sec-h .lead{font-size:14.5px;font-weight:500;color:var(--ink-mid);margin:10px 0 0;max-width:56ch}
+.page-h{padding-block:clamp(48px,6vw,84px) 0;text-align:left}
+.page-h h1{font-size:clamp(30px,3.8vw,42px);font-weight:800;letter-spacing:-.025em;margin:0}
+.page-h .lead{font-size:15px;font-weight:500;color:var(--ink-mid);margin:12px 0 0;max-width:56ch}
+
+/* ---------- photo prints: how a person's photos should read ---------- */
+.print{background:linear-gradient(160deg,var(--slot),var(--slot-2));border:6px solid var(--card);border-radius:14px;box-shadow:var(--shadow)}
+
+/* ---------- HOME: hero ---------- */
+.hero{padding:clamp(30px,4vw,58px) 0 clamp(38px,4.6vw,66px);text-align:center;position:relative}
+.hero::before{content:"";position:absolute;inset:0 0 30% 0;background:radial-gradient(60% 70% at 50% 0%,var(--sky-wash),transparent 70%);pointer-events:none}
+.hero>*{position:relative}
+.hero-photos{display:flex;justify-content:center;align-items:flex-start;margin:6px 0 46px}
+.hero-photos .ph{aspect-ratio:3/4}
+.hero-photos .ph.a{width:clamp(96px,17vw,196px);transform:rotate(-5deg) translateY(26px);margin-right:-22px;z-index:1}
+.hero-photos .ph.b{width:clamp(140px,23vw,264px);aspect-ratio:4/5;z-index:2;box-shadow:var(--shadow-lift)}
+.hero-photos .ph.c{width:clamp(96px,17vw,196px);transform:rotate(4deg) translateY(34px);margin-left:-22px;z-index:1}
+.hero .pos{font-size:clamp(19px,2.4vw,24px);line-height:1.5;font-weight:700;margin:0 auto 12px;max-width:36ch;letter-spacing:-.01em}
+.hero .sub{font-size:14.5px;font-weight:500;color:var(--ink-mid);max-width:52ch;margin:0 auto 34px}
+.hero-act{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:center}
+.act-mail{font-size:13.5px;font-weight:700;background:var(--grad-btn);color:#fff;border-radius:999px;padding:14px 24px;text-decoration:none;letter-spacing:.01em;box-shadow:var(--shadow-btn);transition:transform .2s var(--ease)}
+:root[data-theme="dark"] .act-mail{color:#0E1624}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .act-mail{color:#0E1624}}
+@media (hover:hover){.act-mail:hover{transform:translateY(-1px);color:#fff;text-decoration:none}
+:root[data-theme="dark"] .act-mail:hover{color:#0E1624}}
+.act-cv{font-size:13.5px;font-weight:600;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:999px;padding:13px 23px;text-decoration:none;background:var(--card)}
+@media (hover:hover){.act-cv:hover{border-color:var(--sky);color:var(--sky);text-decoration:none}}
+.timeline{display:flex;align-items:flex-start;justify-content:center;gap:0;max-width:640px;margin:40px auto 0}
+.tl-seg{flex:1;height:1px;background:var(--line-strong);margin-top:5px}
+.tl-item{display:flex;flex-direction:column;align-items:center;gap:8px;padding-inline:clamp(14px,3vw,34px)}
+.tl-item .dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--sky),var(--navy));flex:none}
+.tl-item .place{font-size:13.5px;font-weight:700;letter-spacing:.02em;line-height:1.2}
+.tl-item .yrs{font-size:11.5px;font-weight:500;color:var(--ink-soft);line-height:1.2;white-space:nowrap}
+@media (max-width:560px){
+  /* stacked, the three stops still line up on one left edge, so the dots read
+     as a route down the page instead of three separately centred rows */
+  .timeline{flex-direction:column;align-items:flex-start;gap:14px;width:max-content;max-width:100%;margin-inline:auto;text-align:left}
+  .tl-seg{display:none}
+  .tl-item{flex-direction:row;align-items:baseline;gap:10px;padding:0}
+  .tl-item .dot{align-self:center}
+  .tl-item .place{min-width:5.4em}
+}
+
+/* ---------- HOME: results, lanes, projects, events, press ---------- */
+.figs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(32px,4.5vw,64px)}
+.fig{border-top:2px solid var(--line-strong);padding-top:24px;display:flex;flex-direction:column}
+.fig .n{font-size:clamp(36px,4.2vw,50px);line-height:1.1;font-weight:800;letter-spacing:-.025em;display:block;margin:0 0 8px;font-variant-numeric:tabular-nums}
+.fig p{margin:0;font-size:14.5px;font-weight:500;color:var(--ink-mid);max-width:26ch}
+.fig .src{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-top:auto;padding-top:16px;white-space:nowrap}
+@media (max-width:720px){.figs{grid-template-columns:minmax(0,1fr)}}
+.ws{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(32px,5vw,72px)}
+.ws .lane-h{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 18px}
+.worked-row{font-size:clamp(16px,1.9vw,20px);font-weight:700;letter-spacing:-.005em;margin:0;line-height:2.1}
+.worked-row .dot{color:var(--line-strong);font-weight:400;padding-inline:12px}
+.worked-note{font-size:13px;font-weight:500;color:var(--ink-soft);margin:16px 0 0}
+.edu{display:grid;gap:14px}
+.edu-item{display:grid;gap:2px;border-left:3px solid;border-image:linear-gradient(180deg,var(--sky),var(--navy)) 1;padding-left:16px}
+.edu-item .school{font-size:15.5px;font-weight:700;letter-spacing:-.005em}
+.edu-item .deg{font-size:12.5px;font-weight:500;color:var(--ink-soft)}
+@media (max-width:720px){.ws{grid-template-columns:minmax(0,1fr)}}
+.slot{background:linear-gradient(160deg,var(--slot),var(--slot-2));border-radius:12px}
+.slot.ratio-16-10{aspect-ratio:16/10;width:100%}
+.projs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(22px,3vw,36px)}
+.proj{border:1px solid var(--line);border-radius:18px;background:var(--card);text-decoration:none;display:flex;flex-direction:column;color:inherit;overflow:hidden;transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s var(--ease)}
+@media (hover:hover){.proj:hover{transform:translateY(-5px);box-shadow:var(--shadow-lift);border-color:var(--line-strong);color:inherit}}
+.proj .shot{aspect-ratio:16/10;background:linear-gradient(160deg,var(--slot),var(--slot-2));border-bottom:1px solid var(--line)}
+.proj .body{padding:20px 24px 24px;display:flex;flex-direction:column;gap:9px;flex:1}
+.proj .top{display:flex;align-items:baseline;gap:12px}
+.proj img.shot{width:100%;height:auto;object-fit:cover;display:block}
+.proj .p-name{display:block;font-size:18.5px;font-weight:800;letter-spacing:-.01em}
+.proj .st{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-left:auto;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+.proj .st::before{content:"";width:6px;height:6px;border-radius:50%;background:linear-gradient(135deg,var(--sky),var(--navy))}
+.proj .st.prog::before{background:var(--line-strong)}
+.proj .p-desc{display:block;font-size:14px;font-weight:500;color:var(--ink-mid);flex:1;max-width:44ch}
+.proj:not(a) .visit .go{display:none}
+.proj .visit{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;font-weight:600;color:var(--ink-soft);letter-spacing:.02em}
+.proj .visit .go{color:var(--sky);opacity:0;transform:translateX(-4px);transition:opacity .3s var(--ease),transform .3s var(--ease)}
+@media (hover:hover){.proj:hover .visit .go{opacity:1;transform:none}}
+@media (hover:none){.proj .visit .go{opacity:1;transform:none}}
+@media (max-width:680px){.projs{grid-template-columns:minmax(0,1fr)}}
+.bill{display:grid;gap:clamp(22px,3vw,34px)}
+.poster{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:clamp(28px,3.8vw,48px);display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(26px,3.6vw,56px);align-items:center;transition:box-shadow .35s var(--ease)}
+@media (hover:hover){.poster:hover{box-shadow:var(--shadow-lift)}}
+.poster h3{font-size:clamp(22px,2.8vw,32px);line-height:1.15;letter-spacing:-.02em;font-weight:800;margin:0 0 8px}
+.poster .role{font-size:11px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 14px}
+.poster p{margin:0;color:var(--ink-mid);font-size:15px;font-weight:500;max-width:48ch}
+.poster p+p{margin-top:8px}
+.poster .slot{aspect-ratio:16/10;width:100%}
+.stat-line{display:flex;align-items:baseline;gap:10px;margin-top:18px !important;flex-wrap:wrap}
+.stat-line .hl{font-size:clamp(28px,3.4vw,40px);font-weight:800;letter-spacing:-.02em;line-height:1.1;color:var(--ink)}
+.stat-line span:last-child{font-size:14px;font-weight:600;color:var(--ink-mid)}
+.smalls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(22px,3vw,34px)}
+.small{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:clamp(24px,3.2vw,36px)}
+.small h3{font-size:clamp(17px,2vw,21px);font-weight:800;margin:0 0 6px;letter-spacing:-.01em}
+.small .role{font-size:10.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 10px}
+.small p{margin:0;color:var(--ink-mid);font-size:14px;font-weight:500;max-width:46ch}
+@media (max-width:800px){.poster{grid-template-columns:minmax(0,1fr)}.smalls{grid-template-columns:minmax(0,1fr)}}
+.press-list{display:grid}
+.press-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px clamp(20px,3vw,40px);padding:20px 0;border-top:1px solid var(--line);align-items:baseline}
+.press-row:last-of-type{border-bottom:1px solid var(--line)}
+.press-row .pr-t{font-size:16px;font-weight:700;letter-spacing:-.005em}
+.press-row .about{font-size:13.5px;font-weight:500;color:var(--ink-mid);grid-column:1}
+.press-row .meta{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);grid-row:1;grid-column:2;white-space:nowrap}
+@media (max-width:560px){.press-row{grid-template-columns:minmax(0,1fr)}.press-row .meta{grid-row:auto;grid-column:1}}
+
+/* ---------- BLOG page ---------- */
+.feature{display:block;border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--card);box-shadow:var(--shadow);text-decoration:none;color:inherit;margin-top:clamp(30px,4vw,48px);transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+@media (hover:hover){.feature:hover{transform:translateY(-4px);box-shadow:var(--shadow-lift);color:inherit}}
+.feature .art{display:block;position:relative;aspect-ratio:16/7;background:linear-gradient(165deg,var(--paper) 0%,var(--paper-2) 100%);border-bottom:1px solid var(--line)}
+.feature .art svg{position:absolute;inset:0;width:100%;height:100%}
+.feature .body{display:block;padding:clamp(22px,3vw,34px) clamp(24px,3.4vw,40px) clamp(26px,3.4vw,38px)}
+.feature .kick{display:block;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--sky);margin:0 0 10px}
+.feature .f-title{display:block;font-size:clamp(22px,3vw,32px);font-weight:800;letter-spacing:-.02em;line-height:1.15;margin:0 0 10px;max-width:22ch}
+.feature .f-title .hl2{background-image:var(--hi);background-size:100% .55em;background-position:0 82%;background-repeat:no-repeat;padding:0 .06em;white-space:nowrap;border-radius:2px}
+.feature .f-deck{display:block;margin:0 0 12px;font-size:14.5px;font-weight:500;color:var(--ink-mid);max-width:56ch}
+.feature .meta{font-size:11px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-soft);display:flex;gap:18px;flex-wrap:wrap}
+.blog-note{font-size:13.5px;font-weight:500;color:var(--ink-soft);margin:clamp(26px,3.4vw,40px) 0 clamp(56px,7vw,96px)}
+
+/* ---------- ABOUT ME page ---------- */
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(26px,3.6vw,46px);margin-top:clamp(30px,4vw,48px)}
+.gal{display:grid;gap:8px}
+.gal{margin:0}
+.gal .print{width:100%}
+.gal .print{aspect-ratio:4/5}
+.gal:nth-child(odd) .print{transform:rotate(-1.1deg)}
+.gal:nth-child(even) .print{transform:rotate(1deg)}
+.gal .cap{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);text-align:center}
+@media (max-width:640px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.about-contact{margin-top:clamp(56px,7vw,96px);border-top:1px solid var(--line);padding-block:clamp(48px,6vw,80px) clamp(56px,7vw,96px);text-align:center}
+.about-contact h2{font-size:clamp(21px,2.6vw,28px);font-weight:800;letter-spacing:-.02em;margin:0 0 12px}
+.about-contact p.say{font-size:15px;font-weight:500;margin:0 auto 24px;color:var(--ink-mid);max-width:46ch}
+.about-contact .mail{font-size:clamp(16px,2vw,19px);font-weight:700;margin:0 0 6px}
+.about-contact .reply{font-size:12.5px;font-weight:500;color:var(--ink-soft);margin:0 0 28px}
+.links-row{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+.link-card{display:grid;grid-template-columns:46px minmax(0,1fr) auto;gap:13px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:12px 18px 12px 12px;text-decoration:none;color:inherit;min-width:min(320px,100%);text-align:left;transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+@media (hover:hover){.link-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lift);color:inherit}}
+.link-card .badge{width:46px;height:46px;border-radius:11px;display:grid;place-items:center;font-size:15px;font-weight:800;color:#fff;letter-spacing:.01em}
+.link-card .badge.li{background:#0A66C2}
+.link-card .badge.gh{background:#24292F}
+.link-card .who{display:block;font-size:13.5px;font-weight:700;line-height:1.35}
+.link-card .what{display:block;font-size:11.5px;color:var(--ink-soft);font-weight:500}
+.link-card .arrow{color:var(--sky);font-weight:700}
+
+/* ---------- home closing band ---------- */
+.contact{background:linear-gradient(180deg,var(--paper-2),var(--paper));border-top:1px solid var(--line);margin-top:clamp(48px,6vw,84px)}
+.contact .inner{padding-block:clamp(56px,7vw,92px);max-width:660px;margin-inline:auto;text-align:center}
+.contact h2{font-size:clamp(23px,2.8vw,31px);font-weight:800;margin:0 0 12px;letter-spacing:-.02em}
+.contact p.say{font-size:15px;font-weight:500;margin:0 auto 26px;color:var(--ink-mid);max-width:46ch}
+.contact .mail{font-size:clamp(16px,2vw,19px);font-weight:700;margin:0 0 6px}
+.contact .reply{font-size:12.5px;font-weight:500;color:var(--ink-soft);margin:0 0 30px}
+.contact .more{font-size:13.5px;font-weight:600;margin:26px 0 0}
+.foot{padding:28px 0 64px;font-size:11.5px;font-weight:500;letter-spacing:.04em;color:var(--ink-soft);text-align:center}
+
+/* ---------- skip link, drawn only for the keyboard ---------- */
+.skip{position:absolute;left:-9999px;top:8px;z-index:60;background:var(--navy);color:#fff;padding:10px 18px;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none}
+.skip:focus-visible{left:12px}
+
+/* ---------- long-form reading, for the essay and the CV ---------- */
+.prose{max-width:68ch}
+.prose p{margin:0 0 20px;font-size:16.5px;line-height:1.8;color:var(--ink-mid)}
+.prose h3{font-size:clamp(19px,2.2vw,24px);font-weight:800;letter-spacing:-.015em;margin:44px 0 14px;color:var(--ink);scroll-margin-top:84px}
+.prose h4{font-size:16px;font-weight:700;margin:32px 0 10px;color:var(--ink)}
+.prose ul{margin:0 0 20px;padding-left:22px}
+.prose li{margin:0 0 8px;font-size:16.5px;line-height:1.75;color:var(--ink-mid)}
+.prose strong{color:var(--ink);font-weight:700}
+.prose a{font-weight:500}
+.prose blockquote{margin:26px 0;padding:2px 0 2px 20px;border-left:3px solid;border-image:linear-gradient(180deg,var(--sky),var(--navy)) 1;font-size:18px;font-weight:600;color:var(--ink);line-height:1.5}
+.prose figure{margin:30px 0}
+.prose figcaption{font-size:12.5px;font-weight:500;color:var(--ink-soft);margin-top:10px}
+.prose .sources{margin-top:44px;padding-top:24px;border-top:1px solid var(--line)}
+.prose .sources h3{margin-top:0}
+.prose .sources li{font-size:14px;line-height:1.6}
+.post-head{padding-block:clamp(44px,5.5vw,76px) 0}
+.post-head h1{font-size:clamp(30px,4.2vw,46px);font-weight:800;letter-spacing:-.028em;line-height:1.12;margin:0 0 16px;max-width:20ch}
+.post-head .deck{font-size:clamp(16px,1.9vw,19px);font-weight:500;color:var(--ink-mid);max-width:60ch;margin:0 0 18px}
+.post-head .meta{font-size:11px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-soft);display:flex;gap:18px;flex-wrap:wrap;margin:0}
+.post-body{padding-block:clamp(30px,4vw,48px) clamp(56px,7vw,96px)}
+.back-link{display:inline-block;margin-top:8px;font-size:13.5px;font-weight:600}
+
+/* ---------- the CV page ---------- */
+.cv-sec{margin-top:clamp(34px,4.5vw,56px)}
+.cv-h{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);padding-bottom:8px;border-bottom:1px solid var(--line);margin:0 0 20px}
+.cv-entry{margin-top:22px}
+.cv-entry:first-of-type{margin-top:0}
+.cv-row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
+.cv-org{font-size:17px;font-weight:700;letter-spacing:-.01em;margin:0}
+.cv-date{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap}
+.cv-role{font-size:13.5px;font-weight:500;color:var(--ink-mid);margin:2px 0 8px}
+.cv-points{margin:0;padding-left:20px}
+.cv-points li{font-size:14.5px;line-height:1.65;color:var(--ink-mid);margin-bottom:6px}
+.cv-contact{display:flex;flex-wrap:wrap;gap:8px 22px;align-items:center;margin-top:14px}
+.cv-contact a{font-size:13.5px;font-weight:500}
+.cv-skills{display:grid;gap:16px}
+.cv-skill-row{display:grid;grid-template-columns:150px minmax(0,1fr);gap:6px 20px}
+.cv-skill-cat{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--sky)}
+.cv-skill-items{font-size:14.5px;font-weight:500;color:var(--ink-mid)}
+@media (max-width:600px){.cv-skill-row{grid-template-columns:minmax(0,1fr)}}
+
+/* ---------- 404 ---------- */
+.lost{padding-block:clamp(72px,10vw,150px);text-align:center}
+.lost h1{font-size:clamp(30px,4.2vw,46px);font-weight:800;letter-spacing:-.025em;margin:0 0 14px}
+.lost p{font-size:16px;font-weight:500;color:var(--ink-mid);margin:0 auto 28px;max-width:44ch}
+
+/* ---------- essay furniture: the charts, the summary box, the marks ---------- */
+.chart{margin:32px 0;max-width:60ch}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart figcaption{font-size:12.5px;font-weight:500;line-height:1.6;color:var(--ink-soft);margin-top:11px}
+.c-bar{fill:var(--sky)}
+.c-bar.faint{opacity:.5}
+.c-base{stroke:var(--line-strong);stroke-width:1.5}
+.c-glass{fill:none;stroke:var(--sky);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;opacity:.32}
+.c-glass.on{opacity:1;fill:var(--sky);fill-opacity:.18}
+.c-num{fill:var(--ink);font-family:var(--font);font-size:15px;font-weight:700}
+.c-lab{fill:var(--ink-mid);font-family:var(--font);font-size:12.5px;font-weight:500}
+.c-ttl{fill:var(--ink-soft);font-family:var(--font);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.c-note{fill:var(--sky);font-family:var(--font);font-size:13px;font-weight:600}
+.keybox{margin:30px 0;padding:22px 26px;background:var(--paper-2);border:1px solid var(--line);border-radius:14px}
+.keybox-h{margin:0;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--sky)}
+.keybox ul{margin:12px 0 0;padding-left:20px}
+.keybox li{font-size:14.5px;line-height:1.65;color:var(--ink-mid);margin-bottom:7px}
+.keybox li::marker{color:var(--sky)}
+.sources-h{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 14px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.tag{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mid);border:1px solid var(--line-strong);border-radius:999px;padding:5px 12px}
+.h2{font-size:clamp(19px,2.2vw,25px);font-weight:800;letter-spacing:-.018em;margin:46px 0 14px;color:var(--ink);scroll-margin-top:84px}
+.post-layout{display:grid;grid-template-columns:minmax(0,1fr) 210px;gap:clamp(28px,4vw,64px);align-items:start}
+.toc{position:sticky;top:86px}
+.toc-h{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 12px}
+.toc ol{list-style:none;margin:0;padding:0;border-left:1px solid var(--line)}
+.toc a{display:block;padding:7px 0 7px 14px;margin-left:-1px;border-left:2px solid transparent;font-size:13px;font-weight:500;line-height:1.35;color:var(--ink-soft);text-decoration:none}
+@media (hover:hover){.toc a:hover{color:var(--sky);border-left-color:var(--line-strong)}}
+@media (max-width:900px){.post-layout{grid-template-columns:minmax(0,1fr)}.toc{position:static;margin-bottom:30px}}
+
+.cv-body{padding-block:clamp(20px,3vw,34px) clamp(56px,7vw,96px)}
+.cv-sec-first{margin-top:clamp(24px,3vw,36px)}
