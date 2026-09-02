@@ -84,13 +84,48 @@ class P(HTMLParser):
 			if '"' in k or k.endswith("href="):
 				self.bad.append((self.getpos()[0], "malformed attribute", attrs))
 bad = 0
-for f in sorted(glob.glob("*.html") + glob.glob("blog/*.html") + glob.glob("projects/*.html")):
+for f in sorted([f for f in glob.glob("*.html")+glob.glob("blog/*.html")+glob.glob("projects/*.html") if not f.split("/")[-1].startswith("_")]):
 	if f == "post-template.html": continue
 	p = P(); p.feed(open(f, encoding="utf-8").read())
 	for line, why, attrs in p.bad:
 		print(f"FAIL: {f}:{line} anchor {why}: {attrs}"); bad += 1
 sys.exit(1 if bad else 0)
 PY
+
+# 5i. EVERY TAG'S ATTRIBUTES MUST PARSE, not just an anchor's. Rule 5b has caught
+# a swallowed quote on <a> since the first week; on 2026-09-03 a script spliced
+# <img> width/height with shifting offsets and produced width=6400" and
+# widt780390". Every page still passed, because nothing looked at images. This
+# lane parses every tag on every page and fails on an attribute name that is not
+# a name, a duplicate attribute, or an <img> without alt.
+python3 - <<'TAGCHECK' || fail=1
+import glob, re, sys
+from html.parser import HTMLParser
+class P(HTMLParser):
+	def __init__(self, f): super().__init__(); self.f=f; self.bad=[]
+	def handle_starttag(self, tag, attrs):
+		seen=set()
+		for k, v in attrs:
+			if not re.fullmatch(r'[A-Za-z_:][-A-Za-z0-9_:.]*', k):
+				self.bad.append((self.getpos()[0], f"<{tag}> attribute name {k!r} is malformed"))
+			if k in seen:
+				self.bad.append((self.getpos()[0], f"<{tag}> repeats the attribute {k!r}"))
+			seen.add(k)
+		d=dict(attrs)
+		if tag=="img":
+			if d.get("alt") is None and d.get("aria-hidden")!="true":
+				self.bad.append((self.getpos()[0], "<img> has no alt and is not aria-hidden"))
+			for dim in ("width","height"):
+				if dim in d and not re.fullmatch(r'\d+', d[dim] or ""):
+					self.bad.append((self.getpos()[0], f"<img {dim}={d[dim]!r}> is not a plain number"))
+bad=0
+for f in sorted([f for f in glob.glob("*.html")+glob.glob("blog/*.html")+glob.glob("projects/*.html") if not f.split("/")[-1].startswith("_")]):
+	if f=="post-template.html": continue
+	p=P(f); p.feed(open(f, encoding="utf-8").read())
+	for line, why in p.bad:
+		print(f"FAIL: {f}:{line} {why}"); bad+=1
+sys.exit(1 if bad else 0)
+TAGCHECK
 
 # 5c. The location ban: the city he lives in never ships as HIS location. The one
 #     permitted use, on his instruction 2026-09-01, is the name of the business
@@ -99,7 +134,7 @@ PY
 python3 - <<'PY' || fail=1
 import re, sys, glob
 bad = 0
-for f in sorted(glob.glob("*.html") + glob.glob("blog/*.html") + glob.glob("projects/*.html")
+for f in sorted([f for f in glob.glob("*.html")+glob.glob("blog/*.html")+glob.glob("projects/*.html") if not f.split("/")[-1].startswith("_")]
                 + ["feed.xml", "sitemap.xml", "robots.txt"]):
 	if f == "post-template.html": continue
 	try: s = open(f, encoding="utf-8").read()
@@ -123,7 +158,7 @@ def target(h):
 	for c in (p, p + ".html", p + "/index.html"):
 		if os.path.exists(c): return c
 	return "MISSING:" + h
-for f in glob.glob("*.html") + glob.glob("blog/*.html") + glob.glob("projects/*.html"):
+for f in [f for f in glob.glob("*.html")+glob.glob("blog/*.html")+glob.glob("projects/*.html") if not f.split("/")[-1].startswith("_")]:
 	if f == "post-template.html": continue
 	for h in re.findall(r'(?:href|src)="([^"]+)"', open(f, encoding="utf-8").read()):
 		t = target(h)
@@ -168,7 +203,7 @@ python3 - <<'PY' || fail=1
 import sys, glob, re
 bad = 0
 TAGS = ["div", "article", "section", "main", "nav", "header", "figure", "ul", "ol", "p", "li"]
-for f in sorted(glob.glob("*.html") + glob.glob("blog/*.html") + glob.glob("projects/*.html")):
+for f in sorted([f for f in glob.glob("*.html")+glob.glob("blog/*.html")+glob.glob("projects/*.html") if not f.split("/")[-1].startswith("_")]):
 	if f == "post-template.html": continue
 	s = open(f, encoding="utf-8").read()
 	s = re.sub(r"(?s)<script.*?</script>|<svg.*?</svg>|<!--.*?-->", "", s)

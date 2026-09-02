@@ -598,8 +598,30 @@ html.js .rv.in{opacity:1;transform:none}
 }
 
 /* the week, drawn */
-.loop{margin:0 0 clamp(30px,3.6vw,46px)}
-.loop svg{width:100%;height:auto;display:block;overflow:visible}
+.loopwrap{margin:0 0 clamp(30px,3.6vw,46px)}
+.loop{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr)}
+.loop li{display:grid;grid-template-areas:"k" "d" "v";justify-items:center;text-align:center}
+.loop .lk{grid-area:k;padding:0 8px;font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--sky)}
+.loop .dl{grid-area:d;display:flex;align-items:center;align-self:stretch;width:100%;height:34px}
+.loop .dl::before,.loop .dl::after{content:"";flex:1;height:2px;background:var(--line-strong)}
+.loop li:first-child .dl::before,.loop li:last-child .dl::after{background:none}
+.loop .dl i{width:14px;height:14px;border-radius:50%;background:var(--navy);flex:none}
+.loop .lv{grid-area:v;padding:0 8px;font-size:15px;color:var(--ink-mid)}
+.loop-back{margin:26px 0 0;padding-top:15px;border-top:1.7px dashed var(--sky);font-size:11.5px;font-weight:700;
+	letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);text-align:center}
+@media (max-width:660px){
+	.loop{grid-template-columns:1fr}
+	.loop li{grid-template-areas:"d k" "d v";grid-template-columns:14px 1fr;column-gap:16px;
+		justify-items:start;text-align:left}
+	.loop .lk,.loop .lv{padding:0}
+	.loop li:not(:last-child) .lv{padding-bottom:22px}
+	.loop .dl{flex-direction:column;width:14px;height:auto}
+	.loop .dl::before,.loop .dl::after{width:2px;height:auto}
+	.loop .dl::before{flex:none;height:9px}
+	.loop li:last-child .dl::after{flex:none;height:0}
+	.loop .lv{padding-top:3px}
+	.loop-back{text-align:left;margin-top:18px}
+}
 .loop-pair{display:flex;flex-wrap:wrap;gap:clamp(20px,2.8vw,40px);justify-content:center}
 
 /* a band of desktop at its own size, in a browser window */
