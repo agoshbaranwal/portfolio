@@ -12,11 +12,11 @@
      admenow   Space Grotesk     Utsav      Fraunces
      tvbadger  Bodoni Moda       promptemu  Nunito Sans
      Witness   Instrument Sans   On Record  Helvetica, which needs no file */
-@font-face{font-family:"WM Admenow";src:url("/fonts/wm-admenow.woff2") format("woff2");font-weight:700;font-display:swap}
-@font-face{font-family:"WM Utsav";src:url("/fonts/wm-utsav.woff2") format("woff2");font-weight:600;font-display:swap}
-@font-face{font-family:"WM Tvbadger";src:url("/fonts/wm-tvbadger.woff2") format("woff2");font-weight:700;font-display:swap}
-@font-face{font-family:"WM Promptemu";src:url("/fonts/wm-promptemu.woff2") format("woff2");font-weight:800;font-display:swap}
-@font-face{font-family:"WM Witness";src:url("/fonts/wm-witness.woff2") format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"WM Admenow";src:url("/fonts/wm-admenow.woff2") format("woff2");font-weight:400 700;font-display:swap}
+@font-face{font-family:"WM Utsav";src:url("/fonts/wm-utsav.woff2") format("woff2");font-weight:400 600;font-display:swap}
+@font-face{font-family:"WM Tvbadger";src:url("/fonts/wm-tvbadger.woff2") format("woff2");font-weight:400 700;font-display:swap}
+@font-face{font-family:"WM Promptemu";src:url("/fonts/wm-promptemu.woff2") format("woff2");font-weight:400 800;font-display:swap}
+@font-face{font-family:"WM Witness";src:url("/fonts/wm-witness.woff2") format("woff2");font-weight:400 700;font-display:swap}
 
 @font-face{
   font-family:"Gochi Hand";
@@ -265,12 +265,45 @@ html.js .rv.in{opacity:1;transform:none}
 .proj .top{display:flex;align-items:baseline;gap:12px}
 .proj img.shot{width:100%;height:auto;object-fit:cover;display:block}
 .proj .p-name{display:block;font-size:18.5px;font-weight:800;letter-spacing:-.01em}
-.p-name.wm-admenow{font-family:"WM Admenow",var(--font);font-weight:700;font-size:19.5px;letter-spacing:-.03em}
-.p-name.wm-utsav{font-family:"WM Utsav",Georgia,serif;font-weight:600;font-size:20px;letter-spacing:-.014em}
-.p-name.wm-tvbadger{font-family:"WM Tvbadger",Didot,Georgia,serif;font-weight:700;font-size:21px;letter-spacing:-.004em}
-.p-name.wm-onrecord{font-family:Helvetica,"Helvetica Neue",Arial,sans-serif;font-weight:700;font-size:17.5px;letter-spacing:-.028em}
-.p-name.wm-promptemu{font-family:"WM Promptemu",var(--font);font-weight:800;font-size:18.5px;letter-spacing:-.02em}
-.p-name.wm-witness{font-family:"WM Witness",var(--font);font-weight:700;font-size:18px;letter-spacing:-.02em}
+/* A card wears its project's own face and its own accent. --brand is the colour
+   that project's CSS actually declares, read from its live stylesheet: a wash of
+   it fills the body, and the name carries it at full strength. The optical sizes
+   were measured off a render, because six typefaces at one size do not look like
+   one size: Bodoni needs 21px where Helvetica needs 17.5. */
+.proj .body{transition:background .3s var(--ease)}
+.wm .body{background:color-mix(in srgb, var(--brand) 7%, var(--card))}
+.wm .p-name{color:var(--brand)}
+.wm .body,.wm .body .p-desc,.wm .body .visit{font-family:var(--wm-face)}
+:root[data-theme="dark"] .wm .body{background:color-mix(in srgb, var(--brand) 13%, var(--card))}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .wm .body{background:color-mix(in srgb, var(--brand) 13%, var(--card))}}
+
+.wm.wm-admenow  {--brand:#2438F0; --wm-face:"WM Admenow",var(--font)}
+.wm.wm-utsav    {--brand:#916820; --wm-face:"WM Utsav",Georgia,serif}
+.wm.wm-tvbadger {--brand:#9C3F42; --wm-face:"WM Tvbadger",Didot,Georgia,serif}
+.wm.wm-onrecord {--brand:#9F6023; --wm-face:Helvetica,"Helvetica Neue",Arial,sans-serif}
+.wm.wm-promptemu{--brand:#2563EB; --wm-face:"WM Promptemu",var(--font)}
+.wm.wm-witness  {--brand:#8F6900; --wm-face:"WM Witness",var(--font)}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .wm.wm-utsav{--brand:#E5C063}
+  :root:not([data-theme="light"]) .wm.wm-onrecord{--brand:#F0A45C}
+  :root:not([data-theme="light"]) .wm.wm-witness{--brand:#FFC400}
+  :root:not([data-theme="light"]) .wm.wm-admenow{--brand:#8494FF}
+  :root:not([data-theme="light"]) .wm.wm-promptemu{--brand:#7FA6FF}
+  :root:not([data-theme="light"]) .wm.wm-tvbadger{--brand:#E08A8E}
+}
+:root[data-theme="dark"] .wm.wm-utsav{--brand:#E5C063}
+:root[data-theme="dark"] .wm.wm-onrecord{--brand:#F0A45C}
+:root[data-theme="dark"] .wm.wm-witness{--brand:#FFC400}
+:root[data-theme="dark"] .wm.wm-admenow{--brand:#8494FF}
+:root[data-theme="dark"] .wm.wm-promptemu{--brand:#7FA6FF}
+:root[data-theme="dark"] .wm.wm-tvbadger{--brand:#E08A8E}
+
+.wm-admenow  .p-name{font-weight:700;font-size:19.5px;letter-spacing:-.03em}
+.wm-utsav    .p-name{font-weight:600;font-size:20px;letter-spacing:-.014em}
+.wm-tvbadger .p-name{font-weight:700;font-size:21px;letter-spacing:-.004em}
+.wm-onrecord .p-name{font-weight:700;font-size:17.5px;letter-spacing:-.028em}
+.wm-promptemu .p-name{font-weight:800;font-size:18.5px;letter-spacing:-.02em}
+.wm-witness  .p-name{font-weight:700;font-size:18px;letter-spacing:-.02em}
 .pj-head h1.wm-witness{font-family:"WM Witness",var(--font);font-weight:700;letter-spacing:-.022em}
 .proj .st{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-left:auto;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
 .proj .st::before{content:"";width:6px;height:6px;border-radius:50%;background:linear-gradient(135deg,var(--sky),var(--navy))}

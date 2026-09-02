@@ -225,7 +225,7 @@ generic = {"serif","sans-serif","monospace","cursive","system-ui","ui-monospace"
            "BlinkMacSystemFont","Segoe UI","Roboto","Helvetica","Arial","Helvetica Neue","Georgia",
            "Didot","Menlo","Segoe Script","Segoe Print","Bradley Hand"}
 for decl in re.findall(r'font-family:([^;}]+)', css):
-	if "var(--" in decl: continue
+	if "var(--" in decl or decl.strip() == "inherit": continue
 	for part in decl.split(","):
 		fam = part.strip().strip("'\"")
 		if fam and fam not in generic and fam not in declared:
