@@ -510,11 +510,14 @@ html.js .rv.in{opacity:1;transform:none}
   .dev.bell img{width:min(55vw,220px);height:auto;aspect-ratio:236/566}
 }
 
-.built{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(16px,2.2vw,28px);margin-top:clamp(34px,4vw,52px)}
-.built div{border-top:1px solid var(--line-strong);padding-top:14px}
-.built b{display:block;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:7px}
-.built span{font-size:14.5px;font-weight:600;color:var(--ink);line-height:1.5;display:block}
-@media (max-width:760px){.built{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}}
+.built{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(20px,2.6vw,38px);
+  margin-top:clamp(32px,3.8vw,50px);padding-top:clamp(28px,3.4vw,44px);border-top:1px solid var(--line)}
+.built div{border-top:2px solid var(--line-strong);padding-top:15px}
+.built b{display:block;font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-soft);margin-bottom:9px}
+.built span{font-size:15.5px;font-weight:600;color:var(--ink);line-height:1.45;display:block;letter-spacing:-.008em}
+@media (max-width:860px){.built{grid-template-columns:repeat(2,minmax(0,1fr));gap:26px}}
+@media (max-width:460px){.built{grid-template-columns:minmax(0,1fr);gap:22px}}
 
 .pj-sec{padding-block:clamp(42px,5vw,74px);border-top:1px solid var(--line)}
 .pj-sec h2{font-size:clamp(23px,2.9vw,33px);font-weight:800;letter-spacing:-.024em;margin:0}
