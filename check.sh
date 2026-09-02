@@ -196,6 +196,7 @@ for f in ["index.html", "about.html", "contact.html", "404.html", "blog/index.ht
 	s = re.sub(r"(?s)<head.*?</head>|<script.*?</script>|<svg.*?</svg>|<!--.*?-->", "", s)
 	s = re.sub(r'(?s)<div class="hand[^"]*">.*?</div>', "", s)
 	s = re.sub(r'(?s)<div class="txt">.*?</div>', "", s)
+	s = re.sub(r'(?s)<p class="gate-note">.*?</p>', "", s)
 	for hit in re.findall(r"[A-Za-z0-9)]\.(?=\s|$)", re.sub(r"<[^>]+>", " ", s), re.M):
 		print(f"FAIL: {f} interface copy contains a full stop near '{hit}'"); bad += 1
 sys.exit(1 if bad else 0)

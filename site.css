@@ -553,5 +553,17 @@ html.js .rv.in{opacity:1;transform:none}
 .band-cap{font-size:13.5px;font-weight:500;color:var(--ink-mid);margin:15px 0 0;line-height:1.55}
 .band-cap b{display:block;color:var(--ink);font-weight:700;font-size:15px;margin-bottom:4px}
 
+/* the gate: three numbers about how the thing is kept honest, which is the part
+   of a private tool a reader can actually judge */
+.gate{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,2.6vw,38px);
+  margin-top:clamp(30px,3.6vw,48px)}
+.gate div{border-top:2px solid var(--line-strong);padding-top:16px}
+.gate b{display:block;font-size:clamp(30px,3.6vw,42px);font-weight:800;letter-spacing:-.025em;
+  line-height:1.05;font-variant-numeric:tabular-nums;margin-bottom:8px}
+.gate span{font-size:14px;font-weight:500;color:var(--ink-mid);line-height:1.5;display:block;max-width:26ch}
+.gate-note{font-size:14.5px;font-weight:500;color:var(--ink-mid);line-height:1.65;max-width:74ch;
+  margin:clamp(24px,3vw,36px) 0 0}
+@media (max-width:720px){.gate{grid-template-columns:minmax(0,1fr);gap:22px}}
+
 .pj-back{padding-block:clamp(28px,3.6vw,48px);border-top:1px solid var(--line)}
 .pj-back a{font-size:14.5px;font-weight:700;text-decoration:none;color:var(--navy)}
