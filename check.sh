@@ -238,6 +238,28 @@ for n, line in enumerate(css.split("\n"), 1):
 		print(f"FAIL: site.css:{n} applies the wordmark face {m.group(2)!r} without a wm- class"); bad = 1
 sys.exit(bad)
 FONTCHECK
+# 9b. A FONT URL CARRIES ITS OWN CONTENT HASH, and this one is not theoretical.
+# vercel.json serves /fonts/* with `max-age=31536000, immutable`, which promises
+# the bytes at that URL will never change. On 2026-09-01 the wordmark subsets
+# were re-cut to cover a whole card instead of just its name, under the SAME
+# filenames, so every browser that had loaded the site in between kept the
+# 7-glyph file for a year: most letters fell back to Montserrat mid-word and the
+# cards rendered in two typefaces at once. Content-addressed names make the
+# promise honest, and this lane fails the moment a file's bytes and its name
+# disagree.
+python3 - <<'HASHCHECK' || fail=1
+import hashlib, glob, os, re, sys
+bad = 0
+for f in sorted(glob.glob("fonts/*.woff2")):
+	m = re.search(r'\.([0-9a-f]{8})\.woff2$', os.path.basename(f))
+	if not m:
+		print(f"FAIL: {f} has no content hash in its name, but /fonts is served immutable"); bad = 1; continue
+	real = hashlib.sha256(open(f, "rb").read()).hexdigest()[:8]
+	if real != m.group(1):
+		print(f"FAIL: {f} is named {m.group(1)} but its bytes hash to {real}; rename it or the cache serves the old file"); bad = 1
+sys.exit(bad)
+HASHCHECK
+
 # ------------------------------------------------ 10. every outbound link is previewed
 # The owner's trust rule: a link off this site always shows what is behind it, either
 # a screenshot or a quiet slot waiting for one. No bare URLs.

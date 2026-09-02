@@ -12,22 +12,22 @@
      admenow   Space Grotesk     Utsav      Fraunces
      tvbadger  Bodoni Moda       promptemu  Nunito Sans
      Witness   Instrument Sans   On Record  Helvetica, which needs no file */
-@font-face{font-family:"WM Admenow";src:url("/fonts/wm-admenow.woff2") format("woff2");font-weight:400 700;font-display:swap}
-@font-face{font-family:"WM Utsav";src:url("/fonts/wm-utsav.woff2") format("woff2");font-weight:400 600;font-display:swap}
-@font-face{font-family:"WM Tvbadger";src:url("/fonts/wm-tvbadger.woff2") format("woff2");font-weight:400 700;font-display:swap}
-@font-face{font-family:"WM Promptemu";src:url("/fonts/wm-promptemu.woff2") format("woff2");font-weight:400 800;font-display:swap}
-@font-face{font-family:"WM Witness";src:url("/fonts/wm-witness.woff2") format("woff2");font-weight:400 700;font-display:swap}
+@font-face{font-family:"WM Admenow";src:url("/fonts/wm-admenow.622135de.woff2") format("woff2");font-weight:400 700;font-display:swap}
+@font-face{font-family:"WM Utsav";src:url("/fonts/wm-utsav.da1f9c45.woff2") format("woff2");font-weight:400 600;font-display:swap}
+@font-face{font-family:"WM Tvbadger";src:url("/fonts/wm-tvbadger.63e6ef98.woff2") format("woff2");font-weight:400 700;font-display:swap}
+@font-face{font-family:"WM Promptemu";src:url("/fonts/wm-promptemu.1db55d32.woff2") format("woff2");font-weight:400 800;font-display:swap}
+@font-face{font-family:"WM Witness";src:url("/fonts/wm-witness.1e7be07a.woff2") format("woff2");font-weight:400 700;font-display:swap}
 
 @font-face{
   font-family:"Gochi Hand";
-  src:url("/fonts/gochi-hand.woff2") format("woff2");
+  src:url("/fonts/gochi-hand.65da857e.woff2") format("woff2");
   font-weight:400;
   font-style:normal;
   font-display:swap;
 }
 @font-face{
   font-family:"Montserrat";
-  src:url("/fonts/montserrat.woff2") format("woff2");
+  src:url("/fonts/montserrat.6438d7b8.woff2") format("woff2");
   font-weight:100 900;
   font-style:normal;
   font-display:swap;
