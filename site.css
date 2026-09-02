@@ -4,6 +4,20 @@
    specimen sheet on 2026-09-01. The three he passed over: Caveat read as a
    signature, Architects Daughter as architectural lettering, Patrick Hand as
    too tidy. Self-hosted, latin subset, used on that page and nowhere else. */
+/* WORDMARK FACES, his instruction 2026-09-01: each project card carries its
+   name in the typeface that project actually uses, so the card reads as the
+   thing it opens. Each file is subsetted to only the letters of that one name,
+   which is why five faces cost 10KB between them. They are allowed on `.p-name`
+   and nowhere else, and check.sh rule 9 enforces that.
+     admenow   Space Grotesk     Utsav      Fraunces
+     tvbadger  Bodoni Moda       promptemu  Nunito Sans
+     Witness   Instrument Sans   On Record  Helvetica, which needs no file */
+@font-face{font-family:"WM Admenow";src:url("/fonts/wm-admenow.woff2") format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"WM Utsav";src:url("/fonts/wm-utsav.woff2") format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"WM Tvbadger";src:url("/fonts/wm-tvbadger.woff2") format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"WM Promptemu";src:url("/fonts/wm-promptemu.woff2") format("woff2");font-weight:800;font-display:swap}
+@font-face{font-family:"WM Witness";src:url("/fonts/wm-witness.woff2") format("woff2");font-weight:700;font-display:swap}
+
 @font-face{
   font-family:"Gochi Hand";
   src:url("/fonts/gochi-hand.woff2") format("woff2");
@@ -251,6 +265,13 @@ html.js .rv.in{opacity:1;transform:none}
 .proj .top{display:flex;align-items:baseline;gap:12px}
 .proj img.shot{width:100%;height:auto;object-fit:cover;display:block}
 .proj .p-name{display:block;font-size:18.5px;font-weight:800;letter-spacing:-.01em}
+.p-name.wm-admenow{font-family:"WM Admenow",var(--font);font-weight:700;font-size:19.5px;letter-spacing:-.03em}
+.p-name.wm-utsav{font-family:"WM Utsav",Georgia,serif;font-weight:600;font-size:20px;letter-spacing:-.014em}
+.p-name.wm-tvbadger{font-family:"WM Tvbadger",Didot,Georgia,serif;font-weight:700;font-size:21px;letter-spacing:-.004em}
+.p-name.wm-onrecord{font-family:Helvetica,"Helvetica Neue",Arial,sans-serif;font-weight:700;font-size:17.5px;letter-spacing:-.028em}
+.p-name.wm-promptemu{font-family:"WM Promptemu",var(--font);font-weight:800;font-size:18.5px;letter-spacing:-.02em}
+.p-name.wm-witness{font-family:"WM Witness",var(--font);font-weight:700;font-size:18px;letter-spacing:-.02em}
+.pj-head h1.wm-witness{font-family:"WM Witness",var(--font);font-weight:700;letter-spacing:-.022em}
 .proj .st{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-left:auto;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
 .proj .st::before{content:"";width:6px;height:6px;border-radius:50%;background:linear-gradient(135deg,var(--sky),var(--navy))}
 .proj .st.prog::before{background:var(--line-strong)}

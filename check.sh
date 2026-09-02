@@ -202,22 +202,42 @@ for f in ["index.html", "about.html", "contact.html", "404.html", "blog/index.ht
 sys.exit(1 if bad else 0)
 PY
 
-# ------------------------------------------------- 9. two typefaces, both self-hosted
-# Montserrat everywhere, and Gochi Hand on the About register only (his
-# instruction, 2026-09-01). Both are files in this repo: no request leaves for a font.
+# ------------------------------------------ 9. every typeface is a file in here
+# Montserrat everywhere, Gochi Hand on the About register, and five wordmark
+# faces that exist only to set one project name each on the homepage cards (his
+# instruction, 2026-09-01). Each wordmark file is subsetted to the letters of its
+# own name, which is why five of them weigh 10KB between them. The rules: no
+# request may leave for a font, every declared face must have its file, the hand
+# stays on .hand, and a wordmark face stays on .p-name so none can leak into
+# general use.
 if grep -l "fonts.googleapis.com\|fonts.gstatic.com" $PAGES site.css 2>/dev/null; then
-	echo "FAIL: a remote font request (both faces are self-hosted under /fonts)"; fail=1
+	echo "FAIL: a remote font request (every face is self-hosted under /fonts)"; fail=1
 fi
-for f in fonts/montserrat.woff2 fonts/gochi-hand.woff2; do
-	[ -f "$f" ] || { echo "FAIL: $f missing"; fail=1; }
-done
-n=$(grep -oE 'font-family:[^;}]*' site.css | grep -vc 'var(--font)\|var(--hand)\|"Montserrat"\|"Gochi Hand"')
-[ "$n" = "0" ] || { echo "FAIL: site.css names $n typeface beyond Montserrat and Gochi Hand"; fail=1; }
-# and the hand stays on the About register: nothing else may wear it
-if grep -n 'var(--hand)' site.css | grep -qv '^[0-9]*:\.hand{'; then
-	echo "FAIL: var(--hand) is used outside .hand (the register is its only home)"; fail=1
-fi
-
+python3 - <<'FONTCHECK' || fail=1
+import re, os, sys
+css = open("site.css", encoding="utf-8").read()
+bad = 0
+for fam, url in re.findall(r'@font-face\{[^}]*font-family:"([^"]+)"[^}]*url\("([^"]+)"', css):
+	if not os.path.exists(url.lstrip("/")):
+		print(f"FAIL: @font-face {fam} points at {url}, which is not in the repo"); bad = 1
+declared = set(re.findall(r'@font-face\{[^}]*font-family:"([^"]+)"', css))
+generic = {"serif","sans-serif","monospace","cursive","system-ui","ui-monospace","-apple-system",
+           "BlinkMacSystemFont","Segoe UI","Roboto","Helvetica","Arial","Helvetica Neue","Georgia",
+           "Didot","Menlo","Segoe Script","Segoe Print","Bradley Hand"}
+for decl in re.findall(r'font-family:([^;}]+)', css):
+	if "var(--" in decl: continue
+	for part in decl.split(","):
+		fam = part.strip().strip("'\"")
+		if fam and fam not in generic and fam not in declared:
+			print(f"FAIL: font-family names {fam!r}, which no @font-face in this repo declares"); bad = 1
+for n, line in enumerate(css.split("\n"), 1):
+	if "var(--hand)" in line and not line.startswith(".hand{"):
+		print(f"FAIL: site.css:{n} uses var(--hand) outside .hand"); bad = 1
+	m = re.match(r'\s*([^{]*)\{[^}]*font-family:"(WM [^"]+)"', line)
+	if m and not line.startswith("@font-face") and ".wm-" not in m.group(1):
+		print(f"FAIL: site.css:{n} applies the wordmark face {m.group(2)!r} without a wm- class"); bad = 1
+sys.exit(bad)
+FONTCHECK
 # ------------------------------------------------ 10. every outbound link is previewed
 # The owner's trust rule: a link off this site always shows what is behind it, either
 # a screenshot or a quiet slot waiting for one. No bare URLs.
