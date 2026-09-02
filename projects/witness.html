@@ -42,7 +42,7 @@
 			</div>
 		</header>
 		<main id="main">
-			<div class="wrap">
+			<div class="wrap wide">
 
 				<div class="pj-head">
 					<p class="pj-kick">Personal project</p>
@@ -50,125 +50,111 @@
 					<p class="lead">A check-in tool I designed and built to get the thing I keep putting off onto a real day, at a real time, and to show me honestly whether I am doing it</p>
 				</div>
 
-				<figure class="hero-shot rv">
-					<div class="screen"><span class="bar" aria-hidden="true"><i></i><i></i><i></i></span><img src="/projects/witness/desktop-today.jpg" alt="Witness open in a desktop browser, showing today's habits on the left and what is coming back on the right" width="1600" height="1075" /></div>
-					<figcaption>Today, in a desktop browser</figcaption>
-				</figure>
+				<div class="dev-row rv">
+					<figure class="dev phone">
+						<span class="screen-b"><img src="/projects/witness/phone-today.jpg" alt="The Today screen on a phone, offering to plan the next one after four days away" width="390" height="566" /></span>
+						<figcaption class="dev-cap">On a phone</figcaption>
+					</figure>
+					<figure class="dev panel">
+						<span class="screen-b"><img src="/projects/witness/panel-today-light.jpg" alt="The Witness menu-bar panel on a Mac" width="320" height="566" /></span>
+						<figcaption class="dev-cap">In the Mac menu bar</figcaption>
+					</figure>
+					<figure class="dev bell">
+						<span class="screen-b"><img src="/projects/witness/notif-phone.jpg" alt="A phone lock screen showing Witness reminders with their action buttons" width="236" height="566" /></span>
+						<figcaption class="dev-cap">As a reminder</figcaption>
+					</figure>
+				</div>
 
 				<div class="built">
+					<div><b>Surfaces</b><span>A phone, a desktop browser, a Mac menu-bar app and notifications</span></div>
 					<div><b>Your data</b><span>A Google Sheet in your own account, readable in plain rows without Witness</span></div>
-					<div><b>The web app</b><span>One file, served by Google Apps Script, laid out for a phone and a desktop</span></div>
-					<div><b>The Mac panel</b><span>A native Swift menu-bar app with its own interface</span></div>
+					<div><b>The build</b><span>One file of Apps Script for the web app, and native Swift for the Mac</span></div>
 					<div><b>Built by</b><span>Me, on my own time: the idea, the design, the code and the writing</span></div>
 				</div>
 
 				<section class="pj-sec">
-					<h2>The weekly loop</h2>
-					<p class="say">The whole product is one loop that starts on Sunday, checks in on Wednesday, and asks ten seconds of you every evening</p>
-					<div class="pj-body">
-						<div class="rail three">
-							<figure class="rv">
-								<span class="phone"><img src="/projects/witness/phone-sunday.jpg" alt="The Sunday review, asking what got done and what was avoided" width="780" height="1688" loading="lazy" decoding="async" /></span>
-								<figcaption><span class="step">Sunday</span><b>Decide, in ten to fifteen minutes</b>It settles last week before it lets you plan the next one, then makes you name the one thing you will do before Wednesday, and pin it to a time and a place</figcaption>
-							</figure>
-							<figure class="rv d1">
-								<span class="phone"><img src="/projects/witness/phone-wednesday.jpg" alt="The Wednesday check, asking whether the one thing happened" width="780" height="1688" loading="lazy" decoding="async" /></span>
-								<figcaption><span class="step">Wednesday</span><b>Two minutes, and one question</b>What you wrote on Sunday is quoted back to you, and if it did not happen it asks for a fifteen-minute version to do tonight</figcaption>
-							</figure>
-							<figure class="rv d2">
-								<span class="phone"><img src="/projects/witness/phone-today.jpg" alt="The Today screen, offering to plan the next one after four days away" width="780" height="1688" loading="lazy" decoding="async" /></span>
-								<figcaption><span class="step">Every evening</span><b>Ten seconds to close the day</b>Coming back after four days away, it offers to plan the next one rather than showing you a broken streak</figcaption>
-							</figure>
-						</div>
-					</div>
-				</section>
-
-				<section class="pj-sec">
-					<h2>The four rooms</h2>
-					<p class="say">Everything in the product sits in one of these four, behind a tab bar on a phone and a rail on a desktop</p>
-					<div class="pj-body">
-						<div class="rail">
-							<figure class="rv">
-								<span class="phone"><img src="/projects/witness/phone-today.jpg" alt="The Today room on a phone" width="780" height="1688" loading="lazy" decoding="async" /></span>
-								<figcaption><b>Today</b>The day in three parts, the habits you put in each, up to three things you want to get done, and the evening check</figcaption>
-							</figure>
-							<figure class="rv d1">
-								<span class="phone"><img src="/projects/witness/phone-analytics.jpg" alt="The Analytics room on a phone, showing the full record grid" width="780" height="1688" loading="lazy" decoding="async" /></span>
-								<figcaption><b>Analytics</b>Every day since day one and what it adds up to: the record, the charts and every entry you have written</figcaption>
-							</figure>
-							<figure class="rv d2">
-								<span class="phone"><img src="/projects/witness/phone-plan.jpg" alt="The Plan room on a phone, showing areas, goals and trackers" width="780" height="1688" loading="lazy" decoding="async" /></span>
-								<figcaption><b>Plan</b>What you are working toward and the habits that get you there: the two areas of your life, goals, trackers and lists</figcaption>
-							</figure>
-							<figure class="rv">
-								<span class="phone"><img src="/projects/witness/phone-settings.jpg" alt="The Settings room on a phone, showing appearance and reminder controls" width="780" height="1688" loading="lazy" decoding="async" /></span>
-								<figcaption><b>Settings</b>Reminders, appearance, this device, a test reminder you can watch land, and a repair screen when one does not</figcaption>
-							</figure>
-						</div>
-					</div>
-				</section>
-
-				<section class="pj-sec">
-					<h2>Four design decisions</h2>
+					<h2>Four decisions that shaped it</h2>
 					<p class="say">Every habit app I tried scored me, and a bad week wiped the number back to zero, which is the week you are most likely to quit</p>
 					<div class="pj-body">
 						<div class="calls">
 							<div class="call rv">
 								<span class="crop"><img src="/projects/witness/call-run.jpg" alt="A consistency figure of 62, with a note saying older days are worth less" width="756" height="236" loading="lazy" decoding="async" /></span>
-								<h3>The count only goes up</h3>
-								<p>A week under your own floor reads as behind the pace, with the pace stated, never as a broken streak and never as a zero, and the measure says out loud how it weighs an old day against today</p>
+								<div class="txt"><h3>The count only goes up</h3>
+								<p>A week under your own floor reads as behind the pace, with the pace stated, never as a broken streak and never as a zero, and the measure says out loud how it weighs an old day against today</p></div>
 							</div>
 							<div class="call rv d1">
-								<span class="crop"><img src="/projects/witness/call-days.jpg" alt="Eighty-one days marked and eighty-seven days answered out of the last ninety-one, drawn as a grid" width="756" height="467" loading="lazy" decoding="async" /></span>
-								<h3>A dead phone is not a failure</h3>
-								<p>Days recorded are counted against the days a reminder actually reached you, so a day your phone was off does not sit in your record as a day you gave up</p>
+								<span class="crop"><img src="/projects/witness/call-days.jpg" alt="Eighty-one days marked and eighty-seven answered out of the last ninety-one, drawn as a grid" width="756" height="467" loading="lazy" decoding="async" /></span>
+								<div class="txt"><h3>A dead phone is not a failure</h3>
+								<p>Days recorded are counted against the days a reminder actually reached you, so a day your phone was off does not sit in your record as a day you gave up</p></div>
 							</div>
 							<div class="call rv">
 								<span class="crop"><img src="/projects/witness/call-week.jpg" alt="A week legend distinguishing all, part, none, no answer and no reminder" width="756" height="450" loading="lazy" decoding="async" /></span>
-								<h3>A day with nothing on it is not a hole</h3>
-								<p>A day you answered with nothing and a day nobody answered are two different marks in your history, because only one of them means you stopped</p>
+								<div class="txt"><h3>A day with nothing on it is not a hole</h3>
+								<p>A day you answered with nothing and a day nobody answered are two different marks in your history, because only one of them means you stopped</p></div>
 							</div>
 							<div class="call rv d1">
 								<span class="crop"><img src="/projects/witness/call-goal.jpg" alt="A goal reading nine of sixteen gym sessions, fourteen days left, needs half a session a day from here" width="756" height="360" loading="lazy" decoding="async" /></span>
-								<h3>Nothing is scored</h3>
-								<p>There is no grade, no rating and no rank, only the arithmetic of what you said you would do against the days you have left, so behind and ahead are facts rather than feelings</p>
+								<div class="txt"><h3>Nothing is scored</h3>
+								<p>There is no grade, no rating and no rank, only the arithmetic of what you said you would do against the days you have left, so behind and ahead are facts rather than feelings</p></div>
 							</div>
 						</div>
 					</div>
 				</section>
 
 				<section class="pj-sec">
-					<h2>On a computer</h2>
-					<p class="say">The same product laid out for a wide browser window, and a menu-bar app for logging while you are already at your desk</p>
+					<h2>The week it runs on</h2>
+					<p class="say">The whole product is one loop, and everything in it is a detail of these four moments</p>
 					<div class="pj-body">
-						<div class="two-up">
-							<figure class="rv">
-								<div class="screen"><span class="bar" aria-hidden="true"><i></i><i></i><i></i></span><img src="/projects/witness/desktop-analytics.jpg" alt="The record in a desktop browser, ninety-one days shown as a single grid" width="1600" height="1075" loading="lazy" decoding="async" /></div>
-								<figcaption><b>The browser, on a wide screen</b>One file lays itself out again for the desktop, with the tab bar becoming a rail down the side</figcaption>
+						<div class="loop rv" role="img" aria-label="The weekly loop: on Sunday you name one thing and pin it to a moment, it rings at that moment, on Wednesday it asks whether it happened, every evening you close the day in ten seconds, and on Sunday it starts again.">
+							<svg viewBox="0 0 1040 196" xmlns="http://www.w3.org/2000/svg">
+								<line x1="130" y1="86" x2="949" y2="86" stroke="var(--line-strong)" stroke-width="2" />
+								<path d="M949 86 C 1000 86 1010 152 940 152 L 190 152 C 122 152 112 96 130 88"
+									fill="none" stroke="var(--sky)" stroke-width="1.8" stroke-dasharray="5 7" />
+								<path d="M130 88 L 126 74 M130 88 L 145 85" fill="none" stroke="var(--sky)" stroke-width="1.8" stroke-linecap="round" />
+								<g fill="var(--navy)">
+									<circle cx="130" cy="86" r="8" /><circle cx="403" cy="86" r="8" />
+									<circle cx="676" cy="86" r="8" /><circle cx="949" cy="86" r="8" />
+								</g>
+								<g font-family="Montserrat, Helvetica, sans-serif" font-size="12" font-weight="700"
+									letter-spacing="1.5" fill="var(--sky)" text-anchor="middle">
+									<text x="130" y="38">SUNDAY</text>
+									<text x="403" y="38">THAT MOMENT</text>
+									<text x="676" y="38">WEDNESDAY</text>
+									<text x="949" y="38">EVERY EVENING</text>
+								</g>
+								<g font-family="Montserrat, Helvetica, sans-serif" font-size="14.5" font-weight="500"
+									fill="var(--ink-mid)" text-anchor="middle">
+									<text x="130" y="63">You name one thing</text>
+									<text x="403" y="63">It rings</text>
+									<text x="676" y="63">Did it happen</text>
+									<text x="949" y="63">Ten seconds</text>
+								</g>
+								<text x="565" y="187" font-family="Montserrat, Helvetica, sans-serif" font-size="11.5"
+									font-weight="700" letter-spacing="1.4" fill="var(--ink-soft)" text-anchor="middle">AND ON SUNDAY IT STARTS AGAIN</text>
+							</svg>
+						</div>
+						<div class="loop-pair">
+							<figure class="dev phone">
+								<span class="screen-b"><img src="/projects/witness/phone-sunday.jpg" alt="The Sunday review, asking what got done and what was avoided" width="390" height="566" loading="lazy" decoding="async" /></span>
+								<figcaption class="dev-cap">Sunday, ten to fifteen minutes</figcaption>
 							</figure>
-							<div class="rv d1">
-								<div class="pair">
-									<span class="panel"><img src="/projects/witness/panel-today-light.jpg" alt="The Witness Mac menu-bar panel in the light theme" width="640" height="1246" loading="lazy" decoding="async" /></span>
-									<span class="panel"><img src="/projects/witness/panel-dark.jpg" alt="The Witness Mac menu-bar panel in the dark theme" width="640" height="898" loading="lazy" decoding="async" /></span>
-								</div>
-								<p class="panel-cap"><b>The Mac menu bar</b>A small Swift app that logs a habit, shows the week and opens the review, with a keyboard shortcut on every row, following the Mac's own light and dark setting and carrying the same words as every other surface</p>
-							</div>
+							<figure class="dev phone">
+								<span class="screen-b"><img src="/projects/witness/phone-wednesday.jpg" alt="The Wednesday check, asking whether the one thing happened" width="390" height="566" loading="lazy" decoding="async" /></span>
+								<figcaption class="dev-cap">Wednesday, two minutes</figcaption>
+							</figure>
 						</div>
 					</div>
 				</section>
 
 				<section class="pj-sec">
-					<h2>The reminders</h2>
+					<h2>The same file, laid out for a desktop</h2>
+					<p class="say">One Apps Script file serves every screen, so the tab bar becomes a rail down the side and the record opens out into a single line of sight</p>
 					<div class="pj-body">
-						<div class="bells">
-							<div class="shot rv"><img src="/projects/witness/notif-phone.jpg" alt="A phone lock screen showing Witness reminders, each carrying the state of the thing it is about and two buttons to log it" width="402" height="1042" loading="lazy" decoding="async" /></div>
-							<div class="rv d1">
-								<h3>A reminder carries the state of the thing it is about</h3>
-								<p>Each one carries the state of the thing it is about, so the notification already tells you where you stand, and the two buttons let you log the day without unlocking further</p>
-								<p>Nothing has to be open for one to arrive, because they are sent by Google's servers at times you set</p>
-								<p>You choose those times, cap how many arrive in a day, hold them until you are at your Mac, and pause everything until a date you pick</p>
-							</div>
+						<div class="band rv">
+							<span class="bar" aria-hidden="true"><i></i><i></i><i></i></span>
+							<img src="/projects/witness/record-band.jpg" alt="The record in a desktop browser: eighty-one days marked of the last ninety-one, drawn as a grid of cells, above a consistency figure of sixty-two" width="1452" height="492" loading="lazy" decoding="async" />
 						</div>
+						<p class="band-cap"><b>Ninety-one days, one cell each</b>Shown at the size the browser draws it, because a screenshot shrunk to a third of its own size is decoration rather than evidence</p>
 					</div>
 				</section>
 

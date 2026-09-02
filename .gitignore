@@ -14,3 +14,8 @@ IMG-*.jpg
 # raw photo drops: never in the public repo
 incoming/
 !incoming/README.txt
+
+# render scratch copies
+_*.html
+projects/_*.html
+blog/_*.html
