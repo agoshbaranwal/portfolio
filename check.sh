@@ -181,9 +181,13 @@ PY
 
 # ------------------------------------------- 8. no full stops in interface copy
 # The owner's rule, 2026-09-01: headings, labels, captions and button text carry no
-# full stops. Long-form prose does, so the essay, the CV summary and the writing
-# on the About register are exempt. The exemption is the .hand blocks ONLY: every
-# heading, photo caption and button on that page is still checked.
+# full stops. Long-form prose does, so the essay, the CV summary, the writing on
+# the About register and the explanations under each design decision on the
+# Witness page are exempt. That last one was added 2026-09-01 for a reason worth
+# keeping: with no full stops allowed, every explanation had to be one long
+# comma-spliced sentence, and comma-spliced sentences are exactly what made that
+# copy read as written rather than said. Headings, captions, leads and buttons on
+# every page are still checked.
 python3 - <<'PY' || fail=1
 import re, sys
 bad = 0
@@ -191,6 +195,7 @@ for f in ["index.html", "about.html", "contact.html", "404.html", "blog/index.ht
 	s = open(f, encoding="utf-8").read()
 	s = re.sub(r"(?s)<head.*?</head>|<script.*?</script>|<svg.*?</svg>|<!--.*?-->", "", s)
 	s = re.sub(r'(?s)<div class="hand[^"]*">.*?</div>', "", s)
+	s = re.sub(r'(?s)<div class="txt">.*?</div>', "", s)
 	for hit in re.findall(r"[A-Za-z0-9)]\.(?=\s|$)", re.sub(r"<[^>]+>", " ", s), re.M):
 		print(f"FAIL: {f} interface copy contains a full stop near '{hit}'"); bad += 1
 sys.exit(1 if bad else 0)
