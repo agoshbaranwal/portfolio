@@ -10,7 +10,7 @@
 # no longer exists. Every other rule below is still enforced.
 cd "$(dirname "$0")"
 fail=0
-PAGES="index.html about.html cv.html contact.html 404.html blog/index.html blog/customer-love-is-a-lagging-indicator.html projects/witness.html work/index.html work/efeed-paid.html work/abicart-growth.html work/abicart-retention.html"
+PAGES="index.html about.html cv.html contact.html 404.html blog/index.html blog/customer-love-is-a-lagging-indicator.html projects/witness.html work/efeed-paid.html work/abicart-growth.html work/abicart-retention.html"
 
 # ---------------------------------------------------------------- 1. styling
 # One stylesheet. No <style> blocks, no inline style attributes.
@@ -327,7 +327,7 @@ if grep -rniE "to be added|coming soon|placeholder|lorem ipsum|\bTBD\b|\bTODO\b|
 fi
 
 # --------------------------------------------------- 11. every page is shareable
-for f in index.html about.html cv.html contact.html blog/index.html blog/customer-love-is-a-lagging-indicator.html projects/witness.html work/index.html work/efeed-paid.html work/abicart-growth.html work/abicart-retention.html; do
+for f in index.html about.html cv.html contact.html blog/index.html blog/customer-love-is-a-lagging-indicator.html projects/witness.html work/efeed-paid.html work/abicart-growth.html work/abicart-retention.html; do
 	for tag in 'rel="canonical"' 'property="og:image"' 'name="description"'; do
 		grep -q "$tag" "$f" || { echo "FAIL: $f is missing $tag"; fail=1; }
 	done

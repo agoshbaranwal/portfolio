@@ -88,6 +88,11 @@
 	],
 	"redirects": [
 		{
+			"source": "/work",
+			"destination": "/cv#selected-work",
+			"permanent": false
+		},
+		{
 			"source": "/writing",
 			"destination": "/blog",
 			"permanent": true
