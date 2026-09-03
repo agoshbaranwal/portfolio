@@ -12,7 +12,7 @@
 		<meta property="og:description" content="The best way to reach Agosh Baranwal, plus his LinkedIn and GitHub" />
 		<meta property="og:type" content="website" />
 		<meta property="og:site_name" content="Agosh Baranwal" />
-		<meta property="og:image" content="https://agoshportfolio.vercel.app/og.png" />
+		<meta property="og:image" content="https://agoshportfolio.vercel.app/og-contact.png" />
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="630" />
 		<meta property="og:image:alt" content="Agosh Baranwal, experienced marketer specialising in performance marketing and product growth" />
@@ -23,6 +23,9 @@
 		<link rel="preload" href="/fonts/montserrat.6438d7b8.woff2" as="font" type="font/woff2" crossorigin />
 		<link rel="stylesheet" href="/site.css" />
 		<script src="/pen.js" defer></script>
+		<script type="speculationrules">
+			{"prefetch":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}
+		</script>
 	</head>
 	<body>
 		<a class="skip" href="#main">Skip to content</a>
@@ -30,10 +33,11 @@
 			<div class="wrap">
 				<a class="mark" href="/">Agosh Baranwal</a>
 				<nav class="tabs" aria-label="Pages">
-					<a href="/blog">Blog</a>
-					<a href="/about">About me</a>
 					<a href="/cv">CV</a>
-					<a href="/contact" aria-current="page">Contact</a>
+					<a href="/work">Work</a>
+					<a href="/about">About me</a>
+					<a href="/blog">Blog</a>
+					<a href="/contact">Contact</a>
 				</nav>
 				<div class="right">
 					<button class="theme-btn" id="themeBtn" type="button" aria-pressed="false">Dark</button>
@@ -49,9 +53,13 @@
 				</div>
 				<div class="contact-page">
 					<p class="mail"><a href="mailto:agosh.baranwal@alumni.esade.edu?subject=Hello%20Agosh">agosh.baranwal@alumni.esade.edu</a></p>
+					<div class="vcard-row">
+						<button class="copy-mail" id="copyMail" type="button" data-copy="agosh.baranwal@alumni.esade.edu"><span class="cm">Copy the address</span><span class="ci">Copy</span></button>
+						<a href="/agosh-baranwal.vcf" download>Add to contacts</a>
+					</div>
 				<div class="links-row">
 				<a class="link-card" href="https://www.linkedin.com/in/agoshbaranwal/" target="_blank" rel="noopener">
-				<span class="pfp" aria-hidden="true"><span class="badge li">in</span></span>
+				<span class="pfp" aria-hidden="true"><picture><source type="image/avif" srcset="/photos/agosh-headshot.avif" /><img src="/photos/agosh-headshot.jpg" alt="" width="52" height="52" loading="lazy" decoding="async" /></picture><span class="badge li">in</span></span>
 				<span class="lc-t">
 				<span class="who">Agosh Baranwal</span>
 				<span class="what">Performance marketing and product growth</span>
@@ -60,7 +68,7 @@
 				<span class="arrow" aria-hidden="true">&rarr;</span>
 				</a>
 				<a class="link-card" href="https://github.com/agoshbaranwal" target="_blank" rel="noopener">
-				<span class="pfp" aria-hidden="true"><span class="badge gh">GH</span></span>
+				<span class="pfp" aria-hidden="true"><picture><source type="image/avif" srcset="/photos/agosh-headshot.avif" /><img src="/photos/agosh-headshot.jpg" alt="" width="52" height="52" loading="lazy" decoding="async" /></picture><span class="badge gh">GH</span></span>
 				<span class="lc-t">
 				<span class="who">Agosh Baranwal</span>
 				<span class="what">The code behind the projects on this page</span>
@@ -72,6 +80,15 @@
 				</div>
 			</div>
 		</main>
-		<div class="wrap"><p class="foot">Agosh Baranwal &middot; 2026 &middot; <a href="/feed.xml">RSS</a></p></div>
+		<footer class="site-foot">
+			<div class="wrap fw">
+				<a href="mailto:agosh.baranwal@alumni.esade.edu?subject=Hello%20Agosh">agosh.baranwal@alumni.esade.edu</a>
+				<a href="https://www.linkedin.com/in/agoshbaranwal/" target="_blank" rel="noopener me">LinkedIn</a>
+				<a href="https://github.com/agoshbaranwal" target="_blank" rel="noopener me">GitHub</a>
+				<a href="/feed.xml">RSS</a>
+				<span class="upd">Updated September 2026</span>
+			</div>
+		</footer>
+		<p class="site-print">agoshportfolio.vercel.app/contact</p>
 	</body>
 </html>

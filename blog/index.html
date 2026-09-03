@@ -25,6 +25,9 @@
 		<link rel="preload" href="/fonts/montserrat.6438d7b8.woff2" as="font" type="font/woff2" crossorigin />
 		<link rel="stylesheet" href="/site.css" />
 		<script src="/pen.js" defer></script>
+		<script type="speculationrules">
+			{"prefetch":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}
+		</script>
 	</head>
 	<body>
 		<a class="skip" href="#main">Skip to content</a>
@@ -32,9 +35,10 @@
 			<div class="wrap">
 				<a class="mark" href="/">Agosh Baranwal</a>
 				<nav class="tabs" aria-label="Pages">
-					<a href="/blog" aria-current="page">Blog</a>
-					<a href="/about">About me</a>
 					<a href="/cv">CV</a>
+					<a href="/work">Work</a>
+					<a href="/about">About me</a>
+					<a href="/blog">Blog</a>
 					<a href="/contact">Contact</a>
 				</nav>
 				<div class="right">
@@ -52,21 +56,21 @@
 
 				<a class="feature" href="/blog/customer-love-is-a-lagging-indicator">
 					<span class="art" aria-hidden="true">
-						<svg viewBox="0 0 920 400" preserveAspectRatio="xMidYMid slice">
+						<svg class="draw rv" viewBox="0 0 920 400" preserveAspectRatio="xMidYMid slice">
 							<g stroke="var(--line)" stroke-width="1">
 								<line x1="0" y1="320" x2="920" y2="320" />
 								<line x1="0" y1="215" x2="920" y2="215" />
 								<line x1="0" y1="110" x2="920" y2="110" />
 							</g>
 							<line x1="820" y1="80" x2="820" y2="340" stroke="var(--line-strong)" stroke-width="1.5" stroke-dasharray="3 7" />
-							<path d="M470 288 C 570 262 700 170 820 108 L 820 236 C 760 272 700 302 640 316 L 470 323 Z" fill="var(--chart-gap)" />
-							<path d="M40 318 L 470 288 C 570 262 700 170 820 108" fill="none" stroke="var(--chart-lead)" stroke-width="5" stroke-linecap="round" />
-							<path d="M40 340 L 640 316 C 700 302 760 272 820 236" fill="none" stroke="var(--chart-lag)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1 13" />
+							<path class="d-fill" d="M470 288 C 570 262 700 170 820 108 L 820 236 C 760 272 700 302 640 316 L 470 323 Z" fill="var(--chart-gap)" />
+							<path class="d-line" pathLength="1" d="M40 318 L 470 288 C 570 262 700 170 820 108" fill="none" stroke="var(--chart-lead)" stroke-width="5" stroke-linecap="round" />
+							<path class="d-fill" d="M40 340 L 640 316 C 700 302 760 272 820 236" fill="none" stroke="var(--chart-lag)" stroke-width="5" stroke-linecap="round" stroke-dasharray="1 13" />
 							<line x1="470" y1="236" x2="470" y2="280" stroke="var(--line-strong)" stroke-width="1.5" stroke-dasharray="3 6" />
-							<circle cx="470" cy="288" r="7" fill="var(--chart-lead)" stroke="var(--card)" stroke-width="3" />
-							<circle cx="640" cy="316" r="7" fill="var(--chart-lag)" stroke="var(--card)" stroke-width="3" />
-							<circle cx="820" cy="108" r="9" fill="var(--chart-lead)" stroke="var(--card)" stroke-width="3.5" />
-							<circle cx="820" cy="236" r="9" fill="var(--chart-lag)" stroke="var(--card)" stroke-width="3.5" />
+							<circle class="d-dot" cx="470" cy="288" r="7" fill="var(--chart-lead)" stroke="var(--card)" stroke-width="3" />
+							<circle class="d-dot" cx="640" cy="316" r="7" fill="var(--chart-lag)" stroke="var(--card)" stroke-width="3" />
+							<circle class="d-dot" cx="820" cy="108" r="9" fill="var(--chart-lead)" stroke="var(--card)" stroke-width="3.5" />
+							<circle class="d-dot" cx="820" cy="236" r="9" fill="var(--chart-lag)" stroke="var(--card)" stroke-width="3.5" />
 							<g font-family="Montserrat, Helvetica, sans-serif" font-size="13" font-weight="700" letter-spacing="1.4">
 								<text x="456" y="226" fill="var(--chart-lead)" text-anchor="end">YOU MAKE IT EASY TO BUY</text>
 								<text x="798" y="96" fill="var(--ink-mid)" text-anchor="end">SALES</text>
@@ -84,6 +88,15 @@
 				</a>
 			</div>
 		</main>
-		<div class="wrap"><p class="foot">Agosh Baranwal &middot; 2026 &middot; <a href="/feed.xml">RSS</a></p></div>
+		<footer class="site-foot">
+			<div class="wrap fw">
+				<a href="mailto:agosh.baranwal@alumni.esade.edu?subject=Hello%20Agosh">agosh.baranwal@alumni.esade.edu</a>
+				<a href="https://www.linkedin.com/in/agoshbaranwal/" target="_blank" rel="noopener me">LinkedIn</a>
+				<a href="https://github.com/agoshbaranwal" target="_blank" rel="noopener me">GitHub</a>
+				<a href="/feed.xml">RSS</a>
+				<span class="upd">Updated September 2026</span>
+			</div>
+		</footer>
+		<p class="site-print">agoshportfolio.vercel.app/blog</p>
 	</body>
 </html>

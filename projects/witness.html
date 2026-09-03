@@ -23,6 +23,9 @@
 		<link rel="preload" href="/fonts/montserrat.6438d7b8.woff2" as="font" type="font/woff2" crossorigin />
 		<link rel="stylesheet" href="/site.css" />
 		<script src="/pen.js" defer></script>
+		<script type="speculationrules">
+			{"prefetch":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}
+		</script>
 	</head>
 	<body>
 		<a class="skip" href="#main">Skip to content</a>
@@ -30,9 +33,10 @@
 			<div class="wrap">
 				<a class="mark" href="/">Agosh Baranwal</a>
 				<nav class="tabs" aria-label="Pages">
-					<a href="/blog">Blog</a>
-					<a href="/about">About me</a>
 					<a href="/cv">CV</a>
+					<a href="/work">Work</a>
+					<a href="/about">About me</a>
+					<a href="/blog">Blog</a>
 					<a href="/contact">Contact</a>
 				</nav>
 				<div class="right">
@@ -52,15 +56,15 @@
 
 				<div class="dev-row rv">
 					<figure class="dev phone">
-						<span class="screen-b"><img src="/projects/witness/phone-today.jpg" alt="The Today screen on a phone, offering to plan the next one after four days away" width="390" height="566" /></span>
+						<span class="screen-b"><picture><source type="image/avif" srcset="/projects/witness/phone-today.avif" /><img src="/projects/witness/phone-today.jpg" alt="The Today screen on a phone, offering to plan the next one after four days away" width="390" height="566" /></picture></span>
 						<figcaption class="dev-cap">On a phone</figcaption>
 					</figure>
 					<figure class="dev panel">
-						<span class="screen-b"><img src="/projects/witness/panel-today-light.jpg" alt="The Witness menu-bar panel on a Mac" width="320" height="566" /></span>
+						<span class="screen-b"><picture><source type="image/avif" srcset="/projects/witness/panel-today-light.avif" /><img src="/projects/witness/panel-today-light.jpg" alt="The Witness menu-bar panel on a Mac" width="320" height="566" /></picture></span>
 						<figcaption class="dev-cap">In the Mac menu bar</figcaption>
 					</figure>
 					<figure class="dev bell">
-						<span class="screen-b"><img src="/projects/witness/notif-phone.jpg" alt="A phone lock screen showing Witness reminders with their action buttons" width="236" height="566" /></span>
+						<span class="screen-b"><picture><source type="image/avif" srcset="/projects/witness/notif-phone.avif" /><img src="/projects/witness/notif-phone.jpg" alt="A phone lock screen showing Witness reminders with their action buttons" width="236" height="566" /></picture></span>
 						<figcaption class="dev-cap">As a reminder</figcaption>
 					</figure>
 				</div>
@@ -76,8 +80,8 @@
 					<h2>The week it runs on</h2>
 					<p class="say">The commitment is made once a week and checked once in the middle, which is what keeps the daily interaction under ten seconds</p>
 					<div class="pj-body">
-						<div class="loopwrap rv">
-							<ol class="loop">
+						<div class="loopwrap">
+							<ol class="loop rv">
 								<li><span class="dl"><i></i></span><span class="lk">Start of the week</span><span class="lv">You name one thing</span></li>
 								<li><span class="dl"><i></i></span><span class="lk">The moment you picked</span><span class="lv">It rings</span></li>
 								<li><span class="dl"><i></i></span><span class="lk">Midweek</span><span class="lv">Did it happen</span></li>
@@ -87,11 +91,11 @@
 						</div>
 						<div class="loop-pair">
 							<figure class="dev phone">
-								<span class="screen-b"><img src="/projects/witness/phone-sunday.jpg" alt="The review at the start of the week, asking what got done and what was avoided" width="390" height="566" loading="lazy" decoding="async" /></span>
+								<span class="screen-b"><picture><source type="image/avif" srcset="/projects/witness/phone-sunday.avif" /><img src="/projects/witness/phone-sunday.jpg" alt="The review at the start of the week, asking what got done and what was avoided" width="390" height="566" loading="lazy" decoding="async" /></picture></span>
 								<figcaption class="dev-cap">Start of the week, ten to fifteen minutes</figcaption>
 							</figure>
 							<figure class="dev phone">
-								<span class="screen-b"><img src="/projects/witness/phone-wednesday.jpg" alt="The midweek check, asking whether the one thing happened" width="390" height="566" loading="lazy" decoding="async" /></span>
+								<span class="screen-b"><picture><source type="image/avif" srcset="/projects/witness/phone-wednesday.avif" /><img src="/projects/witness/phone-wednesday.jpg" alt="The midweek check, asking whether the one thing happened" width="390" height="566" loading="lazy" decoding="async" /></picture></span>
 								<figcaption class="dev-cap">Midweek, two minutes</figcaption>
 							</figure>
 						</div>
@@ -103,22 +107,22 @@
 					<div class="pj-body">
 						<div class="calls">
 							<div class="call rv">
-								<span class="crop"><img src="/projects/witness/call-run.jpg" alt="A consistency figure of 62, with a note saying recent days count for more" width="756" height="190" loading="lazy" decoding="async" /></span>
+								<span class="crop"><picture><source type="image/avif" srcset="/projects/witness/call-run.avif" /><img src="/projects/witness/call-run.jpg" alt="A consistency figure of 62, with a note saying recent days count for more" width="756" height="190" loading="lazy" decoding="async" /></picture></span>
 								<div class="txt"><h3>Consistency is a weighted count</h3>
 								<p>Older days count for less, so one from a fortnight ago is worth half of today. The number follows how you are behaving now rather than how long an unbroken run has survived.</p></div>
 							</div>
 							<div class="call rv d1">
-								<span class="crop"><img src="/projects/witness/call-days.jpg" alt="Eighty-one days marked and eighty-seven answered out of the last ninety-one, drawn as a grid" width="756" height="430" loading="lazy" decoding="async" /></span>
+								<span class="crop"><picture><source type="image/avif" srcset="/projects/witness/call-days.avif" /><img src="/projects/witness/call-days.jpg" alt="Eighty-one days marked and eighty-seven answered out of the last ninety-one, drawn as a grid" width="756" height="430" loading="lazy" decoding="async" /></picture></span>
 								<div class="txt"><h3>The denominator is delivered reminders</h3>
 								<p>A day when no reminder was actually sent drops out of the count, which is why the two figures differ. It keeps the number measuring what you did rather than whether the notification got through.</p></div>
 							</div>
 							<div class="call rv">
-								<span class="crop"><img src="/projects/witness/call-week.jpg" alt="A week legend distinguishing all, part, none, no answer and no reminder" width="756" height="535" loading="lazy" decoding="async" /></span>
+								<span class="crop"><picture><source type="image/avif" srcset="/projects/witness/call-week.avif" /><img src="/projects/witness/call-week.jpg" alt="A week legend distinguishing all, part, none, no answer and no reminder" width="756" height="535" loading="lazy" decoding="async" /></picture></span>
 								<div class="txt"><h3>A day has five states</h3>
 								<p>All, part, none, no answer, and no reminder sent. Recording that nothing happened is a different state from never opening the app, and collapsing the two would lose the difference between a bad week and someone who has stopped.</p></div>
 							</div>
 							<div class="call rv d1">
-								<span class="crop"><img src="/projects/witness/call-goal.jpg" alt="A goal reading nine of sixteen gym sessions, twelve days left, needs half a session a day from here" width="756" height="295" loading="lazy" decoding="async" /></span>
+								<span class="crop"><picture><source type="image/avif" srcset="/projects/witness/call-goal.avif" /><img src="/projects/witness/call-goal.jpg" alt="A goal reading nine of sixteen gym sessions, twelve days left, needs half a session a day from here" width="756" height="295" loading="lazy" decoding="async" /></picture></span>
 								<div class="txt"><h3>Goals are a run rate</h3>
 								<p>You set a count and a date, and the progress comes from entries you are already making, so there is nothing extra to fill in. What it shows you is the rate needed from here, not a percentage or a grade.</p></div>
 							</div>
@@ -133,7 +137,7 @@
 					<div class="pj-body">
 						<div class="band rv">
 							<span class="bar" aria-hidden="true"><i></i><i></i><i></i></span>
-							<img src="/projects/witness/record-band.jpg" alt="Witness in a desktop browser: the record and its ninety-one day grid in the left column, and every written entry in the right" width="2560" height="1580" loading="lazy" decoding="async" />
+							<picture><source type="image/avif" srcset="/projects/witness/record-band.avif" /><img src="/projects/witness/record-band.jpg" alt="Witness in a desktop browser: the record and its ninety-one day grid in the left column, and every written entry in the right" width="2560" height="1580" loading="lazy" decoding="async" /></picture>
 						</div>
 						<p class="band-cap"><b>Two columns, not one long phone screen</b>The record on the left and every entry on the right, so a desktop reads in one screen what a phone reads in four</p>
 						<div class="gate">
@@ -150,6 +154,15 @@
 				</div>
 			</div>
 		</main>
-		<div class="wrap"><p class="foot">Agosh Baranwal &middot; 2026 &middot; <a href="/feed.xml">RSS</a></p></div>
+		<footer class="site-foot">
+			<div class="wrap fw">
+				<a href="mailto:agosh.baranwal@alumni.esade.edu?subject=Hello%20Agosh">agosh.baranwal@alumni.esade.edu</a>
+				<a href="https://www.linkedin.com/in/agoshbaranwal/" target="_blank" rel="noopener me">LinkedIn</a>
+				<a href="https://github.com/agoshbaranwal" target="_blank" rel="noopener me">GitHub</a>
+				<a href="/feed.xml">RSS</a>
+				<span class="upd">Updated September 2026</span>
+			</div>
+		</footer>
+		<p class="site-print">agoshportfolio.vercel.app/projects/witness</p>
 	</body>
 </html>

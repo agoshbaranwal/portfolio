@@ -12,7 +12,7 @@
 		<meta property="og:description" content="The full record: education, professional experience, projects, languages and skills." />
 		<meta property="og:type" content="website" />
 		<meta property="og:site_name" content="Agosh Baranwal" />
-		<meta property="og:image" content="https://agoshportfolio.vercel.app/og.png" />
+		<meta property="og:image" content="https://agoshportfolio.vercel.app/og-cv.png" />
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="630" />
 		<meta property="og:image:alt" content="Agosh Baranwal, experienced marketer specialising in performance marketing and product growth" />
@@ -23,6 +23,17 @@
 		<link rel="preload" href="/fonts/montserrat.6438d7b8.woff2" as="font" type="font/woff2" crossorigin />
 		<link rel="stylesheet" href="/site.css" />
 		<script src="/pen.js" defer></script>
+		<script type="speculationrules">
+			{"prefetch":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}
+		</script>
+		<script type="application/ld+json">
+			{"@context":"https://schema.org","@type":"ProfilePage","name":"Agosh Baranwal, CV",
+			 "url":"https://agoshportfolio.vercel.app/cv",
+			 "mainEntity":{"@type":"Person","name":"Agosh Baranwal",
+			  "jobTitle":"Performance and product marketer",
+			  "url":"https://agoshportfolio.vercel.app/",
+			  "sameAs":["https://www.linkedin.com/in/agoshbaranwal/","https://github.com/agoshbaranwal"]}}
+		</script>
 	</head>
 	<body>
 		<a class="skip" href="#main">Skip to content</a>
@@ -30,9 +41,10 @@
 			<div class="wrap">
 				<a class="mark" href="/">Agosh Baranwal</a>
 				<nav class="tabs" aria-label="Pages">
-					<a href="/blog">Blog</a>
-					<a href="/about">About me</a>
 					<a href="/cv" aria-current="page">CV</a>
+					<a href="/work">Work</a>
+					<a href="/about">About me</a>
+					<a href="/blog">Blog</a>
 					<a href="/contact">Contact</a>
 				</nav>
 				<div class="right">
@@ -42,6 +54,9 @@
 			</div>
 		</header>
 		<main id="main">
+			<i class="lens-anchor" id="m-india" aria-hidden="true"></i>
+			<i class="lens-anchor" id="m-sweden" aria-hidden="true"></i>
+			<i class="lens-anchor" id="m-spain" aria-hidden="true"></i>
 			<div class="wrap">
 				<div class="page-h">
 					<h1>CV</h1>
@@ -51,17 +66,49 @@
 						<a href="https://www.linkedin.com/in/agoshbaranwal/" target="_blank" rel="noopener">linkedin.com/in/agoshbaranwal</a>
 						<a href="/agosh-baranwal-cv.pdf" download>Download the PDF</a>
 					</p>
+					<div class="mkt-pick" aria-label="Filter by market">
+						<a class="m-india" href="#m-india" data-market="india">India</a>
+						<a class="m-sweden" href="#m-sweden" data-market="sweden">Sweden</a>
+						<a class="m-spain" href="#m-spain" data-market="spain">Spain</a>
+						<a class="clear" href="#main">Everything</a>
+					</div>
+					<div class="strip">
+						<div class="strip-rows">
+							<div class="strip-row r-washut" data-market="india"><span class="s-nm">Washut<span class="s-yr">2014&ndash;18</span></span><span class="strip-track"><span class="strip-bar india"></span></span></div>
+							<div class="strip-row r-buyceps" data-market="india"><span class="s-nm">Buyceps<span class="s-yr">2018&ndash;19</span></span><span class="strip-track"><span class="strip-bar india"></span></span></div>
+							<div class="strip-row r-abicart" data-market="sweden"><span class="s-nm">Abicart<span class="s-yr">2019&ndash;22</span></span><span class="strip-track"><span class="strip-bar sweden"></span></span></div>
+							<div class="strip-row r-efeed" data-market="india"><span class="s-nm">eFeed<span class="s-yr">2022&ndash;23</span></span><span class="strip-track"><span class="strip-bar india"></span></span></div>
+							<div class="strip-row r-mslate" data-market="india"><span class="s-nm">MSlate<span class="s-yr">2023&ndash;24</span></span><span class="strip-track"><span class="strip-bar india"></span></span></div>
+							<div class="strip-row r-esade" data-market="spain"><span class="s-nm">Esade MBA<span class="s-yr">2024&ndash;now</span></span><span class="strip-track"><span class="strip-bar spain"></span></span></div>
+							<div class="strip-row r-chatty" data-market="spain"><span class="s-nm">ChattyHiring<span class="s-yr">2025</span></span><span class="strip-track"><span class="strip-bar spain"></span></span></div>
+						</div>
+						<div class="strip-axis">
+							<span></span>
+							<span class="strip-yrs" aria-hidden="true">
+								<span class="strip-yr y-2015">2015</span>
+								<span class="strip-yr y-2018">2018</span>
+								<span class="strip-yr y-2021">2021</span>
+								<span class="strip-yr y-2024">2024</span>
+								<span class="strip-yr y-2026">2026</span>
+							</span>
+						</div>
+						<p class="strip-key">
+							<span><i class="strip-bar india"></i>India</span>
+							<span><i class="strip-bar sweden"></i>Sweden</span>
+							<span><i class="strip-bar spain"></i>Spain</span>
+						</p>
+					</div>
 				</div>
 
 				<div class="cv-body">
 <section class="cv-sec cv-sec-first" aria-labelledby="cv-edu">
 				<h2 class="cv-h" id="cv-edu">Education</h2>
-				<div class="cv-entry">
+				<div class="cv-entry" data-market="spain">
 					<div class="cv-row"><span class="cv-org">Esade Business School <em class="cv-note">(#7 MBA Globally by Financial Times)</em></span><span class="cv-place">Spain</span></div>
 					<div class="cv-row cv-sub"><span>Master's in Business Administration &middot; GPA 8.53 (Top 15%), Old GMAT: 750 / GMAT Focus: 695</span><span class="cv-date">09/24 &ndash; Current</span></div>
 					<ul class="cv-points"><li>Winner, HP Innovation Bootcamp, delivering a data monetisation plan with $43M+ ARR upside from increased SMB adoption</li></ul>
 				</div>
-				<div class="cv-entry">
+				<div class="cv-entry" data-market="india">
 					<div class="cv-row"><span class="cv-org">Indian Institute of Technology</span><span class="cv-place">Dhanbad, India</span></div>
 					<div class="cv-row cv-sub"><span>Bachelor of Technology in Petroleum Engineering</span><span class="cv-date">07/14 &ndash; 06/18</span></div>
 					<ul class="cv-points"><li>Organised the first official TEDx event in the district by leading end-to-end production, content curation and sponsorship</li></ul>
@@ -72,7 +119,7 @@
 				<h2 class="cv-h" id="cv-exp">Professional Experience</h2>
 				<p class="cv-summary"><strong>Professional Summary.</strong> Performance and product marketer with 5+ yrs experience in scaling platforms across Sweden, Spain and India. Specialised in SEO, Google Ads, Google App Campaigns (UAC), Meta Ads, TikTok Ads, paid search, CRM and analytics. Drove acquisition, reduced churn and improved contribution margin by owning end-to-end processes and leading cross-functional teams.</p>
 
-				<div class="cv-entry">
+				<div class="cv-entry" data-market="spain">
 					<div class="cv-row"><span class="cv-org">ChattyHiring</span><span class="cv-place">Spain</span></div>
 					<div class="cv-row cv-sub"><span><em>AI-enabled hiring automation SaaS</em> &middot; Marketing Intern (MBA Internship)</span><span class="cv-date">07/25 &ndash; 09/25</span></div>
 					<ul class="cv-points">
@@ -82,28 +129,28 @@
 					</ul>
 				</div>
 
-				<div class="cv-entry">
+				<div class="cv-entry" data-market="india">
 					<div class="cv-row"><span class="cv-org">eFeed</span><span class="cv-place">Cambridge, UK &middot; Lucknow, India</span></div>
 					<div class="cv-row cv-sub"><span><em>Cambridge-based biotechnology startup, $12M valuation</em> &middot; Marketing Lead</span><span class="cv-date">12/22 &ndash; 07/23</span></div>
 					<ul class="cv-points">
-						<li>Ran performance campaigns (Google / UAC, YouTube, Facebook) with a $100,000 per month budget, driving low CAC and lifting ROAS to 10x; expanded product categories into 2 new segments, delivering $1.5M annual revenue</li>
+						<li id="r-efeed">Ran performance campaigns (Google / UAC, YouTube, Facebook) with a $100,000 per month budget, driving low CAC and lifting ROAS to 10x; expanded product categories into 2 new segments, delivering $1.5M annual revenue</li>
 						<li>Built CRM and lifecycle campaigns across email, WhatsApp and SMS with A/B testing on segmentation and targeting, leading a team of 15; secured retention targets and reduced return orders from 40% to 15%</li>
 						<li>Built market feedback loops from retailers, distributors and farmers to improve product communication, positioning and GTM strategy</li>
 					</ul>
 				</div>
 
-				<div class="cv-entry">
+				<div class="cv-entry" data-market="sweden">
 					<div class="cv-row"><span class="cv-org">Abicart</span><span class="cv-place">Gothenburg, Sweden &middot; Lucknow, India</span></div>
 					<div class="cv-row cv-sub"><span><em>Sweden's largest eCommerce service provider, $40M valuation</em> &middot; Brand Manager</span><span class="cv-date">12/19 &ndash; 11/22</span></div>
 					<ul class="cv-points">
 						<li>Led digital marketing (SEO + paid) and customer retention across the Nordics, optimising Google, Facebook and LinkedIn outreach with cross-functional teams</li>
 						<li>Built a retention engine using SQL + GA4 + HubSpot, reducing churn 30% and saving $0.8M annually through funnel improvements</li>
-						<li>Ran SEO-led demand capture and full-funnel paid growth across Google / Facebook / LinkedIn / TikTok, achieving +400% sign-ups, net $3M annual revenue and +50% conversion rate</li>
+						<li id="r-abicart">Ran SEO-led demand capture and full-funnel paid growth across Google / Facebook / LinkedIn / TikTok, achieving +400% sign-ups, net $3M annual revenue and +50% conversion rate</li>
 						<li>Developed product positioning and GTM narratives for core platform features, including store setup, order flows and growth tools</li>
 					</ul>
 				</div>
 
-				<div class="cv-entry">
+				<div class="cv-entry" data-market="india">
 					<div class="cv-row"><span class="cv-org">Buyceps</span><span class="cv-place">Mumbai, India</span></div>
 					<div class="cv-row cv-sub"><span><em>India's most trusted health supplement brand, $2.5M+ annual revenue</em> &middot; Marketing Consultant</span><span class="cv-date">08/18 &ndash; 12/19</span></div>
 					<ul class="cv-points">
@@ -115,7 +162,7 @@
 
 <section class="cv-sec" aria-labelledby="cv-proj">
 				<h2 class="cv-h" id="cv-proj">Projects</h2>
-				<div class="cv-entry">
+				<div class="cv-entry" data-market="india">
 					<div class="cv-row"><span class="cv-org">MSlate</span><span class="cv-place">Lucknow, India</span></div>
 					<div class="cv-row cv-sub"><span><em>AI-enabled SaaS startup backed by the Government of India</em> &middot; Consultant</span><span class="cv-date">08/23 &ndash; 05/24</span></div>
 					<ul class="cv-points">
@@ -124,7 +171,7 @@
 						<li>Scaled app acquisition via Google App Campaigns (UAC) and built lifecycle loops via SMS + in-app, boosting engagement +135%</li>
 					</ul>
 				</div>
-				<div class="cv-entry">
+				<div class="cv-entry" data-market="india">
 					<div class="cv-row"><span class="cv-org">Washut <em class="cv-note">(entrepreneurial venture during undergrad)</em></span><span class="cv-place">Dhanbad, India</span></div>
 					<div class="cv-row cv-sub"><span><em>India's first online door-to-door laundry service application</em> &middot; Co-founder</span><span class="cv-date">11/14 &ndash; 05/18</span></div>
 					<ul class="cv-points">
@@ -144,6 +191,15 @@
 				</div>
 			</div>
 		</main>
-		<div class="wrap"><p class="foot">Agosh Baranwal &middot; 2026 &middot; <a href="/feed.xml">RSS</a></p></div>
+		<footer class="site-foot">
+			<div class="wrap fw">
+				<a href="mailto:agosh.baranwal@alumni.esade.edu?subject=Hello%20Agosh">agosh.baranwal@alumni.esade.edu</a>
+				<a href="https://www.linkedin.com/in/agoshbaranwal/" target="_blank" rel="noopener me">LinkedIn</a>
+				<a href="https://github.com/agoshbaranwal" target="_blank" rel="noopener me">GitHub</a>
+				<a href="/feed.xml">RSS</a>
+				<span class="upd">Updated September 2026</span>
+			</div>
+		</footer>
+		<p class="site-print">agoshportfolio.vercel.app/cv</p>
 	</body>
 </html>

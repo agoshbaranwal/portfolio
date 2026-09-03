@@ -10,7 +10,7 @@
 # no longer exists. Every other rule below is still enforced.
 cd "$(dirname "$0")"
 fail=0
-PAGES="index.html about.html cv.html contact.html 404.html blog/index.html blog/customer-love-is-a-lagging-indicator.html projects/witness.html"
+PAGES="index.html about.html cv.html contact.html 404.html blog/index.html blog/customer-love-is-a-lagging-indicator.html projects/witness.html work/index.html work/efeed-paid.html work/abicart-growth.html work/abicart-retention.html"
 
 # ---------------------------------------------------------------- 1. styling
 # One stylesheet. No <style> blocks, no inline style attributes.
@@ -84,7 +84,7 @@ class P(HTMLParser):
 			if '"' in k or k.endswith("href="):
 				self.bad.append((self.getpos()[0], "malformed attribute", attrs))
 bad = 0
-for f in sorted([f for f in glob.glob("*.html")+glob.glob("blog/*.html")+glob.glob("projects/*.html") if not f.split("/")[-1].startswith("_")]):
+for f in sorted([f for f in glob.glob("*.html")+glob.glob("blog/*.html")+glob.glob("projects/*.html")+glob.glob("work/*.html") if not f.split("/")[-1].startswith("_")]):
 	if f == "post-template.html": continue
 	p = P(); p.feed(open(f, encoding="utf-8").read())
 	for line, why, attrs in p.bad:
@@ -119,7 +119,7 @@ class P(HTMLParser):
 				if dim in d and not re.fullmatch(r'\d+', d[dim] or ""):
 					self.bad.append((self.getpos()[0], f"<img {dim}={d[dim]!r}> is not a plain number"))
 bad=0
-for f in sorted([f for f in glob.glob("*.html")+glob.glob("blog/*.html")+glob.glob("projects/*.html") if not f.split("/")[-1].startswith("_")]):
+for f in sorted([f for f in glob.glob("*.html")+glob.glob("blog/*.html")+glob.glob("projects/*.html")+glob.glob("work/*.html") if not f.split("/")[-1].startswith("_")]):
 	if f=="post-template.html": continue
 	p=P(f); p.feed(open(f, encoding="utf-8").read())
 	for line, why in p.bad:
@@ -134,7 +134,7 @@ TAGCHECK
 python3 - <<'PY' || fail=1
 import re, sys, glob
 bad = 0
-for f in sorted([f for f in glob.glob("*.html")+glob.glob("blog/*.html")+glob.glob("projects/*.html") if not f.split("/")[-1].startswith("_")]
+for f in sorted([f for f in glob.glob("*.html")+glob.glob("blog/*.html")+glob.glob("projects/*.html")+glob.glob("work/*.html") if not f.split("/")[-1].startswith("_")]
                 + ["feed.xml", "sitemap.xml", "robots.txt"]):
 	if f == "post-template.html": continue
 	try: s = open(f, encoding="utf-8").read()
@@ -158,7 +158,7 @@ def target(h):
 	for c in (p, p + ".html", p + "/index.html"):
 		if os.path.exists(c): return c
 	return "MISSING:" + h
-for f in [f for f in glob.glob("*.html")+glob.glob("blog/*.html")+glob.glob("projects/*.html") if not f.split("/")[-1].startswith("_")]:
+for f in [f for f in glob.glob("*.html")+glob.glob("blog/*.html")+glob.glob("projects/*.html")+glob.glob("work/*.html") if not f.split("/")[-1].startswith("_")]:
 	if f == "post-template.html": continue
 	for h in re.findall(r'(?:href|src)="([^"]+)"', open(f, encoding="utf-8").read()):
 		t = target(h)
@@ -203,7 +203,7 @@ python3 - <<'PY' || fail=1
 import sys, glob, re
 bad = 0
 TAGS = ["div", "article", "section", "main", "nav", "header", "figure", "ul", "ol", "p", "li"]
-for f in sorted([f for f in glob.glob("*.html")+glob.glob("blog/*.html")+glob.glob("projects/*.html") if not f.split("/")[-1].startswith("_")]):
+for f in sorted([f for f in glob.glob("*.html")+glob.glob("blog/*.html")+glob.glob("projects/*.html")+glob.glob("work/*.html") if not f.split("/")[-1].startswith("_")]):
 	if f == "post-template.html": continue
 	s = open(f, encoding="utf-8").read()
 	s = re.sub(r"(?s)<script.*?</script>|<svg.*?</svg>|<!--.*?-->", "", s)
@@ -327,11 +327,145 @@ if grep -rniE "to be added|coming soon|placeholder|lorem ipsum|\bTBD\b|\bTODO\b|
 fi
 
 # --------------------------------------------------- 11. every page is shareable
-for f in index.html about.html cv.html contact.html blog/index.html blog/customer-love-is-a-lagging-indicator.html projects/witness.html; do
+for f in index.html about.html cv.html contact.html blog/index.html blog/customer-love-is-a-lagging-indicator.html projects/witness.html work/index.html work/efeed-paid.html work/abicart-growth.html work/abicart-retention.html; do
 	for tag in 'rel="canonical"' 'property="og:image"' 'name="description"'; do
 		grep -q "$tag" "$f" || { echo "FAIL: $f is missing $tag"; fail=1; }
 	done
 done
+
+
+# --------------------------------------------------------- 12. page weight
+# The site is fast because it is small, and it stays small only if something
+# says so out loud. Two numbers: what has to arrive before the first paint, and
+# what the whole page costs once every picture has landed. Every <img> must also
+# declare its own width and height, which is what stops the page jumping about
+# as the pictures arrive.
+python3 - <<'PY' || fail=1
+import os, re, sys
+bad = 0
+BLOCK, TOTAL = 150_000, 900_000
+def size(p):
+	p = p.split("?")[0].lstrip("/")
+	return os.path.getsize(p) if os.path.exists(p) else 0
+for page in ("index.html", "cv.html", "projects/witness.html", "blog/customer-love-is-a-lagging-indicator.html"):
+	s = open(page, encoding="utf-8").read()
+	block = os.path.getsize(page) + size("site.css")
+	block += sum(size(u) for u in re.findall(r'<link rel="preload" href="([^"]+)"', s))
+	total = block + size("pen.js")
+	# one variant per picture: a browser fetches the avif OR the jpeg, never both
+	seen = set()
+	for u in re.findall(r'(?:src|srcset)="([^"]+)"', s):
+		if not u.startswith("/") or u.endswith(".html"): continue
+		best = u[:-4] + ".avif" if u.endswith(".jpg") and os.path.exists(u.lstrip("/")[:-4] + ".avif") else u
+		if best in seen: continue
+		seen.add(best); total += size(best)
+	if block > BLOCK:
+		print(f"FAIL: {page} needs {block//1024}KB before it can paint (limit {BLOCK//1024}KB)"); bad = 1
+	if total > TOTAL:
+		print(f"FAIL: {page} weighs {total//1024}KB in all (limit {TOTAL//1024}KB)"); bad = 1
+	for tag in re.findall(r"<img [^>]*>", s):
+		if 'width="' not in tag or 'height="' not in tag:
+			print(f"FAIL: {page} has an <img> with no width or height: {tag[:80]}"); bad = 1
+sys.exit(bad)
+PY
+
+# ------------------------------------------------- 13. the footer cannot rot
+# Every page says when the site was last updated. They must all say the same
+# thing, it may not be in the future, and it may not be more than a year old:
+# a date that quietly ages is worse than no date, because it is read as a claim.
+python3 - <<'PY' || fail=1
+import glob, re, sys, datetime
+bad = 0; stamps = {}
+MONTHS = {m: i for i, m in enumerate(
+	"January February March April May June July August September October November December".split(), 1)}
+for f in sorted([f for f in glob.glob("*.html")+glob.glob("blog/*.html")+glob.glob("projects/*.html")+glob.glob("work/*.html")
+                 if not f.split("/")[-1].startswith("_")]):
+	if f == "post-template.html": continue
+	m = re.search(r'class="upd">Updated ([A-Z][a-z]+) (\d{4})<', open(f, encoding="utf-8").read())
+	if not m:
+		print(f"FAIL: {f} carries no 'Updated <month> <year>' in its footer"); bad = 1; continue
+	stamps[f] = (m.group(1), m.group(2))
+if len(set(stamps.values())) > 1:
+	print(f"FAIL: pages disagree about when the site was updated: {sorted(set(stamps.values()))}"); bad = 1
+for f, (mon, yr) in stamps.items():
+	if mon not in MONTHS:
+		print(f"FAIL: {f} names no real month, {mon!r}"); bad = 1; continue
+	d = datetime.date(int(yr), MONTHS[mon], 1); today = datetime.date.today()
+	if d > datetime.date(today.year, today.month, 1):
+		print(f"FAIL: {f} says the site was updated in the future, {mon} {yr}"); bad = 1
+	elif (today.year - d.year) * 12 + today.month - d.month > 12:
+		print(f"FAIL: {f} still claims {mon} {yr}, which is over a year stale"); bad = 1
+sys.exit(bad)
+PY
+
+# ------------------------------------ 14. the marker is a promise, not a colour
+# From 2026-09-04 the highlighter means one thing: this figure has a receipt,
+# and the receipt is one click away. So a highlighted number is a link. The one
+# exemption is stated here rather than assumed, and it has a reason: 50,000+ is
+# the Brainomania attendance, which no line of the CV carries, so it stays
+# unlinked until the press link for that event arrives.
+python3 - <<'PY' || fail=1
+import re, sys
+UNLINKED_ON_PURPOSE = {"50,000+"}
+s = open("index.html", encoding="utf-8").read()
+bad = 0
+for m in re.finditer(r'<span class="hl">([^<]*)</span>', s):
+	before = s[:m.start()]
+	linked = before.rfind("<a ") > before.rfind("</a>")
+	fig = m.group(1)
+	if not linked and fig not in UNLINKED_ON_PURPOSE:
+		print(f"FAIL: the marker on '{fig}' promises a source and links to none"); bad = 1
+	if linked and fig in UNLINKED_ON_PURPOSE:
+		print(f"FAIL: '{fig}' is now linked, so take it out of the exemption in rule 14"); bad = 1
+sys.exit(bad)
+PY
+
+# ------------------------------------- 15. a cited page cannot be allowed to rot
+# Every source that points at the open web must also point at a snapshot of it,
+# because a link is a promise about something somebody else controls. The essay
+# published on 2026-07-27 cites books and journal papers and so links to nothing
+# yet, which is why this lane is quiet today; it exists so the first post that
+# does cite a web page cannot ship without its archived copy.
+python3 - <<'PY' || fail=1
+import glob, re, sys
+bad = 0
+for f in sorted(glob.glob("blog/*.html")):
+	if f.endswith("index.html"): continue
+	s = open(f, encoding="utf-8").read()
+	for li in re.findall(r'(?s)<li id="s\d+">(.*?)</li>', s):
+		ext = [u for u in re.findall(r'href="(https?://[^"]+)"', li) if "web.archive.org" not in u]
+		if ext and "web.archive.org" not in li:
+			print(f"FAIL: {f} cites {ext[0][:60]} with no archived copy beside it"); bad = 1
+sys.exit(bad)
+PY
+
+# --------------------------- 16. the CV page and the CV PDF cannot drift apart
+# They are two renderings of one set of facts and they have disagreed before.
+# Every date range printed on the page must appear in the PDF and every date
+# range in the PDF must appear on the page, so a role edited in one place and
+# not the other fails the build instead of reaching a recruiter.
+if command -v pdftotext >/dev/null 2>&1; then
+	python3 - <<'PY' || fail=1
+import re, subprocess, sys
+pdf = subprocess.run(["pdftotext", "-layout", "agosh-baranwal-cv.pdf", "-"],
+                     capture_output=True, text=True).stdout
+page = open("cv.html", encoding="utf-8").read()
+page = re.sub(r"<[^>]+>", " ", page).replace("&ndash;", "-").replace("&middot;", " ")
+norm = lambda t: {a + "-" + b for a, b in re.findall(r"(\d{2}/\d{2})\s*[-–]\s*(\d{2}/\d{2})", t)}
+cur = lambda t: bool(re.search(r"09/24\s*-?\s*Current", t, re.I))
+a, b = norm(page), norm(pdf)
+bad = 0
+for d in sorted(a - b):
+	print(f"FAIL: cv.html shows the dates {d}, which the PDF does not"); bad = 1
+for d in sorted(b - a):
+	print(f"FAIL: the PDF shows the dates {d}, which cv.html does not"); bad = 1
+if cur(page) != cur(pdf):
+	print("FAIL: the page and the PDF disagree about whether the MBA is still running"); bad = 1
+sys.exit(bad)
+PY
+else
+	echo "SKIP: rule 16 (CV page against CV PDF) needs pdftotext, which is not installed"
+fi
 
 [ $fail -eq 0 ] && echo "OK: all invariants hold"
 exit $fail

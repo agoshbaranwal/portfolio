@@ -23,8 +23,34 @@
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cstyle%3E@media(prefers-color-scheme:dark)%7Brect%7Bfill:%230e1624%7Dtext%7Bfill:%238fb6e8%7D%7D%3C/style%3E%3Crect width='32' height='32' rx='7' fill='%23ffffff'/%3E%3Ctext x='16' y='23' font-family='Montserrat,Helvetica,sans-serif' font-size='19' font-weight='800' fill='%2316365f' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E" />
 		<link rel="preload" href="/fonts/montserrat.6438d7b8.woff2" as="font" type="font/woff2" crossorigin />
+		<link rel="preload" as="image" href="/photos/agosh-hero.avif" type="image/avif" fetchpriority="high" />
 		<link rel="stylesheet" href="/site.css" />
 		<script src="/pen.js" defer></script>
+		<script type="speculationrules">
+			{"prefetch":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}
+		</script>
+		<script type="application/ld+json">
+			{
+				"@context": "https://schema.org",
+				"@type": "Person",
+				"name": "Agosh Baranwal",
+				"url": "https://agoshportfolio.vercel.app/",
+				"image": "https://agoshportfolio.vercel.app/photos/agosh-hero.jpg",
+				"email": "mailto:agosh.baranwal@alumni.esade.edu",
+				"jobTitle": "Performance and product marketer",
+				"description": "Experienced marketer specialising in performance marketing and product growth, across India, Sweden and Spain.",
+				"knowsAbout": ["Performance marketing", "Product growth", "Paid acquisition", "Customer retention", "SEO", "Marketing analytics"],
+				"knowsLanguage": ["English", "Hindi", "German", "Spanish"],
+				"alumniOf": [
+					{"@type": "CollegeOrUniversity", "name": "Esade Business School", "sameAs": "https://www.esade.edu"},
+					{"@type": "CollegeOrUniversity", "name": "Indian Institute of Technology (ISM) Dhanbad", "sameAs": "https://www.iitism.ac.in"}
+				],
+				"sameAs": [
+					"https://www.linkedin.com/in/agoshbaranwal/",
+					"https://github.com/agoshbaranwal"
+				]
+			}
+		</script>
 	</head>
 	<body>
 		<a class="skip" href="#main">Skip to content</a>
@@ -32,9 +58,10 @@
 			<div class="wrap">
 				<a class="mark" href="/">Agosh Baranwal</a>
 				<nav class="tabs" aria-label="Pages">
-					<a href="/blog">Blog</a>
-					<a href="/about">About me</a>
 					<a href="/cv">CV</a>
+					<a href="/work">Work</a>
+					<a href="/about">About me</a>
+					<a href="/blog">Blog</a>
 					<a href="/contact">Contact</a>
 				</nav>
 				<div class="right">
@@ -44,6 +71,9 @@
 			</div>
 		</header>
 		<main id="main">
+			<i class="lens-anchor" id="m-india" aria-hidden="true"></i>
+			<i class="lens-anchor" id="m-sweden" aria-hidden="true"></i>
+			<i class="lens-anchor" id="m-spain" aria-hidden="true"></i>
 			<div class="wrap">
 				<p class="notice">
 					<span class="dot" aria-hidden="true"></span>
@@ -54,59 +84,85 @@
 			<div class="wrap">
 
 				<div class="hero">
-					<h1 class="sr">Agosh Baranwal</h1>
-					<div class="hero-photos" aria-hidden="true">
-						<span class="ph print a" aria-hidden="true"></span>
-						<span class="ph print b" aria-hidden="true"></span>
-						<span class="ph print c" aria-hidden="true"></span>
+					<div class="hero-txt">
+						<h1 class="nm">Agosh Baranwal</h1>
+						<p class="pos">Experienced marketer, specialising in performance marketing and product growth</p>
+						<p class="sub">ESADE Barcelona MBA &middot; IIT (ISM) Dhanbad B.Tech &middot; 5+ years of experience driving growth in startups and scaleups</p>
+						<div class="hero-act">
+							<a class="act-mail" href="mailto:agosh.baranwal@alumni.esade.edu?subject=Hello%20Agosh">agosh.baranwal@alumni.esade.edu</a>
+							<a class="act-cv" href="/agosh-baranwal-cv.pdf" download>Download CV</a>
+						</div>
 					</div>
-					<p class="pos">Experienced marketer, specialising in performance marketing and product growth</p>
-					<p class="sub">ESADE Barcelona MBA &middot; IIT (ISM) Dhanbad B.Tech &middot; 5+ years of experience driving growth in startups and scaleups</p>
-					<div class="hero-act">
-						<a class="act-mail" href="mailto:agosh.baranwal@alumni.esade.edu?subject=Hello%20Agosh">agosh.baranwal@alumni.esade.edu</a>
-						<a class="act-cv" href="/agosh-baranwal-cv.pdf" download>Download CV</a>
-					</div>
-					<div class="timeline rv" role="list" aria-label="Where I have worked, by market">
-						<span class="tl-seg" aria-hidden="true"></span>
-						<span class="tl-item" role="listitem"><span class="dot" aria-hidden="true"></span><span class="place">India</span><span class="yrs">2018&ndash;19 &middot; 2022&ndash;24</span></span>
-						<span class="tl-seg" aria-hidden="true"></span>
-						<span class="tl-item" role="listitem"><span class="dot" aria-hidden="true"></span><span class="place">Sweden</span><span class="yrs">2019&ndash;22</span></span>
-						<span class="tl-seg" aria-hidden="true"></span>
-						<span class="tl-item" role="listitem"><span class="dot" aria-hidden="true"></span><span class="place">Spain</span><span class="yrs">2024&ndash;now</span></span>
-						<span class="tl-seg" aria-hidden="true"></span>
-					</div>
+					<figure class="hero-fig">
+						<picture>
+							<source type="image/avif" srcset="/photos/agosh-hero.avif" />
+							<picture><source type="image/avif" srcset="/photos/agosh-hero.avif" /><img src="/photos/agosh-hero.jpg" alt="Agosh Baranwal" width="540" height="675" fetchpriority="high" decoding="async" /></picture>
+						</picture>
+					</figure>
 				</div>
+
+				<div class="timeline rv" aria-label="The three markets, and a filter for each">
+					<span class="tl-seg" aria-hidden="true"></span>
+					<a class="tl-item m-india" href="#m-india" data-market="india"><span class="dot" aria-hidden="true"></span><span class="place">India</span><span class="yrs">2018&ndash;19 &middot; 2022&ndash;24</span></a>
+					<span class="tl-seg" aria-hidden="true"></span>
+					<a class="tl-item m-sweden" href="#m-sweden" data-market="sweden"><span class="dot" aria-hidden="true"></span><span class="place">Sweden</span><span class="yrs">2019&ndash;22</span></a>
+					<span class="tl-seg" aria-hidden="true"></span>
+					<a class="tl-item m-spain" href="#m-spain" data-market="spain"><span class="dot" aria-hidden="true"></span><span class="place">Spain</span><span class="yrs">2024&ndash;now</span></a>
+					<span class="tl-seg" aria-hidden="true"></span>
+				</div>
+				<p class="lens-bar" aria-live="polite">
+					<span class="lb lb-india"><b>India</b> only, on the results, the companies and the events</span>
+					<span class="lb lb-sweden"><b>Sweden</b> only, on the results, the companies and the events</span>
+					<span class="lb lb-spain"><b>Spain</b> only, on the results, the companies and the events</span>
+					<a href="#main">Show everything</a>
+				</p>
 
 				<section class="sec" id="results" aria-labelledby="h-results">
 					<div class="sec-h">
-						<h2 id="h-results">Results</h2>
+						<h2 id="h-results">Results <a class="anchor" href="#results" aria-label="Link to the Results section">#</a></h2>
+						<p class="lead">Each number opens the line of the CV that carries it</p>
 					</div>
 					<div class="figs">
-						<div class="fig rv"><span class="n"><span class="hl">10x ROAS</span></span><p>My best return on ad spend</p><p class="src">eFeed &middot; India &middot; 2022&ndash;23</p></div>
-						<div class="fig rv d1"><span class="n"><span class="hl">$3M</span></span><p>Added in annual revenue in the Nordics</p><p class="src">Abicart &middot; Sweden &middot; 2019&ndash;22</p></div>
-						<div class="fig rv d2"><span class="n"><span class="hl">$100k</span></span><p>The monthly paid budget I ran, end to end</p><p class="src">eFeed &middot; India &middot; 2022&ndash;23</p></div>
+						<div class="fig rv" data-market="india">
+							<span class="n"><a href="/cv#r-efeed"><span class="hl">10x ROAS</span></a></span>
+							<p>My best return on ad spend</p>
+							<p class="src">eFeed &middot; India &middot; 2022&ndash;23</p>
+							<a class="rcpt" href="/work/efeed-paid">Read the case</a>
+						</div>
+						<div class="fig rv d1" data-market="sweden">
+							<span class="n"><a href="/cv#r-abicart"><span class="hl">$3M</span></a></span>
+							<p>Added in annual revenue in the Nordics</p>
+							<p class="src">Abicart &middot; Sweden &middot; 2019&ndash;22</p>
+							<a class="rcpt" href="/work/abicart-growth">Read the case</a>
+						</div>
+						<div class="fig rv d2" data-market="india">
+							<span class="n"><a href="/cv#r-efeed"><span class="hl">$100k</span></a></span>
+							<p>The monthly paid budget I ran, end to end</p>
+							<p class="src">eFeed &middot; India &middot; 2022&ndash;23</p>
+							<a class="rcpt" href="/work/efeed-paid">Read the case</a>
+						</div>
 					</div>
 				</section>
 
 				<section class="sec" id="worked" aria-labelledby="h-worked">
 					<div class="sec-h">
-						<h2 id="h-worked">Experience and education</h2>
+						<h2 id="h-worked">Experience and education <a class="anchor" href="#worked" aria-label="Link to the Experience and education section">#</a></h2>
 					</div>
 					<div class="ws">
 						<div class="lane rv">
 							<p class="lane-h">Companies</p>
 							<div class="items">
-								<div class="item"><a class="nm" href="https://chattyhiring.com" target="_blank" rel="noopener">ChattyHiring <span class="out" aria-hidden="true">&#8599;</span></a><span class="ln">An AI hiring automation company</span></div>
-								<div class="item"><span class="nm">eFeed</span><span class="ln">A biotechnology startup based in Cambridge</span></div>
-								<div class="item"><a class="nm" href="https://www.abicart.com" target="_blank" rel="noopener">Abicart <span class="out" aria-hidden="true">&#8599;</span></a><span class="ln">Sweden's largest eCommerce service provider</span></div>
-								<div class="item"><span class="nm">Buyceps</span><span class="ln">A health supplement brand selling across India</span></div>
+								<div class="item" data-market="spain"><a class="nm" href="https://chattyhiring.com" target="_blank" rel="noopener">ChattyHiring <span class="out" aria-hidden="true">&#8599;</span></a><span class="ln">An AI hiring automation company <span class="mkt">Spain</span></span></div>
+								<div class="item" data-market="india"><span class="nm">eFeed</span><span class="ln">A biotechnology startup based in Cambridge <span class="mkt">India</span></span></div>
+								<div class="item" data-market="sweden"><a class="nm" href="https://www.abicart.com" target="_blank" rel="noopener">Abicart <span class="out" aria-hidden="true">&#8599;</span></a><span class="ln">Sweden's largest eCommerce service provider <span class="mkt">Sweden</span></span></div>
+								<div class="item" data-market="india"><span class="nm">Buyceps</span><span class="ln">A health supplement brand selling across India <span class="mkt">India</span></span></div>
 							</div>
 						</div>
 						<div class="lane rv d1">
 							<p class="lane-h">Education</p>
 							<div class="items">
-								<div class="item"><a class="nm" href="https://www.esade.edu" target="_blank" rel="noopener">ESADE Barcelona <span class="out" aria-hidden="true">&#8599;</span></a><span class="ln">Ranked #7 in the world by the Financial Times</span></div>
-								<div class="item"><a class="nm" href="https://www.iitism.ac.in" target="_blank" rel="noopener">IIT (ISM) Dhanbad <span class="out" aria-hidden="true">&#8599;</span></a><span class="ln">India's most selective engineering schools, entered by ranking in the 99.96th percentile of 1.5 million candidates</span></div>
+								<div class="item" data-market="spain"><a class="nm" href="https://www.esade.edu" target="_blank" rel="noopener">ESADE Barcelona <span class="out" aria-hidden="true">&#8599;</span></a><span class="ln">Ranked #7 in the world by the Financial Times <span class="mkt">Spain</span></span></div>
+								<div class="item" data-market="india"><a class="nm" href="https://www.iitism.ac.in" target="_blank" rel="noopener">IIT (ISM) Dhanbad <span class="out" aria-hidden="true">&#8599;</span></a><span class="ln">India's most selective engineering schools, entered by ranking in the 99.96th percentile of 1.5 million candidates <span class="mkt">India</span></span></div>
 							</div>
 						</div>
 					</div>
@@ -115,93 +171,95 @@
 
 				<section class="sec" id="projects" aria-labelledby="h-projects">
 					<div class="sec-h">
-						<h2 id="h-projects">Personal projects</h2>
-						<p class="lead">All of these were built outside work</p>
+						<h2 id="h-projects">Personal projects <a class="anchor" href="#projects" aria-label="Link to the Personal projects section">#</a></h2>
+						<p class="lead">All of these were built outside work, and each card shows the real site</p>
 					</div>
 					<div class="projs">
 					<a class="proj rv wm wm-admenow" href="https://admenow.vercel.app" target="_blank" rel="noopener">
-						<img class="shot" src="/previews/admenow.jpg" alt="A screenshot of admenow" width="640" height="400" loading="lazy" decoding="async" />
+						<span class="shotwrap"><picture><source type="image/avif" srcset="/previews/admenow.avif" /><img class="shot" src="/previews/admenow.jpg" alt="A screenshot of admenow" width="640" height="400" loading="lazy" decoding="async" /></picture></span>
 						<span class="body">
 							<span class="top"><span class="p-name">admenow</span><span class="st">Live</span></span>
 							<span class="p-desc">Daily-use tools for a marketer working without a team: creative decoding, weekly readouts, brand rules the AI follows</span>
-							<span class="visit">admenow.vercel.app <span class="go">Visit &rarr;</span></span>
+							<span class="visit"><span>admenow.vercel.app</span> <span class="go">Visit &rarr;</span></span>
 						</span>
 					</a>
 					<a class="proj rv d1 wm wm-utsav" href="https://utsav-pi.vercel.app" target="_blank" rel="noopener">
-						<img class="shot" src="/previews/utsav.jpg" alt="A screenshot of Utsav" width="640" height="400" loading="lazy" decoding="async" />
+						<span class="shotwrap"><picture><source type="image/avif" srcset="/previews/utsav.avif" /><img class="shot" src="/previews/utsav.jpg" alt="A screenshot of Utsav" width="640" height="1200" loading="lazy" decoding="async" /></picture></span>
 						<span class="body">
 							<span class="top"><span class="p-name">Utsav</span><span class="st">Live</span></span>
 							<span class="p-desc">A recipe site for the food I cook at home, with hand-drawn scenes you can click around</span>
-							<span class="visit">utsav-pi.vercel.app <span class="go">Visit &rarr;</span></span>
+							<span class="visit"><span>utsav-pi.vercel.app</span> <span class="go">Visit &rarr;</span></span>
 						</span>
 					</a>
 					<a class="proj rv wm wm-tvbadger" href="https://tvbadger.vercel.app" target="_blank" rel="noopener">
-						<img class="shot" src="/previews/tvbadger.jpg" alt="A screenshot of tvbadger" width="640" height="400" loading="lazy" decoding="async" />
+						<span class="shotwrap"><picture><source type="image/avif" srcset="/previews/tvbadger.avif" /><img class="shot" src="/previews/tvbadger.jpg" alt="A screenshot of tvbadger" width="640" height="1200" loading="lazy" decoding="async" /></picture></span>
 						<span class="body">
 							<span class="top"><span class="p-name">tvbadger</span><span class="st">Live</span></span>
 							<span class="p-desc">Reviews and verdicts on what to watch, built on a taste engine</span>
-							<span class="visit">tvbadger.vercel.app <span class="go">Visit &rarr;</span></span>
+							<span class="visit"><span>tvbadger.vercel.app</span> <span class="go">Visit &rarr;</span></span>
 						</span>
 					</a>
 					<a class="proj rv d1 wm wm-onrecord" href="https://agoshbaranwal.github.io/on-record" target="_blank" rel="noopener">
-						<img class="shot" src="/previews/onrecord.jpg" alt="A screenshot of On Record" width="640" height="400" loading="lazy" decoding="async" />
+						<span class="shotwrap"><picture><source type="image/avif" srcset="/previews/onrecord.avif" /><img class="shot" src="/previews/onrecord.jpg" alt="A screenshot of On Record" width="640" height="654" loading="lazy" decoding="async" /></picture></span>
 						<span class="body">
 							<span class="top"><span class="p-name">On Record</span><span class="st">Live</span></span>
 							<span class="p-desc">A live picture of the atmosphere, built from public climate data, with every number naming its source</span>
-							<span class="visit">agoshbaranwal.github.io/on-record <span class="go">Visit &rarr;</span></span>
+							<span class="visit"><span>agoshbaranwal.github.io/on-record</span> <span class="go">Visit &rarr;</span></span>
 						</span>
 					</a>
 					<a class="proj rv wm wm-promptemu" href="https://promptemu.vercel.app" target="_blank" rel="noopener">
-						<img class="shot" src="/previews/promptemu.jpg" alt="A screenshot of promptemu" width="640" height="400" loading="lazy" decoding="async" />
+						<span class="shotwrap"><picture><source type="image/avif" srcset="/previews/promptemu.avif" /><img class="shot" src="/previews/promptemu.jpg" alt="A screenshot of promptemu" width="640" height="1200" loading="lazy" decoding="async" /></picture></span>
 						<span class="body">
 							<span class="top"><span class="p-name">promptemu</span><span class="st">Live</span></span>
 							<span class="p-desc">A prompt writer for coding tools and chat models, which turns a few plain answers into the full prompt</span>
-							<span class="visit">promptemu.vercel.app <span class="go">Visit &rarr;</span></span>
+							<span class="visit"><span>promptemu.vercel.app</span> <span class="go">Visit &rarr;</span></span>
 						</span>
 					</a>
 					<a class="proj rv d1 wm wm-witness" href="/projects/witness">
-						<img class="shot" src="/previews/witness.jpg" alt="A screenshot of Witness on a phone beside its Mac panel" width="640" height="400" loading="lazy" decoding="async" />
+						<span class="shotwrap"><picture><source type="image/avif" srcset="/previews/witness.avif" /><img class="shot" src="/previews/witness.jpg" alt="Witness on a phone, in the Mac menu bar and in a desktop browser" width="640" height="1200" loading="lazy" decoding="async" /></picture></span>
 						<span class="body">
 							<span class="top"><span class="p-name">Witness</span><span class="st prog">Private tool</span></span>
 							<span class="p-desc">A check-in tool for staying consistent, across a phone, a browser, a Mac panel and notifications</span>
-							<span class="visit">Not public, so this opens a walkthrough <span class="go">See it &rarr;</span></span>
+							<span class="visit"><span>Walkthrough, not a live site</span> <span class="go">See it &rarr;</span></span>
 						</span>
 					</a>
 					</div>
 				</section>
 
 				<section class="sec" id="events" aria-labelledby="h-events">
-					<div class="sec-h"><h2 id="h-events">Events organised</h2></div>
-					<div class="bill">
-						<article class="poster rv">
-							<div>
-								<h3>TEDx</h3>
-								<p class="role">Licensee and organiser &middot; India</p>
-								<p>The first official TEDx in the district</p>
-								<p>I held the licence and ran it end to end: production, speakers, sponsors</p>
-							</div>
-							<div class="slot ratio-16-10" aria-hidden="true"></div>
+					<div class="sec-h">
+						<h2 id="h-events">Events organised <a class="anchor" href="#events" aria-label="Link to the Events organised section">#</a></h2>
+					</div>
+					<div class="ev-grid">
+						<article class="ev rv" data-market="india">
+							<h3>TEDx</h3>
+							<p class="role">Licensee and organiser &middot; India</p>
+							<p>The first official TEDx in the district</p>
+							<p>I held the licence and ran it end to end: production, speakers, sponsors</p>
 						</article>
-						<article class="poster rv">
-							<div>
-								<h3>Brainomania</h3>
-								<p class="role">Organiser &middot; India</p>
-								<p>A free quiz competition for students</p>
-								<p>I ran the format, the campuses, the sponsors, and the day itself</p>
-								<p class="stat-line"><span class="hl">50,000+</span> <span>students took part</span></p>
-							</div>
-							<div class="slot ratio-16-10" aria-hidden="true"></div>
+						<article class="ev rv d1" data-market="india">
+							<h3>Brainomania</h3>
+							<p class="role">Organiser &middot; India</p>
+							<p>A free quiz competition for students</p>
+							<p>I ran the format, the campuses, the sponsors, and the day itself</p>
+							<p class="stat-line"><span class="hl">50,000+</span> <span>students took part</span></p>
 						</article>
-						<div class="smalls">
-							<article class="small rv"><h3>HP Innovation Bootcamp</h3><p class="role">Winner &middot; Esade</p><p>Won with a data monetisation plan for HP, modelled at $43M in added annual recurring revenue</p></article>
-							<article class="small rv d1"><h3>Toastmasters</h3><p class="role">Club president &middot; IIT (ISM) Dhanbad</p><p>Ran the club for a year: the meetings, the schedule, the speakers</p></article>
-						</div>
+						<article class="ev rv" data-market="spain">
+							<h3>HP Innovation Bootcamp</h3>
+							<p class="role">Winner &middot; Esade</p>
+							<p>Won with a data monetisation plan for HP, modelled at $43M in added annual recurring revenue</p>
+						</article>
+						<article class="ev rv d1" data-market="india">
+							<h3>Toastmasters</h3>
+							<p class="role">Club president &middot; IIT (ISM) Dhanbad</p>
+							<p>Ran the club for a year: the meetings, the schedule, the speakers</p>
+						</article>
 					</div>
 				</section>
 
 				<section class="sec" id="press" aria-labelledby="h-press">
 					<div class="sec-h">
-						<h2 id="h-press">Press</h2>
+						<h2 id="h-press">Press <a class="anchor" href="#press" aria-label="Link to the Press section">#</a></h2>
 					</div>
 					<div class="press-list">
 						<div class="press-row rv"><span class="pr-t">The TEDx event</span><span class="about">On the first official TEDx in the district</span></div>
@@ -213,6 +271,27 @@
 			</div>
 
 		</main>
-		<div class="wrap"><p class="foot">Agosh Baranwal &middot; 2026 &middot; <a href="/feed.xml">RSS</a></p></div>
+		<nav class="home-rail" aria-label="Sections of this page">
+			<ol>
+				<li><a href="#results">Results</a></li>
+				<li><a href="#worked">Experience</a></li>
+				<li><a href="#projects">Projects</a></li>
+				<li><a href="#events">Events</a></li>
+				<li><a href="#press">Press</a></li>
+			</ol>
+		</nav>
+		<div class="dock" id="dock" aria-hidden="true">
+			<a class="d-mail" href="mailto:agosh.baranwal@alumni.esade.edu?subject=Hello%20Agosh" tabindex="-1">Email me</a>
+			<a class="d-cv" href="/agosh-baranwal-cv.pdf" download tabindex="-1">Download CV</a>
+		</div>
+		<footer class="site-foot">
+			<div class="wrap fw">
+				<a href="mailto:agosh.baranwal@alumni.esade.edu?subject=Hello%20Agosh">agosh.baranwal@alumni.esade.edu</a>
+				<a href="https://www.linkedin.com/in/agoshbaranwal/" target="_blank" rel="noopener me">LinkedIn</a>
+				<a href="https://github.com/agoshbaranwal" target="_blank" rel="noopener me">GitHub</a>
+				<a href="/feed.xml">RSS</a>
+				<span class="upd">Updated September 2026</span>
+			</div>
+		</footer>
 	</body>
 </html>
