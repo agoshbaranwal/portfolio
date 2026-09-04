@@ -1134,3 +1134,10 @@ picture{display:contents}
 .print-row.three{grid-template-columns:repeat(3,minmax(0,1fr))}
 @media (max-width:900px){.reg-gal{max-width:none;grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:560px){.print-row.three{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* His instruction, 2026-09-04: no photographs on the About page for now. The
+   register keeps its ruling and its margin; the writing simply runs down the
+   left of the sheet the way a page looks when the line is not filled to the
+   edge. .reg-gal, .print-row and figure.print are all still defined above and
+   the files are still in /photos, so putting the prints back is markup only. */
+.reg-body.solo{grid-template-columns:minmax(0,min(100%,700px))}
+@media (max-width:900px){.reg-body.solo{grid-template-columns:minmax(0,1fr)}}
