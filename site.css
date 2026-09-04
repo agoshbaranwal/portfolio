@@ -1125,3 +1125,12 @@ picture{display:contents}
    the tilt stay; the image fills the frame. */
 .reg-gal figure.print,.print-row figure.print{margin:0;overflow:hidden;background:var(--slot)}
 .reg-gal figure.print img,.print-row figure.print img{width:100%;height:100%;display:block;object-fit:cover;border-radius:1px}
+/* The register holds real photographs now, and they keep their own shape: two
+   portraits stand in the rail beside the writing and three landscapes lie across
+   the foot. The rail is narrower than its column so two portraits stack to about
+   the height of the writing rather than running far past it. */
+.reg-gal{max-width:258px;margin-left:auto}
+.reg-gal .print{aspect-ratio:2/3}
+.print-row.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:900px){.reg-gal{max-width:none;grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.print-row.three{grid-template-columns:repeat(2,minmax(0,1fr))}}
