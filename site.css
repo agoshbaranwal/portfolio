@@ -765,7 +765,7 @@ h2[id],h3[id],section[id],li[id],.case-sec[id]{scroll-margin-top:96px}
   .projs{grid-template-columns:minmax(0,1fr);gap:14px}
   .proj{flex-direction:row;align-items:stretch;border-radius:14px}
   .proj .shotwrap{flex:none;width:116px;aspect-ratio:auto;border-bottom:0;border-right:1px solid var(--line)}
-  .proj .shotwrap img{height:100%;width:100%;object-fit:cover;object-position:top center}
+  .proj .shotwrap img{height:100%;width:auto;max-width:none;transform:none;transition:none}
   .proj .body{padding:14px 16px;gap:5px}
   .proj .p-desc{font-size:12.8px;line-height:1.45;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
   .proj .visit{font-size:10.5px}
@@ -878,16 +878,35 @@ main:has(.tl-item.m-spain:hover) [data-market]:not([data-market~="spain"]),main:
 .item .nm .mkt{font-weight:700}
 
 /* ---- 6.1  A preview that scrolls while you rest on it. Each card's picture is
-   that site captured at a real 1280 by 800 viewport and scrolled, three screens
-   stitched, so what pans past is what a visitor would actually see. --pan is the
-   distance that card can travel, which is the site's own height minus the window:
-   admenow is one screen tall and so it does not move at all. */
+   that site captured at a real 1280x800 viewport and scrolled, and the screens
+   are laid SIDE BY SIDE, so the window shows the first one and resting on the
+   card slides across to the rest. Three earlier mistakes are fixed here, and
+   each is easy to make again:
+
+   1. The viewport was never really 800px tall. `--window-size` leaves the new
+      headless window shorter than it claims, so every capture carried a 43px
+      band of blank white at its foot, and stacked vertically those bands read
+      as a white strip between screens. `Emulation.setDeviceMetricsOverride`
+      (cdp.py's `resize`) is the only thing that sets a real viewport.
+   2. The travel was written in pixels of the SOURCE image while the card shows
+      it at about half that width, so the pan ran roughly twice as far as there
+      was picture and the second half of every hover was empty. It is a
+      percentage of the image's own width now, which is exact at any card size:
+      with N screens side by side the travel is (N-1)/N of the image.
+   3. Six and a half seconds on a decelerating curve reads as a drift, not a
+      scroll, and leaving the card crawled back for five and a half more. A
+      scroll moves at a constant speed, so the pan is linear, and the return is
+      half a second.
+   The layer is promoted at rest rather than at hover, because promoting it on
+   the first frame of the transition is itself a stutter. */
 .proj .shotwrap{display:block;aspect-ratio:16/10;overflow:hidden;position:relative;
   border-bottom:1px solid var(--line);background:linear-gradient(160deg,var(--slot),var(--slot-2))}
-.proj .shotwrap img{width:100%;height:auto;display:block}
+.proj .shotwrap img{display:block;height:auto;max-width:none;width:calc(100% * var(--screens,1));
+  transform:translate3d(0,0,0);backface-visibility:hidden}
 @media (hover:hover) and (prefers-reduced-motion:no-preference){
-  .proj .shotwrap img{transition:transform 5.5s cubic-bezier(.33,0,.2,1)}
-  .proj:hover .shotwrap img,.proj:focus-visible .shotwrap img{transform:translateY(calc(var(--pan,0px) * -1));transition-duration:6.5s}
+  .proj .shotwrap img{transition:transform .5s cubic-bezier(.3,0,.25,1)}
+  .proj:hover .shotwrap img,.proj:focus-visible .shotwrap img{
+    transform:translate3d(var(--pan,0%),0,0);transition:transform 3.2s linear}
 }
 
 /* ---- 6.3  The week runs once, when it arrives. Four stops and a dot that walks
@@ -1040,15 +1059,17 @@ html.js .readbar{display:block}
 }
 .site-print{display:none}
 
-/* how far each card's picture can travel: that site's real height at a 1280x800
-   viewport, less the window it shows through. admenow is one screen tall, so its
-   card does not move, which is the truth about that page. */
-.wm-admenow{--pan:0px}
-.wm-utsav{--pan:800px}
-.wm-tvbadger{--pan:800px}
-.wm-onrecord{--pan:254px}
-.wm-promptemu{--pan:800px}
-.wm-witness{--pan:800px}
+/* How many screens each card holds, and how far it can travel: with N screens
+   side by side the picture is N times the window and the travel is (N-1)/N of
+   its own width. admenow is one screen tall in total and On Record is barely
+   taller than one, so both show a single screen and neither moves, which is the
+   truth about those two pages. */
+.wm-admenow  {--screens:1; --pan:0%}
+.wm-utsav    {--screens:3; --pan:-66.6667%}
+.wm-tvbadger {--screens:3; --pan:-66.6667%}
+.wm-onrecord {--screens:1; --pan:0%}
+.wm-promptemu{--screens:3; --pan:-66.6667%}
+.wm-witness  {--screens:3; --pan:-66.6667%}
 
 /* Where the career strip's bars sit. Computed from the date ranges on this page
    against an axis running Jul 2014 to Sep 2026, 12.25 years: a role's left edge
