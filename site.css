@@ -1061,13 +1061,16 @@ html.js .readbar{display:block}
 
 /* How many screens each card holds, and how far it can travel: with N screens
    side by side the picture is N times the window and the travel is (N-1)/N of
-   its own width. admenow is one screen tall in total and On Record is barely
-   taller than one, so both show a single screen and neither moves, which is the
-   truth about those two pages. */
-.wm-admenow  {--screens:1; --pan:0%}
+   its own width. Neither admenow nor On Record scrolls: admenow's page is
+   exactly one viewport and On Record is a seven-chapter story that swaps panes
+   in place. Their three screens are therefore STATES, not scroll positions:
+   admenow's three tools, and three of On Record's chapters. Both were driven
+   through a real browser to reach them, which is the only way to photograph an
+   app that has no second screen to scroll to. */
+.wm-admenow  {--screens:3; --pan:-66.6667%}
 .wm-utsav    {--screens:3; --pan:-66.6667%}
 .wm-tvbadger {--screens:3; --pan:-66.6667%}
-.wm-onrecord {--screens:1; --pan:0%}
+.wm-onrecord {--screens:3; --pan:-66.6667%}
 .wm-promptemu{--screens:3; --pan:-66.6667%}
 .wm-witness  {--screens:3; --pan:-66.6667%}
 

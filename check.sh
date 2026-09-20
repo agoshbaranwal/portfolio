@@ -340,16 +340,30 @@ done
 # what the whole page costs once every picture has landed. Every <img> must also
 # declare its own width and height, which is what stops the page jumping about
 # as the pictures arrive.
+#
+# The first version of this lane counted RAW bytes and was wrong by about half.
+# Vercel serves HTML, CSS and JS brotli-compressed, so what a visitor waits for
+# is the compressed size: site.css is 79KB on disk and 23KB on the wire. Counting
+# raw, the lane failed the essay at "146KB before it can paint" when the real
+# figure is nearer 70KB, and the only way to satisfy it would have been to delete
+# the comments that explain the stylesheet, which cost about a kilobyte
+# compressed. Text is measured with gzip here, which is a close and slightly
+# pessimistic stand-in for the brotli production actually sends; woff2, jpg and
+# avif are already compressed, so those count raw.
 python3 - <<'PY' || fail=1
-import os, re, sys
+import os, re, sys, gzip
 bad = 0
-BLOCK, TOTAL = 150_000, 900_000
+BLOCK, TOTAL = 110_000, 700_000
+TEXT = (".html", ".css", ".js", ".svg", ".json", ".xml")
 def size(p):
 	p = p.split("?")[0].lstrip("/")
-	return os.path.getsize(p) if os.path.exists(p) else 0
+	if not os.path.exists(p): return 0
+	if p.endswith(TEXT):
+		return len(gzip.compress(open(p, "rb").read(), 9))
+	return os.path.getsize(p)
 for page in ("index.html", "cv.html", "projects/witness.html", "blog/customer-love-is-a-lagging-indicator.html"):
 	s = open(page, encoding="utf-8").read()
-	block = os.path.getsize(page) + size("site.css")
+	block = size(page) + size("site.css")
 	block += sum(size(u) for u in re.findall(r'<link rel="preload" href="([^"]+)"', s))
 	total = block + size("pen.js")
 	# one variant per picture: a browser fetches the avif OR the jpeg, never both
@@ -360,9 +374,9 @@ for page in ("index.html", "cv.html", "projects/witness.html", "blog/customer-lo
 		if best in seen: continue
 		seen.add(best); total += size(best)
 	if block > BLOCK:
-		print(f"FAIL: {page} needs {block//1024}KB before it can paint (limit {BLOCK//1024}KB)"); bad = 1
+		print(f"FAIL: {page} needs {block//1024}KB on the wire before it can paint (limit {BLOCK//1024}KB)"); bad = 1
 	if total > TOTAL:
-		print(f"FAIL: {page} weighs {total//1024}KB in all (limit {TOTAL//1024}KB)"); bad = 1
+		print(f"FAIL: {page} weighs {total//1024}KB on the wire in all (limit {TOTAL//1024}KB)"); bad = 1
 	for tag in re.findall(r"<img [^>]*>", s):
 		if 'width="' not in tag or 'height="' not in tag:
 			print(f"FAIL: {page} has an <img> with no width or height: {tag[:80]}"); bad = 1
