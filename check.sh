@@ -481,5 +481,39 @@ else
 	echo "SKIP: rule 16 (CV page against CV PDF) needs pdftotext, which is not installed"
 fi
 
+
+# ------------------------------- 17. the scale cannot drift again
+# A design audit on 2026-09-20 counted 46 distinct text sizes and 15 distinct
+# corner radii in one stylesheet. None of it was visible as a fault on any one
+# page, which is exactly why it accumulated: every addition set whatever looked
+# right on the day. The accidental sizes are snapped and the corners are five
+# named tokens, and this lane stops both from happening again.
+python3 - <<'PY' || fail=1
+import re, sys, collections
+css = open("site.css", encoding="utf-8").read()
+bad = 0
+# the ladder: half steps up to 19 because that is what the small end already
+# ran on, then whole steps for display type
+LADDER = {10,10.5,11,11.5,12,12.5,13,13.5,14,14.5,15,15.5,16,16.5,17,18,19,20,21,22,
+          23,24,25,26,27,28,30,31,32,33,34,36,38,40,42,46,50,52,68}
+seen = set()
+for m in re.finditer(r'font-size:\s*([^;}]+)', css):
+	v = m.group(1).strip()
+	vals = [float(x) for x in re.findall(r'([\d.]+)px', v)]
+	for x in vals:
+		seen.add(x)
+		if x not in LADDER:
+			print(f"FAIL: font-size {x}px is not on the scale (nearest allowed: "
+			      f"{min(LADDER, key=lambda y: abs(y-x))}px)"); bad = 1
+RADII = {"var(--r-xs)","var(--r-sm)","var(--r-md)","var(--r-lg)","var(--r-pill)","50%",
+         "0 var(--r-md) var(--r-md) 0","inherit"}
+for m in re.finditer(r'border-radius:\s*([^;}]+)', css):
+	v = m.group(1).strip()
+	if v not in RADII:
+		print(f"FAIL: border-radius {v!r} is not one of the five tokens"); bad = 1
+print(f"      (scale holds {len(seen)} sizes and 5 corner tokens)" if not bad else "", end="")
+sys.exit(bad)
+PY
+
 [ $fail -eq 0 ] && echo "OK: all invariants hold"
 exit $fail
