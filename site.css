@@ -819,6 +819,18 @@ a.hl{border-bottom:1px solid transparent}
 .post-layout{grid-template-columns:196px minmax(0,1fr);gap:clamp(28px,3.4vw,56px)}
 .post-layout>.toc{order:1}
 .post-layout>article{order:2;min-width:0}
+/* ⛔ The collapse rule for this grid lives 300 lines above, inside
+   @media (max-width:900px). A plain rule written LATER beats an earlier media
+   query at equal specificity, so from the day the contents rail moved left the
+   essay kept its two columns on every screen: at 390px that is a 196px rail
+   beside a 122px article, about three words a line and 49 screens of scrolling.
+   The collapse has to be restated here, after the override that broke it. */
+@media (max-width:880px){
+  .post-layout{grid-template-columns:minmax(0,1fr)}
+  .post-layout>.toc{position:static;margin-bottom:26px}
+  .prose{max-width:none}
+}
+.prose{overflow-wrap:break-word}
 .prose{max-width:642px}
 .sn-n{font-size:.62em;font-weight:700;line-height:0;vertical-align:super}
 .sn-n a{color:var(--sky);text-decoration:none;padding:0 .12em}
@@ -1165,3 +1177,15 @@ picture{display:contents}
    the files are still in /photos, so putting the prints back is markup only. */
 .reg-body.solo{grid-template-columns:minmax(0,min(100%,700px))}
 @media (max-width:900px){.reg-body.solo{grid-template-columns:minmax(0,1fr)}}
+
+/* ---- The smallest phones still in use are 320px wide, and the email address
+   is 31 characters: as a pill with 24px of padding it was 325px and pushed the
+   whole page sideways. Both places it appears now wrap rather than overflow. */
+@media (max-width:400px){
+  .hero-act{width:100%}
+  .hero-act a{flex:1 1 100%;text-align:center}
+  .act-mail{font-size:12.5px;padding:13px 14px;overflow-wrap:anywhere}
+  .act-cv{padding:12px 14px}
+}
+.contact-page .mail{overflow-wrap:anywhere}
+@media (max-width:400px){.contact-page .mail{font-size:17px}}
