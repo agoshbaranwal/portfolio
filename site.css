@@ -45,12 +45,17 @@
   --card:#FFFFFF;
   --ink:#16233A;
   --ink-mid:#4A5870;
-  --ink-soft:#75839B;
+  /* Both of these were an eighth of a step too light for text on white, 2026-09-20:
+     #75839B measured 3.83:1 and #3E86C4 3.88:1 against the 4.5:1 the standard
+     asks for, and between them they carried 22 of the 28 named text roles on
+     the site. Each is about eight per cent less light now and nothing else
+     about them changed. The dark theme always passed and is untouched. */
+  --ink-soft:#697791;
   --line:#E4E9F0;
   --line-strong:#CBD4E0;
   --navy:#16365F;
   --navy-2:#1B4F8F;
-  --sky:#3E86C4;
+  --sky:#377BB5;
   --sky-wash:rgba(62,134,196,.08);
   --hi:linear-gradient(100deg, rgba(255,224,74,0) 0%, rgba(255,224,74,.75) 6%, rgba(250,214,60,.6) 50%, rgba(255,224,74,.75) 94%, rgba(255,224,74,0) 100%);
   --chart-lead:#16365F; --chart-lag:#5AA0DC; --chart-gap:rgba(250,214,60,.5);
@@ -305,7 +310,7 @@ html.js .rv.in{opacity:1;transform:none}
 .proj .st.prog::before{background:var(--line-strong)}
 .proj .p-desc{display:block;font-size:14px;font-weight:600;color:var(--ink-mid);flex:1;max-width:44ch}
 .proj:not(a) .visit .go{display:none}
-.proj .visit{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;font-weight:600;color:var(--ink-soft);letter-spacing:.02em}
+.proj .visit{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;font-weight:600;color:var(--ink-mid);letter-spacing:.02em}
 .proj .visit .go{color:var(--sky);opacity:0;transform:translateX(-4px);transition:opacity .3s var(--ease),transform .3s var(--ease)}
 @media (hover:hover){.proj:hover .visit .go{opacity:1;transform:none}}
 @media (hover:none){.proj .visit .go{opacity:1;transform:none}}

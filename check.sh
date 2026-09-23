@@ -515,5 +515,67 @@ print(f"      (scale holds {len(seen)} sizes and 5 corner tokens)" if not bad el
 sys.exit(bad)
 PY
 
+
+# ------------------------------------- 18. text has to stay readable
+# A design audit on 2026-09-20 found 22 of the 28 named text roles below the
+# 4.5:1 the standard asks for, all of it in the LIGHT theme, and all of it from
+# two tokens being an eighth of a step too light. Both were darkened. This lane
+# computes the ratios straight from the tokens, so it needs no browser and
+# cannot be fooled by one: headless Chrome defaults to dark, which made the
+# first measurement of this report wrong in both directions.
+python3 - <<'PY' || fail=1
+import re, sys
+css = open("site.css", encoding="utf-8").read()
+def tokens(block): return dict(re.findall(r'(--[a-z0-9-]+)\s*:\s*([^;]+);', block))
+light = tokens(re.search(r'(?s):root\{(.*?)\n\}', css).group(1))
+dark  = tokens(re.search(r'(?s):root\[data-theme="dark"\]\{(.*?)\n\}', css).group(1))
+T = {"light": light, "dark": {**light, **dark}}
+def hexc(s):
+	s = s.strip()
+	if s.startswith("#"): return tuple(int(s[i:i+2], 16) for i in (1, 3, 5))
+	m = re.match(r"rgba?\(([^)]+)\)", s)
+	if m:
+		p = [float(x) for x in re.split(r"[,\s/]+", m.group(1).strip()) if x]
+		return tuple(int(round(v)) for v in p[:3])
+	return None
+def col(th, x):
+	x = x.strip()
+	if x.startswith("--"): x = T[th].get(x, x)
+	for _ in range(3):
+		x = re.sub(r"var\((--[a-z0-9-]+)\)", lambda m: T[th].get(m.group(1), m.group(0)), x).strip()
+	return hexc(x)
+def lum(c):
+	f = lambda v: (v/255)/12.92 if v/255 <= 0.03928 else (((v/255)+0.055)/1.055) ** 2.4
+	return 0.2126*f(c[0]) + 0.7152*f(c[1]) + 0.0722*f(c[2])
+def ratio(a, b):
+	la, lb = lum(a), lum(b); hi, lo = max(la, lb), min(la, lb)
+	return (hi + 0.05) / (lo + 0.05)
+def mix(a, p, b): return tuple(round(a[i]*p + b[i]*(1-p)) for i in range(3))
+FLOOR = 4.5
+PAIRS = [("--ink", "--paper"), ("--ink", "--card"), ("--ink-mid", "--paper"),
+         ("--ink-mid", "--card"), ("--ink-mid", "--paper-2"),
+         ("--ink-soft", "--paper"), ("--ink-soft", "--card"), ("--sky", "--paper")]
+# the project cards put text on a 7% (light) or 13% (dark) tint of their own accent
+BRAND = {"light": ["#2438F0","#916820","#9C3F42","#9F6023","#2563EB","#8F6900"],
+         "dark":  ["#8494FF","#E5C063","#E08A8E","#F0A45C","#7FA6FF","#FFC400"]}
+bad = 0; worst = (99, "")
+for th in ("light", "dark"):
+	for fg, bg in PAIRS:
+		r = ratio(col(th, fg), col(th, bg))
+		if r < worst[0]: worst = (r, f"{fg} on {bg}, {th}")
+		if r < FLOOR:
+			print(f"FAIL: {fg} on {bg} is {r:.2f}:1 in the {th} theme, below {FLOOR}:1"); bad = 1
+	p = 0.07 if th == "light" else 0.13
+	for brand in BRAND[th]:
+		tint = mix(hexc(brand), p, col(th, "--card"))
+		for fg in ("--ink-mid",):
+			r = ratio(col(th, fg), tint)
+			if r < worst[0]: worst = (r, f"{fg} on the {brand} card, {th}")
+			if r < FLOOR:
+				print(f"FAIL: {fg} on the {brand} card tint is {r:.2f}:1 in {th}, below {FLOOR}:1"); bad = 1
+if not bad: print(f"      (worst text contrast {worst[0]:.2f}:1, {worst[1]})")
+sys.exit(bad)
+PY
+
 [ $fail -eq 0 ] && echo "OK: all invariants hold"
 exit $fail
