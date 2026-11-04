@@ -737,8 +737,6 @@ h2[id],h3[id],section[id],li[id],.case-sec[id]{scroll-margin-top:96px}
 @media (max-width:680px){
   .projs{grid-template-columns:minmax(0,1fr);gap:14px}
   .proj{flex-direction:row;align-items:stretch;border-radius:var(--r-md)}
-  .proj .shotwrap{flex:none;width:116px;aspect-ratio:auto;border-bottom:0;border-right:1px solid var(--line)}
-  .proj .shotwrap img{height:100%;width:auto;max-width:none;transform:none;transition:none}
   .proj .body{padding:14px 16px;gap:5px}
   .proj .p-desc{font-size:13px;line-height:1.45;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
   .proj .visit{font-size:10.5px}
@@ -796,11 +794,11 @@ a.hl{border-bottom:1px solid transparent}
    query at equal specificity, so from the day the contents rail moved left the
    essay kept its two columns on every screen: at 390px that is a 196px rail
    beside a 122px article, about three words a line and 49 screens of scrolling.
-   The collapse has to be restated here, after the override that broke it. */
+   The collapse has to be restated here, after the override that broke it.
+   The essay keeps its 642px measure at every width; that is set just below. */
 @media (max-width:880px){
   .post-layout{grid-template-columns:minmax(0,1fr)}
   .post-layout>.toc{position:static;margin-bottom:26px}
-  .prose{max-width:none}
 }
 .prose{overflow-wrap:break-word}
 .prose{max-width:642px}
@@ -891,6 +889,21 @@ main:has(.tl-item.m-spain:hover) [data-market]:not([data-market~="spain"]),main:
   .proj .shotwrap img{transition:transform .5s cubic-bezier(.3,0,.25,1)}
   .proj:hover .shotwrap img,.proj:focus-visible .shotwrap img{
     transform:translate3d(var(--pan,0%),0,0);transition:transform 3.2s linear}
+}
+/* On a phone the card is a row and the picture is a thumbnail that fills its
+   frame. These lines used to sit in 3.3 above, where the rules just written
+   beat them: same specificity, later in the file. For six weeks every phone
+   showed the picture in the top half of a grey frame. A thumbnail is half of
+   one screen; --thumb picks which half, as a share of the whole strip. It is
+   taken out of the flow so the text, not the picture, sets the row height. */
+@media (max-width:680px){
+  .proj .shotwrap{flex:none;width:116px;aspect-ratio:auto;border-bottom:0;border-right:1px solid var(--line)}
+  .proj .shotwrap img{position:absolute;top:0;left:0;height:100%;width:auto;
+    transform:translate3d(var(--thumb,0%),0,0);transition:none}
+  /* a long address cannot hold the text column open past the card's edge */
+  .proj .body{min-width:0}
+  .proj .visit .go{flex:none;white-space:nowrap}
+  .wm-utsav{--thumb:-8.3333%}
 }
 
 /* ---- 6.3  The week runs once, when it arrives. Four stops and a dot that walks

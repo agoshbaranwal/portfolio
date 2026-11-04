@@ -619,5 +619,48 @@ else
 	echo "SKIP: rule 20 (Witness numbers) needs ../Witness/check, which is not on this machine"
 fi
 
+# --------------------- 21. a screen-size rule cannot be silently overridden
+# A plain rule written LATER beats an earlier media query at equal specificity.
+# It broke the essay in September (a 122px article on every phone, 49 screens)
+# and the project cards in November (every phone showed the picture in the top
+# half of a grey frame for six weeks), and both times this file passed. This
+# fails when a property set for a screen size is set again, to something else,
+# by the same selector later in the file and outside any media block, unless a
+# later screen-size block restates it.
+python3 - site.css <<'PY' || fail=1
+import re, sys
+css = re.sub(r"/\*.*?\*/", "", open(sys.argv[1], encoding="utf-8").read(), flags=re.S)
+rules, stack, buf = [], [], ""
+for ch in css:
+	if ch == "{":
+		stack.append(buf.strip()); buf = ""
+	elif ch == "}":
+		head = stack.pop() if stack else ""
+		if head and not head.startswith("@"):
+			decl = {}
+			for d in buf.split(";"):
+				if ":" in d:
+					k, v = d.split(":", 1); decl[k.strip().lower()] = v.strip()
+			ctx = [h for h in stack if h.startswith("@")]
+			for sel in head.split(","):
+				rules.append((len(rules), " ".join(sel.split()), ctx, decl))
+		buf = ""
+	else:
+		buf += ch
+W = re.compile(r"(max|min)-width")
+sized = lambda ctx: any(c.startswith("@media") and W.search(c) for c in ctx)
+bad = set()
+for n, sel, ctx, decl in rules:
+	if not sized(ctx): continue
+	for m, sel2, ctx2, decl2 in rules:
+		if m <= n or sel2 != sel or ctx2: continue
+		for k, v in decl.items():
+			if "!important" in v or k not in decl2 or decl2[k] == v: continue
+			if any(o > m and s3 == sel and k in d3 and sized(c3) for o, s3, c3, d3 in rules): continue
+			bad.add(f"FAIL: {sel} {{{k}: {v}}} in {ctx[-1]} never applies; a plain rule later sets {k}: {decl2[k]}")
+for b in sorted(bad): print(b)
+sys.exit(1 if bad else 0)
+PY
+
 [ $fail -eq 0 ] && echo "OK: all invariants hold"
 exit $fail
