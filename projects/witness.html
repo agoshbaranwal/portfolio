@@ -140,11 +140,11 @@
 						</div>
 						<p class="band-cap"><b>Two columns, not one long phone screen</b>The record on the left and every entry on the right, so a desktop reads in one screen what a phone reads in four</p>
 						<div class="gate">
-							<div><b>24</b><span>named lanes in the build gate, run before anything ships</span></div>
-							<div><b>462</b><span>invariants enforced by a lane, of 594 registered</span></div>
-							<div><b>4</b><span>surfaces photographed on every run, from the shipped code</span></div>
+							<div><b data-witness="lanes">29</b><span>lanes in the build gate, and a release cannot go out while any one of them fails</span></div>
+							<div><b data-witness="enforced">463</b><span>rules enforced by a lane, of <span data-witness="registered">621</span> written down</span></div>
+							<div><b>4</b><span>surfaces photographed from the shipped code, on a full run</span></div>
 						</div>
-						<p class="gate-note">The surfaces lane will not accept a green build on trust: it wants a fresh screenshot of each of the four every run, and fails on the one that has none. The Mac panel is rendered out of the shipped Swift rather than mocked, so a screenshot cannot be a lie about the type or the layout. A rule that has been written but not yet built is recorded as pending rather than quietly missing, which is why 594 and 462 are both on the board.</p>
+						<p class="gate-note">Every release runs the gate first and stops at any failing lane, so nothing ships on trust. A full run adds one more lane that photographs all four surfaces from the shipped code, with the Mac panel rendered out of the real Swift rather than mocked, so a screenshot cannot misrepresent the type or the layout. A rule that has been written but not yet built is recorded as pending rather than left out, which is why the two counts differ. <span class="gate-asof">Counted on 4 November 2026.</span></p>
 					</div>
 				</section>
 

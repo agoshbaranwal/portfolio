@@ -1,7 +1,8 @@
 /* pen.js: the only script on the site, and the site never needs it.
    Everything here is delight or convenience on top of pages that are complete
    without it:
-     1. the theme choice follows you across pages and never flashes,
+     1. the theme is light unless someone presses the switch, and that choice
+        follows them across pages without a flash,
      2. the highlighter draws itself on when you reach the thing it marks,
         and blocks rise into place as they arrive,
      3. on a phone, the two things a visitor came for stay in reach once the
@@ -27,8 +28,8 @@
 	const btn = doc.getElementById("themeBtn");
 	if (btn) {
 		const meta = doc.querySelector('meta[name="theme-color"]');
-		const current = () =>
-			root.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+		// light unless someone chose dark: the device's own setting is never asked
+		const current = () => root.dataset.theme || "light";
 		const sync = () => {
 			const t = current();
 			btn.textContent = t === "dark" ? "Light" : "Dark";

@@ -577,5 +577,47 @@ if not bad: print(f"      (worst text contrast {worst[0]:.2f}:1, {worst[1]})")
 sys.exit(bad)
 PY
 
+
+# ------------------------------------- 19. light unless someone chooses dark
+# His rule from 2026-09-01, for every project: a reader's device setting is not
+# consent to change the page. This site broke it until 2026-11-04 by following
+# prefers-color-scheme, which opened it dark on every dark-mode Mac including
+# his. Dark exists only under [data-theme="dark"], set by the switch.
+if grep -n "prefers-color-scheme" site.css pen.js 2>/dev/null; then
+	echo "FAIL: the theme follows the device setting; light is the default and dark only when chosen"; fail=1
+fi
+
+# ------------------------------- 20. the Witness numbers cannot drift again
+# The Witness page quoted "24 lanes" and "462 of 594" for five weeks after the
+# gate had moved to 29 lanes and 463 of 621, and claimed all four surfaces were
+# photographed on every run after that lane had become opt-in. This compares the
+# page against the gate's own report, re-running the gate first if Witness has
+# changed since the report was written. If the Witness repo is not on this
+# machine the lane says so out loud rather than passing quietly.
+W="../Witness"
+if [ -x "$W/check" ]; then
+	R="$W/.deploy/check-report.json"
+	head_t=$(git -C "$W" log -1 --format=%ct 2>/dev/null || echo 0)
+	rep_t=$( [ -f "$R" ] && stat -f %m "$R" 2>/dev/null || echo 0 )
+	if [ "$rep_t" -lt "$head_t" ]; then "$W/check" --json >/dev/null 2>&1; fi
+	python3 - "$R" <<'PY' || fail=1
+import json, re, sys
+d = json.load(open(sys.argv[1]))
+ran = sum(1 for l in d["lanes"] if l["status"] != "SKIP")
+reg = next(l["count"] for l in d["lanes"] if l["lane"] == "registry")
+enf, total = (int(x) for x in reg.split("/"))
+page = open("projects/witness.html", encoding="utf-8").read()
+got = {k: int(v) for k, v in re.findall(r'data-witness="(\w+)">(\d+)<', page)}
+want = {"lanes": ran, "enforced": enf, "registered": total}
+bad = 0
+for k, v in want.items():
+	if got.get(k) != v:
+		print(f"FAIL: the Witness page says {k} = {got.get(k)}, the gate says {v}"); bad = 1
+sys.exit(bad)
+PY
+else
+	echo "SKIP: rule 20 (Witness numbers) needs ../Witness/check, which is not on this machine"
+fi
+
 [ $fail -eq 0 ] && echo "OK: all invariants hold"
 exit $fail

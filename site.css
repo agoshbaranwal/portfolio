@@ -60,7 +60,6 @@
   --hi:linear-gradient(100deg, rgba(255,224,74,0) 0%, rgba(255,224,74,.75) 6%, rgba(250,214,60,.6) 50%, rgba(255,224,74,.75) 94%, rgba(255,224,74,0) 100%);
   --chart-lead:#16365F; --chart-lag:#5AA0DC; --chart-gap:rgba(250,214,60,.5);
   --rule:37px; --rule-ink:#DDE5F0; --margin-ink:#E7B8B2; --rail:322px;
-  --film:#1B1C21; --sprocket:#EAEBEF;
   --slot:#E7EDF5;
   --slot-2:#D9E2EF;
   --shadow:0 1px 2px rgba(22,35,58,.04), 0 8px 26px rgba(22,35,58,.06);
@@ -75,36 +74,13 @@
      now lands on one of these, and check.sh rule 17 fails on any other. */
   --r-xs:2px; --r-sm:6px; --r-md:12px; --r-lg:16px; --r-pill:999px;
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --paper:#0E1624;
-    --paper-2:#131D2F;
-    --card:#162236;
-    --ink:#EAF0F8;
-    --ink-mid:#AEBACE;
-    --ink-soft:#8090A8;
-    --line:#25344C;
-    --line-strong:#3B4D6A;
-    --navy:#8FB6E8;
-    --navy-2:#6FA5E4;
-    --sky:#6FB0E0;
-    --sky-wash:rgba(111,176,224,.09);
-    --hi:linear-gradient(100deg, rgba(214,178,44,0) 0%, rgba(214,178,44,.34) 6%, rgba(214,178,44,.27) 50%, rgba(214,178,44,.34) 94%, rgba(214,178,44,0) 100%);
-    --chart-lead:#F2F6FC; --chart-lag:#5F9FD8; --chart-gap:rgba(255,240,190,.15);
-    --rule-ink:#22304A; --margin-ink:#5C3D40;
-  --film:#0A0B0E; --sprocket:#3A3D47;
-    --film:#0A0B0E; --sprocket:#3A3D47;
-    --rule-ink:#22304A; --margin-ink:#5C3D40;
-  --film:#0A0B0E; --sprocket:#3A3D47;
-    --film:#0A0B0E; --sprocket:#3A3D47;
-  --slot:#1B2942;
-    --slot-2:#20304C;
-    --shadow:0 1px 2px rgba(0,0,0,.35), 0 8px 26px rgba(0,0,0,.32);
-    --shadow-lift:0 2px 4px rgba(0,0,0,.4), 0 22px 52px rgba(111,176,224,.16);
-    --shadow-btn:0 6px 20px rgba(0,0,0,.5);
-    --grad-btn:linear-gradient(135deg,#A9CBF0,#8FB6E8);
-  }
-}
+/* Dark exists only when someone presses the switch. Until 2026-11-04 it also
+   followed the device's own setting, which opened the site dark on every
+   dark-mode Mac including his, against his rule from 2026-09-01: light by
+   default, a device setting is not consent. Removing that path also exposed a
+   bug it had been hiding: four tokens existed only on the device path, so a
+   person on a light Mac who pressed Dark got the About page's ruled lines in
+   their light colours. They are here now. */
 :root[data-theme="dark"]{
   --paper:#0E1624;
   --paper-2:#131D2F;
@@ -126,6 +102,7 @@
   --shadow-lift:0 2px 4px rgba(0,0,0,.4), 0 22px 52px rgba(111,176,224,.16);
   --shadow-btn:0 6px 20px rgba(0,0,0,.5);
   --grad-btn:linear-gradient(135deg,#A9CBF0,#8FB6E8);
+  --rule-ink:#22304A; --margin-ink:#5C3D40;
 }
 
 *,*::before,*::after{box-sizing:border-box}
@@ -161,7 +138,6 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--sky);outline-offset
 	.theme-btn{padding:7px 14px}
 }
 :root[data-theme="dark"] .cv-btn{color:#0E1624}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .cv-btn{color:#0E1624}}
 @media (hover:hover){.cv-btn:hover{transform:translateY(-1px);color:#fff;text-decoration:none}
 :root[data-theme="dark"] .cv-btn:hover{color:#0E1624}}
 
@@ -197,7 +173,6 @@ html.js .rv.in{opacity:1;transform:none}
 .hero-act{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 .act-mail{font-size:13.5px;font-weight:700;background:var(--grad-btn);color:#fff;border-radius:var(--r-pill);padding:14px 24px;text-decoration:none;letter-spacing:.01em;box-shadow:var(--shadow-btn);transition:transform .2s var(--ease)}
 :root[data-theme="dark"] .act-mail{color:#0E1624}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .act-mail{color:#0E1624}}
 @media (hover:hover){.act-mail:hover{transform:translateY(-1px);color:#fff;text-decoration:none}
 :root[data-theme="dark"] .act-mail:hover{color:#0E1624}}
 .act-cv{font-size:13.5px;font-weight:600;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:var(--r-pill);padding:13px 23px;text-decoration:none;background:var(--card)}
@@ -275,7 +250,6 @@ html.js .rv.in{opacity:1;transform:none}
 .wm .p-name{color:var(--brand)}
 .wm .body,.wm .body .p-desc,.wm .body .visit{font-family:var(--wm-face)}
 :root[data-theme="dark"] .wm .body{background:color-mix(in srgb, var(--brand) 13%, var(--card))}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .wm .body{background:color-mix(in srgb, var(--brand) 13%, var(--card))}}
 
 .wm.wm-admenow  {--brand:#2438F0; --wm-face:"WM Admenow",var(--font)}
 .wm.wm-utsav    {--brand:#916820; --wm-face:"WM Utsav",Georgia,serif}
@@ -283,14 +257,6 @@ html.js .rv.in{opacity:1;transform:none}
 .wm.wm-onrecord {--brand:#9F6023; --wm-face:Helvetica,"Helvetica Neue",Arial,sans-serif}
 .wm.wm-promptemu{--brand:#2563EB; --wm-face:"WM Promptemu",var(--font)}
 .wm.wm-witness  {--brand:#8F6900; --wm-face:"WM Witness",var(--font)}
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]) .wm.wm-utsav{--brand:#E5C063}
-  :root:not([data-theme="light"]) .wm.wm-onrecord{--brand:#F0A45C}
-  :root:not([data-theme="light"]) .wm.wm-witness{--brand:#FFC400}
-  :root:not([data-theme="light"]) .wm.wm-admenow{--brand:#8494FF}
-  :root:not([data-theme="light"]) .wm.wm-promptemu{--brand:#7FA6FF}
-  :root:not([data-theme="light"]) .wm.wm-tvbadger{--brand:#E08A8E}
-}
 :root[data-theme="dark"] .wm.wm-utsav{--brand:#E5C063}
 :root[data-theme="dark"] .wm.wm-onrecord{--brand:#F0A45C}
 :root[data-theme="dark"] .wm.wm-witness{--brand:#FFC400}
@@ -677,7 +643,6 @@ p,li,figcaption,.p-desc,.lead,.say{text-wrap:pretty}
 html{hanging-punctuation:first last}
 ::selection{background:rgba(250,214,60,.55);color:#16233A}
 :root[data-theme="dark"] ::selection{background:rgba(214,178,44,.42);color:#EAF0F8}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) ::selection{background:rgba(214,178,44,.42);color:#EAF0F8}}
 .cv-date,.tl-item .yrs,.case-fig b,.strip-yr{font-variant-numeric:tabular-nums}
 
 /* ---- 1.2 + 6.2  Moving between pages. The masthead keeps its place while the
@@ -745,7 +710,6 @@ h2[id],h3[id],section[id],li[id],.case-sec[id]{scroll-margin-top:96px}
 .dock a{flex:1;text-align:center;font-size:13.5px;font-weight:700;border-radius:var(--r-pill);padding:12px 10px;text-decoration:none}
 .dock .d-mail{background:var(--grad-btn);color:#fff}
 :root[data-theme="dark"] .dock .d-mail{color:#0E1624}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .dock .d-mail{color:#0E1624}}
 .dock .d-cv{border:1.5px solid var(--line-strong);color:var(--ink);background:var(--card)}
 @media (max-width:640px){html.js .dock{display:flex}html.js body{padding-bottom:0}}
 
@@ -814,7 +778,6 @@ a.hl{border-bottom:1px solid transparent}
   padding:9px 12px 9px 13px;margin-left:-13px;list-style-position:inside}
 :root{--hi-flat:rgba(250,214,60,.20)}
 :root[data-theme="dark"]{--hi-flat:rgba(214,178,44,.16)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--hi-flat:rgba(214,178,44,.16)}}
 .cv-points li:target::before{content:"";position:absolute;left:0;top:6px;width:3px;height:0;border-radius:var(--r-xs);
   background:linear-gradient(180deg,var(--sky),var(--navy));animation:receipt .62s var(--ease) .12s forwards}
 @keyframes receipt{to{height:calc(100% - 12px)}}
@@ -1231,3 +1194,7 @@ picture{display:contents}
 .band-cap{max-width:72ch}
 .lc-h{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);
   margin:0 0 14px;padding-bottom:9px;border-bottom:1px solid var(--line)}
+.gate-asof{display:block;margin-top:8px;font-size:12px;font-weight:600;color:var(--ink-soft);letter-spacing:.02em}
+/* the registered count sits inside a .gate span sentence, and .gate span is a
+   block, so without this it fell onto a line of its own */
+.gate span span{display:inline;font:inherit;color:inherit;max-width:none}
