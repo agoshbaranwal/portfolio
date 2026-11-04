@@ -457,7 +457,9 @@ PY
 # They are two renderings of one set of facts and they have disagreed before.
 # Every date range printed on the page must appear in the PDF and every date
 # range in the PDF must appear on the page, so a role edited in one place and
-# not the other fails the build instead of reaching a recruiter.
+# not the other fails the build instead of reaching a recruiter. "Current" is an
+# end date like any other: it once only counted for the MBA, so a new running
+# role on one and not the other would have passed.
 if command -v pdftotext >/dev/null 2>&1; then
 	python3 - <<'PY' || fail=1
 import re, subprocess, sys
@@ -465,16 +467,13 @@ pdf = subprocess.run(["pdftotext", "-layout", "agosh-baranwal-cv.pdf", "-"],
                      capture_output=True, text=True).stdout
 page = open("cv.html", encoding="utf-8").read()
 page = re.sub(r"<[^>]+>", " ", page).replace("&ndash;", "-").replace("&middot;", " ")
-norm = lambda t: {a + "-" + b for a, b in re.findall(r"(\d{2}/\d{2})\s*[-–]\s*(\d{2}/\d{2})", t)}
-cur = lambda t: bool(re.search(r"09/24\s*-?\s*Current", t, re.I))
+norm = lambda t: {a + "-" + b.title() for a, b in re.findall(r"(\d{2}/\d{2})\s*[-–]\s*(\d{2}/\d{2}|current)", t, re.I)}
 a, b = norm(page), norm(pdf)
 bad = 0
 for d in sorted(a - b):
 	print(f"FAIL: cv.html shows the dates {d}, which the PDF does not"); bad = 1
 for d in sorted(b - a):
 	print(f"FAIL: the PDF shows the dates {d}, which cv.html does not"); bad = 1
-if cur(page) != cur(pdf):
-	print("FAIL: the page and the PDF disagree about whether the MBA is still running"); bad = 1
 sys.exit(bad)
 PY
 else
